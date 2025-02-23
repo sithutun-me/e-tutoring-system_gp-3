@@ -1,0 +1,39 @@
+<?php
+
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TutorController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
+Route::middleware(['guest'])->group(function(){
+
+    Route::get('/', function () {
+        return view('welcome');
+    });
+
+    Route::view('/login', 'login')->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+
+});
+
+Route::middleware('auth')->group(function(){
+
+    // Admin Dashboard Route
+    Route::middleware(['role:3'])->group(function () {
+        Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    });
+
+    // Tutor Dashboard Route
+    Route::middleware(['role:2'])->group(function () {
+        Route::get('/tutor/dashboard', [TutorController::class, 'index'])->name('tutor.dashboard');
+    });
+
+    // Student Dashboard Route
+    Route::middleware(['role:1'])->group(function () {
+        Route::get('/student/dashboard', [StudentController::class, 'index'])->name('student.dashboard');
+    });
+
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
