@@ -1067,3 +1067,28 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
   margin-left: -5px;
   z-index: 1;
 }
+
+.normal-text {
+  font-size: 0.9rem;
+  color: #333333 !important;
+  font-weight: 400;
+}
+
+
+.btn-secondary {
+  color: #212529;
+  background-color: #ffffff;
+  border-color: #333333;
+  /* box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); */
+}
+
+.btn-secondary:hover {
+  color: #212529;
+  background-color: #dee1e7;
+  border-color: #d6dae2;
+}
+
+.btn-secondary:focus,
+.btn-secondary.focus {
+  box-shadow: 0 4px 6px rgba(0, 74, 173, 0.11), 0 1px 3px rgba(0, 74, 173, 0.08), 0 0 0 0 rgba(0, 74, 173, 0.5);
+}

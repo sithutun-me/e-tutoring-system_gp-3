@@ -68,7 +68,7 @@
 
             <div class="dashboard-content px-3 pt-4">
                 <h2 class="fs-2 fw-bold"> Admin Dashboard</h2>
-                
+
                 <div class="chart-card">
                     <div class="chart-card-header">
                         <h5 class="card-category"></h5>
@@ -88,6 +88,110 @@
                     <div class="chart-card-body">
                         <div class="chart-area">
                             <canvas id="TutorMessagesChart" class="chart-canvas"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-card ">
+                    <div class="chart-card-header">
+                        <h4 class="chart-card-title">Students without a personal tutor</h4>
+                    </div>
+                    <div class="chart-card-body">
+                        <div class="table-responsive">
+                            <table class="table tablesorter" id="">
+                                <thead>
+                                    <tr>
+                                        <th class="normal-text">
+                                            Student ID
+                                        </th>
+                                        <th class="normal-text">
+                                            Student Name
+                                        </th>
+                                        <th class="text-center normal-text">
+                                            ....
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="normal-text">
+                                            STU001
+                                        </td>
+                                        <td class="normal-text">
+                                            Dakota Rice
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="#" class="btn btn-sm btn-secondary">Allocate</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="normal-text">
+                                            STU002
+                                        </td>
+                                        <td class="normal-text">
+                                            Minerva Hooper
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="#" class="btn btn-sm btn-secondary">Allocate</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="normal-text">
+                                            STU003
+                                        </td>
+                                        <td class="normal-text">
+                                            Sage Rodriguez
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="#" class="btn btn-sm btn-secondary">Allocate</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="normal-text">
+                                            STU004
+                                        </td>
+                                        <td class="normal-text">
+                                            Philip Chaney
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="#" class="btn btn-sm btn-secondary">Allocate</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="normal-text">
+                                            STU005
+                                        </td>
+                                        <td class="normal-text">
+                                            Doris Greene
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="#" class="btn btn-sm btn-secondary">Allocate</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="normal-text">
+                                            STU006
+                                        </td>
+                                        <td class="normal-text">
+                                            Mason Porter
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="#" class="btn btn-sm btn-secondary">Allocate</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="normal-text">
+                                            STU007
+                                        </td>
+                                        <td class="normal-text">
+                                            Jon Porter
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="#" class="btn btn-sm btn-secondary">Allocate</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
