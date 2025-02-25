@@ -27,6 +27,16 @@ class User extends Authenticatable
         return $this->role_id === $role;
     }
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'post_create_by', 'id'); // Link posts created by user
+    }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'user_id', 'id'); // Link posts created by user
+    }
+    
+
     /**
      * The attributes that should be hidden for serialization.
      *

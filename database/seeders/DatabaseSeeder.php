@@ -18,6 +18,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             RoleSeeder::class,
+            PostSeeder::class,
+            DocumentSeeder::class,
+            CommentSeeder::class,
         ]);
         User::factory()->create([
             'user_code' => 'stf0001',
