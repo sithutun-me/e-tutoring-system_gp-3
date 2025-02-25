@@ -7,11 +7,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
-                    <div class="d-flex justify-content-center py-4">
-
-                        <h3 class="login-title">Group 3 E-Tutoring System</h3>
-
-                    </div>
+                    
 
                     <div class="card mb-3">
 
@@ -19,7 +15,8 @@
 
                             <div class="pt-4 pb-2">
                                 <div class="login-h5">
-                                    <h5 class="card-title text-center pb-0 fs-2">Login </h5>
+                                    <h5 class="card-title text-center pb-0 fs-2" style="color: #004AAD;">TripleEDU </h5>
+                                    <p class="card-title text-center"> E-tutoring system Login</p>
                                 </div>
                             </div>
 
