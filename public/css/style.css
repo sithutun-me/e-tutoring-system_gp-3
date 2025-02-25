@@ -138,6 +138,11 @@ h6 {
     border-color: #d3d3d4;
   }
 
+
+
+
+
+
   .col-12 button{
     background-color:  #004AAD ;
     color: white;
@@ -304,10 +309,11 @@ h6 {
 
 /* Dashboard-nav */
 
+
    #side_nav{
     background:  #004AAD;
-    min-width: 250px;
-    max-width: 250px;
+    min-width: 200px;
+    max-width: 200px;
     transition: all 0.3s;
    }
    .content{
@@ -317,9 +323,7 @@ h6 {
    hr.h-color{
      background: #eee;
    }
-
-
-
+   
    .sidebar li a:hover {
     color: #fff;
    }
@@ -328,6 +332,13 @@ h6 {
     font-family: "Poppins";
     font-size: 16px;
    }
+
+   .header .toggle-sidebar-btn {
+    font-size: 32px;
+    padding-left: 10px;
+    cursor: pointer;
+    color: #012970;
+  }
 
    @media(max-width: 767px){
     #side_nav{
@@ -347,5 +358,84 @@ h6 {
     background-color:  #004AAD ;
     color: white;
   }
+
+  /* Allocation-table */
+  @media only screen and (max-width:800px){
+    #no-more-tables tbody,
+    #no-more-tables tr,
+    #no-more-tables td{
+      display: block;
+    }
+    
+    #no-more-tables thead tr{
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
+
+    #no-more-tables td{
+      position: relative;
+      padding-left: 50%;
+      border: none;
+      border-bottom: 1px solid #eee;
+    }
+
+    #no-more-tables td:before{
+      content: attr(data-title);
+      position: absolute;
+      left:6px ;
+      font-weight: bold;
+    }
+
+    #no-more-tables tr{
+      border-bottom: 1px solid #ccc ;
+    }
+
+
+  }
+
+
+  /* table */
+
+  .custom-bg{
+    background-color: #004AAD;
+
+  }
+
+  .form-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+/* Responsive - Stack elements vertically on small screens */
+@media (max-width: 900px) {
+    .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+ 
+    }
+
+    .form-select {
+        width: 100%; /* Make the select box full-width */
+    }
+  
+
+    .form-select, .btn {
+      width: 100%; /* Make select box & button full-width */
+      margin-right: 20px;
+  }
+
+  #no-more-tables button{
+    margin-bottom: 20px;
+
+  }
+
+ 
+ 
+}
+
+
 
 
