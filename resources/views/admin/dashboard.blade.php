@@ -217,6 +217,8 @@ $(".sidebar ul li").on('click', function () {
         if (tutorMessagesChartElement && typeof demo !== 'undefined') {
             demo.initTutorMessagesChart(); // Call the correct function with matching ID
         }
+       
+
     });
 </script>
 @endpush

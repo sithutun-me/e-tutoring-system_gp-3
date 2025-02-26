@@ -44,3 +44,7 @@ Route::middleware('auth')->group(function(){
    
 
 });
+
+Route::get('/student-inactivity', [AdminController::class, 'getInactiveStudentsData']);
+Route::get('/average_messages', [AdminController::class, 'getAverageMessage']);
+
