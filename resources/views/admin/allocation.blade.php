@@ -51,8 +51,8 @@
               <h2 class="fs-2 fw-bold mb-4"> Allocation</h2>
 
                   <div class=" form-group mb-4">
-                    <input class="form-control me-2" type="search" placeholder="Search here" aria-label="Search" style="width: 320px;">
-                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                    <input class="form-control" type="search" placeholder="Search here" aria-label="Search" style="width: 320px;">
+                    <button  type="submit"  name="submit" class="btn btn-sm shadow-none">Search</button>
                   </div>
  
                   <div class="form-group mb-4">
@@ -69,7 +69,7 @@
                           <option value="9">Tutor9</option>
                           <option value="10">Tutor10</option>
                       </select>
-                      <button  type="submit"  name="submit" class="btn btn-primary shadow-none" style="width: 100px;">Allocate</button>
+                      <button  type="submit"  name="submit" class="btn btn-primary shadow-none">Allocate</button>
                   </div>
 
                   

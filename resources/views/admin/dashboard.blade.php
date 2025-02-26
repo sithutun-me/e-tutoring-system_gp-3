@@ -13,22 +13,24 @@
         </div>
 
         <ul class="list-unstyled px-2">
-            <li><a href="/admin/dashboard" class="text-decoration-none px-3 py-2 d-block">
+      
+        
+            <li class="active"><a href="/admin/dashboard" class="text-decoration-none px-3 py-2 d-block">
                 <img src="/icon images/dashboard.png" style="width:20px; margin-right: 10px;"> Dashboard
             </a></li>
-            <li><a href="/admin/allocation" class="text-decoration-none px-3 py-2 d-block">
-                <img src="/icon images/allocation.png" style="width:20px; margin-right: 10px;">  Allocation
+            <li class=""><a href="/admin/allocation" class="text-decoration-none px-3 py-2 d-block">
+                <img src="/icon images/allocation.png" style="width:20px; margin-right: 10px;"/>  Allocation
             </a></li>
-            <li><a href="/admin/assignedlists" class="text-decoration-none px-3 py-2 d-block">
+            <li class=""><a href="/admin/assignedlists" class="text-decoration-none px-3 py-2 d-block">
                 <img src="/icon images/assigned list.png" style="width:20px; margin-right: 10px;"> Assigned List
             </a></li>
-            <li><a href="#" class="text-decoration-none px-3 py-2 d-block">
+            <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">
                 <img src="/icon images/tutor.png" style="width:20px; margin-right: 10px;"> Tutor
             </a></li>
-            <li><a href="#" class="text-decoration-none px-3 py-2 d-block">
+            <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">
                 <img src="/icon images/student.png" style="width:20px; margin-right: 10px;"> Student
             </a></li>
-            <li><a href="#" class="text-decoration-none px-3 py-2 d-block">
+            <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">
                 <img src="/icon images/reports.png" style="width:20px; margin-right: 10px;"> Reports
             </a></li>
         </ul>

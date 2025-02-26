@@ -141,7 +141,7 @@ h6 {
 
 
 
-
+/* Login Page */
 
   .col-12 button{
     background-color:  #004AAD ;
@@ -170,11 +170,12 @@ h6 {
 
 
   /* Card */
-  .card {
+ .card {
     margin-bottom: 30px;
     border: none;
     border-radius: 5px;
     box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+  
   }
 
   .card-header,
@@ -310,34 +311,39 @@ h6 {
 /* Dashboard-nav */
 
 
-   #side_nav{
-    background:  #004AAD;
-    min-width: 200px;
-    max-width: 200px;
-    transition: all 0.3s;
-   }
-   .content{
-      min-height: 100vh;
-      width: 100%;
-   }
-   hr.h-color{
-     background: #eee;
-   }
-   
-   .sidebar li a:hover {
-    color: #fff;
-   }
-   .sidebar li a{
-    color: #fff;
-    font-family: "Poppins";
-    font-size: 16px;
-   }
+  #side_nav{
+  background:  #004AAD;
+  min-width: 200px;
+  max-width: 200px;
+  transition: all 0.3s;
+  }
+  .content{
+    min-height: 100vh;
+    width: 100%;
+  }
+  hr.h-color{
+    background: #eee;
+  }
 
-   .header .toggle-sidebar-btn {
-    font-size: 32px;
-    padding-left: 10px;
-    cursor: pointer;
-    color: #012970;
+  .sidebar li a:hover {
+  color: #fff;
+  }
+  .sidebar li a{
+  color: #fff;
+  font-family: "Poppins";
+  font-size: 16px;
+  }
+
+ .sidebar li a{
+  color: #fff;
+  font-family: "Poppins";
+  font-size: 16px;
+ }
+
+  
+
+  #side_nav.active li a {
+    color: #004AAD;
   }
 
    @media(max-width: 767px){
@@ -353,6 +359,7 @@ h6 {
      }
    }
 
+ 
 
    .col-12 button{
     background-color:  #004AAD ;
@@ -407,6 +414,24 @@ h6 {
     align-items: center;
     gap: 10px;
     width: 100%;
+}
+
+.form-group button{
+  height: 40px;
+  color: white;
+  font-family: 'Poppins';
+  font-size: 16px;
+  background-color: #004AAD;
+  width: 100px;
+}
+
+.form-group-table button{
+  height: 35px;
+  font-family: 'Poppins';
+  font-size: 16px;
+  width: 100px;
+  margin-top: 3px;
+  margin-right: 2px;
 }
 
 /* Responsive - Stack elements vertically on small screens */

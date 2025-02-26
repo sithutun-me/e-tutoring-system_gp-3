@@ -53,7 +53,7 @@
                   
                   <div class=" form-group mb-4">
                      <input class="form-control me-2" type="search" placeholder="Search here" aria-label="Search" style="width: 320px;">
-                     <button class="btn btn-outline-primary" type="submit">Search</button>
+                      <button  type="submit"  name="submit" class="btn btn-sm shadow-none">Search</button>
                       <button  type="submit"  name="submit" class="btn btn-primary shadow-none" style="width: 200px;">Bulk Reallocate</button>
                   </div>
 
@@ -71,7 +71,7 @@
                                   <th class="text-center" style="color: white;">Action</th>
                               </tr>
                           </thead>
-                          <tbody>
+                          <tbody class="form-group-table">
                               <tr class="text-center">
                                   <td data-title="S No">1</td>
                                   <td data-title="Allocation Date">22/2/2025</td>
@@ -81,7 +81,7 @@
                                   <td data-title="Tutor Name">Cornor McGregor</td>
                                   <td><span class="allocate-checkbox"><input type="checkbox" id="checkbox1" name="option[]" value="1">
                                   <label for="checkbox1"></label></span></td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none me-2" style="width:100px; height:35px;"><a href="/admin/reallocation" class="text-decoration-none " style="color: white;">Reallocate</a></button> 
+                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD"><a href="/admin/reallocation" class="text-decoration-none " style="color: white;">Reallocate</a></button> 
                                   <button type="button" class="btn btn-outline-secondary btn-sm shadow-none" style="width:100px; height:35px;">Delete</button></td>
 
                               </tr>
@@ -95,8 +95,8 @@
                                   <td data-title="Tutor Name">Cornor McGregor</td>
                                   <td><span class="allocate-checkbox"><input type="checkbox" id="checkbox1" name="option[]" value="1">
                                   <label for="checkbox1"></label></span></td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none me-2" style="width:100px; height:35px;"><a href="/admin/reallocation" class="text-decoration-none " style="color: white;">Reallocate</a></button> 
-                                  <button type="button" class="btn btn-outline-secondary btn-sm shadow-none" style="width:100px; height:35px;">Delete</button></td>
+                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none " style="background-color:#004AAD"><a href="/admin/reallocation" class="text-decoration-none " style="color: white;">Reallocate</a></button> 
+                                  <button type="button" class="btn btn-outline-secondary btn-sm shadow-none" >Delete</button></td>
 
                               </tr>
 
@@ -109,8 +109,8 @@
                                   <td data-title="Tutor Name">Cornor McGregor</td>
                                   <td><span class="allocate-checkbox"><input type="checkbox" id="checkbox1" name="option[]" value="1">
                                   <label for="checkbox1"></label></span></td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none me-2" style="width:100px; height:35px;"><a href="/admin/reallocation" class="text-decoration-none " style="color: white;">Reallocate</a></button> 
-                                  <button type="button" class="btn btn-outline-secondary btn-sm shadow-none" style="width:100px; height:35px;">Delete</button></td>
+                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none " style="background-color:#004AAD" ><a href="/admin/reallocation" class="text-decoration-none " style="color: white;">Reallocate</a></button> 
+                                  <button type="button" class="btn btn-outline-secondary btn-sm shadow-none" >Delete</button></td>
 
                               </tr>
 
@@ -123,8 +123,8 @@
                                   <td data-title="Tutor Name">Cornor McGregor</td>
                                   <td><span class="allocate-checkbox"><input type="checkbox" id="checkbox1" name="option[]" value="1">
                                   <label for="checkbox1"></label></span></td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none me-2" style="width:100px; height:35px;"><a href="/admin/reallocation" class="text-decoration-none " style="color: white;">Reallocate</a></button> 
-                                  <button type="button" class="btn btn-outline-secondary btn-sm shadow-none" style="width:100px; height:35px;">Delete</button></td>
+                                  <td><button type="button" class="btn btn-sm shadow-none " style="background-color:#004AAD"><a href="/admin/reallocation" class="text-decoration-none " style="color: white; ">Reallocate</a></button> 
+                                  <button type="button" class="btn btn-outline-secondary btn-sm shadow-none">Delete</button></td>
 
                               </tr>
 
