@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Services\DashboardService;
+use App\Services\AdminDashboardService;
+use App\Model\User;
 
 class AdminController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard');
+        $students = $this->adminDashboardService->studentsWithoutTutors();
+         
+
+        return view('admin.dashboard', compact('students'));
     }
 
     public function allocation()
@@ -27,11 +31,11 @@ class AdminController extends Controller
     }
 
 
-    protected $dashboardService;
+    protected $adminDashboardService;
 
-    public function __construct(DashboardService $dashboardService)
+    public function __construct(AdminDashboardService $adminDashboardService)
     {
-        $this->dashboardService = $dashboardService;
+        $this->adminDashboardService = $adminDashboardService;
     }
 
     /**
@@ -43,7 +47,7 @@ class AdminController extends Controller
     {
        // return response()->json(['message' => 'API is working']);
 
-        $data = $this->dashboardService->getInactiveStudentsData();
+        $data = $this->adminDashboardService->getInactiveStudentsData();
 
         return response()->json($data);  // Return as JSON for API
     }
@@ -52,10 +56,11 @@ class AdminController extends Controller
     {
        // return response()->json(['message' => 'API is working']);
 
-        $data = $this->dashboardService->getAverageMessagesPerTutor(1); // past 30 days (1 month)
+        $data = $this->adminDashboardService->getAverageMessagesPerTutor(1); // past 30 days (1 month)
 
         return response()->json($data);  // Return as JSON for API
     }
 
+   
 
 }

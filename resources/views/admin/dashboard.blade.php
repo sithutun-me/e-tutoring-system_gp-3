@@ -91,83 +91,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($students as $student)
                                     <tr>
-                                        <td class="normal-text">
-                                            STU001
-                                        </td>
-                                        <td class="normal-text">
-                                            Dakota Rice
-                                        </td>
+                                        <td class="normal-text">{{ $student->user_code }}</td>
+                                        <td class="normal-text">{{ $student->first_name }} {{ $student->last_name }}</td>
                                         <td class="text-center">
-                                            <a href="#" class="btn btn-sm btn-secondary">Allocate</a>
+                                            <a href="{{ route('admin.allocation', $student->id) }}" class="btn btn-sm btn-secondary">Allocate</a>
                                         </td>
                                     </tr>
+                                @endforeach
+            
+                                @if ($students->isEmpty())
                                     <tr>
-                                        <td class="normal-text">
-                                            STU002
-                                        </td>
-                                        <td class="normal-text">
-                                            Minerva Hooper
-                                        </td>
-                                        <td class="text-center">
-                                            <a href="#" class="btn btn-sm btn-secondary">Allocate</a>
-                                        </td>
+                                        <td colspan="3" class="text-center">All students have tutors assigned!</td>
                                     </tr>
-                                    <tr>
-                                        <td class="normal-text">
-                                            STU003
-                                        </td>
-                                        <td class="normal-text">
-                                            Sage Rodriguez
-                                        </td>
-                                        <td class="text-center">
-                                            <a href="#" class="btn btn-sm btn-secondary">Allocate</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="normal-text">
-                                            STU004
-                                        </td>
-                                        <td class="normal-text">
-                                            Philip Chaney
-                                        </td>
-                                        <td class="text-center">
-                                            <a href="#" class="btn btn-sm btn-secondary">Allocate</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="normal-text">
-                                            STU005
-                                        </td>
-                                        <td class="normal-text">
-                                            Doris Greene
-                                        </td>
-                                        <td class="text-center">
-                                            <a href="#" class="btn btn-sm btn-secondary">Allocate</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="normal-text">
-                                            STU006
-                                        </td>
-                                        <td class="normal-text">
-                                            Mason Porter
-                                        </td>
-                                        <td class="text-center">
-                                            <a href="#" class="btn btn-sm btn-secondary">Allocate</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="normal-text">
-                                            STU007
-                                        </td>
-                                        <td class="normal-text">
-                                            Jon Porter
-                                        </td>
-                                        <td class="text-center">
-                                            <a href="#" class="btn btn-sm btn-secondary">Allocate</a>
-                                        </td>
-                                    </tr>
+                                @endif
                                 </tbody>
                             </table>
                         </div>

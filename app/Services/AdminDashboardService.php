@@ -4,10 +4,11 @@ namespace App\Services;
 use App\Models\User;
 use App\Models\Post;
 use App\Models\Comment;
+use App\Models\Allocation;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class DashboardService
+class AdminDashboardService
 {
     /**
      * Get the number of students inactive for the given time period.
@@ -74,16 +75,27 @@ class DashboardService
         ->groupBy('tutors.id', 'tutors.first_name')
         ->get();
 
-    // Preparing data for chart
-    $labels = $messages->pluck('tutor_name');
-    $data = $messages->pluck('message_count');
+        // Preparing data for chart
+        $labels = $messages->pluck('tutor_name');
+        $data = $messages->pluck('message_count');
 
-    return [
-        'labels' => $labels,
-        'data' => $data
-    ];
+        return [
+            'labels' => $labels,
+            'data' => $data
+        ];
     }
 
+    public function studentsWithoutTutors()
+    {
+        $students = User::where('role_id', 1)
+            ->whereNotIn('id', function ($query) {
+                $query->select('student_id')
+                      ->from('allocation');
+            })
+            ->get();
+
+        return $students;
+    }
     
 
 }

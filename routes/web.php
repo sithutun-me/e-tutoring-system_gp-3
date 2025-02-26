@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function(){
     // Admin Dashboard Route
     Route::middleware(['role:3'])->group(function () {
         Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+        
         Route::get('/admin/allocation', [AdminController::class, 'allocation'])->name('admin.allocation');
         Route::get('/admin/assignedlists', [AdminController::class, 'assignedlists'])->name('admin.assignedlists');
         Route::get('/admin/reallocation', [AdminController::class, 'reallocation'])->name('admin.reallocation');
@@ -47,4 +48,5 @@ Route::middleware('auth')->group(function(){
 
 Route::get('/student-inactivity', [AdminController::class, 'getInactiveStudentsData']);
 Route::get('/average_messages', [AdminController::class, 'getAverageMessage']);
+
 
