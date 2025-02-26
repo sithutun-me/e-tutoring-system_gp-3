@@ -20,7 +20,7 @@ class DashboardService
         $dateLimit = Carbon::now()->subDays($days);
 
         // Get the students who have not created or updated posts in the last $days
-        $inactiveStudents = User::where('role_id', 1) // Assuming 'student' is the role ID
+        $inactiveStudents = User::where('role_id', 1)
             ->whereDoesntHave('posts', function ($query) use ($dateLimit) {
                 $query->where('updated_at', '>=', $dateLimit); // Checking post update time
             })
