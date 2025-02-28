@@ -30,6 +30,18 @@ class AdminController extends Controller
         return view('admin.reallocation');
     }
 
+    public function tutorlists()
+    {
+        return view('admin.tutorlists');
+    }
+
+
+    
+    public function studentlists()
+    {
+        return view('admin.studentlists');
+    }
+
 
     protected $adminDashboardService;
 

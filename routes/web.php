@@ -27,6 +27,8 @@ Route::middleware('auth')->group(function(){
         Route::get('/admin/allocation', [AdminController::class, 'allocation'])->name('admin.allocation');
         Route::get('/admin/assignedlists', [AdminController::class, 'assignedlists'])->name('admin.assignedlists');
         Route::get('/admin/reallocation', [AdminController::class, 'reallocation'])->name('admin.reallocation');
+        Route::get('/admin/tutorlists', [AdminController::class, 'tutorlists'])->name('admin.tutorlists');
+        Route::get('/admin/studentlists', [AdminController::class, 'studentlists'])->name('admin.studentlists');
       
     });
 

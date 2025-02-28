@@ -27,6 +27,7 @@
 </head>
 <body>
     @include('components.header')
+
     @yield('content')
 
     <script>
@@ -45,6 +46,11 @@
             $('.sidebar').removeClass('active');
 
         })
+
+       
+
+
+       
 
     </script>
     

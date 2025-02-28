@@ -9,7 +9,7 @@
 
                     
                    <div class="login-card">
-                    <div class="card mb-3" style="width: 400px;">
+                    <div class="card mb-3">
 
                         <div class="card-body">
 

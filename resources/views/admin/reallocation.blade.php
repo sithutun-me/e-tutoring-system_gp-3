@@ -5,6 +5,9 @@
 <div class="main-container d-flex">
     <div class="sidebar" id="side_nav">
         <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between">
+            <h1 class=" header-title fs-4 mt-3">
+                <span class="text-white fw-bold" style="margin-left:20px;">TripleEDU</span>
+            </h1>
             
             <button class="btn d-md-none d-block close-btn px-1 py-0 text-white">
             <i class="fa-solid fa-square-xmark"></i>
@@ -21,10 +24,10 @@
             <li><a href="/admin/assignedlists" class="text-decoration-none px-3 py-2 d-block">
                 <img src="/icon images/assigned list.png" style="width:20px; margin-right: 10px;"> Assigned List
             </a></li>
-            <li><a href="#" class="text-decoration-none px-3 py-2 d-block">
+            <li><a href="/admin/tutorlists" class="text-decoration-none px-3 py-2 d-block">
                 <img src="/icon images/tutor.png" style="width:20px; margin-right: 10px;"> Tutor
             </a></li>
-            <li><a href="#" class="text-decoration-none px-3 py-2 d-block">
+            <li><a href="/admin/studentlists" class="text-decoration-none px-3 py-2 d-block">
                 <img src="/icon images/student.png" style="width:20px; margin-right: 10px;"> Student
             </a></li>
             <li><a href="#" class="text-decoration-none px-3 py-2 d-block">
@@ -72,7 +75,7 @@
                     
                    
 
-                    <div class="table-responsive" id="no-more-tables">
+                    <div class="table-responsive" id="no-more-tables" style=" height:300px; overflow-y:scroll;">
                         <table class="table bg-white table-bordered">
                             <thead>
                                 <tr class="custom-bg text-light">
@@ -126,10 +129,23 @@
                         </table>
                     </div>
 
-                 <!-- Can't remove this p tag as if it is removed then all the main contents will went outisde of the nav -->
-                  <p class="mb-0" style="color: white;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, totam? Sequi alias eveniet ut quas
-                  ullam delectus et quasi incidunt rem deserunt asperiores reiciendis assumenda doloremque provident,
-                  dolores aspernatur neque.</p>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true" style="color: #004AAD;">&laquo;</span>
+                            </a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#" style="color: #004AAD;">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#" style="color: #004AAD;">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#" style="color: #004AAD;">3</a></li>
+                            <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true" style="color: #004AAD;">&raquo;</span>
+                            </a>
+                            </li>
+                        </ul>
+                    </nav>
 
                 </section>
 
