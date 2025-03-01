@@ -1,5 +1,44 @@
+.table-responsive {
+  overflow-x: auto; 
+  width: 100%; 
+}
+.text-center a {
+  height: 40px;
+  color: white;
+  font-family: 'Poppins';
+  font-size: 16px;
+  background-color: #004AAD;
+  width: 100px;
+}
 
-.container {
+#table-student-no-tutor tbody {
+  min-height: 300px;
+}
+
+#table-student-no-tutor {
+  flex-grow: 1;
+  min-height: 300px;
+  overflow-y: auto;
+}
+
+.dataTables_paginate .page-link {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-family: "Poppins";
+  font-size: 0.9rem;
+  color: #333333;
+  font-weight: 400;
+}
+
+.dataTables_info {
+  margin-top: 20px;
+  font-family: "Poppins";
+  font-size: 0.9rem;
+  color: #333333;
+  font-weight: 400;
+}
+
+.chart-container {
   width: 100%;
   padding-right: 15px;
   padding-left: 15px;
@@ -7,71 +46,90 @@
   margin-left: auto;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: 10px;
 }
 
+.chart-card-full {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+
 @media (min-width: 576px) {
-  .container {
+  .chart-container {
     min-width: 540px;
+    /* width: 100%; */
   }
+
   .chart-card {
     max-width: 540px;
+    /* width: 100%; */
   }
+
   .chart-canvas {
     max-width: 540px;
+    /* width: 100%; */
   }
 }
 
 @media (min-width: 768px) {
-  .container {
+  .chart-container {
     min-width: 720px;
+    /* width: 100%; */
   }
+
   .chart-card {
     max-width: 450px;
+    /* width: 48%; */
   }
+
   .chart-canvas {
     max-width: 450px;
+    /* width: 48%; */
   }
 }
 
 @media (min-width: 992px) {
-  .container {
+  .chart-container {
     min-width: 960px;
   }
+
   .chart-card {
-    max-width: 450px;
+    max-width: 430px;
   }
+
   .chart-canvas {
-    max-width: 450px;
+    max-width: 430px;
   }
 }
 
 @media (min-width: 1200px) {
-  .container {
+  .chart-container {
     min-width: 1140px;
   }
+
   .chart-card {
-    max-width: 540px;
+    max-width: 520px;
   }
+
   .chart-canvas {
-    max-width: 540px;
+    max-width: 520px;
   }
 }
 
 @media (min-width: 1400px) {
-  .container {
+  .chart-container {
     min-width: 1320px;
   }
+
   .chart-card {
     max-width: 540px;
   }
+
   .chart-canvas {
     max-width: 540px;
   }
 }
-
-
 
 
 .chart-card {
@@ -121,23 +179,6 @@
   color: '#333333'
 }
 
-.card-subtitle {
-  margin-top: -0.625rem;
-  margin-bottom: 0;
-}
-
-.card-text:last-child {
-  margin-bottom: 0;
-}
-
-.card-link:hover {
-  text-decoration: none;
-}
-
-.card-link+.card-link {
-  margin-left: 1.5rem;
-}
-
 .chart-card-header {
   padding: 1.25rem 1.5rem;
   margin-bottom: 0;
@@ -153,198 +194,23 @@
   border-top: 0;
 }
 
-.card-footer {
-  padding: 1.25rem 1.5rem;
-  background-color: #f6f9fc;
-  border-top: 0.0625rem solid rgba(34, 42, 66, 0.05);
-}
 
-.card-footer:last-child {
-  border-radius: 0 0 calc(0.2857rem - 0.0625rem) calc(0.2857rem - 0.0625rem);
-}
-
-.chart-card-header-tabs {
-  margin-right: -0.75rem;
-  margin-bottom: -1.25rem;
-  margin-left: -0.75rem;
-  border-bottom: 0;
-}
-
-.chart-card-header-pills {
-  margin-right: -0.75rem;
-  margin-left: -0.75rem;
-}
-
-.card-img-overlay {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 1.25rem;
-}
-
-.card-img {
-  width: 100%;
-  border-radius: calc(0.2857rem - 0.0625rem);
-}
-
-.card-img-top {
-  width: 100%;
-  border-top-left-radius: calc(0.2857rem - 0.0625rem);
-  border-top-right-radius: calc(0.2857rem - 0.0625rem);
-}
-
-.card-img-bottom {
-  width: 100%;
-  border-bottom-right-radius: calc(0.2857rem - 0.0625rem);
-  border-bottom-left-radius: calc(0.2857rem - 0.0625rem);
-}
-
-.card-deck {
-  display: flex;
-  flex-direction: column;
-}
-
-.card-deck .card {
-  margin-bottom: 15px;
-}
-
-@media (min-width: 576px) {
-  .card-deck {
-    flex-flow: row wrap;
-    margin-right: -15px;
-    margin-left: -15px;
-  }
-
-  .card-deck .card {
-    display: flex;
-    flex: 1 0 0%;
-    flex-direction: column;
-    margin-right: 15px;
-    margin-bottom: 0;
-    margin-left: 15px;
-  }
-}
-
-.card-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.card-group>.card {
-  margin-bottom: 15px;
-}
-
-@media (min-width: 576px) {
-  .card-group {
-    flex-flow: row wrap;
-  }
-
-  .card-group>.card {
-    flex: 1 0 0%;
-    margin-bottom: 0;
-  }
-
-  .card-group>.card+.card {
-    margin-left: 0;
-    border-left: 0;
-  }
-
-  .card-group>.card:first-child {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-
-  .card-group>.card:first-child .card-img-top,
-  .card-group>.card:first-child .chart-card-header {
-    border-top-right-radius: 0;
-  }
-
-  .card-group>.card:first-child .card-img-bottom,
-  .card-group>.card:first-child .card-footer {
-    border-bottom-right-radius: 0;
-  }
-
-  .card-group>.card:last-child {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-
-  .card-group>.card:last-child .card-img-top,
-  .card-group>.card:last-child .chart-card-header {
-    border-top-left-radius: 0;
-  }
-
-  .card-group>.card:last-child .card-img-bottom,
-  .card-group>.card:last-child .card-footer {
-    border-bottom-left-radius: 0;
-  }
-
-  .card-group>.card:only-child {
-    border-radius: 0.2857rem;
-  }
-
-  .card-group>.card:only-child .card-img-top,
-  .card-group>.card:only-child .chart-card-header {
-    border-top-left-radius: 0.2857rem;
-    border-top-right-radius: 0.2857rem;
-  }
-
-  .card-group>.card:only-child .card-img-bottom,
-  .card-group>.card:only-child .card-footer {
-    border-bottom-right-radius: 0.2857rem;
-    border-bottom-left-radius: 0.2857rem;
-  }
-
-  .card-group>.card:not(:first-child):not(:last-child):not(:only-child) {
-    border-radius: 0;
-  }
-
-  .card-group>.card:not(:first-child):not(:last-child):not(:only-child) .card-img-top,
-  .card-group>.card:not(:first-child):not(:last-child):not(:only-child) .card-img-bottom,
-  .card-group>.card:not(:first-child):not(:last-child):not(:only-child) .chart-card-header,
-  .card-group>.card:not(:first-child):not(:last-child):not(:only-child) .card-footer {
-    border-radius: 0;
-  }
-}
-
-.card-columns .card {
-  margin-bottom: 1.25rem;
-}
-
-@media (min-width: 576px) {
-  .card-columns {
-    column-count: 3;
-    column-gap: 1.25rem;
-    orphans: 1;
-    widows: 1;
-  }
-
-  .card-columns .card {
-    display: inline-block;
-    width: 100%;
-  }
-}
-
-
-
-.accordion .card:not(:first-of-type):not(:last-of-type) {
+.card:not(:first-of-type):not(:last-of-type) {
   border-bottom: 0;
   border-radius: 0;
 }
 
-.accordion .card:not(:first-of-type) .chart-card-header:first-child {
+.card:not(:first-of-type) .chart-card-header:first-child {
   border-radius: 0;
 }
 
-.accordion .card:first-of-type {
+.card:first-of-type {
   border-bottom: 0;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.accordion .card:last-of-type {
+.card:last-of-type {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
@@ -362,79 +228,51 @@
 }
 
 
-.description,
-.card-description,
-.footer-big p,
-.chart-card .footer .stats {
+.chart-card {
   color: #9A9A9A;
   font-weight: 300;
 }
 
-.category,
-.card-category {
+.chart-card-category {
   text-transform: capitalize;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.6);
   font-size: 0.75rem;
 }
 
-.card-category {
+.chart-card-category {
   font-size: 0.75rem;
 }
 
-
-
-.card-tasks .chart-card-body .table {
+.chart-card-body .table {
   margin-bottom: 0;
 }
 
-.card-tasks .chart-card-body .table>thead>tr>th,
-.card-tasks .chart-card-body .table>tbody>tr>th,
-.card-tasks .chart-card-body .table>tfoot>tr>th,
-.card-tasks .chart-card-body .table>thead>tr>td,
-.card-tasks .chart-card-body .table>tbody>tr>td,
-.card-tasks .chart-card-body .table>tfoot>tr>td {
+.chart-card-body .table>thead>tr>th,
+.chart-card-body .table>tbody>tr>th,
+.chart-card-body .table>tfoot>tr>th,
+.chart-card-body .table>thead>tr>td,
+.chart-card-body .table>tbody>tr>td,
+.chart-card-body .table>tfoot>tr>td {
   padding-top: 5px;
   padding-bottom: 5px;
 }
 
 
-.dropdown-toggle[aria-expanded="true"]:after,
 a[data-toggle="collapse"][aria-expanded="true"] .caret,
-.card-collapse .card a[data-toggle="collapse"][aria-expanded="true"] i,
-.card-collapse .card a[data-toggle="collapse"].expanded i {
+.card a[data-toggle="collapse"][aria-expanded="true"] i,
+.card a[data-toggle="collapse"].expanded i {
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
   -webkit-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
   transform: rotate(180deg);
 }
 
-.caret {
-  width: 0;
-  height: 0;
-  vertical-align: middle;
-  border-top: 4px dashed;
-  border-right: 4px solid transparent;
-  border-left: 4px solid transparent;
-  margin-top: -5px;
-  position: absolute;
-  top: 30px;
-  margin-left: 5px;
-}
-
-.pull-left {
-  float: left;
-}
-
-.pull-right {
-  float: right;
-}
-
 .chart-card form label+.form-control {
   margin-bottom: 20px;
 }
 
-.chart-card .map-title {
+.chart-card {
   color: #ffffff;
 }
 
@@ -444,64 +282,64 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
 }
 
 
-.white-content .chart-card:not(.card-white) {
+.chart-card:not(.card-white) {
   background: #ffffff;
   box-shadow: 5px 5px 10px rgba(34, 42, 66, 0.3);
 }
 
-.white-content .chart-card:not(.card-white) .chart-card-header {
+.chart-card:not(.card-white) .chart-card-header {
   color: #222a42;
 }
 
-.white-content .chart-card:not(.card-white) .chart-card-header a[data-toggle="collapse"] {
+.chart-card:not(.card-white) .chart-card-header a[data-toggle="collapse"] {
   color: #222a42;
 }
 
-.white-content .chart-card:not(.card-white) .chart-card-header .chart-card-title,
-.white-content .card:not(.card-white) .chart-card-body .chart-card-title {
+.chart-card:not(.card-white) .chart-card-header .chart-card-title,
+.card:not(.card-white) .chart-card-body .chart-card-title {
   color: #1d253b;
 }
 
-.white-content .chart-card:not(.card-white) .chart-card-body .card-category,
-.white-content .chart-card:not(.card-white) .chart-card-body .card-description {
+.chart-card:not(.card-white) .chart-card-body .chart-card-category,
+.chart-card:not(.card-white) .chart-card-body {
   color: #1d253b;
 }
 
-.white-content .chart-card:not(.card-white) label:not(.btn) {
+.chart-card:not(.card-white) label:not(.btn) {
   color: #344675;
 }
 
-.white-content .chart-card:not(.card-white).nav-pills .nav-item .nav-link {
+.chart-card:not(.card-white).nav-pills .nav-item .nav-link {
   color: #444444;
   background-color: rgba(222, 222, 222, 0.3);
 }
 
-.white-content .chart-card:not(.card-white).nav-pills .nav-item .nav-link:not(.active):hover {
+.chart-card:not(.card-white).nav-pills .nav-item .nav-link:not(.active):hover {
   background: rgba(222, 222, 222, 0.5);
 }
 
-.white-content .chart-card:not(.card-white).nav-pills .nav-item .nav-link.active {
+.chart-card:not(.card-white).nav-pills .nav-item .nav-link.active {
   color: #ffffff;
 }
 
-.white-content .chart-card:not(.card-white) .tab-content .tab-pane {
+.chart-card:not(.card-white) .tab-content .tab-pane {
   color: #444444;
 }
 
-.white-content .chart-card:not(.card-white) .card {
+.chart-card:not(.card-white) .card {
   box-shadow: none;
 }
 
-.white-content .chart-card:not(.card-white).card-plain {
+.chart-card:not(.card-white).card-plain {
   background: transparent;
   box-shadow: none;
 }
 
-.white-content .chart-card:not(.card-white).card-tasks .chart-card-body i {
+.chart-card:not(.card-white).card-tasks .chart-card-body i {
   color: rgba(34, 42, 66, 0.7);
 }
 
-.white-content .chart-card:not(.card-white).card-tasks .chart-card-body i:hover {
+.chart-card:not(.card-white).card-tasks .chart-card-body i:hover {
   color: #222a42;
 }
 
@@ -530,8 +368,8 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
   margin-bottom: .75rem;
 }
 
-.chart-card .chart-card-body .card-description,
-.chart-card .chart-card-body .card-category {
+.chart-card .chart-card-body,
+.chart-card .chart-card-body .chart-card-category {
   color: rgba(255, 255, 255, 0.6);
 }
 
@@ -550,176 +388,17 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
   font-weight: 400;
 }
 
-.chart-card .chart-card-header .card-category {
+.chart-card .chart-card-header .chart-card-category {
   color: #9A9A9A;
   margin-bottom: 5px;
   font-weight: 300;
 }
 
-.chart-card .map {
+.chart-card {
   border-radius: 0.2857rem;
-}
-
-.chart-card .map.map-big {
   height: 420px;
 }
 
-.chart-card.card-white {
-  background: #ffffff;
-}
-
-.chart-card.card-white .chart-card-title {
-  color: #222a42;
-}
-
-.chart-card.card-white .card-category,
-.chart-card.card-white .stats {
-  color: #808080;
-}
-
-.chart-card.card-white .form-control::-moz-placeholder {
-  color: rgba(34, 42, 66, 0.4);
-  opacity: 1;
-  filter: alpha(opacity=100);
-}
-
-.chart-card.card-white .form-control:-moz-placeholder {
-  color: rgba(34, 42, 66, 0.4);
-  opacity: 1;
-  filter: alpha(opacity=100);
-}
-
-.chart-card.card-white .form-control::-webkit-input-placeholder {
-  color: rgba(34, 42, 66, 0.4);
-  opacity: 1;
-  filter: alpha(opacity=100);
-}
-
-.chart-card.card-white .form-control:-ms-input-placeholder {
-  color: rgba(34, 42, 66, 0.4);
-  opacity: 1;
-  filter: alpha(opacity=100);
-}
-
-.chart-card.card-white .has-danger .form-control,
-.chart-card.card-white .has-danger .input-group-prepend .input-group-text {
-  border-color: #ec250d;
-}
-
-.chart-card.card-white .input-group-prepend .input-group-text {
-  border-color: rgba(29, 37, 59, 0.2);
-  color: #1d253b;
-}
-
-.chart-card.card-white .form-control {
-  color: #222a42;
-  border-color: rgba(29, 37, 59, 0.2);
-}
-
-.chart-card.card-white .form-control:focus {
-  border-color: #e14eca;
-}
-
-.chart-card.card-white label:not(.btn) {
-  color: #344675;
-}
-
-.chart-card.card-white .form-group.no-border .form-control,
-.chart-card.card-white .form-group.no-border .form-control+.input-group-prepend .input-group-text,
-.chart-card.card-white .form-group.no-border .form-control+.input-group-append .input-group-text,
-.chart-card.card-white .form-group.no-border .input-group-prepend .input-group-text,
-.chart-card.card-white .form-group.no-border .input-group-append .input-group-text,
-.chart-card.card-white .input-group.no-border .form-control,
-.chart-card.card-white .input-group.no-border .form-control+.input-group-prepend .input-group-text,
-.chart-card.card-white .input-group.no-border .form-control+.input-group-append .input-group-text,
-.chart-card.card-white .input-group.no-border .input-group-prepend .input-group-text,
-.chart-card.card-white .input-group.no-border .input-group-append .input-group-text {
-  background-color: rgba(222, 222, 222, 0.3);
-}
-
-.chart-card.card-white .form-group.no-border .form-control:focus,
-.chart-card.card-white .form-group.no-border .form-control:active,
-.chart-card.card-white .form-group.no-border .form-control:active,
-.chart-card.card-white .form-group.no-border .form-control+.input-group-prepend .input-group-text:focus,
-.chart-card.card-white .form-group.no-border .form-control+.input-group-prepend .input-group-text:active,
-.chart-card.card-white .form-group.no-border .form-control+.input-group-prepend .input-group-text:active,
-.chart-card.card-white .form-group.no-border .form-control+.input-group-append .input-group-text:focus,
-.chart-card.card-white .form-group.no-border .form-control+.input-group-append .input-group-text:active,
-.chart-card.card-white .form-group.no-border .form-control+.input-group-append .input-group-text:active,
-.chart-card.card-white .form-group.no-border .input-group-prepend .input-group-text:focus,
-.chart-card.card-white .form-group.no-border .input-group-prepend .input-group-text:active,
-.chart-card.card-white .form-group.no-border .input-group-prepend .input-group-text:active,
-.chart-card.card-white .form-group.no-border .input-group-append .input-group-text:focus,
-.chart-card.card-white .form-group.no-border .input-group-append .input-group-text:active,
-.chart-card.card-white .form-group.no-border .input-group-append .input-group-text:active,
-.chart-card.card-white .input-group.no-border .form-control:focus,
-.chart-card.card-white .input-group.no-border .form-control:active,
-.chart-card.card-white .input-group.no-border .form-control:active,
-.chart-card.card-white .input-group.no-border .form-control+.input-group-prepend .input-group-text:focus,
-.chart-card.card-white .input-group.no-border .form-control+.input-group-prepend .input-group-text:active,
-.chart-card.card-white .input-group.no-border .form-control+.input-group-prepend .input-group-text:active,
-.chart-card.card-white .input-group.no-border .form-control+.input-group-append .input-group-text:focus,
-.chart-card.card-white .input-group.no-border .form-control+.input-group-append .input-group-text:active,
-.chart-card.card-white .input-group.no-border .form-control+.input-group-append .input-group-text:active,
-.chart-card.card-white .input-group.no-border .input-group-prepend .input-group-text:focus,
-.chart-card.card-white .input-group.no-border .input-group-prepend .input-group-text:active,
-.chart-card.card-white .input-group.no-border .input-group-prepend .input-group-text:active,
-.chart-card.card-white .input-group.no-border .input-group-append .input-group-text:focus,
-.chart-card.card-white .input-group.no-border .input-group-append .input-group-text:active,
-.chart-card.card-white .input-group.no-border .input-group-append .input-group-text:active {
-  background-color: rgba(222, 222, 222, 0.5);
-}
-
-.chart-card.card-white .form-group.no-border .form-control:focus+.input-group-prepend .input-group-text,
-.chart-card.card-white .form-group.no-border .form-control:focus+.input-group-append .input-group-text,
-.chart-card.card-white .input-group.no-border .form-control:focus+.input-group-prepend .input-group-text,
-.chart-card.card-white .input-group.no-border .form-control:focus+.input-group-append .input-group-text {
-  background-color: transparent;
-}
-
-.chart-card.card-white .input-group[disabled] .input-group-prepend .input-group-text,
-.chart-card.card-white .input-group[disabled] .input-group-append .input-group-text {
-  background-color: #222a42;
-}
-
-.chart-card.card-white .form-control[disabled],
-.chart-card.card-white .form-control[readonly],
-.chart-card.card-white fieldset[disabled] .form-control {
-  background: #E3E3E3;
-  border-color: rgba(29, 37, 59, 0.3);
-}
-
-.chart-card.card-white .input-group-focus .input-group-prepend .input-group-text,
-.chart-card.card-white .input-group-focus .input-group-append .input-group-text,
-.chart-card.card-white .input-group-focus .form-control {
-  background-color: #ffffff;
-  border-color: #e14eca;
-}
-
-.chart-card.card-white .input-group-focus.no-border .input-group-prepend .input-group-text,
-.chart-card.card-white .input-group-focus.no-border .input-group-append .input-group-text {
-  background-color: rgba(222, 222, 222, 0.5);
-}
-
-.chart-card.card-white .input-group-prepend .input-group-text {
-  border-right: none;
-}
-
-.chart-card.card-white .input-group-append .input-group-text {
-  border-left: none;
-}
-
-.chart-card.card-white .has-danger .form-control:focus,
-.chart-card.card-white .has-success.input-group-focus .input-group-append .input-group-text,
-.chart-card.card-white .has-success.input-group-focus .input-group-prepend .input-group-text {
-  border-color: #ec250d;
-}
-
-.chart-card.card-white .has-success .form-control:focus,
-.chart-card.card-white .has-success.input-group-focus .input-group-append .input-group-text,
-.chart-card.card-white .has-success.input-group-focus .input-group-prepend .input-group-text {
-  border-color: #00bf9a;
-}
 
 .chart-card.card-plain {
   background: transparent;
@@ -782,7 +461,7 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
   margin-bottom: 3px;
 }
 
-.chart-cart .chart-card-header .card-category {
+.chart-cart .chart-card-header .chart-card-category {
   margin-bottom: 5px;
 }
 
@@ -966,7 +645,7 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
   text-align: center;
 }
 
-.card-user .card-description {
+.card-user {
   margin-top: 30px;
 }
 
@@ -1058,6 +737,7 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
 .card-register.card-white .card-header .chart-card-title {
   color: #ffffff;
 }
+
 .card-register .card-header .chart-card-title {
   position: relative;
   font-size: 5em;
@@ -1072,8 +752,19 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
   font-size: 0.9rem;
   color: #333333 !important;
   font-weight: 400;
+  font-family: 'Poppins';
 }
-
+.small-text {
+  font-size: 0.8rem;
+  color: #333333 !important;
+  font-weight: 400;
+  font-family: 'Poppins';
+}
+.box-align-right {
+  text-align: end;
+  margin-top: 10px;
+  padding-right: 25px;
+}
 
 .btn-secondary {
   color: #212529;
