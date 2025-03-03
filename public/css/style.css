@@ -26,10 +26,6 @@ h6 {
 # Override some default Bootstrap stylings
 --------------------------------------------------------------*/
 
-
-
-
-
 /* Login Page */
 
   .col-12 button{
@@ -267,8 +263,6 @@ h6 {
   
    }
 
- 
-
    .col-12 button{
     background-color:  #004AAD ;
     color: white;
@@ -281,7 +275,7 @@ h6 {
     #no-more-tables td{
       display: block;
     }
-    
+   
     #no-more-tables thead tr{
       position: absolute;
       top: -9999px;
@@ -310,7 +304,7 @@ h6 {
   }
 
 
-  /* table */
+  /* admin table */
 
   .custom-bg{
     background-color: #004AAD;
@@ -340,6 +334,41 @@ h6 {
   width: 100px;
   margin-top: 3px;
   margin-right: 2px;
+}
+
+/* Pagination container */
+#assignedTable_wrapper .dataTables_paginate {
+  margin-top: 15px;
+  text-align: center;
+ 
+}
+
+/* General pagination button styling */
+#assignedTable_wrapper .dataTables_paginate .paginate_button {
+  display: inline-block;
+  background-color: white !important;
+  color:  #92969c !important; /* Blue text */
+  border: 1px solid #D3D3D3 !important;
+  border-radius: 5px;
+  margin: 3px; /* Add spacing between buttons */
+  padding: 6px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Style the active page button */
+#assignedTable_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: #007bff !important; /* Blue background */
+  color: white !important; /* White text */
+  border: none !important;
+  font-weight: bold;
+}
+
+/* Hover effect */
+#assignedTable_wrapper .dataTables_paginate .paginate_button:hover {
+  background-color: #007bff !important; /* Darker blue */
+  color: white !important;
 }
 
 /* Responsive - Stack elements vertically on small screens */

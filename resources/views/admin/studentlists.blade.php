@@ -60,8 +60,8 @@
                      
                   </div>
 
-                  <div class="table-responsive" id="no-more-tables" style=" height:700px; overflow-y:scroll;">
-                      <table class="table bg-white table-bordered">
+                  <div class="table-responsive" id="no-more-tables">
+                     <table id="assignedTable" class="table bg-white table-bordered" style="height:400px;">
                           <thead>
                               <tr class="custom-bg text-light">
                                   <th class="text-center" style="color: white;">No.</th>
@@ -80,7 +80,7 @@
                                   <td data-title="Tutor Name">Anna</td>
                                   <td data-title="Email">example@gmail.com</td>
                                   <td data-title="Assigned Tutor">Isabella</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashbaord >></a></button> 
+                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashboard >></a></button> 
                                   </td>
 
                               </tr>
@@ -91,7 +91,7 @@
                                   <td data-title="Tutor Name">Anna</td>
                                   <td data-title="Email">example@gmail.com</td>
                                   <td data-title="Assigned Tutor">Isabella</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashbaord >></a></button> 
+                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashboard >></a></button> 
                                   </td>
 
                               </tr>
@@ -102,7 +102,7 @@
                                   <td data-title="Tutor Name">Anna</td>
                                   <td data-title="Email">example@gmail.com</td>
                                   <td data-title="Assigned Tutor">Isabella</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashbaord >></a></button> 
+                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashboard >></a></button> 
                                   </td>
 
                               </tr>
@@ -113,7 +113,7 @@
                                   <td data-title="Tutor Name">Anna</td>
                                   <td data-title="Email">example@gmail.com</td>
                                   <td data-title="Assigned Tutor">Isabella</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashbaord >></a></button> 
+                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashboard >></a></button> 
                                   </td>
 
                               </tr>
@@ -124,7 +124,7 @@
                                   <td data-title="Tutor Name">Anna</td>
                                   <td data-title="Email">example@gmail.com</td>
                                   <td data-title="Assigned Tutor">Isabella</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashbaord >></a></button> 
+                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashboard >></a></button> 
                                   </td>
 
                               </tr>
@@ -135,7 +135,7 @@
                                   <td data-title="Tutor Name">Anna</td>
                                   <td data-title="Email">example@gmail.com</td>
                                   <td data-title="Assigned Tutor">Isabella</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashbaord >></a></button> 
+                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashboard >></a></button> 
                                   </td>
 
                               </tr>
@@ -146,7 +146,7 @@
                                   <td data-title="Tutor Name">Anna</td>
                                   <td data-title="Email">example@gmail.com</td>
                                   <td data-title="Assigned Tutor">Isabella</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashbaord >></a></button> 
+                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashboard >></a></button> 
                                   </td>
 
                               </tr>
@@ -157,24 +157,7 @@
 
                       
                   </div>
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true" style="color: #004AAD;">&laquo;</span>
-                            </a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#" style="color: #004AAD;">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#" style="color: #004AAD;">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#" style="color: #004AAD;">3</a></li>
-                            <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true" style="color: #004AAD;">&raquo;</span>
-                            </a>
-                            </li>
-                        </ul>
-                    </nav>
-
+                 
                    
 
               </section>
@@ -194,6 +177,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
 <!-- Bootstrap JS connection in public file -->
 <script src="/bootstrap-5.0.2-dist/js/bootstrap.js"></script>
 
@@ -212,7 +198,20 @@ $(".sidebar ul li").on('click', function () {
         $('.close-btn').on('click', function () {
             $('.sidebar').removeClass('active');
 
-        })
+        });
+
+        $(document).ready(function () {
+        $('#assignedTable').DataTable({
+            paging: true,
+            pageLength: 5,
+            lengthChange: false,
+            searching: false,
+            ordering: false,
+            "language": {
+                "info": "Total Records: _TOTAL_",
+            }
+        });
+    });
 
 </script>
 

@@ -75,8 +75,8 @@
                     
                    
 
-                    <div class="table-responsive" id="no-more-tables" style=" height:300px; overflow-y:scroll;">
-                        <table class="table bg-white table-bordered">
+                    <div class="table-responsive" id="no-more-tables">
+                            <table id="assignedTable" class="table bg-white table-bordered" style="height:400px;">
                             <thead>
                                 <tr class="custom-bg text-light">
                                     <th class="text-center" style="color: white;">S No</th>
@@ -129,23 +129,7 @@
                         </table>
                     </div>
 
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true" style="color: #004AAD;">&laquo;</span>
-                            </a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#" style="color: #004AAD;">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#" style="color: #004AAD;">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#" style="color: #004AAD;">3</a></li>
-                            <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true" style="color: #004AAD;">&raquo;</span>
-                            </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    
 
                 </section>
 
@@ -182,7 +166,21 @@ $(".sidebar ul li").on('click', function () {
         $('.close-btn').on('click', function () {
             $('.sidebar').removeClass('active');
 
-        })
+        });
+
+        $(document).ready(function () {
+        $('#assignedTable').DataTable({
+            paging: true,
+            pageLength: 5,
+            lengthChange: false,
+            searching: false,
+            ordering: false,
+            "language": {
+                "info": "Total Records: _TOTAL_",
+            }
+        });
+    });
+
 
 </script>
 

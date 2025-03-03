@@ -17,9 +17,13 @@
     <!-- Bootstrap Connection in public file -->
 
     <link href="/bootstrap-5.0.2-dist/css/bootstrap.css" rel="stylesheet">
+  
+    <!-- datatables connection -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
 
     <link href="{{ asset('white') }}/css/white-dashboard.css?v=1.0.0" rel="stylesheet" />
@@ -45,7 +49,20 @@
         $('.close-btn').on('click', function () {
             $('.sidebar').removeClass('active');
 
-        })
+        });
+
+        $(document).ready(function () {
+        $('#assignedTable').DataTable({
+            paging: true,
+            pageLength: 5,
+            lengthChange: false,
+            searching: false,
+            ordering: false,
+            "language": {
+                "info": "Total Records: _TOTAL_",
+            }
+        });
+    });
 
        
 
