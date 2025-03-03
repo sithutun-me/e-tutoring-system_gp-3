@@ -50,85 +50,48 @@
 
 
                 
-                <section class="p-5">
-                <h2 class="fs-2 fw-bold mb-4"> Reallocation</h2>
- 
+              <section class="p-5">
+              <h2 class="fs-2 fw-bold mb-4"> Student Lists</h2>
 
-                    <div class="form-group mb-4">
-           
-                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example" style="width: 300px;">
-                        <option selected>Choose Tutor</option>
-                          <option value="1">Tutor1</option>
-                          <option value="2">Tutor2</option>
-                          <option value="3">Tutor3</option>
-                          <option value="4">Tutor4</option>
-                          <option value="5">Tutor5</option>
-                          <option value="6">Tutor6</option>
-                          <option value="7">Tutor7</option>
-                          <option value="8">Tutor8</option>
-                          <option value="9">Tutor9</option>
-                          <option value="10">Tutor10</option>
-                        </select>
-                        <button  type="submit"  name="submit" class="btn btn-primary shadow-none" style="width: 100px;">Submit</button>
-                    </div>
+                  
+                  <div class=" form-group mb-4">
+                     <input class="form-control me-2" type="search" placeholder="Search here" aria-label="Search" style="width: 320px;">
+                      <button  type="submit"  name="submit" class="btn btn-primary shadow-none">Search</button>
+                     
+                  </div>
 
-                    
-                   
-
-                    <div class="table-responsive" id="no-more-tables" style=" height:300px; overflow-y:scroll;">
-                        <table class="table bg-white table-bordered">
-                            <thead>
-                                <tr class="custom-bg text-light">
-                                    <th class="text-center" style="color: white;">S No</th>
-                                    <th class="text-center"  style="color: white;">Student code</th>
-                                    <th class="text-center"  style="color: white;">Student Name</th>
-                                    <th class="text-center"  style="color: white;">Tutor code</th>
-                                    <th class="text-center"  style="color: white;">Tutor Name</th>
-                          
-                                </tr>
-                            </thead>
-                            <tbody>
+                  <div class="table-responsive" id="no-more-tables" style=" height:700px; overflow-y:scroll;">
+                      <table class="table bg-white table-bordered">
+                          <thead>
+                              <tr class="custom-bg text-light">
+                                  <th class="text-center" style="color: white;">No.</th>
+                                  <th class="text-center" style="color: white;">Student Code</th>
+                                  <th class="text-center"  style="color: white;">Student Name</th>
+                                  <th class="text-center"  style="color: white;">Email</th>
+                                  <th class="text-center"  style="color: white;">Assigned Tutor</th>
+                                  <th></th>
+                                  
+                              </tr>
+                          </thead>
+                          <tbody class="form-group-table">
+                            @php $count = 1; @endphp
+                            @foreach ($students as $student)
                                 <tr class="text-center">
-                                    <td data-title="S No">1</td>
-                                    <td data-title="Student code">std0025</td>
-                                    <td data-title="Student Name">Robertz</td>
-                                    <td data-title="Tutor Code">tur0001</td>
-                                    <td data-title="Tutor Name">Margaret Taylor</td>
-                                    
+                                    <td data-title="No">{{ $count++;}}</td>
+                                    <td data-title="Code">{{ $student->user_code }}</td>
+                                    <td data-title="Name">{{ $student->first_name }} {{ $student->last_name }}</td>
+                                    <td data-title="Email">{{ $student->email }}</td>
+                                    <td data-title="Assigned Tutor">{{ $student->tutor_name }}</td>
+                                    <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;">
+                                        <a href="student/dashboard" class="text-decoration-none " style="color: white;">View Dashbaord >></a></button> 
+                                    </td>      
                                 </tr>
+                            @endforeach    
+                          </tbody>
+                      </table>
 
-                                <tr class="text-center">
-                                    <td data-title="S No">1</td>
-                                    <td data-title="Student code">std0025</td>
-                                    <td data-title="Student Name">Robertz</td>
-                                    <td data-title="Tutor Code">tur0001</td>
-                                    <td data-title="Tutor Name">Margaret Taylor</td>
-                                    
-                                </tr>
-
-                                <tr class="text-center">
-                                    <td data-title="S No">1</td>
-                                    <td data-title="Student code">std0025</td>
-                                    <td data-title="Student Name">Robertz</td>
-                                    <td data-title="Tutor Code">tur0001</td>
-                                    <td data-title="Tutor Name">Margaret Taylor</td>
-                                    
-                                </tr>
-
-                                <tr class="text-center">
-                                    <td data-title="S No">1</td>
-                                    <td data-title="Student code">std0025</td>
-                                    <td data-title="Student Name">Robertz</td>
-                                    <td data-title="Tutor Code">tur0001</td>
-                                    <td data-title="Tutor Name">Margaret Taylor</td>
-                                    
-                                </tr>
-
-                               
-                            </tbody>
-                        </table>
-                    </div>
-
+                      
+                  </div>
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
                             <li class="page-item">
@@ -147,12 +110,14 @@
                         </ul>
                     </nav>
 
-                </section>
+                   
+
+              </section>
 
 
 
 
-            </div>
+          </div>
 
 
     </div>

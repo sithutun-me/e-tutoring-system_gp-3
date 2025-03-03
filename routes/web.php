@@ -27,7 +27,11 @@ Route::middleware('auth')->group(function(){
         Route::get('/admin/allocation', [AdminController::class, 'allocation'])->name('admin.allocation');
         Route::get('/admin/assignedlists', [AdminController::class, 'assignedlists'])->name('admin.assignedlists');
         Route::get('/admin/reallocation', [AdminController::class, 'reallocation'])->name('admin.reallocation');
-      
+        Route::get('/admin/tutorlists', [AdminController::class, 'tutorlists'])->name('admin.tutorlists');
+        Route::get('/admin/studentlists', [AdminController::class, 'studentlists'])->name('admin.studentlists');
+        Route::get('/admin/student/dashboard', [StudentController::class, 'index'])->name('admin.student.dashboard');
+        Route::get('/admin/tutor/dashboard', [TutorController::class, 'index'])->name('admin.tutor.dashboard');
+
     });
 
     // Tutor Dashboard Route
@@ -48,5 +52,6 @@ Route::middleware('auth')->group(function(){
 
 Route::get('/student-inactivity', [AdminController::class, 'getInactiveStudentsData']);
 Route::get('/average_messages', [AdminController::class, 'getAverageMessage']);
+Route::get('/student_list_with_assigned_tutors', [AdminController::class, 'getStudentListWithAssignedTutors']);
 
 

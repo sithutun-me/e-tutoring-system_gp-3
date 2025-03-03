@@ -8,7 +8,7 @@ use App\Models\Allocation;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class AdminDashboardService
+class AdminService
 {
     /**
      * Get the number of students inactive for the given time period.
@@ -96,6 +96,51 @@ class AdminDashboardService
 
 
         return $students;
+    }
+
+    public function getStudentListWithAssignedTutor()
+    {
+        $students = DB::table('users AS students')
+            ->select(
+                'students.id',
+                'students.user_code',
+                'students.first_name',
+                'students.last_name',
+                'students.email',
+                DB::raw("COALESCE(CONCAT(tutors.first_name, ' ', tutors.last_name), 'Unassigned') AS tutor_name")
+            )
+            ->leftJoin('allocation', 'students.id', '=', 'allocation.student_id')
+            ->leftJoin('users AS tutors', 'allocation.tutor_id', '=', 'tutors.id')
+            ->where('students.role_id', 1) // RoleID 1 for students
+            ->orderBy('students.user_code') // Optional: Order by name
+            ->get();
+
+        return $students;
+        
+    }
+
+    public function getTutorListWithAssignedStudentCount()
+    {
+        $results = DB::table('users AS tutors')
+        ->select(
+            'tutors.id AS tutor_id',
+            'tutors.user_code',
+            'tutors.first_name',
+            'tutors.last_name',
+            'tutors.email',
+            DB::raw('COUNT(students.id) AS assigned_students_count')
+        )
+        ->leftJoin('allocation AS a', 'a.tutor_id', '=', 'tutors.id')
+        ->leftJoin('users AS students', function ($join) {
+            $join->on('students.id', '=', 'a.student_id')
+                ->where('students.role_id', 1); // Only students
+        })
+        ->where('tutors.role_id', 2) // Only tutors
+        ->groupBy('tutors.id', 'tutors.user_code','tutors.first_name','tutors.last_name','tutors.email')
+        ->get();
+
+    return $results;
+        
     }
     
 

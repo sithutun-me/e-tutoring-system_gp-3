@@ -23,36 +23,42 @@
 
 
     <link href="{{ asset('white') }}/css/white-dashboard.css?v=1.0.0" rel="stylesheet" />
-    <link href="{{ asset('white') }}/css/theme.css" rel="stylesheet" />
+    <!-- <link href="{{ asset('white') }}/css/theme.css" rel="stylesheet" /> -->
 </head>
 <body>
     @include('components.header')
+
     @yield('content')
 
     <script>
-    $(".sidebar ul li").on('click', function () {
-                $(".sidebar ul li.active").removeClass('active');
-                $(this).addClass('active');
-            });
+  $(".sidebar ul li").on('click', function () {
+            $(".sidebar ul li.active").removeClass('active');
+            $(this).addClass('active');
+        });
 
-            $('.open-btn').on('click', function () {
-                $('.sidebar').addClass('active');
+        $('.open-btn').on('click', function () {
+            $('.sidebar').addClass('active');
 
-            });
+        });
 
 
-            $('.close-btn').on('click', function () {
-                $('.sidebar').removeClass('active');
+        $('.close-btn').on('click', function () {
+            $('.sidebar').removeClass('active');
 
-            })
+        })
+
+       
+
+
+       
 
     </script>
     
-    <script src="{{ asset('white') }}/js/core/jquery.min.js"></script>
+    <!-- <script src="{{ asset('white') }}/js/core/jquery.min.js"></script>
     <script src="{{ asset('white') }}/js/core/popper.min.js"></script>
     <script src="{{ asset('white') }}/js/plugins/perfect-scrollbar.jquery.min.js"></script>
     <script src="{{ asset('white') }}/js/plugins/bootstrap-notify.js"></script>
-    <script src="{{ asset('white') }}/js/theme.js"></script>
+    <script src="{{ asset('white') }}/js/theme.js"></script> -->
     @stack('scripts')
 </body>
 </html>
