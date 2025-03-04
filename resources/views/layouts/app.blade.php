@@ -17,6 +17,8 @@
     <!-- Bootstrap Connection in public file -->
 
     <link href="/bootstrap-5.0.2-dist/css/bootstrap.css" rel="stylesheet">
+  
+    <!-- datatables connection -->
 
     <!-- datatables connection -->
 
@@ -52,6 +54,7 @@
             $('.sidebar').removeClass('active');
 
         });
+        
         $(document).ready(function () {
         $('#assignedTable').DataTable({
             paging: true,
@@ -64,6 +67,7 @@
             }
         });
     });
+
 
     </script>
     
