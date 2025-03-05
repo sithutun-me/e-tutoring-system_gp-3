@@ -141,7 +141,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- Bootstrap JS connection in public file -->
 <script src="/bootstrap-5.0.2-dist/js/bootstrap.js"></script>
 <script src="{{ asset('white') }}/js/plugins/chartjs.min.js"></script>
 <script src="{{ asset('js/chart.js') }}"></script>

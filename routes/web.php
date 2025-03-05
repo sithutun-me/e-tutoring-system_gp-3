@@ -36,6 +36,9 @@ Route::middleware('auth')->group(function(){
     Route::middleware(['role:2'])->group(function () {
         Route::get('/tutor/dashboard', [TutorController::class, 'index'])->name('tutor.dashboard');
     });
+    Route::middleware(['role:2'])->group(function () {
+        Route::get('/tutor/meetinglists', [TutorController::class, 'meetinglists'])->name('tutor.meetinglists');
+    });
 
     // Student Dashboard Route
     Route::middleware(['role:1'])->group(function () {
