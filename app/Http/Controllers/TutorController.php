@@ -10,4 +10,9 @@ class TutorController extends Controller
     {
         return view('tutor.dashboard');
     }
+    public function meetinglists()
+    {
+        return view('tutor.meetinglists');
+    }
+
 }
