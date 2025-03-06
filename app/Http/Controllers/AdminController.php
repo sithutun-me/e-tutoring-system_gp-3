@@ -38,9 +38,10 @@ class AdminController extends Controller
 
 
     
-    public function studentlists()
+    public function studentlists(Request $request)
     {
-        $students = $this->adminDashboardService->getStudentListWithAssignedTutor();
+        $students = $this->adminDashboardService->getStudentListWithAssignedTutor($request);
+       
         return view('admin.studentlists',compact('students'));
     }
 
@@ -75,11 +76,11 @@ class AdminController extends Controller
         return response()->json($data);  // Return as JSON for API
     }
 
-    public function getStudentListWithAssignedTutors(){
-        $data = $this->adminDashboardService->getStudentListWithAssignedTutor();
-        return response()->json($data);
-    }
+    // public function getStudentListWithAssignedTutors(){
+    //     $data = $this->adminDashboardService->getStudentListWithAssignedTutor();
+    //     return response()->json($data);
+    // }
 
-   
+    
 
 }

@@ -7,6 +7,8 @@ use App\Models\Comment;
 use App\Models\Allocation;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+
 
 class AdminService
 {
@@ -98,8 +100,10 @@ class AdminService
         return $students;
     }
 
-    public function getStudentListWithAssignedTutor()
+    public function getStudentListWithAssignedTutor(Request $request)
     {
+        $search = $request->input('search');
+
         $students = DB::table('users AS students')
             ->select(
                 'students.id',
@@ -111,9 +115,19 @@ class AdminService
             )
             ->leftJoin('allocation', 'students.id', '=', 'allocation.student_id')
             ->leftJoin('users AS tutors', 'allocation.tutor_id', '=', 'tutors.id')
-            ->where('students.role_id', 1) // RoleID 1 for students
-            ->orderBy('students.user_code') // Optional: Order by name
-            ->get();
+            ->where('students.role_id', 1); // RoleID 1 for students
+            
+        
+            if ($search) {
+                $students->where(function ($query) use ($search) {
+                    $query->where('students.first_name', 'like', "%{$search}%")
+                        ->orWhere('students.last_name', 'like', "%{$search}%")
+                        ->orWhere('students.user_code', 'like', "%{$search}%")
+                        ->orWhere('students.email', 'like', "%{$search}%")
+                        ->orWhereRaw("CONCAT(tutors.first_name, ' ', tutors.last_name) LIKE ?", ["%{$search}%"]);
+                });
+            }
+            $students = $students->orderBy('students.user_code')->get();
 
         return $students;
         
@@ -137,6 +151,7 @@ class AdminService
         })
         ->where('tutors.role_id', 2) // Only tutors
         ->groupBy('tutors.id', 'tutors.user_code','tutors.first_name','tutors.last_name','tutors.email')
+        ->orderBy('tutors.user_code')
         ->get();
 
     return $results;

@@ -53,13 +53,14 @@
               <section class="p-5">
               <h2 class="fs-2 fw-bold mb-4"> Student Lists</h2>
 
-                  
+              
                   <div class=" form-group mb-4">
-                     <input class="form-control me-2" type="search" placeholder="Search here" aria-label="Search" style="width: 320px;">
-                      <button  type="submit"  name="submit" class="btn btn-primary shadow-none">Search</button>
+                     <input class="form-control me-2" id="studentSearch" type="search" placeholder="Search here" oninput="filterStudents()"
+                     aria-label="Search" style="width: 320px;">
+                      <button  type="submit"  name="submit" onclick="filterStudents()" class="btn btn-primary shadow-none" >Search</button>
                      
                   </div>
-
+                 
                   <div class="table-responsive" id="no-more-tables" style=" height:700px; overflow-y:scroll;">
                       <table class="table bg-white table-bordered">
                           <thead>
@@ -73,10 +74,10 @@
                                   
                               </tr>
                           </thead>
-                          <tbody class="form-group-table">
+                          <tbody class="form-group-table" id="studentsBody">
                             @php $count = 1; @endphp
                             @foreach ($students as $student)
-                                <tr class="text-center">
+                                <tr class="student-row">
                                     <td data-title="No">{{ $count++;}}</td>
                                     <td data-title="Code">{{ $student->user_code }}</td>
                                     <td data-title="Name">{{ $student->first_name }} {{ $student->last_name }}</td>
@@ -87,11 +88,17 @@
                                     </td>      
                                 </tr>
                             @endforeach    
+                            @if ($students->isEmpty())
+        <tr class="no-results">
+            <td colspan="5" class="text-center">No students found!</td>
+        </tr>
+        @endif
                           </tbody>
                       </table>
 
                       
                   </div>
+                
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
                             <li class="page-item">
@@ -125,7 +132,7 @@
 
 @endsection
 
-@push('script')
+@push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -147,7 +154,28 @@ $(".sidebar ul li").on('click', function () {
         $('.close-btn').on('click', function () {
             $('.sidebar').removeClass('active');
 
-        })
+        });
+
+        function filterStudents() {
+            const searchInput = document.getElementById('studentSearch').value.toLowerCase();
+            const rows = document.querySelectorAll('.student-row');
+            
+            rows.forEach(row => {
+                const userCode = row.cells[1].textContent.toLowerCase();
+                const name = row.cells[2].textContent.toLowerCase();
+                const email = row.cells[3].textContent.toLowerCase();
+                const tutor = row.cells[4].textContent.toLowerCase();
+                
+                // If search term matches any field, show the row; otherwise, hide it
+                if (userCode.includes(searchInput) || name.includes(searchInput) || email.includes(searchInput) || tutor.includes(searchInput)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            
+        }       
+
 
 </script>
 
