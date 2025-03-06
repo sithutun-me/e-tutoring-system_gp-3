@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -21,16 +22,47 @@ class UserFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
+    protected $model = User::class;
+
     public function definition(): array
     {
+
+        // Default to student role (id = 1)
+        $roleId = $this->role_id ?? 1;
+
+        // Get the role prefix based on role_id
+        $prefix = $this->getRolePrefix($roleId);
+
+        // Generate a unique user_code
+        $user_code = $prefix . str_pad(
+            $this->faker->unique()->numberBetween(1, 9999),
+            4,
+            '0',
+            STR_PAD_LEFT
+        );
+
         return [
-            // 'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
+            'user_code' => $user_code,
+            'first_name' => $this->faker->firstName,
+            'last_name' => $this->faker->lastName,
+            'date_of_birth' => $this->faker->date(),
+            'email' => $this->faker->unique()->safeEmail,
+            'password' => Hash::make('password'),
         ];
     }
+
+    private function getRolePrefix(int $roleId): string
+    {
+        $prefixMap = [
+            1 => 'std', // Student
+            2 => 'tur', // Tutor
+            3 => 'stf', // Admin
+        ];
+
+        return $prefixMap[$roleId] ?? 'usr';
+    }
+
 
     /**
      * Indicate that the model's email address should be unverified.
