@@ -53,15 +53,16 @@
               <section class="p-5">
               <h2 class="fs-2 fw-bold mb-4"> Student Lists</h2>
 
-                  
+              
                   <div class=" form-group mb-4">
-                     <input class="form-control me-2" type="search" placeholder="Search here" aria-label="Search" style="width: 320px;">
-                      <button  type="submit"  name="submit" class="btn btn-primary shadow-none">Search</button>
+                     <input class="form-control me-2" id="studentSearch" type="search" placeholder="Search here" oninput="filterStudents()"
+                     aria-label="Search" style="width: 320px;">
+                      <button  type="submit"  name="submit" onclick="filterStudents()" class="btn btn-primary shadow-none" >Search</button>
                      
                   </div>
 
                   <div class="table-responsive" id="no-more-tables">
-                     <table id="assignedTable" class="table bg-white table-bordered" style="height:400px;">
+                     <table id="studentTable" class="table bg-white table-bordered" style="height:400px;">
                           <thead>
                               <tr class="custom-bg text-light">
                                   <th class="text-center" style="color: white;">No.</th>
@@ -73,85 +74,25 @@
                                   
                               </tr>
                           </thead>
-                          <tbody class="form-group-table">
-                              <tr class="text-center">
-                                  <td data-title="No">1</td>
-                                  <td data-title="Tutor Code">std0001</td>
-                                  <td data-title="Tutor Name">Anna</td>
-                                  <td data-title="Email">example@gmail.com</td>
-                                  <td data-title="Assigned Tutor">Isabella</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashboard >></a></button> 
-                                  </td>
-
-                              </tr>
-
-                              <tr class="text-center">
-                                  <td data-title="No">1</td>
-                                  <td data-title="Tutor Code">std0001</td>
-                                  <td data-title="Tutor Name">Anna</td>
-                                  <td data-title="Email">example@gmail.com</td>
-                                  <td data-title="Assigned Tutor">Isabella</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashboard >></a></button> 
-                                  </td>
-
-                              </tr>
-
-                              <tr class="text-center">
-                                  <td data-title="No">1</td>
-                                  <td data-title="Tutor Code">std0001</td>
-                                  <td data-title="Tutor Name">Anna</td>
-                                  <td data-title="Email">example@gmail.com</td>
-                                  <td data-title="Assigned Tutor">Isabella</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashboard >></a></button> 
-                                  </td>
-
-                              </tr>
-
-                              <tr class="text-center">
-                                  <td data-title="No">1</td>
-                                  <td data-title="Tutor Code">std0001</td>
-                                  <td data-title="Tutor Name">Anna</td>
-                                  <td data-title="Email">example@gmail.com</td>
-                                  <td data-title="Assigned Tutor">Isabella</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashboard >></a></button> 
-                                  </td>
-
-                              </tr>
-
-                              <tr class="text-center">
-                                  <td data-title="No">1</td>
-                                  <td data-title="Tutor Code">std0001</td>
-                                  <td data-title="Tutor Name">Anna</td>
-                                  <td data-title="Email">example@gmail.com</td>
-                                  <td data-title="Assigned Tutor">Isabella</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashboard >></a></button> 
-                                  </td>
-
-                              </tr>
-
-                              <tr class="text-center">
-                                  <td data-title="No">1</td>
-                                  <td data-title="Tutor Code">std0001</td>
-                                  <td data-title="Tutor Name">Anna</td>
-                                  <td data-title="Email">example@gmail.com</td>
-                                  <td data-title="Assigned Tutor">Isabella</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashboard >></a></button> 
-                                  </td>
-
-                              </tr>
-
-                              <tr class="text-center">
-                                  <td data-title="No">1</td>
-                                  <td data-title="Tutor Code">std0001</td>
-                                  <td data-title="Tutor Name">Anna</td>
-                                  <td data-title="Email">example@gmail.com</td>
-                                  <td data-title="Assigned Tutor">Isabella</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashboard >></a></button> 
-                                  </td>
-
-                              </tr>
-
-                             
+                          <tbody class="form-group-table" id="studentsBody">
+                            @php $count = 1; @endphp
+                            @foreach ($students as $student)
+                                <tr class="student-row">
+                                    <td data-title="No">{{ $count++;}}</td>
+                                    <td data-title="Code">{{ $student->user_code }}</td>
+                                    <td data-title="Name">{{ $student->first_name }} {{ $student->last_name }}</td>
+                                    <td data-title="Email">{{ $student->email }}</td>
+                                    <td data-title="Assigned Tutor">{{ $student->tutor_name }}</td>
+                                    <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;">
+                                        <a href="student/dashboard" class="text-decoration-none " style="color: white;">View Dashbaord >></a></button> 
+                                    </td>      
+                                </tr>
+                            @endforeach    
+                            @if ($students->isEmpty())
+        <tr class="no-results">
+            <td colspan="5" class="text-center">No students found!</td>
+        </tr>
+        @endif
                           </tbody>
                       </table>
 
@@ -173,7 +114,7 @@
 
 @endsection
 
-@push('script')
+@push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -201,7 +142,8 @@ $(".sidebar ul li").on('click', function () {
         });
 
         $(document).ready(function () {
-        $('#assignedTable').DataTable({
+            
+        $('#studentTable').DataTable({
             paging: true,
             pageLength: 5,
             lengthChange: false,
@@ -212,6 +154,26 @@ $(".sidebar ul li").on('click', function () {
             }
         });
     });
+        function filterStudents() {
+            const searchInput = document.getElementById('studentSearch').value.toLowerCase();
+            const rows = document.querySelectorAll('.student-row');
+            
+            rows.forEach(row => {
+                const userCode = row.cells[1].textContent.toLowerCase();
+                const name = row.cells[2].textContent.toLowerCase();
+                const email = row.cells[3].textContent.toLowerCase();
+                const tutor = row.cells[4].textContent.toLowerCase();
+                
+                // If search term matches any field, show the row; otherwise, hide it
+                if (userCode.includes(searchInput) || name.includes(searchInput) || email.includes(searchInput) || tutor.includes(searchInput)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            
+        }       
+
 
 </script>
 

@@ -371,6 +371,42 @@ h6 {
   color: white !important;
 }
 
+
+/*Temporary for student table*/
+#studentTable_wrapper .dataTables_paginate {
+  margin-top: 15px;
+  text-align: center;
+ 
+}
+
+/* General pagination button styling */
+#studentTable_wrapper .dataTables_paginate .paginate_button {
+  display: inline-block;
+  background-color: white !important;
+  color:  #92969c !important; /* Blue text */
+  border: 1px solid #D3D3D3 !important;
+  border-radius: 5px;
+  margin: 3px; /* Add spacing between buttons */
+  padding: 6px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Style the active page button */
+#studentTable_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: #007bff !important; /* Blue background */
+  color: white !important; /* White text */
+  border: none !important;
+  font-weight: bold;
+}
+
+/* Hover effect */
+#studentTable_wrapper .dataTables_paginate .paginate_button:hover {
+  background-color: #007bff !important; /* Darker blue */
+  color: white !important;
+}
+
 /* Responsive - Stack elements vertically on small screens */
 @media (max-width: 900px) {
     .form-group {

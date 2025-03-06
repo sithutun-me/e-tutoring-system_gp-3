@@ -74,82 +74,19 @@
                               </tr>
                           </thead>
                           <tbody class="form-group-table">
-                              <tr class="text-center">
-                                  <td data-title="No">1</td>
-                                  <td data-title="Tutor Code">tur0001</td>
-                                  <td data-title="Tutor Name">Isabella</td>
-                                  <td data-title="Email">example@gmail.com</td>
-                                  <td data-title="Assigned Students">12</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashboard >></a></button> 
-                                  </td>
-
-                              </tr>
-
-                              <tr class="text-center">
-                                  <td data-title="No">1</td>
-                                  <td data-title="Tutor Code">tur0001</td>
-                                  <td data-title="Tutor Name">Isabella</td>
-                                  <td data-title="Email">example@gmail.com</td>
-                                  <td data-title="No of Student">12</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashboard >></a></button> 
-                                  </td>
-
-                              </tr>
-
-                              <tr class="text-center">
-                                  <td data-title="No">1</td>
-                                  <td data-title="Tutor Code">tur0001</td>
-                                  <td data-title="Tutor Name">Isabella</td>
-                                  <td data-title="Email">example@gmail.com</td>
-                                  <td data-title="No of Student">12</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashboard >></a></button> 
-                                  </td>
-
-                              </tr>
-
-                              <tr class="text-center">
-                                  <td data-title="No">1</td>
-                                  <td data-title="Tutor Code">tur0001</td>
-                                  <td data-title="Tutor Name">Isabella</td>
-                                  <td data-title="Email">example@gmail.com</td>
-                                  <td data-title="No of Student">12</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashboard >></a></button> 
-                                  </td>
-
-                              </tr>
-
-                              <tr class="text-center">
-                                  <td data-title="No">1</td>
-                                  <td data-title="Tutor Code">tur0001</td>
-                                  <td data-title="Tutor Name">Isabella</td>
-                                  <td data-title="Email">example@gmail.com</td>
-                                  <td data-title="No of Student">12</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashboard >></a></button> 
-                                  </td>
-
-                              </tr>
-
-                              <tr class="text-center">
-                                  <td data-title="No">1</td>
-                                  <td data-title="Tutor Code">tur0001</td>
-                                  <td data-title="Tutor Name">Isabella</td>
-                                  <td data-title="Email">example@gmail.com</td>
-                                  <td data-title="No of Student">12</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashboard >></a></button> 
-                                  </td>
-
-                              </tr>
-
-                              <tr class="text-center">
-                                  <td data-title="No">1</td>
-                                  <td data-title="Tutor Code">tur0001</td>
-                                  <td data-title="Tutor Name">Isabella</td>
-                                  <td data-title="Email">example@gmail.com</td>
-                                  <td data-title="No of Student">12</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;"><a href="/tutor/dashbaord" class="text-decoration-none " style="color: white;">View Dashboard >></a></button> 
-                                  </td>
-
-                              </tr>
+                              @php $count = 1; @endphp
+                              @foreach ($tutors as $tutor)
+                                  <tr class="text-center">
+                                      <td data-title="No">{{ $count++;}}</td>
+                                      <td data-title="Code">{{ $tutor->user_code }}</td>
+                                      <td data-title="Name">{{ $tutor->first_name }} {{ $tutor->last_name }}</td>
+                                      <td data-title="Email">{{ $tutor->email }}</td>
+                                      <td data-title="No of Student">{{ $tutor->assigned_students_count }}</td>
+                                      <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;">
+                                        <a href="tutor/dashboard" class="text-decoration-none " style="color: white;">View Dashbaord >></a></button> 
+                                      </td>  
+                                  </tr>
+                              @endforeach
 
                              
                           </tbody>

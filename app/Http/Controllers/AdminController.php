@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Services\AdminDashboardService;
+use App\Services\AdminService;
 use App\Model\User;
 
 class AdminController extends Controller
@@ -32,20 +32,23 @@ class AdminController extends Controller
 
     public function tutorlists()
     {
-        return view('admin.tutorlists');
+        $tutors = $this->adminDashboardService->getTutorListWithAssignedStudentCount();
+        return view('admin.tutorlists',compact('tutors'));
     }
 
 
     
-    public function studentlists()
+    public function studentlists(Request $request)
     {
-        return view('admin.studentlists');
+        $students = $this->adminDashboardService->getStudentListWithAssignedTutor($request);
+       
+        return view('admin.studentlists',compact('students'));
     }
 
 
     protected $adminDashboardService;
 
-    public function __construct(AdminDashboardService $adminDashboardService)
+    public function __construct(AdminService $adminDashboardService)
     {
         $this->adminDashboardService = $adminDashboardService;
     }
@@ -73,6 +76,11 @@ class AdminController extends Controller
         return response()->json($data);  // Return as JSON for API
     }
 
-   
+    // public function getStudentListWithAssignedTutors(){
+    //     $data = $this->adminDashboardService->getStudentListWithAssignedTutor();
+    //     return response()->json($data);
+    // }
+
+    
 
 }

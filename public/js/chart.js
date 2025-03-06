@@ -67,7 +67,7 @@ window.demo = {
           return [data.inactive_7_days, data.inactive_30_days, data.inactive_60_days];
         } catch (error) {
           console.error('Error fetching student interaction data:', error);
-          return [10, 20, 0]; // Fallback data in case of an error
+          return [0, 0, 0]; // Fallback data in case of an error
         }
       }
   
@@ -186,11 +186,13 @@ window.demo = {
           // Extracting labels and message count data
           const labels = data.labels;
           const messageCounts = data.data;
+          var now = new Date();
           
+          var day = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
           // Calculate average message count per tutor
           const averageMessageCounts = messageCounts.map(count => {
               // If count is greater than 0, calculate the average
-              return count > 0 ? count / labels.length : 0;
+              return count > 0 ? count / day:0;
           });
           
           // Returning both labels and average message counts in a single object
