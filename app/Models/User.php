@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -17,6 +18,7 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+    protected $primaryKey = 'id';
     protected $fillable = [
         'email',
         'password',
@@ -27,6 +29,7 @@ class User extends Authenticatable
         return $this->role_id === $role;
     }
 
+<<<<<<< HEAD
     public function posts()
     {
         return $this->hasMany(Post::class, 'post_create_by', 'id'); // Link posts created by user
@@ -38,6 +41,8 @@ class User extends Authenticatable
     
 
 
+=======
+>>>>>>> 5b5d709 (allocation and assignedlist)
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -59,5 +64,24 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function studentAllocations()
+    {
+        return $this->hasMany(Allocation::class, 'student_id', 'id');
+    }
+
+    public function tutorAllocations()
+    {
+        return $this->hasMany(Allocation::class, 'tutor_id', 'id');
+    }
+
+    public function staffAllocations()
+    {
+        return $this->hasMany(Allocation::class, 'staff_id', 'id');
     }
 }

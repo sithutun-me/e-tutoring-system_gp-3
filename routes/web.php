@@ -33,8 +33,9 @@ Route::middleware('auth')->group(function(){
         Route::get('/admin/tutor/dashboard', [TutorController::class, 'index'])->name('admin.tutor.dashboard');
 
 
-        Route::get('/admin/allocation', [AllocationController::class, 'index'])->name('admin.allocation.index');
-        Route::post('/admin/allocation/create', [AllocationController::class, 'create'])->name('admin.allocation.create');
+        Route::get('/admin/allocation', [AllocationController::class, 'index'])->name('admin.allocation');
+        Route::post('/admin/allocate', [AllocationController::class, 'allocate'])->name('admin.allocate');
+        Route::get('/admin/assignedlists', [AllocationController::class, 'assignedLists'])->name('admin.assignedlists');
     });
 
     // Tutor Dashboard Route
