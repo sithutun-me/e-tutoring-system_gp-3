@@ -51,7 +51,7 @@
 
 
             <section class="p-5">
-                <form action="{{ route('admin.allocation.create') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.allocate') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <h2 class="fs-2 fw-bold mb-4"> Allocation</h2>
 
@@ -62,9 +62,11 @@
 
                     <div class="form-group mb-4">
                         <select class="form-select form--control" name="tutor_id" id="floatingSelect" aria-label="Floating label select example" style="width: 320px;">
-                            <option selected>Choose Tutor</option>
+                            <option value="" {{ old('tutor_id') ? '' : 'selected' }}>Choose Tutor</option>
                             @foreach($tutors as $tutor)
-                            <option value="{{ $tutor->id }}">{{ $tutor->first_name }} {{ $tutor->last_name }}</option>
+                            <option value="{{ $tutor->id }}" {{ old('tutor_id') == $tutor->id ? 'selected' : '' }}>
+                                {{ $tutor->first_name }} {{ $tutor->last_name }}
+                            </option>
                             @endforeach
                         </select>
                         <button type="submit" name="submit" class="btn btn-primary shadow-none">Allocate</button>
@@ -90,11 +92,15 @@
                                 <tr class="text-center">
                                     <td>
                                         <span class="allocate-checkbox">
-                                            <input type="checkbox" id="checkbox1" name="selected_students[]" value="{{ $student->id }}">
-                                            <label for="checkbox1"></label>
+                                            <input type="checkbox"
+                                                id="student_{{ $student->id }}"
+                                                name="selected_students[]"
+                                                value="{{ $student->id }}"
+                                                {{ in_array($student->id, old('selected_students', [])) ? 'checked' : '' }}>
+                                            <label for="student_{{ $student->id }}"></label>
                                         </span>
                                     </td>
-                                    <td data-title="S No">1</td>
+                                    <td data-title="S No">{{__(@$student->id) }}</td>
                                     <td data-title="User code">{{__($student->user_code)}}</td>
                                     <td data-title="Student Name">{{ $student->first_name }} {{ $student->last_name }}</td>
                                     <td data-title="Email">{{__(@$student->email)}}</td>

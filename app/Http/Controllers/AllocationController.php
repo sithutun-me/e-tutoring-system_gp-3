@@ -5,20 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\Allocation;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AllocationController extends Controller
 {
     public function index(){
         $pageTitle = 'Allocation';
         $tutors = User::where('role_id',2)->latest()->get();
-        $students = User::where('role_id',1)->latest()->paginate(5);
+        $students = User::doesntHave('studentAllocations')->get();
 
         return view('admin.allocation',compact('pageTitle','tutors','students'));
     }
 
-    public function create(Request $request)
+    public function allocate(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'tutor_id' => 'required',
             'selected_students' => 'required|array|min:1', // Ensure at least one order is selected
             'selected_students.*' => 'exists:users,id',   // Validate each selected order ID
@@ -29,23 +30,45 @@ class AllocationController extends Controller
             'selected_students.*.exists' => 'One or more selected students are invalid.',
         ]);
         $selectedStudentIds = $request->input('selected_students');
-        dd($selectedStudentIds);
-        if( $selectedStudentIds == null){
-            return back()->withErrors('Student is not choosen');
-        }
+        $tutor = User::findOrFail($request->tutor_id);
+
         $selectedStudents = User::whereIn('id',$selectedStudentIds)->get();
-        // dd($selectedStudentIds);
+        $selectedStudents = json_decode($selectedStudents);
 
-        if($validated){
-            return back()->withErrors($validated);
+        // dd(count($selectedStudents),$tutor,Auth::user()->id);
+        $selectedStudentsCount = count($selectedStudents);
+        $studentCount = Allocation::where('tutor_id',$tutor->id)->count();
+        if($studentCount + $selectedStudentsCount > 15){
+            $notify[] = ['warning', 'Tutor has student limit.'];
+            return back()->withErrors($notify);
         }
 
-        // $allocation = new Allocation;
-        // $allocation->student_id = request()->student_id;
-        // $allocation->tutor_id = request()->tutor_id;
-        // $allocation->allocation_date_time = request()->student_id;
-        // $allocation->student_id = request()->student_id;
-        // $allocation->student_id = request()->student_id;
-        return redirect('/admin/assignedlists');
+        foreach($selectedStudents as $selectedStudent){
+            $existingStudent = Allocation::where('student_id',$selectedStudent->id)->exists();
+            if(!$existingStudent){
+
+                $allocation = new Allocation();
+                $allocation->student_id = $selectedStudent->id;
+                $allocation->tutor_id = $tutor->id;
+                $allocation->allocation_date_time = now();
+                $allocation->staff_id = Auth::user()->id;
+                $allocation->active = 1;
+                $allocation->save();
+            }
+            $studentCount++;
+            if ($studentCount >= 15) {
+                break;
+            }
+        }
+        $notify[] = ['Successful', 'Students have been assigned.'];
+        return back()->withErrors($notify);
+    }
+
+    public function assignedLists(Request $request){
+
+        $pageTitle = 'Assigned List';
+        $allocations = Allocation::with(['staff','tutor','student'])->get();
+        $allocations = json_decode($allocations);
+        return view('admin.assignedlists',compact('pageTitle','allocations'));
     }
 }
