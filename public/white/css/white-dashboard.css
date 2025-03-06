@@ -38,6 +38,8 @@
 
  }
 
+
+ /* datetimepicker */
  #datetimepicker {
    width: 320px;
  }
@@ -111,8 +113,8 @@
    border: none;
  }
 
- .table-responsive {
-   overflow-x: auto;
+ .chart-card-body .table-responsive {
+   overflow-x: hidden;
    width: 100%;
  }
 
@@ -140,14 +142,45 @@
    overflow-y: auto;
  }
 
- .dataTables_paginate .page-link {
-   margin-top: 15px;
-   margin-bottom: 15px;
-   font-family: "Poppins";
-   font-size: 0.9rem;
-   color: #333333;
-   font-weight: 400;
+
+ .dataTables_paginate .paginate_button .page-link {
+   display: inline-block;
+   background-color: white;
+   color: #92969c;
+   border: 1px solid #D3D3D3;
+   border-radius: 5px;
+   margin: 3px;
+   padding: 6px 12px;
+   font-weight: bold;
+   cursor: pointer;
+   text-decoration: none;
  }
+
+ .page-item.disabled .page-link {
+   color: #bfc1c4;
+   pointer-events: none;
+   background-color: #fff;
+   border-color: #bfc1c4;
+   font-weight: normal;
+ }
+
+ .dataTables_paginate {
+   margin-top: 30px;
+ }
+
+
+ .dataTables_paginate .paginate_button.active .page-link {
+   background-color: #007bff !important;
+   color: white !important;
+   border: none !important;
+   font-weight: bold;
+ }
+
+ .dataTables_paginate .paginate_button .page-link:hover {
+   background-color: #007bff !important;
+   color: white !important;
+ }
+
 
  .dataTables_info {
    margin-top: 20px;
@@ -173,8 +206,15 @@
    width: 100% !important;
  }
 
+ @media (max-width: 575.98px) {
+   .chart-card-body .table-responsive {
+     overflow-x: auto !important;
+   }
+ }
+
 
  @media (min-width: 576px) {
+
    .chart-container {
      min-width: 540px;
      /* width: 100%; */
@@ -515,7 +555,6 @@
 
  .chart-card {
    border-radius: 0.2857rem;
-   height: 420px;
  }
 
 
