@@ -29,7 +29,6 @@ class User extends Authenticatable
         return $this->role_id === $role;
     }
 
-<<<<<<< HEAD
     public function posts()
     {
         return $this->hasMany(Post::class, 'post_create_by', 'id'); // Link posts created by user
@@ -38,11 +37,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class, 'user_id', 'id'); // Link posts created by user
     }
-    
 
 
-=======
->>>>>>> 5b5d709 (allocation and assignedlist)
+
     /**
      * The attributes that should be hidden for serialization.
      *

@@ -37,16 +37,11 @@ class AdminController extends Controller
     }
 
 
-<<<<<<< HEAD
-    
-    public function studentlists(Request $request)
-=======
 
-    public function studentlists()
->>>>>>> 5b5d709 (allocation and assignedlist)
+    public function studentlists(Request $request)
     {
         $students = $this->adminDashboardService->getStudentListWithAssignedTutor($request);
-       
+
         return view('admin.studentlists',compact('students'));
     }
 
@@ -81,15 +76,10 @@ class AdminController extends Controller
         return response()->json($data);  // Return as JSON for API
     }
 
-<<<<<<< HEAD
     // public function getStudentListWithAssignedTutors(){
     //     $data = $this->adminDashboardService->getStudentListWithAssignedTutor();
     //     return response()->json($data);
     // }
 
-    
-=======
-
->>>>>>> 5b5d709 (allocation and assignedlist)
 
 }
