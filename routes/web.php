@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AllocationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TutorController;
@@ -23,8 +24,7 @@ Route::middleware('auth')->group(function(){
     // Admin Dashboard Route
     Route::middleware(['role:3'])->group(function () {
         Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-        
-        Route::get('/admin/allocation', [AdminController::class, 'allocation'])->name('admin.allocation');
+
         Route::get('/admin/assignedlists', [AdminController::class, 'assignedlists'])->name('admin.assignedlists');
         Route::get('/admin/reallocation', [AdminController::class, 'reallocation'])->name('admin.reallocation');
         Route::get('/admin/tutorlists', [AdminController::class, 'tutorlists'])->name('admin.tutorlists');
@@ -32,6 +32,10 @@ Route::middleware('auth')->group(function(){
         Route::get('/admin/student/dashboard', [StudentController::class, 'index'])->name('admin.student.dashboard');
         Route::get('/admin/tutor/dashboard', [TutorController::class, 'index'])->name('admin.tutor.dashboard');
 
+
+        Route::get('/admin/allocation', [AllocationController::class, 'index'])->name('admin.allocation');
+        Route::post('/admin/allocate', [AllocationController::class, 'allocate'])->name('admin.allocate');
+        Route::get('/admin/assignedlists', [AllocationController::class, 'assignedLists'])->name('admin.assignedlists');
     });
 
     // Tutor Dashboard Route
@@ -49,7 +53,7 @@ Route::middleware('auth')->group(function(){
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-   
+
 
 });
 

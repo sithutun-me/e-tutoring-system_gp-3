@@ -12,7 +12,7 @@ class AdminController extends Controller
     public function index()
     {
         $students = $this->adminDashboardService->studentsWithoutTutors();
-         
+
 
         return view('admin.dashboard', compact('students'));
     }
@@ -37,11 +37,11 @@ class AdminController extends Controller
     }
 
 
-    
+
     public function studentlists(Request $request)
     {
         $students = $this->adminDashboardService->getStudentListWithAssignedTutor($request);
-       
+
         return view('admin.studentlists',compact('students'));
     }
 
@@ -81,6 +81,5 @@ class AdminController extends Controller
     //     return response()->json($data);
     // }
 
-    
 
 }

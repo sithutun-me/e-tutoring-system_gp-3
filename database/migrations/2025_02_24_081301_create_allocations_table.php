@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('allocation', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained('users', 'id');
-            $table->foreignId('tutor_id')->constrained('users', 'id');
+            $table->unsignedBigInteger('student_id');
+            $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('tutor_id');
+            $table->foreign('tutor_id')->references('id')->on('users')->onDelete('cascade');
             $table->dateTime('allocation_date_time');
-            $table->foreignId('staff_id')->constrained('users', 'id');
+            $table->unsignedBigInteger('staff_id');
+            $table->foreign('staff_id')->references('id')->on('users')->onDelete('cascade');
             $table->boolean('active')->default(1);
             $table->timestamps();
         });
