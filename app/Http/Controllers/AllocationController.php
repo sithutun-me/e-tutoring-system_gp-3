@@ -39,7 +39,7 @@ class AllocationController extends Controller
         $selectedStudentsCount = count($selectedStudents);
         $studentCount = Allocation::where('tutor_id',$tutor->id)->count();
         if($studentCount + $selectedStudentsCount > 15){
-            $notify[] = ['warning', 'Tutor has student limit.'];
+            $notify[] = ['Tutor has student limit.'];
             return back()->withErrors($notify);
         }
 
