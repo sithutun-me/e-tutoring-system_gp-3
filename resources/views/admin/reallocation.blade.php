@@ -76,7 +76,7 @@
                    
 
                     <div class="table-responsive" id="no-more-tables">
-                            <table id="assignedTable" class="table bg-white table-bordered" style="height:400px;">
+                            <table id="reallocationTable" class="table bg-white table-bordered" style="height:400px;">
                             <thead>
                                 <tr class="custom-bg text-light">
                                     <th class="text-center" style="color: white;">S No</th>
@@ -88,7 +88,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="text-center">
+                                <tr class="reallocation-row">
                                     <td data-title="S No">1</td>
                                     <td data-title="Student code">std0025</td>
                                     <td data-title="Student Name">Robertz</td>
@@ -97,7 +97,7 @@
                                     
                                 </tr>
 
-                                <tr class="text-center">
+                                <tr class="reallocation-row">
                                     <td data-title="S No">1</td>
                                     <td data-title="Student code">std0025</td>
                                     <td data-title="Student Name">Robertz</td>
@@ -106,7 +106,7 @@
                                     
                                 </tr>
 
-                                <tr class="text-center">
+                                <tr class="reallocation-row">
                                     <td data-title="S No">1</td>
                                     <td data-title="Student code">std0025</td>
                                     <td data-title="Student Name">Robertz</td>
@@ -115,7 +115,7 @@
                                     
                                 </tr>
 
-                                <tr class="text-center">
+                                <tr class="reallocation-row">
                                     <td data-title="S No">1</td>
                                     <td data-title="Student code">std0025</td>
                                     <td data-title="Student Name">Robertz</td>
@@ -169,9 +169,9 @@ $(".sidebar ul li").on('click', function () {
         });
 
         $(document).ready(function () {
-        $('#assignedTable').DataTable({
+        $('#reallocationTable').DataTable({
             paging: true,
-            pageLength: 5,
+            pageLength: 15,
             lengthChange: false,
             searching: false,
             ordering: false,

@@ -45,12 +45,25 @@
             </div>
         </nav>
 
-        <div class="dashboard-content px-2 pt-4">
+        <div class="dashboard-content px-2 pt-2">
+
+        <div class="container" >
+        @if($errors->any())
+            <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-left: 100px;">
+                <ol>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ol>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+    </div>
 
 
 
 
-            <section class="p-5">
+            <section class="p-3">
                 <form action="{{ route('admin.allocate') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <h2 class="fs-2 fw-bold mb-4"> Allocation</h2>
@@ -74,7 +87,7 @@
 
 
                     <div class="table-responsive" id="no-more-tables">
-                        <table id="assignedTable" class="table bg-white table-bordered" style="height:400px;">
+                        <table id="allocationTable" class="table bg-white table-bordered" style="height: 600px;">
                             <thead>
                                 <tr class="custom-bg text-light">
                                     <th></th>
@@ -89,7 +102,7 @@
                             </thead>
                             <tbody>
                                 @foreach($students as $student)
-                                <tr class="text-center">
+                                <tr class="allocation-row">
                                     <td>
                                         <span class="allocate-checkbox">
                                             <input type="checkbox"
@@ -158,9 +171,9 @@
     });
 
     $(document).ready(function() {
-        $('#assignedTable').DataTable({
+        $('#allocationTable').DataTable({
             paging: true,
-            pageLength: 5,
+            pageLength: 15,
             lengthChange: false,
             searching: false,
             ordering: false,

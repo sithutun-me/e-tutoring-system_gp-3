@@ -45,12 +45,12 @@
             </div>
         </nav>
 
-        <div class="dashboard-content px-2 pt-4">
+        <div class="dashboard-content px-2 pt-2">
 
 
 
 
-              <section class="p-5">
+              <section class="p-3">
               <h2 class="fs-2 fw-bold mb-4"> Assigned Lists</h2>
 
 
@@ -61,7 +61,7 @@
                   </div>
 
                   <div class="table-responsive" id="no-more-tables">
-                    <table id="assignedTable" class="table bg-white table-bordered" style="height:400px;">
+                    <table id="assignedTable" class="table bg-white table-bordered" style="height: 600px;">
                           <thead>
                               <tr class="custom-bg text-light">
                                   <th></th>
@@ -71,12 +71,12 @@
                                   <th class="text-center"  style="color: white;">Student Name</th>
                                   <th class="text-center"  style="color: white;">Tutor Code</th>
                                   <th class="text-center" style="color: white;">Tutor Name</th>
-                                  <th class="text-center" style="color: white;">Action</th>
+                                  <th></th>
                               </tr>
                           </thead>
                           <tbody class="form-group-table">
                             @foreach($allocations as $allocation)
-                              <tr class="text-center">
+                              <tr class="assigned-row">
                                   <td><span class="allocate-checkbox"><input type="checkbox" id="checkbox1" name="option[]" value="1">
                                   <label for="checkbox1"></label></span></td>
                                   <td data-title="S No">{{ $allocation->id }}</td>
@@ -142,7 +142,7 @@ $(".sidebar ul li").on('click', function () {
         $(document).ready(function () {
         $('#assignedTable').DataTable({
             paging: true,
-            pageLength: 5,
+            pageLength: 15,
             lengthChange: false,
             searching: false,
             ordering: false,

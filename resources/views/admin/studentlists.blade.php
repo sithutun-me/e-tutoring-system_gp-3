@@ -62,7 +62,7 @@
                   </div>
 
                   <div class="table-responsive" id="no-more-tables" >
-                     <table id="studentTable" class="table bg-white table-bordered" style="height:400px; ">
+                     <table id="studentTable" class="table bg-white table-bordered" style="height: 600px; ">
                           <thead>
                               <tr class="custom-bg text-light">
                                   <th class="text-center" style="color: white;">No.</th>
@@ -83,8 +83,8 @@
                                     <td data-title="Name">{{ $student->first_name }} {{ $student->last_name }}</td>
                                     <td data-title="Email">{{ $student->email }}</td>
                                     <td data-title="Assigned Tutor">{{ $student->tutor_name }}</td>
-                                    <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;">
-                                        <a href="student/dashboard" class="text-decoration-none " style="color: white;">View Dashbaord >></a></button> 
+                                    <td style="text-align: center;"><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;">
+                                        <a href="student/dashboard" class="text-decoration-none " style="color: white; ">View Dashboard >></a></button> 
                                     </td>      
                                 </tr>
                             @endforeach    
@@ -145,7 +145,7 @@ $(".sidebar ul li").on('click', function () {
             
         $('#studentTable').DataTable({
             paging: true,
-            pageLength: 5,
+            pageLength: 15,
             lengthChange: false,
             searching: false,
             ordering: false,

@@ -15,7 +15,7 @@
 
                             <div class="pt-4 pb-2">
                                 <div class="login-h5">
-                                    <h5 class="card-title text-center pb-0 fs-2" style="color: #004AAD;">TripleEDU </h5>
+                                    <h5 class="card-title text-center pb-0 " style="color: #004AAD;">TripleEDU </h5>
                                     <p class="card-title text-center"> E-tutoring system Login</p>
                                 </div>
                             </div>

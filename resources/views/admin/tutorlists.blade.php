@@ -61,7 +61,7 @@
                   </div>
 
                   <div class="table-responsive" id="no-more-tables" >
-                    <table id="assignedTable" class="table bg-white table-bordered" style="height:400px;">
+                    <table id="tutorTable" class="table bg-white table-bordered" style="height: 400px;">
                           <thead>
                               <tr class="custom-bg text-light">
                                   <th class="text-center" style="color: white;">No.</th>
@@ -76,14 +76,14 @@
                           <tbody class="form-group-table">
                               @php $count = 1; @endphp
                               @foreach ($tutors as $tutor)
-                                  <tr class="text-center">
+                                  <tr class="tutor-row">
                                       <td data-title="No">{{ $count++;}}</td>
                                       <td data-title="Code">{{ $tutor->user_code }}</td>
                                       <td data-title="Name">{{ $tutor->first_name }} {{ $tutor->last_name }}</td>
                                       <td data-title="Email">{{ $tutor->email }}</td>
-                                      <td data-title="No of Student">{{ $tutor->assigned_students_count }}</td>
+                                      <td data-title="Assigned Students">{{ $tutor->assigned_students_count }}</td>
                                       <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;">
-                                        <a href="tutor/dashboard" class="text-decoration-none " style="color: white;">View Dashbaord >></a></button> 
+                                        <a href="tutor/dashboard" class="text-decoration-none " style="color: white;">View Dashboard >></a></button> 
                                       </td>  
                                   </tr>
                               @endforeach
@@ -139,9 +139,9 @@ $(".sidebar ul li").on('click', function () {
         });
 
         $(document).ready(function () {
-        $('#assignedTable').DataTable({
+        $('#tutorTable').DataTable({
             paging: true,
-            pageLength: 5,
+            pageLength: 15,
             lengthChange: false,
             searching: false,
             ordering: false,
