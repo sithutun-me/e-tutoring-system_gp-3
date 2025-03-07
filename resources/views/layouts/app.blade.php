@@ -31,6 +31,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Toast Message -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <link href="{{ asset('white') }}/css/white-dashboard.css?v=1.0.0" rel="stylesheet" />
     <!-- <link href="{{ asset('white') }}/css/theme.css" rel="stylesheet" /> -->
@@ -40,8 +43,6 @@
     @include('components.header')
 
     @yield('content')
-
-
 
     <script>
         $(".sidebar ul li").on('click', function() {
@@ -59,6 +60,7 @@
             $('.sidebar').removeClass('active');
 
         });
+
 
         $(document).ready(function() {
             $('#assignedTable').DataTable({
@@ -114,7 +116,30 @@
     });
     
     </script>
+    <script>
+        $(document).ready(function() {
+            toastr.options = {
+                closeBtton: true,
+                progressBar: true,
+                positionClass: "toast-bottom-right",
+                timeOut: "3500"
+            };
 
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                    toastr.error("{{ addslashes($error) }}");
+                @endforeach
+            @endif
+
+            @if (session('success'))
+                toastr.success("{{ session('success') }}");
+            @endif
+
+            @if (session('error'))
+                toastr.error("{{ session('error') }}");
+            @endif
+        });
+    </script>
     @stack('scripts')
 </body>
 

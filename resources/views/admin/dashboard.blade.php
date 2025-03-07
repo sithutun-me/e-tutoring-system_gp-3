@@ -51,7 +51,7 @@
         </nav>
 
         <div class="dashboard-content px-2 pt-4">
-            <h2 class="fs-2 fw-bold ms-3"> Admin Dashboard</h2>
+            <h2 class="fw-bold" style="padding-left: 15px;font-size:2rem;"> Admin Dashboard</h2>
             <div class="chart-container">
                 <div class="chart-card">
                     <div class="chart-card-header">

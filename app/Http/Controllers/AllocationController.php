@@ -60,8 +60,7 @@ class AllocationController extends Controller
                 break;
             }
         }
-        $notify[] = ['Successful', 'Students have been assigned.'];
-        return back()->withErrors($notify);
+        return redirect()->route('admin.allocation')->with('success', 'Students have been assigned.');
     }
 
     public function assignedLists(Request $request){
