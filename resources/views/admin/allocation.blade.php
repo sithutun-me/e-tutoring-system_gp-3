@@ -53,16 +53,15 @@
             <section class="p-5">
 
                 <h2 class="fs-2 fw-bold mb-4"> Allocation</h2>
-                <form action="{{  route('admin.filter') }}" method="GET">
-                    @csrf
+                <!-- <form action="{{  route('admin.filter') }}" method="GET"> -->
+                    <!-- @csrf -->
                     <div class=" form-group mb-4">
-                        <input class="form-control" name='search' type="search" placeholder="Search here" aria-label="Search" style="width: 320px;">
-                        <button type="submit" name="submit" class="btn btn-primary shadow-none">Search</button>
-                    </div>
-                </form>
-
+                        <input class="form-control" name='search_table' type="search" placeholder="Search here" aria-label="Search" style="width: 320px;" id="studentSearch">
+                        <button  type="submit"  name="submit" onclick="filterStudents()" class="btn btn-primary shadow-none" >Search</button>                    </div>
+                <!-- </form> -->
                 <form action="{{ route('admin.allocate') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
+                @csrf
+
                     <div class="form-group mb-4">
                         <select class="form-select form--control" name="tutor_id" id="floatingSelect" aria-label="Floating label select example" style="width: 320px;">
                             <option value="" {{ old('tutor_id') ? '' : 'selected' }}>Choose Tutor</option>
@@ -77,7 +76,7 @@
 
 
                     <div class="table-responsive" id="no-more-tables">
-                        <table id="assignedTable" class="table bg-white table-bordered" style="height:400px;">
+                        <table id="assignedTable" class="table bg-white table-bordered custom-table" style="height:400px;">
                             <thead>
                                 <tr class="custom-bg text-light">
                                     <th></th>
@@ -92,7 +91,7 @@
                             </thead>
                             <tbody>
                                 @foreach($students as $student)
-                                <tr class="text-center">
+                                <tr class="text-center student-row">
                                     <td>
                                         <span class="allocate-checkbox">
                                             <input type="checkbox"
@@ -134,7 +133,7 @@
 
 @endsection
 
-@push('script')
+@push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -172,6 +171,25 @@
             }
         });
     });
+
+    function filterStudents(){
+        const searchInput = document.getElementById('studentSearch').value.toLowerCase();
+            const rows = document.querySelectorAll('.student-row');
+
+            rows.forEach(row => {
+                const userCode = row.cells[1].textContent.toLowerCase();
+                const name = row.cells[2].textContent.toLowerCase();
+                const email = row.cells[3].textContent.toLowerCase();
+                const tutor = row.cells[4].textContent.toLowerCase();
+
+                // If search term matches any field, show the row; otherwise, hide it
+                if (userCode.includes(searchInput) || name.includes(searchInput) || email.includes(searchInput) || tutor.includes(searchInput)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+    }
 </script>
 
 @endpush

@@ -55,8 +55,8 @@
 
 
                   <div class=" form-group mb-4">
-                     <input class="form-control me-2" type="search" placeholder="Search here" aria-label="Search" style="width: 320px;">
-                      <button  type="submit"  name="submit" class="btn btn-primary shadow-none" style="width: 150px;">Search</button>
+                     <input class="form-control me-2" type="search" placeholder="Search here" aria-label="Search" style="width: 320px;" id="studentSearch">
+                      <button  type="submit"  name="submit" class="btn btn-primary shadow-none" onclick="filterStudents()" style="width: 150px;">Search</button>
                       <button  type="submit"  name="submit" class="btn btn-primary shadow-none" style="width: 150px;">Bulk Reallocate</button>
                   </div>
 
@@ -90,92 +90,6 @@
 
                               </tr>
                             @endforeach
-<!--
-                              <tr class="text-center">
-                                  <td><span class="allocate-checkbox"><input type="checkbox" id="checkbox1" name="option[]" value="1">
-                                  <label for="checkbox1"></label></span></td>
-                                  <td data-title="S No">1</td>
-                                  <td data-title="Allocation Date">22/2/2025</td>
-                                  <td data-title="Student code">Std0005</td>
-                                  <td data-title="Student Name">Isabella Swift</td>
-                                  <td data-title="Tutor Code">tur0012</td>
-                                  <td data-title="Tutor Name">Cornor McGregor</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD"><a href="/admin/reallocation" class="text-decoration-none " style="color: white;">Reallocate</a></button>
-                                  <button type="button" class="btn btn-outline-secondary btn-sm shadow-none" style="width:100px; height:35px;">Delete</button></td>
-
-
-                              </tr>
-
-                              <tr class="text-center">
-                                  <td><span class="allocate-checkbox"><input type="checkbox" id="checkbox1" name="option[]" value="1">
-                                  <label for="checkbox1"></label></span></td>
-                                  <td data-title="S No">1</td>
-                                  <td data-title="Allocation Date">22/2/2025</td>
-                                  <td data-title="Student code">Std0005</td>
-                                  <td data-title="Student Name">Isabella Swift</td>
-                                  <td data-title="Tutor Code">tur0012</td>
-                                  <td data-title="Tutor Name">Cornor McGregor</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD"><a href="/admin/reallocation" class="text-decoration-none " style="color: white;">Reallocate</a></button>
-                                  <button type="button" class="btn btn-outline-secondary btn-sm shadow-none" style="width:100px; height:35px;">Delete</button></td>
-
-
-                              </tr>
-
-                              <tr class="text-center">
-                                  <td><span class="allocate-checkbox"><input type="checkbox" id="checkbox1" name="option[]" value="1">
-                                  <label for="checkbox1"></label></span></td>
-                                  <td data-title="S No">1</td>
-                                  <td data-title="Allocation Date">22/2/2025</td>
-                                  <td data-title="Student code">Std0005</td>
-                                  <td data-title="Student Name">Isabella Swift</td>
-                                  <td data-title="Tutor Code">tur0012</td>
-                                  <td data-title="Tutor Name">Cornor McGregor</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD"><a href="/admin/reallocation" class="text-decoration-none " style="color: white;">Reallocate</a></button>
-                                  <button type="button" class="btn btn-outline-secondary btn-sm shadow-none" style="width:100px; height:35px;">Delete</button></td>
-
-                              </tr>
-
-                              <tr class="text-center">
-                                  <td><span class="allocate-checkbox"><input type="checkbox" id="checkbox1" name="option[]" value="1">
-                                  <label for="checkbox1"></label></span></td>
-                                  <td data-title="S No">1</td>
-                                  <td data-title="Allocation Date">22/2/2025</td>
-                                  <td data-title="Student code">Std0005</td>
-                                  <td data-title="Student Name">Isabella Swift</td>
-                                  <td data-title="Tutor Code">tur0012</td>
-                                  <td data-title="Tutor Name">Cornor McGregor</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD"><a href="/admin/reallocation" class="text-decoration-none " style="color: white;">Reallocate</a></button>
-                                  <button type="button" class="btn btn-outline-secondary btn-sm shadow-none" style="width:100px; height:35px;">Delete</button></td>
-
-                              </tr>
-                              <tr class="text-center">
-                                  <td><span class="allocate-checkbox"><input type="checkbox" id="checkbox1" name="option[]" value="1">
-                                  <label for="checkbox1"></label></span></td>
-                                  <td data-title="S No">1</td>
-                                  <td data-title="Allocation Date">22/2/2025</td>
-                                  <td data-title="Student code">Std0005</td>
-                                  <td data-title="Student Name">Isabella Swift</td>
-                                  <td data-title="Tutor Code">tur0012</td>
-                                  <td data-title="Tutor Name">Cornor McGregor</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD"><a href="/admin/reallocation" class="text-decoration-none " style="color: white;">Reallocate</a></button>
-                                  <button type="button" class="btn btn-outline-secondary btn-sm shadow-none" style="width:100px; height:35px;">Delete</button></td>
-
-                              </tr>
-                              <tr class="text-center">
-                                  <td><span class="allocate-checkbox"><input type="checkbox" id="checkbox1" name="option[]" value="1">
-                                  <label for="checkbox1"></label></span></td>
-                                  <td data-title="S No">1</td>
-                                  <td data-title="Allocation Date">22/2/2025</td>
-                                  <td data-title="Student code">Std0005</td>
-                                  <td data-title="Student Name">Isabella Swift</td>
-                                  <td data-title="Tutor Code">tur0012</td>
-                                  <td data-title="Tutor Name">Cornor McGregor</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD"><a href="/admin/reallocation" class="text-decoration-none " style="color: white;">Reallocate</a></button>
-                                  <button type="button" class="btn btn-outline-secondary btn-sm shadow-none" style="width:100px; height:35px;">Delete</button></td>
-
-                              </tr> -->
-
-
                           </tbody>
                       </table>
 
@@ -198,7 +112,7 @@
 
 @endsection
 
-@push('script')
+@push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -237,6 +151,26 @@ $(".sidebar ul li").on('click', function () {
             }
         });
     });
+
+    function filterStudents() {
+            const searchInput = document.getElementById('studentSearch').value.toLowerCase();
+            const rows = document.querySelectorAll('.student-row');
+
+            rows.forEach(row => {
+                const userCode = row.cells[1].textContent.toLowerCase();
+                const name = row.cells[2].textContent.toLowerCase();
+                const email = row.cells[3].textContent.toLowerCase();
+                const tutor = row.cells[4].textContent.toLowerCase();
+
+                // If search term matches any field, show the row; otherwise, hide it
+                if (userCode.includes(searchInput) || name.includes(searchInput) || email.includes(searchInput) || tutor.includes(searchInput)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+        }
 
 
 
