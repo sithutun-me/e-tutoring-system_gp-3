@@ -51,15 +51,18 @@
 
 
             <section class="p-5">
-                <form action="{{ route('admin.allocate') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <h2 class="fs-2 fw-bold mb-4"> Allocation</h2>
 
+                <h2 class="fs-2 fw-bold mb-4"> Allocation</h2>
+                <form action="{{  route('admin.filter') }}" method="GET">
+                    @csrf
                     <div class=" form-group mb-4">
-                        <input class="form-control" type="search" placeholder="Search here" aria-label="Search" style="width: 320px;">
+                        <input class="form-control" name='search' type="search" placeholder="Search here" aria-label="Search" style="width: 320px;">
                         <button type="submit" name="submit" class="btn btn-primary shadow-none">Search</button>
                     </div>
+                </form>
 
+                <form action="{{ route('admin.allocate') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <div class="form-group mb-4">
                         <select class="form-select form--control" name="tutor_id" id="floatingSelect" aria-label="Floating label select example" style="width: 320px;">
                             <option value="" {{ old('tutor_id') ? '' : 'selected' }}>Choose Tutor</option>
