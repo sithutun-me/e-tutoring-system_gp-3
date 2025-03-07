@@ -25,118 +25,8 @@ h6 {
 /*--------------------------------------------------------------
 # Override some default Bootstrap stylings
 --------------------------------------------------------------*/
-/* Dropdown menus */
-.dropdown-menu {
-    border-radius: 4px;
-    padding: 10px 0;
-    animation-name: dropdown-animate;
-    animation-duration: 0.2s;
-    animation-fill-mode: both;
-    border: 0;
-    box-shadow: 0 5px 30px 0 rgba(82, 63, 105, 0.2);
-  }
 
-  .dropdown-menu .dropdown-header,
-  .dropdown-menu .dropdown-footer {
-    text-align: center;
-    font-size: 15px;
-    padding: 10px 25px;
-  }
-
-  .dropdown-menu .dropdown-footer a {
-    color: #444444;
-    text-decoration: underline;
-  }
-
-  .dropdown-menu .dropdown-footer a:hover {
-    text-decoration: none;
-  }
-
-  .dropdown-menu .dropdown-divider {
-    color: #a5c5fe;
-    margin: 0;
-  }
-
-  .dropdown-menu .dropdown-item {
-    font-size: 14px;
-    padding: 10px 15px;
-    transition: 0.3s;
-  }
-
-  .dropdown-menu .dropdown-item i {
-    margin-right: 10px;
-    font-size: 18px;
-    line-height: 0;
-  }
-
-  .dropdown-menu .dropdown-item:hover {
-    background-color: #f6f9ff;
-  }
-
-  @media (min-width: 768px) {
-    .dropdown-menu-arrow::before {
-      content: "";
-      width: 13px;
-      height: 13px;
-      background: #fff;
-      position: absolute;
-      top: -7px;
-      right: 20px;
-      transform: rotate(45deg);
-      border-top: 1px solid #eaedf1;
-      border-left: 1px solid #eaedf1;
-    }
-  }
-
-  @keyframes dropdown-animate {
-    0% {
-      opacity: 0;
-    }
-
-    100% {
-      opacity: 1;
-    }
-
-    0% {
-      opacity: 0;
-    }
-  }
-
-  /* Light Backgrounds */
-  .bg-primary-light {
-    background-color: #cfe2ff;
-    border-color: #cfe2ff;
-  }
-
-  .bg-secondary-light {
-    background-color: #e2e3e5;
-    border-color: #e2e3e5;
-  }
-
-  .bg-success-light {
-    background-color: #d1e7dd;
-    border-color: #d1e7dd;
-  }
-
-  .bg-danger-light {
-    background-color: #f8d7da;
-    border-color: #f8d7da;
-  }
-
-  .bg-warning-light {
-    background-color: #fff3cd;
-    border-color: #fff3cd;
-  }
-
-  .bg-info-light {
-    background-color: #cff4fc;
-    border-color: #cff4fc;
-  }
-
-  .bg-dark-light {
-    background-color: #d3d3d4;
-    border-color: #d3d3d4;
-  }
+/* Login Page */
 
   .col-12 button{
     background-color:  #004AAD ;
@@ -154,9 +44,9 @@ h6 {
     background-color: #F2F8FF  ;
   }
 
-  .login-title{
+  .login-h5 h5{
     font-family: "Poppins";
-    font-size: 26px;
+    font-size: 2rem;
     font-weight: bold;
     text-align: center;
     text-decoration: none;
@@ -165,11 +55,12 @@ h6 {
 
 
   /* Card */
-  .card {
+ .card {
     margin-bottom: 30px;
     border: none;
     border-radius: 5px;
     box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+  
   }
 
   .card-header,
@@ -182,7 +73,7 @@ h6 {
 
   .card-title {
     padding: 20px 0 15px 0;
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 700;
     color: #333333;
     font-family: "Poppins", sans-serif;
@@ -190,7 +81,7 @@ h6 {
 
   .card-title span {
     color: #899bbd;
-    font-size: 14px;
+    font-size: 0.8125rem;
     font-weight: 400;
   }
 
@@ -207,7 +98,7 @@ h6 {
   .alert-heading {
     font-weight: 500;
     font-family: "Poppins", sans-serif;
-    font-size: 20px;
+    font-size: 1.25rem;
   }
 
   /* Close Button */
@@ -249,13 +140,13 @@ h6 {
   .accordion-flush .accordion-body {
     padding: 0 0 15px 0;
     color: #3e4f6f;
-    font-size: 15px;
+    font-size: 0.875rem;
   }
 
   /* Breadcrumbs */
   .breadcrumb {
-    font-size: 14px;
-    font-family: "Nunito", sans-serif;
+    font-size: 0.875rem;
+    font-family: "Poppins", sans-serif;
     color: #899bbd;
     font-weight: 600;
   }
@@ -304,30 +195,47 @@ h6 {
 
 /* Dashboard-nav */
 
-   #side_nav{
-    background:  #004AAD;
-    min-width: 250px;
-    max-width: 250px;
+
+  #side_nav{
+   
+    background: #004AAD;
+    min-width: 200px;
+    max-width: 200px;
     transition: all 0.3s;
-   }
-   .content{
-      min-height: 100vh;
-      width: 100%;
-   }
-   hr.h-color{
-     background: #eee;
-   }
+    
+    /* Sticky Positioning */
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow-y: auto; /* Enables scrolling if content overflows */
+  }
 
 
+  .content {
+    min-height: 100vh;
+    width: calc(100% - 200px); /* Adjust width to leave space for the sidebar */
+    margin-left: 200px; /* Shift content to the right */
+    transition: all 0.3s;
+  }
+  
+  hr.h-color{
+    background: #eee;
+  }
 
-   .sidebar li a:hover {
+  .sidebar li a:hover {
+  color: #fff;
+  }
+  .sidebar li a{
+  color: #fff;
+  font-family: "Poppins";
+  font-size: 1rem;
+  }
+
+ 
+  #side_nav.active li a {
     color: #fff;
-   }
-   .sidebar li a{
-    color: #fff;
-    font-family: "Poppins";
-    font-size: 16px;
-   }
+  }
 
    @media(max-width: 767px){
     #side_nav{
@@ -340,12 +248,404 @@ h6 {
     #side_nav.active{
       margin-left: 0;
      }
-   }
+     .content {
+      width: 100%;
+      margin-left: 0; /* Reset margin when sidebar is collapsed */
+    }
 
+  
+   }
 
    .col-12 button{
     background-color:  #004AAD ;
-    color: white;
+    color: #FFFFFF;
   }
+
+  /* Allocation-table */
+  @media only screen and (max-width:800px){
+    #no-more-tables tbody,
+    #no-more-tables tr,
+    #no-more-tables td{
+      display: block;
+    }
+   
+    #no-more-tables thead tr{
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
+
+    #no-more-tables td{
+      position: relative;
+      padding-left: 50%;
+      border: none;
+      border-bottom: 1px solid #eee;
+    }
+
+    #no-more-tables td:before{
+      content: attr(data-title);
+      position: absolute;
+      left:6px ;
+      font-weight: bold;
+    }
+
+    #no-more-tables tr{
+      border-bottom: 1px solid #ccc ;
+    }
+
+    
+
+
+  }
+
+  #no-more-tables .allocation-row, .assigned-row, .tutor-row, .student-row, .reallocation-row{
+    text-align: center;
+  }
+
+
+  /* admin table */
+
+  .custom-bg{
+    background-color: #004AAD;
+
+  }
+
+  .form-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.form-group button{
+  height: 40px;
+  color: #FFFFFF;
+  font-family: 'Poppins';
+  font-size: 1rem;
+  background-color: #004AAD;
+  width: 100px;
+}
+
+.form-group-table button{
+  height: 35px;
+  font-family: 'Poppins';
+  font-size: 1rem;
+  width: 100px;
+  margin-top: 3px;
+  margin-right: 2px;
+}
+
+
+/* Allocation Page Pagination container */
+#allocationTable_wrapper .dataTables_paginate {
+  margin-top: 15px;
+  text-align: center;
+ 
+}
+
+/* Allocation page pagination button styling */
+#allocationTable_wrapper .dataTables_paginate .paginate_button {
+  display: inline-block;
+  background-color: #FFFFFF !important;
+  color:  #92969c !important; /* Blue text */
+  border: 1px solid #D3D3D3 !important;
+  border-radius: 5px;
+  margin: 3px; /* Add spacing between buttons */
+  padding: 6px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Style the active page button */
+#allocationTable_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: #007bff !important; /* Blue background */
+  color: #FFFFFF !important; /* White text */
+  border: none !important;
+  font-weight: bold;
+}
+
+#allocationTable_wrapper .dataTables_paginate .paginate_button.disabled {
+  background-color: #fff !important;
+  color: #bfc1c4 !important;
+  cursor: not-allowed !important;
+  border-color: #bfc1c4 !important;
+  pointer-events: none;
+}
+
+
+.allocation-row td {
+  padding: 8px; /* Adjust padding to control row height */
+  line-height: 1.8; /* Adjust line height for better spacing */
+}
+ 
+#allocationTable {
+  height: auto !important; /* Ensures the table doesn't have a fixed height */
+}
+
+ 
+
+/* Hover effect */
+#allocationTable_wrapper .dataTables_paginate .paginate_button:hover {
+  background-color: #007bff !important; /* Darker blue */
+  color: #FFFFFF !important;
+}
+
+/* Assigned Page Pagination container */
+#assignedTable_wrapper .dataTables_paginate {
+  margin-top: 15px;
+  text-align: center;
+ 
+}
+
+/* Assigned List Page pagination button styling */
+#assignedTable_wrapper .dataTables_paginate .paginate_button {
+  display: inline-block;
+  background-color: #FFFFFF !important;
+  color:  #92969c !important; /* Blue text */
+  border: 1px solid #D3D3D3 !important;
+  border-radius: 5px;
+  margin: 3px; /* Add spacing between buttons */
+  padding: 6px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Style the active page button */
+#assignedTable_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: #007bff !important; /* Blue background */
+  color: #FFFFFF !important; /* White text */
+  border: none !important;
+  font-weight: bold;
+}
+
+#assignedTable_wrapper .dataTables_paginate .paginate_button.disabled {
+  background-color: #fff !important;
+  color: #bfc1c4 !important;
+  cursor: not-allowed !important;
+  border-color: #bfc1c4 !important;
+  pointer-events: none;
+}
+
+.assigned-row td {
+  padding: 8px; /* Adjust padding to control row height */
+  line-height: 1.8; /* Adjust line height for better spacing */
+}
+ 
+#assignedTable {
+  height: auto !important; /* Ensures the table doesn't have a fixed height */
+}
+
+
+/* Hover effect */
+#assignedTable_wrapper .dataTables_paginate .paginate_button:hover {
+  background-color: #007bff !important; /* Darker blue */
+  color: #FFFFFF !important;
+}
+
+
+/* Reallocation Page Pagination container */
+#reallocationTable_wrapper .dataTables_paginate {
+  margin-top: 15px;
+  text-align: center;
+ 
+}
+
+/* Assigned List Page pagination button styling */
+#reallocationTable_wrapper .dataTables_paginate .paginate_button {
+  display: inline-block;
+  background-color: #FFFFFF !important;
+  color:  #92969c !important; /* Blue text */
+  border: 1px solid #D3D3D3 !important;
+  border-radius: 5px;
+  margin: 3px; /* Add spacing between buttons */
+  padding: 6px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Style the active page button */
+#reallocationTable_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: #007bff !important; /* Blue background */
+  color: #FFFFFF !important; /* White text */
+  border: none !important;
+  font-weight: bold;
+}
+
+#reallocationTablee_wrapper .dataTables_paginate .paginate_button.disabled {
+  background-color: #fff !important;
+  color: #bfc1c4 !important;
+  cursor: not-allowed !important;
+  border-color: #bfc1c4 !important;
+  pointer-events: none;
+}
+
+.reallocation-row td {
+  padding: 8px; /* Adjust padding to control row height */
+  line-height: 1.8; /* Adjust line height for better spacing */
+}
+ 
+#reallocationTable {
+  height: auto !important; /* Ensures the table doesn't have a fixed height */
+}
+
+
+ 
+
+/* Hover effect */
+#reallocationTable_wrapper .dataTables_paginate .paginate_button:hover {
+  background-color: #007bff !important; /* Darker blue */
+  color: #FFFFFF !important;
+}
+
+
+/* Tutor Page Pagination container */
+#tutorTable_wrapper .dataTables_paginate {
+  margin-top: 15px;
+  text-align: center;
+ 
+}
+
+/* Assigned List Page pagination button styling */
+#tutorTable_wrapper .dataTables_paginate .paginate_button {
+  display: inline-block;
+  background-color: #FFFFFF !important;
+  color:  #92969c !important; /* Blue text */
+  border: 1px solid #D3D3D3 !important;
+  border-radius: 5px;
+  margin: 3px; /* Add spacing between buttons */
+  padding: 6px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Style the active page button */
+#tutorTable_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: #007bff !important; /* Blue background */
+  color: #FFFFFF !important; /* White text */
+  border: none !important;
+  font-weight: bold;
+}
+
+#tutorTable_wrapper .dataTables_paginate .paginate_button.disabled {
+  background-color: #fff !important;
+  color: #bfc1c4 !important;
+  cursor: not-allowed !important;
+  border-color: #bfc1c4 !important;
+  pointer-events: none;
+}
+
+
+.tutor-row td {
+  padding: 8px; /* Adjust padding to control row height */
+  line-height: 1.8; /* Adjust line height for better spacing */
+}
+ 
+#tutorTable {
+  height: auto !important; /* Ensures the table doesn't have a fixed height */
+}
+
+ 
+
+/* Hover effect */
+#tutorTable_wrapper .dataTables_paginate .paginate_button:hover {
+  background-color: #007bff !important; /* Darker blue */
+  color: #FFFFFF !important;
+}
+
+
+/*Student table Pagination*/
+#studentTable_wrapper .dataTables_paginate {
+  margin-top: 15px;
+  text-align: center;
+ 
+}
+
+/* General pagination button styling */
+#studentTable_wrapper .dataTables_paginate .paginate_button {
+  display: inline-block;
+  background-color: #FFFFFF !important;
+  color:  #92969c !important; /* Blue text */
+  border: 1px solid #D3D3D3 !important;
+  border-radius: 5px;
+  margin: 3px; /* Add spacing between buttons */
+  padding: 6px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Style the active page button */
+#studentTable_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: #007bff !important; /* Blue background */
+  color: #FFFFFF !important; /* White text */
+  border: none !important;
+  font-weight: bold;
+}
+
+#studentTable_wrapper .dataTables_paginate .paginate_button.disabled {
+  background-color: #fff !important;
+  color: #bfc1c4 !important;
+  border-color: #bfc1c4 !important;
+  pointer-events: none;
+}
+
+
+.student-row td {
+  padding: 8px; /* Adjust padding to control row height */
+  line-height: 1.8; /* Adjust line height for better spacing */
+}
+ 
+#studentTable {
+  height: auto !important; /* Ensures the table doesn't have a fixed height */
+}
+
+
+/* Hover effect */
+ .dataTables_paginate .paginate_button:hover {
+  background-color: #007bff !important; /* Darker blue */
+  color: #FFFFFF !important;
+}
+
+/* Responsive - Stack elements vertically on small screens */
+@media (max-width: 900px) {
+    .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+ 
+    }
+
+    .form-select {
+        width: 100%; /* Make the select box full-width */
+    }
+  
+
+    .form-select, .btn {
+      width: 100%; /* Make select box & button full-width */
+      margin-right: 20px;
+  }
+
+  #no-more-tables button{
+    margin-bottom: 20px;
+
+  }
+
+  
+  #no-more-tables .allocation-row, .assigned-row, .tutor-row, .student-row, .reallocation-row{
+    text-align: left;
+
+  }
+
+
+ 
+ 
+}
+
+
+
+
 
 
