@@ -373,6 +373,16 @@ h6 {
   pointer-events: none;
 }
 
+
+.allocation-row td {
+  padding: 8px; /* Adjust padding to control row height */
+  line-height: 1.8; /* Adjust line height for better spacing */
+}
+ 
+#allocationTable {
+  height: auto !important; /* Ensures the table doesn't have a fixed height */
+}
+
  
 
 /* Hover effect */
@@ -418,7 +428,15 @@ h6 {
   pointer-events: none;
 }
 
+.assigned-row td {
+  padding: 8px; /* Adjust padding to control row height */
+  line-height: 1.8; /* Adjust line height for better spacing */
+}
  
+#assignedTable {
+  height: auto !important; /* Ensures the table doesn't have a fixed height */
+}
+
 
 /* Hover effect */
 #assignedTable_wrapper .dataTables_paginate .paginate_button:hover {
@@ -463,6 +481,16 @@ h6 {
   border-color: #bfc1c4 !important;
   pointer-events: none;
 }
+
+.reallocation-row td {
+  padding: 8px; /* Adjust padding to control row height */
+  line-height: 1.8; /* Adjust line height for better spacing */
+}
+ 
+#reallocationTable {
+  height: auto !important; /* Ensures the table doesn't have a fixed height */
+}
+
 
  
 
@@ -511,6 +539,17 @@ h6 {
 }
 
 
+.tutor-row td {
+  padding: 8px; /* Adjust padding to control row height */
+  line-height: 1.8; /* Adjust line height for better spacing */
+}
+ 
+#tutorTable {
+  height: auto !important; /* Ensures the table doesn't have a fixed height */
+}
+
+ 
+
 /* Hover effect */
 #tutorTable_wrapper .dataTables_paginate .paginate_button:hover {
   background-color: #007bff !important; /* Darker blue */
@@ -553,6 +592,17 @@ h6 {
   border-color: #bfc1c4 !important;
   pointer-events: none;
 }
+
+
+.student-row td {
+  padding: 8px; /* Adjust padding to control row height */
+  line-height: 1.8; /* Adjust line height for better spacing */
+}
+ 
+#studentTable {
+  height: auto !important; /* Ensures the table doesn't have a fixed height */
+}
+
 
 /* Hover effect */
  .dataTables_paginate .paginate_button:hover {

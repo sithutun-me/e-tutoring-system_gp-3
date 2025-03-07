@@ -12,7 +12,7 @@ class AllocationController extends Controller
     public function index(){
         $pageTitle = 'Allocation';
         $tutors = User::where('role_id',2)->latest()->get();
-        $students = User::doesntHave('studentAllocations')->get();
+        $students = User::doesntHave('studentAllocations')->where('role_id',1)->get();
 
         return view('admin.allocation',compact('pageTitle','tutors','students'));
     }
@@ -39,7 +39,7 @@ class AllocationController extends Controller
         $selectedStudentsCount = count($selectedStudents);
         $studentCount = Allocation::where('tutor_id',$tutor->id)->count();
         if($studentCount + $selectedStudentsCount > 15){
-            $notify[] = ['warning', 'Tutor has student limit.'];
+            $notify[] = ['Tutor has student limit.'];
             return back()->withErrors($notify);
         }
 
@@ -69,5 +69,21 @@ class AllocationController extends Controller
         $allocations = Allocation::with(['staff','tutor','student'])->get();
         $allocations = json_decode($allocations);
         return view('admin.assignedlists',compact('pageTitle','allocations'));
+    }
+
+    public function filter(Request $request){
+        $pageTitle = 'Search students';
+        $tutors = User::where('role_id',2)->latest()->get();
+        $query = User::doesntHave('studentAllocations');
+
+        if($request->filled('search')) {
+            $query->where('user_code', 'LIKE', '%' . $request->input('search') . '%' )
+            ->orWhere('first_name', 'LIKE', '%' . $request->input('search') . '%')
+            ->orWhere('last_name', 'LIKE', '%' . $request->input('search') . '%')
+            ->orWhere('email', 'LIKE', '%' . $request->input('search') . '%');
+        }
+        $students = $query->where('role_id',1)->get();
+
+        return view('admin.allocation', compact('pageTitle','tutors','students'));
     }
 }

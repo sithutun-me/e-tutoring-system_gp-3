@@ -62,18 +62,18 @@
         });
 
 
-        $(document).ready(function() {
-            $('#assignedTable').DataTable({
-                paging: true,
-                pageLength: 15,
-                lengthChange: false,
-                searching: false,
-                ordering: false,
-                "language": {
-                    "info": "Total Records: _TOTAL_",
-                }
-            });
-        });
+    //     $(document).ready(function() {
+    //         $('#assignedTable').DataTable({
+    //             paging: true,
+    //             pageLength: 15,
+    //             lengthChange: false,
+    //             searching: false,
+    //             ordering: false,
+    //             "language": {
+    //                 "info": "Total Records: _TOTAL_",
+    //             }
+    //         });
+    //     });
 
     //     $(document).ready(function() {
     //     $('#allocationTable').DataTable({
@@ -89,31 +89,31 @@
     // });
 
 
-    $(document).ready(function () {
-        $('#reallocationTable').DataTable({
-            paging: true,
-            pageLength: 15,
-            lengthChange: false,
-            searching: false,
-            ordering: false,
-            "language": {
-                "info": "Total Records: _TOTAL_",
-            }
-        });
-    });
+    // $(document).ready(function () {
+    //     $('#reallocationTable').DataTable({
+    //         paging: true,
+    //         pageLength: 15,
+    //         lengthChange: false,
+    //         searching: false,
+    //         ordering: false,
+    //         "language": {
+    //             "info": "Total Records: _TOTAL_",
+    //         }
+    //     });
+    // });
 
-    $(document).ready(function () {
-        $('#tutorTable').DataTable({
-            paging: true,
-            pageLength: 15,
-            lengthChange: false,
-            searching: false,
-            ordering: false,
-            "language": {
-                "info": "Total Records: _TOTAL_",
-            }
-        });
-    });
+    // $(document).ready(function () {
+    //     $('#tutorTable').DataTable({
+    //         paging: true,
+    //         pageLength: 15,
+    //         lengthChange: false,
+    //         searching: false,
+    //         ordering: false,
+    //         "language": {
+    //             "info": "Total Records: _TOTAL_",
+    //         }
+    //     });
+    // });
     
     </script>
     <script>
