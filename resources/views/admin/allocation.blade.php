@@ -69,7 +69,7 @@
                     <h2 class="fs-2 fw-bold mb-4"> Allocation</h2>
 
                     <div class=" form-group mb-4">
-                        <input class="form-control" type="search" placeholder="Search here" aria-label="Search" style="width: 320px;">
+                        <input id="allocationSearch" class="form-control" type="search" placeholder="Search here" aria-label="Search" style="width: 320px;">
                         <button type="submit" name="submit" class="btn btn-primary shadow-none">Search</button>
                     </div>
 
@@ -144,7 +144,7 @@
 
 @endsection
 
-@push('script')
+@push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -182,6 +182,25 @@
             }
         });
     });
+
+    function filterStudents(){
+        const searchInput = document.getElementById('allocationSearch').value.toLowerCase();
+            const rows = document.querySelectorAll('.allocation-row');
+
+            rows.forEach(row => {
+                const userCode = row.cells[1].textContent.toLowerCase();
+                const name = row.cells[2].textContent.toLowerCase();
+                const email = row.cells[3].textContent.toLowerCase();
+                const tutor = row.cells[4].textContent.toLowerCase();
+
+                // If search term matches any field, show the row; otherwise, hide it
+                if (userCode.includes(searchInput) || name.includes(searchInput) || email.includes(searchInput) || tutor.includes(searchInput)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+    }
 </script>
 
 @endpush

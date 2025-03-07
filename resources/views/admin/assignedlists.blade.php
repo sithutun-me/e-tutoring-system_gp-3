@@ -55,8 +55,8 @@
 
 
                   <div class=" form-group mb-4">
-                     <input class="form-control me-2" type="search" placeholder="Search here" aria-label="Search" style="width: 320px;">
-                      <button  type="submit"  name="submit" class="btn btn-primary shadow-none" style="width: 150px;">Search</button>
+                     <input class="form-control me-2" type="search" placeholder="Search here" aria-label="Search" style="width: 320px;" id="assignedSearch">
+                      <button  type="submit"  name="submit" class="btn btn-primary shadow-none" onclick="filterStudents()" style="width: 150px;">Search</button>
                       <button  type="submit"  name="submit" class="btn btn-primary shadow-none" style="width: 150px;">Bulk Reallocate</button>
                   </div>
 
@@ -112,7 +112,7 @@
 
 @endsection
 
-@push('script')
+@push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -151,6 +151,26 @@ $(".sidebar ul li").on('click', function () {
             }
         });
     });
+
+    function filterStudents() {
+            const searchInput = document.getElementById('assignedSearch').value.toLowerCase();
+            const rows = document.querySelectorAll('.assigned-row');
+
+            rows.forEach(row => {
+                const userCode = row.cells[1].textContent.toLowerCase();
+                const name = row.cells[2].textContent.toLowerCase();
+                const email = row.cells[3].textContent.toLowerCase();
+                const tutor = row.cells[4].textContent.toLowerCase();
+
+                // If search term matches any field, show the row; otherwise, hide it
+                if (userCode.includes(searchInput) || name.includes(searchInput) || email.includes(searchInput) || tutor.includes(searchInput)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+        }
 
 
 
