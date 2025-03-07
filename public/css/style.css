@@ -538,6 +538,7 @@ h6 {
   pointer-events: none;
 }
 
+<<<<<<< HEAD
 
 .tutor-row td {
   padding: 8px; /* Adjust padding to control row height */
@@ -549,6 +550,8 @@ h6 {
 }
 
  
+=======
+>>>>>>> aa95066 (Style changes)
 
 /* Hover effect */
 #tutorTable_wrapper .dataTables_paginate .paginate_button:hover {
