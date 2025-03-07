@@ -192,11 +192,11 @@ window.demo = {
           // Calculate average message count per tutor
           const averageMessageCounts = messageCounts.map(count => {
               // If count is greater than 0, calculate the average
-              return count > 0 ? count / day:0;
+              return count > 0 ? (count / day).toFixed(2):0;
           });
           
           // Returning both labels and average message counts in a single object
-          return { labels, averageMessageCounts };
+          return { labels, averageMessageCounts};
       } catch (error) {
           console.error('Error fetching average messages:', error);
   
