@@ -47,7 +47,7 @@
 
         <div class="dashboard-content px-2 pt-2">
 
-        <div class="container" >
+        <!-- <div class="container" >
         @if($errors->any())
             <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-left: 100px;">
                 <ol>
@@ -58,7 +58,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-    </div>
+    </div> -->
 
 
 
