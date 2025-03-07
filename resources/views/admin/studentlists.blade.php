@@ -55,7 +55,7 @@
 
               
                   <div class=" form-group mb-4">
-                     <input class="form-control me-2" id="studentSearch" type="search" placeholder="Search here" oninput="filterStudents()"
+                     <input class="form-control me-2" id="studentSearch" type="search" placeholder="Search here" 
                      aria-label="Search" style="width: 320px;">
                       <button  type="submit"  name="submit" onclick="filterStudents()" class="btn btn-primary shadow-none" >Search</button>
                      
@@ -158,6 +158,7 @@ $(".sidebar ul li").on('click', function () {
             const searchInput = document.getElementById('studentSearch').value.toLowerCase();
             const rows = document.querySelectorAll('.student-row');
             
+
             rows.forEach(row => {
                 const userCode = row.cells[1].textContent.toLowerCase();
                 const name = row.cells[2].textContent.toLowerCase();
@@ -172,7 +173,13 @@ $(".sidebar ul li").on('click', function () {
                 }
             });
             
-        }       
+        }  
+        // Automatically clear filter and show all rows when input is empty
+        document.getElementById('studentSearch').addEventListener('input', function() {
+            if (this.value.trim() === '') {
+                filterStudents();
+            }
+        });     
 
 
 </script>
