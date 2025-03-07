@@ -56,7 +56,7 @@
 
                   <div class=" form-group mb-4">
                      <input class="form-control me-2" type="search" placeholder="Search here" aria-label="Search" style="width: 320px;" id="assignedSearch">
-                      <button  type="submit"  name="submit" class="btn btn-primary shadow-none" onclick="filterStudents()" style="width: 150px;">Search</button>
+                      <button  type="submit"  name="submit" class="btn btn-primary shadow-none" onclick="filterAssigned()" style="width: 150px;">Search</button>
                       <button  type="submit"  name="submit" class="btn btn-primary shadow-none" style="width: 150px;">Bulk Reallocate</button>
                   </div>
 
@@ -152,7 +152,7 @@ $(".sidebar ul li").on('click', function () {
         });
     });
 
-    function filterStudents() {
+    function filterAssigned() {
             const searchInput = document.getElementById('assignedSearch').value.toLowerCase();
             const rows = document.querySelectorAll('.assigned-row');
 
@@ -171,6 +171,11 @@ $(".sidebar ul li").on('click', function () {
             });
 
         }
+        document.getElementById('assignedSearch').addEventListener('input', function() {
+            if (this.value.trim() === '') {
+                filterAssigned();
+            }
+        });
 
 
 
