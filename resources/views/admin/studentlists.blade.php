@@ -5,8 +5,8 @@
 <div class="main-container d-flex">
     <div class="sidebar" id="side_nav">
         <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between">
-            <h1 class=" header-title fs-4 mt-3">
-                <span class="text-white fw-bold" style="margin-left:20px;">TripleEDU</span>
+            <h1 class=" header-title fs-2 mt-3">
+                <span class="text-white fw-bold" style="margin-left:10px;">TripleEDU</span>
             </h1>
             
             <button class="btn d-md-none d-block close-btn px-1 py-0 text-white">
@@ -45,12 +45,12 @@
             </div>
         </nav>
 
-        <div class="dashboard-content px-2 pt-4">
+        <div class="dashboard-content px-2 pt-2">
               
 
 
                 
-              <section class="p-5">
+              <section class="p-3">
               <h2 class="fs-2 fw-bold mb-4"> Student Lists</h2>
 
               
@@ -61,8 +61,8 @@
                      
                   </div>
 
-                  <div class="table-responsive" id="no-more-tables">
-                     <table id="studentTable" class="table bg-white table-bordered" style="height:400px;">
+                  <div class="table-responsive" id="no-more-tables" >
+                     <table id="studentTable" class="table bg-white table-bordered" style="height:400px; ">
                           <thead>
                               <tr class="custom-bg text-light">
                                   <th class="text-center" style="color: white;">No.</th>
