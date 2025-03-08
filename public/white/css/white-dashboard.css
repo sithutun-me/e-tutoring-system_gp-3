@@ -37,26 +37,52 @@
    }
 
  }
- 
+/* 
+ .meeting-card {
+  width: auto !important;
+ } */
+
+ .hidden-div,
+ .hidden-button,
+ .hidden-title {
+   display: none;
+ }
+
  /* datetimepicker */
  #datetimepicker {
    width: 320px;
+ }
+
+ #meetingdatepicker, #starttimepicker, #endtimepicker {
+   background-color: white;
  }
 
  #datetimepicker input {
    background-color: white;
  }
 
+ #selectMeetingType,
  #floatingSelect {
 
    font-family: 'Poppins';
    font-size: 0.8125rem;
  }
 
+ .full-button {
+   width: 100% !important;
+   font-size: 0.8125rem !important;
+ }
+
+ textarea {
+   height: 150px;
+   resize: none;
+   overflow-y: auto;
+ }
+
  input {
 
    font-family: 'Poppins';
-   font-size: 0.8125rem;
+   font-size: 0.8125rem !important;
  }
 
  .card-table {
@@ -117,18 +143,33 @@
    width: 100%;
  }
 
+ .form-check {
+   display: flex;
+   width: auto;
+ }
+
+ .form-check-label {
+   margin-left: 10px;
+   margin-bottom: 0px !important;
+ }
+
+ .form-check-input {
+   margin-top: 4px;
+ }
+
  .text-center.fit {
    width: fit-content;
  }
 
  .text-center a {
-   height: 40px;
    color: white;
    font-family: 'Poppins';
    font-size: 0.8125rem;
    background-color: #004AAD;
    width: 130px;
    align-content: center;
+   padding-top: 10px;
+   padding-bottom: 10px;
  }
 
  #table-student-no-tutor tbody {
@@ -573,6 +614,11 @@
    width: 100%;
  }
 
+ .header-text {
+   font-size: 1rem;
+   font-family: 'Poppins';
+   color: '#333333'
+ }
 
  .normal-text {
    font-size: 0.8125rem;
@@ -595,10 +641,8 @@
  }
 
  .btn-secondary {
-   color: #212529;
-   background-color: #ffffff;
-   border-color: #333333;
-   /* box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); */
+   color: #212529 !important;
+   background-color: #ffffff !important;
  }
 
  .btn-secondary:hover {

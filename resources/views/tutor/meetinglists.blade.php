@@ -63,7 +63,7 @@
                 <h2 class="fs-2 fw-bold">Meetings</h2>
                 <!-- <div class=" form-group mb-4"> -->
                 <div class="text-center fit mb-4 mt-4">
-                    <a href="#" class="btn btn-primary shadow-none">+ New Meeting</a>
+                    <a href="/tutor/meetingdetail" class="btn btn-primary shadow-none">+ New Meeting</a>
                 </div>
                 <!-- </div> -->
                 <div class="form-group mb-4">
@@ -101,7 +101,7 @@
                                 <td class="w-15 no-border special" style="color: #004AAD;">Status</td>
                                 <td class="w-15 no-border special" style="color: #004AAD;">Meeting type</td>
                                 <td class="w-25 no-border special" style="color: #004AAD;">Meeting link</td>
-                                <td rowspan="2" class="text-center w-15 no-left-border special"><a href="#" class="btn btn-primary shadow-none">Detail</a></td>
+                                <td rowspan="2" class="text-center w-15 no-left-border special"><a href="/tutor/meetingdetail/1" class="btn btn-primary shadow-none">Detail</a></td>
                             </tr>
                             <tr class="no-top-border special">
                                 <td class="w-15 no-right-border padding-left special">Zoom Meeting</td>
@@ -122,7 +122,7 @@
                                 <td class="w-15 no-border special" style="color: #004AAD;">Status</td>
                                 <td class="w-15 no-border special" style="color: #004AAD;">Meeting type</td>
                                 <td class="w-25 no-border special" style="color: #004AAD;">Location</td>
-                                <td rowspan="2" class="text-center w-15 no-left-border special"><a href="#" class="btn btn-primary shadow-none">Detail</a></td>
+                                <td rowspan="2" class="text-center w-15 no-left-border special"><a href="/tutor/meetingdetail/1" class="btn btn-primary shadow-none">Detail</a></td>
                             </tr>
                             <tr class="no-top-border special">
                                 <td class="w-15 no-right-border padding-left special"></td>
@@ -147,7 +147,7 @@
                                 <td class="w-15 no-border special" style="color: #004AAD;">Status</td>
                                 <td class="w-15 no-border special" style="color: #004AAD;">Meeting type</td>
                                 <td class="w-25 no-border special" style="color: #004AAD;">Meeting link</td>
-                                <td rowspan="2" class="text-center w-15 no-left-border special"><a href="#" class="btn btn-primary shadow-none">Detail</a></td>
+                                <td rowspan="2" class="text-center w-15 no-left-border special"><a href="/tutor/meetingdetail/1" class="btn btn-primary shadow-none">Detail</a></td>
                             </tr>
                             <tr class="no-top-border special">
                                 <td class="w-15 no-right-border padding-left special">Zoom Meeting</td>
@@ -168,7 +168,7 @@
                                 <td class="w-15 no-border special" style="color: #004AAD;">Status</td>
                                 <td class="w-15 no-border special" style="color: #004AAD;">Meeting type</td>
                                 <td class="w-25 no-border special" style="color: #004AAD;">Location</td>
-                                <td rowspan="2" class="text-center w-15 no-left-border special"><a href="#" class="btn btn-primary shadow-none">Detail</a></td>
+                                <td rowspan="2" class="text-center w-15 no-left-border special"><a href="/tutor/meetingdetail/1" class="btn btn-primary shadow-none">Detail</a></td>
                             </tr>
                             <tr class="no-top-border special">
                                 <td class="w-15 no-right-border padding-left special"></td>
@@ -203,11 +203,10 @@
 <script>
     console.log("Script is loaded!");
     $(document).ready(function() {
-        console.log("Data table is loading..");
         $('#datepicker').datepicker({
-            format: 'yyyy-mm-dd', // Set the date format
-            autoclose: true, // Close the calendar when a date is selected
-            todayHighlight: true // Highlight today's date
+            format: 'yyyy-mm-dd',
+            autoclose: true, 
+            todayHighlight: true
         });
     });
 
@@ -242,8 +241,5 @@
         $('.sidebar').removeClass('active');
 
     });
-    window.onload = function() {
-        console.log("DOM is fully loaded");
-    }
 </script>
 @endpush
