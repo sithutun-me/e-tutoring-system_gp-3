@@ -55,9 +55,9 @@
 
 
                 <div class=" form-group mb-4">
-                    <input class="form-control me-2" id="studentSearch" type="search" placeholder="Search here" oninput="filterStudents()"
+                    <input class="form-control me-2" id="studentSearch" type="search" placeholder="Search here" 
                         aria-label="Search" style="width: 320px;">
-                    <button type="submit" name="submit" onclick="filterStudents()" class="btn btn-primary shadow-none">Search</button>
+                    <button type="button" name="submit" onclick="filterStudents()" class="btn btn-primary shadow-none">Search</button>
 
                 </div>
 
@@ -95,6 +95,7 @@
                             @endif
                         </tbody>
                     </table>
+                    
 
 
                 </div>
@@ -141,9 +142,10 @@
 
     });
 
+    let table;
     $(document).ready(function() {
 
-        $('#studentTable').DataTable({
+         table = $('#studentTable').DataTable({
             paging: true,
             pageLength: 15,
             lengthChange: false,
@@ -158,6 +160,7 @@
     function filterStudents() {
         const searchInput = document.getElementById('studentSearch').value.toLowerCase();
         const rows = document.querySelectorAll('.student-row');
+        let visibleCount = 0;
 
         rows.forEach(row => {
             const userCode = row.cells[1].textContent.toLowerCase();
@@ -168,10 +171,26 @@
             // If search term matches any field, show the row; otherwise, hide it
             if (userCode.includes(searchInput) || name.includes(searchInput) || email.includes(searchInput) || tutor.includes(searchInput)) {
                 row.style.display = '';
+                visibleCount++;
             } else {
                 row.style.display = 'none';
             }
         });
+        $('#noRecordRow').remove();
+            if (visibleCount === 0) {
+                const noRecordRow = `<tr id="noRecordRow">
+                    <td colspan="5" class="text-center">No records found</td></tr>`;
+                $('#studentTable tbody').append(noRecordRow); // Add it to the table
+
+
+            } else {
+                $('#noRecordRow').remove();
+            }
+        const infoText = visibleCount === 0 ? 'No records found' : `Total Records: ${visibleCount}`;
+        $('#studentTable_info').text(infoText);
+        //table.draw(false);
+        console.log(infoText);
+        
 
     }
     document.getElementById('studentSearch').addEventListener('input', function() {
