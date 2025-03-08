@@ -36,6 +36,11 @@ Route::middleware('auth')->group(function(){
         Route::get('/admin/allocation', [AllocationController::class, 'index'])->name('admin.allocation');
         Route::post('/admin/allocate', [AllocationController::class, 'allocate'])->name('admin.allocate');
         Route::get('/admin/assignedlists', [AllocationController::class, 'assignedLists'])->name('admin.assignedlists');
+
+        Route::get('/admin/reallocation', [AllocationController::class, 'reallocation'])->name('admin.reallocation');
+        Route::get('/admin/reallocation/{id}', [AllocationController::class, 'reallocateSingle'])->name('admin.reallocation.single');
+
+
     });
 
     // Tutor Dashboard Route

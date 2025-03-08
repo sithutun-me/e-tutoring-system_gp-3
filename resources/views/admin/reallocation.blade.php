@@ -8,7 +8,7 @@
             <h1 class=" header-title fs-2 mt-3">
                 <span class="text-white fw-bold" style="margin-left:10px;">TripleEDU</span>
             </h1>
-            
+
             <button class="btn d-md-none d-block close-btn px-1 py-0 text-white">
             <i class="fa-solid fa-square-xmark"></i>
             </button>
@@ -46,34 +46,29 @@
         </nav>
 
         <div class="dashboard-content px-2 pt-2">
-              
 
 
-                
+
+
                 <section class="p-3">
                 <h2 class="fs-2 fw-bold mb-4"> Reallocation</h2>
- 
+
 
                     <div class="form-group mb-4">
-           
+
                         <select class="form-select" id="floatingSelect" aria-label="Floating label select example" style="width: 300px;">
-                        <option selected>Choose Tutor</option>
-                          <option value="1">Tutor1</option>
-                          <option value="2">Tutor2</option>
-                          <option value="3">Tutor3</option>
-                          <option value="4">Tutor4</option>
-                          <option value="5">Tutor5</option>
-                          <option value="6">Tutor6</option>
-                          <option value="7">Tutor7</option>
-                          <option value="8">Tutor8</option>
-                          <option value="9">Tutor9</option>
-                          <option value="10">Tutor10</option>
+                        <option value="" {{ old('tutor_id') ? '' : 'selected' }}>Choose Tutor</option>
+                            @foreach($tutors as $tutor)
+                            <option value="{{ $tutor->id }}" {{ old('tutor_id') == $tutor->id ? 'selected' : '' }}>
+                                {{ $tutor->first_name }} {{ $tutor->last_name }}
+                            </option>
+                            @endforeach
                         </select>
                         <button  type="submit"  name="submit" class="btn btn-primary shadow-none" style="width: 100px;">Submit</button>
                     </div>
 
-                    
-                   
+
+
 
                     <div class="table-responsive" id="no-more-tables">
                             <table id="reallocationTable" class="table bg-white table-bordered" style="height:400px;">
@@ -84,52 +79,24 @@
                                     <th class="text-center"  style="color: white;">Student Name</th>
                                     <th class="text-center"  style="color: white;">Tutor code</th>
                                     <th class="text-center"  style="color: white;">Tutor Name</th>
-                          
+
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($allocations as $allocation)
                                 <tr class="reallocation-row">
-                                    <td data-title="S No">1</td>
-                                    <td data-title="Student code">std0025</td>
-                                    <td data-title="Student Name">Robertz</td>
-                                    <td data-title="Tutor Code">tur0001</td>
-                                    <td data-title="Tutor Name">Margaret Taylor</td>
-                                    
+                                    <td data-title="S No">{{ $allocation->id }}</td>
+                                    <td data-title="Student code">{{$allocation->student?->user_code ?? 'No user associated'}}</td>
+                                    <td data-title="Student Name">{{__(@$allocation->student->first_name) }} {{__(@$allocation->student->last_name) }}</td>
+                                    <td data-title="Tutor code">{{__(@$allocation->tutor->user_code) }}</td>
+                                    <td data-title="Tutor Name">{{__(@$allocation->tutor->first_name) }} {{__(@$allocation->tutor->last_name) }}</td>
                                 </tr>
-
-                                <tr class="reallocation-row">
-                                    <td data-title="S No">1</td>
-                                    <td data-title="Student code">std0025</td>
-                                    <td data-title="Student Name">Robertz</td>
-                                    <td data-title="Tutor Code">tur0001</td>
-                                    <td data-title="Tutor Name">Margaret Taylor</td>
-                                    
-                                </tr>
-
-                                <tr class="reallocation-row">
-                                    <td data-title="S No">1</td>
-                                    <td data-title="Student code">std0025</td>
-                                    <td data-title="Student Name">Robertz</td>
-                                    <td data-title="Tutor Code">tur0001</td>
-                                    <td data-title="Tutor Name">Margaret Taylor</td>
-                                    
-                                </tr>
-
-                                <tr class="reallocation-row">
-                                    <td data-title="S No">1</td>
-                                    <td data-title="Student code">std0025</td>
-                                    <td data-title="Student Name">Robertz</td>
-                                    <td data-title="Tutor Code">tur0001</td>
-                                    <td data-title="Tutor Name">Margaret Taylor</td>
-                                    
-                                </tr>
-
-                               
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
 
-                    
+
 
                 </section>
 
@@ -144,9 +111,12 @@
 
 @endsection
 
-@push('script')
+@push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
 <!-- Bootstrap JS connection in public file -->
 <script src="/bootstrap-5.0.2-dist/js/bootstrap.js"></script>
