@@ -79,7 +79,7 @@
                             <table id="reallocationTable" class="table bg-white table-bordered">
                             <thead>
                                 <tr class="custom-bg text-light">
-                                    <th class="text-center" style="color: white;">S No</th>
+                                    <th class="text-center" style="color: white;">No.</th>
                                     <th class="text-center"  style="color: white;">Student code</th>
                                     <th class="text-center"  style="color: white;">Student Name</th>
                                     <th class="text-center"  style="color: white;">Tutor code</th>
@@ -89,7 +89,7 @@
                             </thead>
                             <tbody>
                                 <tr class="reallocation-row">
-                                    <td data-title="S No">1</td>
+                                    <td data-title="No.">1</td>
                                     <td data-title="Student code">std0025</td>
                                     <td data-title="Student Name">Robertz</td>
                                     <td data-title="Tutor Code">tur0001</td>

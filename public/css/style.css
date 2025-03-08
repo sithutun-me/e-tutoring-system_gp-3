@@ -226,10 +226,12 @@ h6 {
   .sidebar li a:hover {
   color: #fff;
   }
+
   .sidebar li a{
   color: #fff;
   font-family: "Poppins";
   font-size: 1rem;
+  margin-bottom: 8px;
   }
 
  
@@ -262,7 +264,7 @@ h6 {
   }
 
   /* Allocation-table */
-  @media only screen and (max-width:800px){
+  @media only screen and (max-width:850px){
     #no-more-tables tbody,
     #no-more-tables tr,
     #no-more-tables td{

@@ -65,7 +65,7 @@
                           <thead>
                               <tr class="custom-bg text-light">
                                   <th style="width: 63px;"></th>
-                                  <th class="text-center" style="color: white; width: 70px;">S No</th>
+                                  <th class="text-center" style="color: white; width: 70px;">No.</th>
                                   <th class="text-center" style="color: white;">Allocation Date</th>
                                   <th class="text-center"  style="color: white; width: 100px;">Student code</th>
                                   <th class="text-center"  style="color: white; width:200px;">Student Name</th>
@@ -79,7 +79,7 @@
                               <tr class="assigned-row">
                                   <td style="width: 50px;"><span class="allocate-checkbox"><input type="checkbox" id="checkbox1" name="option[]" value="1">
                                   <label for="checkbox1"></label></span></td>
-                                  <td data-title="S No" style="width: 59px;">{{ $allocation->id }}</td>
+                                  <td data-title="No." style="width: 59px;">{{ $allocation->id }}</td>
                                   <td data-title="Allocation Date">{{__(@$allocation->allocation_date_time)}}</td>
                                   <td data-title="Student code" style="width: 94px;" >{{$allocation->student?->user_code ?? 'No user associated'}}</td>
                                   <td data-title="Student Name" style="width: 203px;" >{{__(@$allocation->student->first_name) }} {{__(@$allocation->student->last_name) }}</td>

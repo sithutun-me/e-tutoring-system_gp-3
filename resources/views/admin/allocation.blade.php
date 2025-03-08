@@ -76,8 +76,8 @@
                             <thead>
                                 <tr class="custom-bg text-light">
                                     <th style="width: 74px;"></th>
-                                    <th class="text-center" style="color: white;">S No</th>
-                                    <th class="text-center" style="color: white;">User code</th>
+                                    <th class="text-center" style="color: white;">No.</th>
+                                    <th class="text-center" style="color: white;">Student Code</th>
                                     <th class="text-center" style="color: white;">Student Name</th>
 
                                     <th class="text-center" style="color: white;">Email</th>
@@ -98,8 +98,8 @@
                                             <label for="student_{{ $student->id }}"></label>
                                         </span>
                                     </td>
-                                    <td data-title="S No">{{__(@$student->id) }}</td>
-                                    <td data-title="User code">{{__($student->user_code)}}</td>
+                                    <td data-title="No.">{{__(@$student->id) }}</td>
+                                    <td data-title="Student Code">{{__($student->user_code)}}</td>
                                     <td data-title="Student Name">{{ $student->first_name }} {{ $student->last_name }}</td>
                                     <td data-title="Email">{{__(@$student->email)}}</td>
 
