@@ -85,7 +85,7 @@
                                   <td data-title="Student Name" style="width: 203px;" >{{__(@$allocation->student->first_name) }} {{__(@$allocation->student->last_name) }}</td>
                                   <td data-title="Tutor code">{{__(@$allocation->tutor->user_code) }}</td>
                                   <td data-title="Tutor Name">{{__(@$allocation->tutor->first_name) }} {{__(@$allocation->user->last_name) }}</td>
-                                  <td style="width:260px;""><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD"><a href="/admin/reallocation" class="text-decoration-none " style="color: white;">Reallocate</a></button>
+                                  <td style="width:260px;"><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD"><a href="/admin/reallocation" class="text-decoration-none " style="color: white;">Reallocate</a></button>
                                   <button type="button" class="btn btn-outline-secondary btn-sm shadow-none" style="width:100px; height:35px;">Delete</button></td>
 
                               </tr>

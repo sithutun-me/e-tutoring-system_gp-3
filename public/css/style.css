@@ -695,6 +695,8 @@ h6 {
   overflow-y: auto; /* Enable scrolling */
 }
 
+
+
 #studentTable{
   height: 100%; /* Ensure the table fills the container */
   table-layout: fixed; /* Prevent column width issues */
