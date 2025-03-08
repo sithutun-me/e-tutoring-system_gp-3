@@ -55,37 +55,37 @@
 
 
                   <div class=" form-group mb-4">
-                     <input class="form-control me-2" type="search" placeholder="Search here" aria-label="Search" style="width: 320px;">
-                      <button  type="submit"  name="submit" class="btn btn-primary shadow-none" style="width: 150px;">Search</button>
+                     <input class="form-control me-2" type="search" placeholder="Search here" aria-label="Search" style="width: 320px;" id="assignedSearch">
+                      <button  type="submit"  name="submit" class="btn btn-primary shadow-none" onclick="filterAssigned()" style="width: 150px;">Search</button>
                       <button  type="submit"  name="submit" class="btn btn-primary shadow-none" style="width: 150px;">Bulk Reallocate</button>
                   </div>
 
                   <div class="table-responsive" id="no-more-tables">
-                    <table id="assignedTable" class="table bg-white table-bordered" style="height: 600px;">
+                    <table id="assignedTable" class="table bg-white table-bordered" >
                           <thead>
                               <tr class="custom-bg text-light">
-                                  <th></th>
-                                  <th class="text-center" style="color: white;">S No</th>
+                                  <th style="width: 63px;"></th>
+                                  <th class="text-center" style="color: white; width: 70px;">S No</th>
                                   <th class="text-center" style="color: white;">Allocation Date</th>
-                                  <th class="text-center"  style="color: white;">Student code</th>
-                                  <th class="text-center"  style="color: white;">Student Name</th>
+                                  <th class="text-center"  style="color: white; width: 100px;">Student code</th>
+                                  <th class="text-center"  style="color: white; width:200px;">Student Name</th>
                                   <th class="text-center"  style="color: white;">Tutor Code</th>
                                   <th class="text-center" style="color: white;">Tutor Name</th>
-                                  <th></th>
+                                  <th style="width:248px;"></th>
                               </tr>
                           </thead>
                           <tbody class="form-group-table">
                             @foreach($allocations as $allocation)
                               <tr class="assigned-row">
-                                  <td><span class="allocate-checkbox"><input type="checkbox" id="checkbox1" name="option[]" value="1">
+                                  <td style="width: 50px;"><span class="allocate-checkbox"><input type="checkbox" id="checkbox1" name="option[]" value="1">
                                   <label for="checkbox1"></label></span></td>
-                                  <td data-title="S No">{{ $allocation->id }}</td>
+                                  <td data-title="S No" style="width: 59px;">{{ $allocation->id }}</td>
                                   <td data-title="Allocation Date">{{__(@$allocation->allocation_date_time)}}</td>
-                                  <td data-title="Student code">{{$allocation->student?->user_code ?? 'No user associated'}}</td>
-                                  <td data-title="Student Name">{{__(@$allocation->student->first_name) }} {{__(@$allocation->student->last_name) }}</td>
+                                  <td data-title="Student code" style="width: 94px;" >{{$allocation->student?->user_code ?? 'No user associated'}}</td>
+                                  <td data-title="Student Name" style="width: 203px;" >{{__(@$allocation->student->first_name) }} {{__(@$allocation->student->last_name) }}</td>
                                   <td data-title="Tutor code">{{__(@$allocation->tutor->user_code) }}</td>
                                   <td data-title="Tutor Name">{{__(@$allocation->tutor->first_name) }} {{__(@$allocation->user->last_name) }}</td>
-                                  <td><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD"><a href="/admin/reallocation" class="text-decoration-none " style="color: white;">Reallocate</a></button>
+                                  <td style="width:260px;""><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD"><a href="/admin/reallocation" class="text-decoration-none " style="color: white;">Reallocate</a></button>
                                   <button type="button" class="btn btn-outline-secondary btn-sm shadow-none" style="width:100px; height:35px;">Delete</button></td>
 
                               </tr>
@@ -112,7 +112,7 @@
 
 @endsection
 
-@push('script')
+@push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -151,6 +151,31 @@ $(".sidebar ul li").on('click', function () {
             }
         });
     });
+
+    function filterAssigned() {
+            const searchInput = document.getElementById('assignedSearch').value.toLowerCase();
+            const rows = document.querySelectorAll('.assigned-row');
+
+            rows.forEach(row => {
+                const userCode = row.cells[1].textContent.toLowerCase();
+                const name = row.cells[2].textContent.toLowerCase();
+                const email = row.cells[3].textContent.toLowerCase();
+                const tutor = row.cells[4].textContent.toLowerCase();
+
+                // If search term matches any field, show the row; otherwise, hide it
+                if (userCode.includes(searchInput) || name.includes(searchInput) || email.includes(searchInput) || tutor.includes(searchInput)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+        }
+        document.getElementById('assignedSearch').addEventListener('input', function() {
+            if (this.value.trim() === '') {
+                filterAssigned();
+            }
+        });
 
 
 

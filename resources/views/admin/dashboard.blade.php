@@ -182,6 +182,7 @@
             pageLength: 5,
             lengthChange: false,
             searching: false,
+            scrollY: '280px',
             ordering: true,
             "language": {
                 "info": "Total Records: _TOTAL_",

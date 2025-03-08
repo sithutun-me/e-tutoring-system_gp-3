@@ -38,10 +38,6 @@
 
  }
  
- input[type="search"]::-webkit-search-cancel-button {
-  
-}
-
  /* datetimepicker */
  #datetimepicker {
    width: 320px;
@@ -141,9 +137,15 @@
 
  #table-student-no-tutor {
    flex-grow: 1;
-   min-height: 300px;
+   /* min-height: 300px; */
    overflow-y: auto;
  }
+
+ #table-student-no-tutor td {
+   font-family: 'Poppins';
+   font-size: 0.8125rem;
+ }
+
 
 
  .dataTables_paginate .paginate_button .page-link {
