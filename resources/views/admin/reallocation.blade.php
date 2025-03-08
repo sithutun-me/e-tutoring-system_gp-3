@@ -76,7 +76,7 @@
                    
 
                     <div class="table-responsive" id="no-more-tables">
-                            <table id="reallocationTable" class="table bg-white table-bordered" style="height:400px;">
+                            <table id="reallocationTable" class="table bg-white table-bordered">
                             <thead>
                                 <tr class="custom-bg text-light">
                                     <th class="text-center" style="color: white;">S No</th>
@@ -98,11 +98,11 @@
                                 </tr>
 
                                 <tr class="reallocation-row">
-                                    <td data-title="S No">1</td>
-                                    <td data-title="Student code">std0025</td>
-                                    <td data-title="Student Name">Robertz</td>
-                                    <td data-title="Tutor Code">tur0001</td>
-                                    <td data-title="Tutor Name">Margaret Taylor</td>
+                                    <td data-title="S No">2</td>
+                                    <td data-title="Student code">std0035</td>
+                                    <td data-title="Student Name">Emily</td>
+                                    <td data-title="Tutor Code">tur0005</td>
+                                    <td data-title="Tutor Name">Taylor</td>
                                     
                                 </tr>
 
@@ -150,6 +150,9 @@
 
 <!-- Bootstrap JS connection in public file -->
 <script src="/bootstrap-5.0.2-dist/js/bootstrap.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
 <script>
 $(".sidebar ul li").on('click', function () {
