@@ -47,6 +47,21 @@
 
         <div class="dashboard-content px-2 pt-2">
 
+        <!-- <div class="container" >
+        @if($errors->any())
+            <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-left: 100px;">
+                <ol>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ol>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+    </div> -->
+
+
+
 
             <section class="p-3">
                 <form action="{{ route('admin.allocate') }}" method="POST" enctype="multipart/form-data">
@@ -86,6 +101,8 @@
                                 </tr>
                             </thead>
                             <tbody>
+
+                                @php $count = 1; @endphp
                                 @foreach($students as $student)
                                 <tr class="allocation-row">
                                     <td style="width: 60px;">
@@ -187,10 +204,10 @@
         });
     }
     document.getElementById('allocationSearch').addEventListener('input', function() {
-            if (this.value.trim() === '') {
-                filterAllocation();
-            }
-        });
+        if (this.value.trim() === '') {
+            filterAllocation();
+        }
+    });
 </script>
 
 @endpush

@@ -617,6 +617,7 @@ h6 {
 }
 
 
+
 #tutorTable {
   height: 500px; /* Fixed height */
   overflow-y: auto; /* Enable scrolling */
@@ -640,13 +641,30 @@ h6 {
   table-layout: fixed; /* Ensures alignment */
 }
 
-.tutor-row td {
-  padding: 8px;
-  line-height: 1.8;
-  white-space: nowrap; /* Prevents breaking text */
+#tutorTable {
+  height: 500px; /* Fixed height */
+  overflow-y: auto; /* Enable scrolling */
 }
 
- 
+#tutorTable{
+  height: 100%; /* Ensure the table fills the container */
+  table-layout: fixed; /* Prevent column width issues */
+}
+
+#tutorTable tbody {
+  display: block;
+  height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
+  overflow-y: auto; /* Enable scrolling inside tbody */
+}
+
+#tutorTable thead,
+#tutorTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed; /* Ensures alignment */
+}
+
+
 
 /* Hover effect */
 #tutorTable_wrapper .dataTables_paginate .paginate_button:hover {
