@@ -90,10 +90,10 @@
 
 
                     <div class="table-responsive" id="no-more-tables">
-                        <table id="allocationTable" class="table bg-white table-bordered" style="height: 600px;">
+                        <table id="allocationTable" class="table bg-white table-bordered">
                             <thead>
                                 <tr class="custom-bg text-light">
-                                    <th></th>
+                                    <th style="width: 74px;"></th>
                                     <th class="text-center" style="color: white;">S No</th>
                                     <th class="text-center" style="color: white;">User code</th>
                                     <th class="text-center" style="color: white;">Student Name</th>
@@ -108,7 +108,7 @@
                                 @php $count = 1; @endphp
                                 @foreach($students as $student)
                                 <tr class="allocation-row">
-                                    <td>
+                                    <td style="width: 60px;">
                                         <span class="allocate-checkbox">
                                             <input type="checkbox"
                                                 id="student_{{ $student->id }}"

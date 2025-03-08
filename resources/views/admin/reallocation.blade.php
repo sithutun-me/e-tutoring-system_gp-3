@@ -68,7 +68,11 @@
                     </div>
 
                     <div class="table-responsive" id="no-more-tables">
+<<<<<<< HEAD
                         <table id="reallocationTable" class="table bg-white table-bordered" style="height:400px;">
+=======
+                            <table id="reallocationTable" class="table bg-white table-bordered">
+>>>>>>> 23b92d8 (Table height fixed)
                             <thead>
                                 <tr class="custom-bg text-light">
                                     <th class="text-center" style="color: white;">S No</th>
@@ -83,6 +87,7 @@
                                 @php $count = 1; @endphp
                                 @foreach($allocations as $allocation)
                                 <tr class="reallocation-row">
+<<<<<<< HEAD
                                     <td class="d-none">
                                         <span class="allocate-checkbox">
                                             <input type="checkbox"
@@ -98,6 +103,14 @@
                                     <td data-title="Student Name">{{__(@$allocation->student->first_name) }} {{__(@$allocation->student->last_name) }}</td>
                                     <td data-title="Tutor code">{{__(@$allocation->tutor->user_code) }}</td>
                                     <td data-title="Tutor Name">{{__(@$allocation->tutor->first_name) }} {{__(@$allocation->tutor->last_name) }}</td>
+=======
+                                    <td data-title="S No">2</td>
+                                    <td data-title="Student code">std0035</td>
+                                    <td data-title="Student Name">Emily</td>
+                                    <td data-title="Tutor Code">tur0005</td>
+                                    <td data-title="Tutor Name">Taylor</td>
+                                    
+>>>>>>> 23b92d8 (Table height fixed)
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -120,6 +133,9 @@
 
 <!-- Bootstrap JS connection in public file -->
 <script src="/bootstrap-5.0.2-dist/js/bootstrap.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
 <script>
     $(".sidebar ul li").on('click', function() {

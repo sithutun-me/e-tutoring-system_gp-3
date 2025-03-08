@@ -373,15 +373,77 @@ h6 {
   pointer-events: none;
 }
 
+/* Table Fixed height */
+
+#allocationTable {
+  height: 500px; /* Fixed height */
+  overflow-y: auto; /* Enable scrolling */
+}
+
+#allocationTable {
+  height: 100%; /* Ensure the table fills the container */
+  table-layout: fixed; /* Prevent column width issues */
+}
+
+#allocationTable tbody {
+  display: block;
+  height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
+  overflow-y: auto; /* Enable scrolling inside tbody */
+}
+
+#allocationTable thead,
+#allocationTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed; /* Ensures alignment */
+}
 
 .allocation-row td {
-  padding: 8px; /* Adjust padding to control row height */
-  line-height: 1.8; /* Adjust line height for better spacing */
+  padding: 8px;
+  line-height: 1.8;
+  white-space: nowrap; /* Prevents breaking text */
 }
- 
-#allocationTable {
-  height: auto !important; /* Ensures the table doesn't have a fixed height */
+
+
+
+#assignedTable{
+  height: 500px; /* Fixed height */
+  overflow-y: auto; /* Enable scrolling */
 }
+
+#assignedTable {
+  height: 100%; /* Ensure the table fills the container */
+  table-layout: fixed; /* Prevent column width issues */
+}
+
+#assignedTable tbody {
+  display: block;
+  height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
+  overflow-y: auto; /* Enable scrolling inside tbody */
+}
+
+#assignedTable thead,
+#assignedTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed; /* Ensures alignment */
+}
+
+.assigned-row td {
+  padding: 8px;
+  line-height: 1.8;
+  white-space: nowrap; /* Prevents breaking text */
+}
+
+
+
+@media only screen and (max-width: 800px) {
+  #no-more-tables {
+    height: auto; /* Adjust for mobile */
+    
+  }
+}
+
 
  
 
@@ -428,14 +490,6 @@ h6 {
   pointer-events: none;
 }
 
-.assigned-row td {
-  padding: 8px; /* Adjust padding to control row height */
-  line-height: 1.8; /* Adjust line height for better spacing */
-}
- 
-#assignedTable {
-  height: auto !important; /* Ensures the table doesn't have a fixed height */
-}
 
 
 /* Hover effect */
@@ -448,6 +502,8 @@ h6 {
 /* Reallocation Page Pagination container */
 #reallocationTable_wrapper .dataTables_paginate {
   margin-top: 15px;
+  text-align: center;
+  display: block !important;
   text-align: center;
  
 }
@@ -474,25 +530,45 @@ h6 {
   font-weight: bold;
 }
 
-#reallocationTablee_wrapper .dataTables_paginate .paginate_button.disabled {
+#reallocationTable_wrapper .dataTables_paginate .paginate_button.disabled {
   background-color: #fff !important;
   color: #bfc1c4 !important;
   cursor: not-allowed !important;
   border-color: #bfc1c4 !important;
   pointer-events: none;
 }
-
-.reallocation-row td {
-  padding: 8px; /* Adjust padding to control row height */
-  line-height: 1.8; /* Adjust line height for better spacing */
-}
  
 #reallocationTable {
-  height: auto !important; /* Ensures the table doesn't have a fixed height */
+  height: 500px; /* Fixed height */
+  overflow-y: auto; /* Enable scrolling */
+}
+
+#reallocationTable {
+  height: 100%; /* Ensure the table fills the container */
+  table-layout: fixed; /* Prevent column width issues */
+}
+
+#reallocationTable tbody {
+  display: block;
+  height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
+  overflow-y: auto; /* Enable scrolling inside tbody */
+}
+
+#reallocationTable thead,
+#reallocationTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed; /* Ensures alignment */
+}
+
+.reallocation-row td {
+  padding: 8px;
+  line-height: 1.8;
+  white-space: nowrap; /* Prevents breaking text */
 }
 
 
- 
+
 
 /* Hover effect */
 #reallocationTable_wrapper .dataTables_paginate .paginate_button:hover {
@@ -540,13 +616,33 @@ h6 {
 
 <<<<<<< HEAD
 
-.tutor-row td {
-  padding: 8px; /* Adjust padding to control row height */
-  line-height: 1.8; /* Adjust line height for better spacing */
-}
- 
 #tutorTable {
-  height: auto !important; /* Ensures the table doesn't have a fixed height */
+  height: 500px; /* Fixed height */
+  overflow-y: auto; /* Enable scrolling */
+}
+
+#tutorTable{
+  height: 100%; /* Ensure the table fills the container */
+  table-layout: fixed; /* Prevent column width issues */
+}
+
+#tutorTable tbody {
+  display: block;
+  height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
+  overflow-y: auto; /* Enable scrolling inside tbody */
+}
+
+#tutorTable thead,
+#tutorTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed; /* Ensures alignment */
+}
+
+.tutor-row td {
+  padding: 8px;
+  line-height: 1.8;
+  white-space: nowrap; /* Prevents breaking text */
 }
 
  
@@ -597,13 +693,33 @@ h6 {
 }
 
 
-.student-row td {
-  padding: 8px; /* Adjust padding to control row height */
-  line-height: 1.8; /* Adjust line height for better spacing */
-}
- 
 #studentTable {
-  height: auto !important; /* Ensures the table doesn't have a fixed height */
+  height: 500px; /* Fixed height */
+  overflow-y: auto; /* Enable scrolling */
+}
+
+#studentTable{
+  height: 100%; /* Ensure the table fills the container */
+  table-layout: fixed; /* Prevent column width issues */
+}
+
+#studentTable tbody {
+  display: block;
+  height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
+  overflow-y: auto; /* Enable scrolling inside tbody */
+}
+
+#studentTable thead,
+#studentTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed; /* Ensures alignment */
+}
+
+.student-row td {
+  padding: 8px;
+  line-height: 1.8;
+  white-space: nowrap; /* Prevents breaking text */
 }
 
 

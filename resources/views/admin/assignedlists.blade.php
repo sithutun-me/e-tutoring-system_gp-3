@@ -61,6 +61,7 @@
                         <button type="submit" name="submit" class="btn btn-primary shadow-none" style="width: 150px;">Bulk Reallocate</button>
                     </div>
 
+<<<<<<< HEAD
                     <div class="table-responsive" id="no-more-tables">
                         <table id="assignedTable" class="table bg-white table-bordered" style="height: 600px;">
                             <thead>
@@ -76,6 +77,35 @@
                                 </tr>
                             </thead>
                             <tbody class="form-group-table">
+=======
+                  <div class="table-responsive" id="no-more-tables">
+                    <table id="assignedTable" class="table bg-white table-bordered" >
+                          <thead>
+                              <tr class="custom-bg text-light">
+                                  <th style="width: 63px;"></th>
+                                  <th class="text-center" style="color: white; width: 70px;">S No</th>
+                                  <th class="text-center" style="color: white;">Allocation Date</th>
+                                  <th class="text-center"  style="color: white; width: 100px;">Student code</th>
+                                  <th class="text-center"  style="color: white; width:200px;">Student Name</th>
+                                  <th class="text-center"  style="color: white;">Tutor Code</th>
+                                  <th class="text-center" style="color: white;">Tutor Name</th>
+                                  <th style="width:248px;"></th>
+                              </tr>
+                          </thead>
+                          <tbody class="form-group-table">
+                            @foreach($allocations as $allocation)
+                              <tr class="assigned-row">
+                                  <td style="width: 50px;"><span class="allocate-checkbox"><input type="checkbox" id="checkbox1" name="option[]" value="1">
+                                  <label for="checkbox1"></label></span></td>
+                                  <td data-title="S No" style="width: 59px;">{{ $allocation->id }}</td>
+                                  <td data-title="Allocation Date">{{__(@$allocation->allocation_date_time)}}</td>
+                                  <td data-title="Student code" style="width: 94px;" >{{$allocation->student?->user_code ?? 'No user associated'}}</td>
+                                  <td data-title="Student Name" style="width: 203px;" >{{__(@$allocation->student->first_name) }} {{__(@$allocation->student->last_name) }}</td>
+                                  <td data-title="Tutor code">{{__(@$allocation->tutor->user_code) }}</td>
+                                  <td data-title="Tutor Name">{{__(@$allocation->tutor->first_name) }} {{__(@$allocation->user->last_name) }}</td>
+                                  <td style="width:260px;""><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD"><a href="/admin/reallocation" class="text-decoration-none " style="color: white;">Reallocate</a></button>
+                                  <button type="button" class="btn btn-outline-secondary btn-sm shadow-none" style="width:100px; height:35px;">Delete</button></td>
+>>>>>>> 23b92d8 (Table height fixed)
 
                                 @php $count = 1; @endphp
                                 @foreach($allocations as $allocation)
