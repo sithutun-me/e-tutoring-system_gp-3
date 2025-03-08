@@ -86,6 +86,8 @@
                                 </tr>
                             </thead>
                             <tbody>
+
+                                @php $count = 1; @endphp
                                 @foreach($students as $student)
                                 <tr class="allocation-row">
                                     <td style="width: 60px;">
@@ -98,7 +100,7 @@
                                             <label for="student_{{ $student->id }}"></label>
                                         </span>
                                     </td>
-                                    <td data-title="S No">{{__(@$student->id) }}</td>
+                                    <td data-title="S No">{{$count++}}</td>
                                     <td data-title="User code">{{__($student->user_code)}}</td>
                                     <td data-title="Student Name">{{ $student->first_name }} {{ $student->last_name }}</td>
                                     <td data-title="Email">{{__(@$student->email)}}</td>
@@ -187,10 +189,10 @@
         });
     }
     document.getElementById('allocationSearch').addEventListener('input', function() {
-            if (this.value.trim() === '') {
-                filterAllocation();
-            }
-        });
+        if (this.value.trim() === '') {
+            filterAllocation();
+        }
+    });
 </script>
 
 @endpush

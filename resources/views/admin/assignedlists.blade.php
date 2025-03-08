@@ -49,45 +49,70 @@
 
 
 
-            <form action="{{ route('admin.reallocation') }}" method="get">
-
+            <form action="{{ route('admin.reallocation') }}" method="GET" enctype="multipart/form-data">
+                @csrf
                 <section class="p-3">
                     <h2 class="fs-2 fw-bold mb-4"> Assigned Lists</h2>
 
 
                     <div class=" form-group mb-4">
                         <input class="form-control me-2" type="search" placeholder="Search here" aria-label="Search" style="width: 320px;" id="assignedSearch">
-                        <button class="btn btn-primary shadow-none" onclick="filterAssigned()" style="width: 150px;">Search</button>
+                        <button type="button" class="btn btn-primary shadow-none" onclick="filterAssigned()" style="width: 150px;">Search</button>
                         <button type="submit" name="submit" class="btn btn-primary shadow-none" style="width: 150px;">Bulk Reallocate</button>
                     </div>
 
-                  <div class="table-responsive" id="no-more-tables">
-                    <table id="assignedTable" class="table bg-white table-bordered" >
-                          <thead>
-                              <tr class="custom-bg text-light">
-                                  <th style="width: 63px;"></th>
-                                  <th class="text-center" style="color: white; width: 70px;">S No</th>
-                                  <th class="text-center" style="color: white;">Allocation Date</th>
-                                  <th class="text-center"  style="color: white; width: 100px;">Student code</th>
-                                  <th class="text-center"  style="color: white; width:200px;">Student Name</th>
-                                  <th class="text-center"  style="color: white;">Tutor Code</th>
-                                  <th class="text-center" style="color: white;">Tutor Name</th>
-                                  <th style="width:248px;"></th>
-                              </tr>
-                          </thead>
-                          <tbody class="form-group-table">
-                            @foreach($allocations as $allocation)
-                              <tr class="assigned-row">
-                                  <td style="width: 50px;"><span class="allocate-checkbox"><input type="checkbox" id="checkbox1" name="option[]" value="1">
-                                  <label for="checkbox1"></label></span></td>
-                                  <td data-title="S No" style="width: 59px;">{{ $allocation->id }}</td>
-                                  <td data-title="Allocation Date">{{__(@$allocation->allocation_date_time)}}</td>
-                                  <td data-title="Student code" style="width: 94px;" >{{$allocation->student?->user_code ?? 'No user associated'}}</td>
-                                  <td data-title="Student Name" style="width: 203px;" >{{__(@$allocation->student->first_name) }} {{__(@$allocation->student->last_name) }}</td>
-                                  <td data-title="Tutor code">{{__(@$allocation->tutor->user_code) }}</td>
-                                  <td data-title="Tutor Name">{{__(@$allocation->tutor->first_name) }} {{__(@$allocation->user->last_name) }}</td>
-                                  <td style="width:260px;"><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD"><a href="/admin/reallocation" class="text-decoration-none " style="color: white;">Reallocate</a></button>
-                                  <button type="button" class="btn btn-outline-secondary btn-sm shadow-none" style="width:100px; height:35px;">Delete</button></td>
+                    <div class="table-responsive" id="no-more-tables">
+                        <table id="assignedTable" class="table bg-white table-bordered" style="height: 600px;">
+                            <thead>
+                                <tr class="custom-bg text-light">
+                                    <th></th>
+                                    <th class="text-center" style="color: white;">S No</th>
+                                    <th class="text-center" style="color: white;">Allocation Date</th>
+                                    <th class="text-center" style="color: white;">Student code</th>
+                                    <th class="text-center" style="color: white;">Student Name</th>
+                                    <th class="text-center" style="color: white;">Tutor Code</th>
+                                    <th class="text-center" style="color: white;">Tutor Name</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody class="form-group-table">
+
+                                @php $count = 1; @endphp
+                                @foreach($allocations as $allocation)
+                                <tr class="assigned-row">
+                                    <td>
+                                        <span class="allocate-checkbox">
+                                            <input type="checkbox"
+                                                id="allocation_{{ $allocation->id }}"
+                                                name="selected_allocations[]"
+                                                value="{{ $allocation->id }}"
+                                                {{ in_array($allocation->id, old('selected_allocations', [])) ? 'checked' : '' }}>
+                                            <label for="allocation_{{ $allocation->id }}"></label>
+                                        </span>
+                                    </td>
+                                    <td data-title="S No">{{ $count++;}}</td>
+                                    <td data-title="Allocation Date">{{__(@$allocation->allocation_date_time)}}</td>
+                                    <td data-title="Student code">{{$allocation->student?->user_code ?? 'No user associated'}}</td>
+                                    <td data-title="Student Name">{{__(@$allocation->student->first_name) }} {{__(@$allocation->student->last_name) }}</td>
+                                    <td data-title="Tutor code">{{__(@$allocation->tutor->user_code) }}</td>
+                                    <td data-title="Tutor Name">{{__(@$allocation->tutor->first_name) }} {{__(@$allocation->tutor->last_name) }}</td>
+                                    <td>
+                                        <button
+                                            type="button"
+                                            data-route="{{ route('admin.reallocation') }}"
+                                            data-allocation-id="{{ $allocation->id }}"
+                                            class="btn btn-primary btn-sm shadow-none reallocate"
+                                            style="background-color:#004AAD">
+                                            Reallocate
+                                        </button>
+                                        <button
+                                            type="button"
+                                            data-id="{{$allocation->id}}"
+                                            class="btn btn-outline-secondary btn-sm shadow-none delete"
+                                            style="width:100px; height:35px;">
+                                            Delete
+                                        </button>
+                                    </td>
 
                                 </tr>
                                 @endforeach
@@ -110,6 +135,38 @@
 
 
 </div>
+</div>
+
+
+
+<div id="deleteModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete confirmation!</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{route('admin.allocation.delete')}}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <input type="hidden" name="id">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <p>Are you sure want to delete this allocation?</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <button type="submit" class="btn btn-primary">Confirm</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="las la-times"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 @endsection
@@ -152,6 +209,22 @@
                 "info": "Total Records: _TOTAL_",
             }
         });
+
+        $('.reallocate').on('click', function() {
+            // Extract the route URL and allocation ID from the button's data attributes
+            const route = $(this).data('route');
+            const allocationId = $(this).data('allocation-id');
+
+            // Redirect to the route with selected_allocations[] as a single-item array
+            window.location.href = `${route}?selected_allocations[]=${allocationId}`;
+        });
+
+        $('.delete').on('click', function() {
+            var modal = $('#deleteModal');
+            modal.find('input[name=id]').val($(this).data('id'));
+            modal.modal('show');
+        });
+
     });
 
     function filterAssigned() {
