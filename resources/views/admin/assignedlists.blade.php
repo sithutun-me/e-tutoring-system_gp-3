@@ -90,8 +90,8 @@
                                             <label for="allocation_{{ $allocation->id }}"></label>
                                         </span>
                                     </td>
-                                    <td data-title="S No">{{ $count++;}}</td>
-                                    <td data-title="Allocation Date">{{__(@$allocation->allocation_date_time)}}</td>
+                                    <td data-title="S No">{{ $count++; }}</td>
+                                    <td data-title="Allocation Date">{{ formatDate($allocation->allocation_date_time)}}</td>
                                     <td data-title="Student code">{{$allocation->student?->user_code ?? 'No user associated'}}</td>
                                     <td data-title="Student Name">{{__(@$allocation->student->first_name) }} {{__(@$allocation->student->last_name) }}</td>
                                     <td data-title="Tutor code">{{__(@$allocation->tutor->user_code) }}</td>
