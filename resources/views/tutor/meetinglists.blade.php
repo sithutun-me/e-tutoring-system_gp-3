@@ -66,22 +66,40 @@
                     <a href="/tutor/meetingdetail" class="btn btn-primary shadow-none">+ New Meeting</a>
                 </div>
                 <!-- </div> -->
-                <div class="form-group mb-4">
-                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example" style="width: 320px;">
-                        <option selected>All</option>
-                        <option value="Real">Real</option>
-                        <option value="Virtual">Virtual</option>
-                    </select>
-                    <div class="input-group" id="datetimepicker">
-                        <input type="text" class="form-control" id="datepicker" placeholder="Select a date" readonly/>
-                        <span class="input-group-text" id="datepicker-icon">
-                            <i class="fas fa-calendar-alt"></i>
-                        </span>
+                <div class="form-group mb-4 row">
+                    <div class="row">
+                        <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
+                            <select class="form-select" id="selectDateMeeting" aria-label="Floating label select example">
+                                <option selected>All</option>
+                                <option value="Real">Real</option>
+                                <option value="Virtual">Virtual</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
+
+                            <div class="input-group" id="datetimepicker">
+                                <input type="text" class="form-control" id="datepicker" placeholder="Select a date" readonly />
+                                <span class="input-group-text" id="datepicker-icon">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
+
+                            <select class="form-select form--control" name="student_id" id="selectStudentMeeting" aria-label="Floating label select example">
+                                <option value="" selected disabled>-- Choose Student --</option>
+                                <option value="1">Student One</option>
+                                <option value="2">Student Two</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-2 d-flex flex-column align-items-start">
+
+                            <div class="text-center">
+                                <a href="#" class="btn btn-primary shadow-none">Search</a>
+                            </div>
+                        </div>
                     </div>
-                    <input class="form-control" type="search" placeholder="Search" aria-label="Search" style="width: 320px;">
-                    <div class="text-center">
-                        <a href="#" class="btn btn-primary shadow-none">Search</a>
-                    </div>
+
                 </div>
                 <div class="table-responsive">
                     <table class="table bg-white table-bordered card-table" id="table-meeting">
@@ -205,7 +223,7 @@
     $(document).ready(function() {
         $('#datepicker').datepicker({
             format: 'yyyy-mm-dd',
-            autoclose: true, 
+            autoclose: true,
             todayHighlight: true
         });
     });

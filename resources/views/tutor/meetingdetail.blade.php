@@ -65,212 +65,214 @@
                 </span>
                 <div class="form-group mb-4 mt-4">
                     <form action="{{ route('tutor.meetinglists') }}" method="POST" enctype="multipart/form-data">
-                        
-                            <div class="chart-container">
 
-                                <div class="chart-card chart-card-full meeting-card">
-                                    <div class="chart-card-header">
-                                        <div class="row hidden-title update-title-div">
-                                            <div class="col-md-6 mt-4 d-flex justify-content-center align-items-center">
-                                                <h4 class="chart-card-title" style="font-size:1rem;">Reschedule Meeting</h4>
-                                            </div>
+                        <div class="chart-container">
+
+                            <div class="chart-card chart-card-full meeting-card">
+                                <div class="chart-card-header">
+                                    <div class="row hidden-title update-title-div">
+                                        <div class="col-md-6 mt-4 d-flex justify-content-center align-items-center">
+                                            <h4 class="chart-card-title" style="font-size:1rem;">Reschedule Meeting</h4>
                                         </div>
-                                        <div class="row hidden-title detail-title-div">
-                                            <div class="col-md-2 mt-4 d-flex justify-content-center align-items-center">
-
-                                            </div>
-                                            <div class="col-md-2 mt-4 d-flex justify-content-center align-items-center">
-                                                <h4 class="chart-card-title" style="font-size:1rem;">Meeting Detail</h4>
-                                            </div>
-                                            <div class="col-md-2 mt-4 d-flex align-items-start flex-column">
-                                                <div class="text-center">
-                                                    <a href="#" class="btn btn-primary shadow-none" style="width: auto;">Mark as complete</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row hidden-title new-title-div">
-                                            <div class="col-md-6 mt-4 d-flex justify-content-center align-items-center">
-                                                <h4 class="chart-card-title" style="font-size:1rem;">Create New Meeting</h4>
-                                            </div>
-                                        </div>
-
-
                                     </div>
-                                    <div class="chart-card-body">
-                                        <div class="row">
-                                            <div class="col-md-6 mb-2">
-                                                <div class="normal-text">
-                                                    Meeting Title
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6 mb-2">
-                                                <div class="normal-text">
-                                                    <input type="text" class="form-control" placeholder="Add title" required />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6 mb-2">
-                                                <div class="normal-text">
-                                                    Student
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6 mb-2">
-                                                <div class="normal-text">
-                                                    <input type="text" class="form-control" placeholder="Add student" required />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6 mb-2">
-                                                <div class="normal-text">
-                                                    Date
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6 mb-2">
-                                                <div class="input-group normal-text">
-                                                    <input type="text" class="form-control" id="meetingdatepicker" placeholder="Select a date" readonly required />
-                                                    <span class="input-group-text" id="datepicker-icon">
-                                                        <i class="fas fa-calendar-alt"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-2 mb-2">
-                                                <div class="normal-text">
-                                                    Start time
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2 mb-2">
+                                    <div class="row hidden-title detail-title-div">
+                                        <div class="col-md-2 mt-4 d-flex justify-content-center align-items-center">
 
-                                            </div>
-                                            <div class="col-md-2 mb-2">
-                                                <div class="normal-text">
-                                                    End time
-                                                </div>
+                                        </div>
+                                        <div class="col-md-2 mt-4 d-flex justify-content-center align-items-center">
+                                            <h4 class="chart-card-title" style="font-size:1rem;">Meeting Detail</h4>
+                                        </div>
+                                        <div class="col-md-2 mt-4 d-flex align-items-start flex-column">
+                                            <div class="text-center">
+                                                <a href="#" class="btn btn-primary shadow-none" style="width: auto;">Mark as complete</a>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-2 mb-2">
-                                                <input id="starttimepicker" type="text" class="form-control" required />
-                                            </div>
-                                            <div class="col-md-2 mb-2 d-flex justify-content-center align-items-center">
-                                                <div class="normal-text">
-                                                    <i class="fa-solid fa-right-long fa-2xl"></i>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2 mb-2">
-                                                <input id="endtimepicker" type="text" class="form-control" required />
-                                            </div>
+                                    </div>
+                                    <div class="row hidden-title new-title-div">
+                                        <div class="col-md-6 mt-4 d-flex justify-content-center align-items-center">
+                                            <h4 class="chart-card-title" style="font-size:1rem;">Create New Meeting</h4>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6 mb-2">
-                                                <div class="normal-text">
-                                                    Meeting type
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-1 mb-2">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="meetingtype" id="realmeeting" value="real" data-target=".location-div">
-                                                    <label class="form-check-label" for="realmeeting">Real</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-1 mb-2">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="meetingtype" id="virtualmeeting" value="virtual" data-target=".platform-div,.link-div">
-                                                    <label class="form-check-label" for="virtualmeeting">Virtual</label>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    </div>
 
-                                        <div class="row location-div hidden-div">
-                                            <div class="col-md-6 mb-2">
-                                                <div class="normal-text">
-                                                    Location
-                                                </div>
+
+                                </div>
+                                <div class="chart-card-body">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-2">
+                                            <div class="normal-text">
+                                                Meeting Title
                                             </div>
                                         </div>
-                                        <div class="row location-div hidden-div">
-                                            <div class="col-md-6 mb-2">
-                                                <div class="normal-text">
-                                                    <input type="text" class="form-control" placeholder="Add room, floor, building" />
-                                                </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-2">
+                                            <div class="normal-text">
+                                                <input type="text" class="form-control" placeholder="Add title" required />
                                             </div>
                                         </div>
-                                        <div class="row platform-div hidden-div">
-                                            <div class="col-md-6 mb-2">
-                                                <div class="normal-text">
-                                                    Platform
-                                                </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-2">
+                                            <div class="normal-text">
+                                                Student
                                             </div>
                                         </div>
-                                        <div class="row platform-div hidden-div">
-                                            <div class="col-md-6 mb-2">
-                                                <select class="form-select" id="selectMeetingType" aria-label="Floating label select example">
-                                                    <option value="Zoom">Zoom Meeting</option>
-                                                    <option value="Google">Google Meet</option>
-                                                    <option value="Teams">Microsoft Teams Meeting</option>
-                                                </select>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-2">
+                                            <select class="form-select" id="selectStudentMeetingDetail" aria-label="Floating label select example">
+                                                <option value="" selected disabled>-- Choose Student --</option>
+                                                <option value="1">Student One</option>
+                                                <option value="2">Student Two</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-2">
+                                            <div class="normal-text">
+                                                Date
                                             </div>
                                         </div>
-                                        <div class="row link-div hidden-div">
-                                            <div class="col-md-6 mb-2">
-                                                <div class="normal-text">
-                                                    Meeting Link
-                                                </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-2">
+                                            <div class="input-group normal-text">
+                                                <input type="text" class="form-control" id="meetingdatepicker" placeholder="Select a date" readonly required />
+                                                <span class="input-group-text" id="datepicker-icon">
+                                                    <i class="fas fa-calendar-alt"></i>
+                                                </span>
                                             </div>
                                         </div>
-                                        <div class="row link-div hidden-div">
-                                            <div class="col-md-6 mb-2">
-                                                <div class="normal-text">
-                                                    <input type="text" class="form-control" placeholder="Add link" />
-                                                </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2 mb-2">
+                                            <div class="normal-text">
+                                                Start time
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6 mb-2">
-                                                <div class="normal-text">
-                                                    Description
-                                                </div>
+                                        <div class="col-md-2 mb-2">
+
+                                        </div>
+                                        <div class="col-md-2 mb-2">
+                                            <div class="normal-text">
+                                                End time
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6 mb-2">
-                                                <div class="normal-text">
-                                                    <textarea class="form-control"></textarea>
-                                                </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2 mb-2">
+                                            <input id="starttimepicker" type="text" class="form-control" required />
+                                        </div>
+                                        <div class="col-md-2 mb-2 d-flex justify-content-center align-items-center">
+                                            <div class="normal-text">
+                                                <i class="fa-solid fa-right-long fa-2xl"></i>
                                             </div>
                                         </div>
-                                        <div class="row hidden-button new-button-div">
-                                            <div class="col-md-6 mb-2 mt-2">
-                                                <button type="button" class="btn btn-primary shadow-none full-button">Save</button>
+                                        <div class="col-md-2 mb-2">
+                                            <input id="endtimepicker" type="text" class="form-control" required />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-2">
+                                            <div class="normal-text">
+                                                Meeting type
                                             </div>
                                         </div>
-                                        <div class="row hidden-button update-button-div">
-                                            <div class="col-md-6 mb-2 mt-2">
-                                                <button type="button" class="btn btn-primary shadow-none full-button">Update</button>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1 mb-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="meetingtype" id="realmeeting" value="real" data-target=".location-div">
+                                                <label class="form-check-label" for="realmeeting">Real</label>
                                             </div>
                                         </div>
-                                        <div class="row hidden-button detail-button-div">
-                                            <div class="col-md-6 mb-2 mt-2">
-                                                <button type="button" class="btn btn-primary shadow-none full-button"><a href="/tutor/meetingdetail/1/edit" class="text-decoration-none" style="color: white;">Reschedule</a></button>
+                                        <div class="col-md-1 mb-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="meetingtype" id="virtualmeeting" value="virtual" data-target=".platform-div,.link-div">
+                                                <label class="form-check-label" for="virtualmeeting">Virtual</label>
                                             </div>
                                         </div>
-                                        <div class="row hidden-button detail-button-div">
-                                            <div class="col-md-6 mb-2 mt-1">
-                                                <button type="button" class="btn btn-secondary shadow-none full-button">Cancel</button>
+                                    </div>
+
+                                    <div class="row location-div hidden-div">
+                                        <div class="col-md-6 mb-2">
+                                            <div class="normal-text">
+                                                Location
                                             </div>
                                         </div>
-                                    
+                                    </div>
+                                    <div class="row location-div hidden-div">
+                                        <div class="col-md-6 mb-2">
+                                            <div class="normal-text">
+                                                <input type="text" class="form-control" placeholder="Add room, floor, building" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row platform-div hidden-div">
+                                        <div class="col-md-6 mb-2">
+                                            <div class="normal-text">
+                                                Platform
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row platform-div hidden-div">
+                                        <div class="col-md-6 mb-2">
+                                            <select class="form-select" id="selectMeetingType" aria-label="Floating label select example">
+                                                <option value="Zoom">Zoom Meeting</option>
+                                                <option value="Google">Google Meet</option>
+                                                <option value="Teams">Microsoft Teams Meeting</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row link-div hidden-div">
+                                        <div class="col-md-6 mb-2">
+                                            <div class="normal-text">
+                                                Meeting Link
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row link-div hidden-div">
+                                        <div class="col-md-6 mb-2">
+                                            <div class="normal-text">
+                                                <input type="text" class="form-control" placeholder="Add link" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-2">
+                                            <div class="normal-text">
+                                                Description
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-2">
+                                            <div class="normal-text">
+                                                <textarea class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row hidden-button new-button-div">
+                                        <div class="col-md-6 mb-2 mt-2">
+                                            <button type="button" class="btn btn-primary shadow-none full-button">Save</button>
+                                        </div>
+                                    </div>
+                                    <div class="row hidden-button update-button-div">
+                                        <div class="col-md-6 mb-2 mt-2">
+                                            <button type="button" class="btn btn-primary shadow-none full-button">Update</button>
+                                        </div>
+                                    </div>
+                                    <div class="row hidden-button detail-button-div">
+                                        <div class="col-md-6 mb-2 mt-2">
+                                            <button type="button" class="btn btn-primary shadow-none full-button"><a href="/tutor/meetingdetail/1/edit" class="text-decoration-none" style="color: white;">Reschedule</a></button>
+                                        </div>
+                                    </div>
+                                    <div class="row hidden-button detail-button-div">
+                                        <div class="col-md-6 mb-2 mt-1">
+                                            <button type="button" class="btn btn-secondary shadow-none full-button">Cancel</button>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
