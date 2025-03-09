@@ -148,7 +148,7 @@
             <div class="modal-header">
                 <h5 class="modal-title">Delete confirmation!</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
             <form action="{{route('admin.allocation.delete')}}" method="POST">
@@ -164,7 +164,7 @@
                 <div class="modal-footer ">
                     <button type="submit" class="btn btn-primary">Confirm</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="fa-solid fa-square-xmark"></i>
+                    Cancel
                     </button>
                 </div>
             </form>
