@@ -264,11 +264,19 @@ h6 {
   }
 
   /* Allocation-table */
-  @media only screen and (max-width:850px){
+  @media only screen and (max-width:1100px){
+    #no-more-tables {
+      overflow-y: auto;  /* Enable vertical scrolling */
+      overflow-x: scroll;
+      display: block; 
+    }
+
+    
     #no-more-tables tbody,
     #no-more-tables tr,
     #no-more-tables td{
       display: block;
+      
     }
    
     #no-more-tables thead tr{
@@ -279,7 +287,7 @@ h6 {
 
     #no-more-tables td{
       position: relative;
-      padding-left: 50%;
+      padding-left: 42%;
       border: none;
       border-bottom: 1px solid #eee;
     }
@@ -336,6 +344,8 @@ h6 {
   margin-top: 3px;
   margin-right: 2px;
 }
+
+
 
 
 /* Allocation Page Pagination container */
@@ -436,6 +446,8 @@ h6 {
   line-height: 1.8;
   white-space: nowrap; /* Prevents breaking text */
 }
+
+
 
 
 

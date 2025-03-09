@@ -68,30 +68,7 @@
                     </div>
 
                     <div class="table-responsive" id="no-more-tables">
-
-                            <table id="reallocationTable" class="table bg-white table-bordered">
-                            <thead>
-                                <tr class="custom-bg text-light">
-                                    <th class="text-center" style="color: white;">No.</th>
-                                    <th class="text-center"  style="color: white;">Student code</th>
-                                    <th class="text-center"  style="color: white;">Student Name</th>
-                                    <th class="text-center"  style="color: white;">Tutor code</th>
-                                    <th class="text-center"  style="color: white;">Tutor Name</th>
-                          
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="reallocation-row">
-                                    <td data-title="No.">1</td>
-                                    <td data-title="Student code">std0025</td>
-                                    <td data-title="Student Name">Robertz</td>
-                                    <td data-title="Tutor Code">tur0001</td>
-                                    <td data-title="Tutor Name">Margaret Taylor</td>
-                                    
-                                </tr>
-
-                            <table id="reallocationTable" class="table bg-white table-bordered">
-
+                        <table id="reallocationTable" class="table bg-white table-bordered" style="height:400px;">
                             <thead>
                                 <tr class="custom-bg text-light">
                                     <th class="text-center" style="color: white;">S No</th>
@@ -103,11 +80,9 @@
                             </thead>
                             <tbody>
 
-
                                 @php $count = 1; @endphp
                                 @foreach($allocations as $allocation)
                                 <tr class="reallocation-row">
-
                                     <td class="d-none">
                                         <span class="allocate-checkbox">
                                             <input type="checkbox"
@@ -123,7 +98,6 @@
                                     <td data-title="Student Name">{{__(@$allocation->student->first_name) }} {{__(@$allocation->student->last_name) }}</td>
                                     <td data-title="Tutor code">{{__(@$allocation->tutor->user_code) }}</td>
                                     <td data-title="Tutor Name">{{__(@$allocation->tutor->first_name) }} {{__(@$allocation->tutor->last_name) }}</td>
-
                                 </tr>
                                 @endforeach
                             </tbody>

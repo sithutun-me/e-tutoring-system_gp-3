@@ -78,12 +78,12 @@
 
                                 @php $count = 1; @endphp
                                 @foreach ($tutors as $tutor)
-                                    <tr class="tutor-row" id="no-record-row">
+                                    <tr class="tutor-row " id="no-record-row">
                                         <td data-title="No">{{ $count++ }}</td>
                                         <td data-title="Code">{{ $tutor->user_code }}</td>
                                         <td data-title="Name">{{ $tutor->first_name }} {{ $tutor->last_name }}</td>
                                         <td data-title="Email">{{ $tutor->email }}</td>
-                                        <td data-title="Assigned Students">{{ $tutor->assigned_students_count }}</td>
+                                        <td data-title="Assigned Students" >{{ $tutor->assigned_students_count }}</td>
                                         <td><button type="button" class="btn btn-primary btn-sm shadow-none"
                                                 style="background-color:#004AAD; width:190px;">
                                                 <a href="tutor/dashboard" class="text-decoration-none "

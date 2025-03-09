@@ -46,23 +46,6 @@
         </nav>
 
         <div class="dashboard-content px-2 pt-2">
-
-        <!-- <div class="container" >
-        @if($errors->any())
-            <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-left: 100px;">
-                <ol>
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ol>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-    </div> -->
-
-
-
-
             <section class="p-3">
                 <form action="{{ route('admin.allocate') }}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -91,8 +74,8 @@
                             <thead>
                                 <tr class="custom-bg text-light">
                                     <th style="width: 74px;"></th>
-                                    <th class="text-center" style="color: white;">No.</th>
-                                    <th class="text-center" style="color: white;">Student Code</th>
+                                    <th class="text-center" style="color: white;">S No</th>
+                                    <th class="text-center" style="color: white;">User code</th>
                                     <th class="text-center" style="color: white;">Student Name</th>
 
                                     <th class="text-center" style="color: white;">Email</th>
@@ -115,8 +98,8 @@
                                             <label for="student_{{ $student->id }}"></label>
                                         </span>
                                     </td>
-                                    <td data-title="No.">{{__(@$student->id) }}</td>
-                                    <td data-title="Student Code">{{__($student->user_code)}}</td>
+                                    <td data-title="S No">{{$count++}}</td>
+                                    <td data-title="User code">{{__($student->user_code)}}</td>
                                     <td data-title="Student Name">{{ $student->first_name }} {{ $student->last_name }}</td>
                                     <td data-title="Email">{{__(@$student->email)}}</td>
 
