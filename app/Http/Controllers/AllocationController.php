@@ -6,6 +6,9 @@ use App\Models\Allocation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\StudentAssignedMail;
+use App\Mail\TutorAssignmentMail;
 
 use function PHPSTORM_META\type;
 
@@ -58,12 +61,15 @@ class AllocationController extends Controller
                 $allocation->staff_id = Auth::user()->id;
                 $allocation->active = 1;
                 $allocation->save();
+                Mail::to($selectedStudent->email)->send(new StudentAssignedMail($selectedStudent, $tutor));
             }
             $studentCount++;
             if ($studentCount > 15) {
                 break;
             }
         }
+        Mail::to($tutor->email)->send(new TutorAssignmentMail($tutor, $selectedStudents));
+
         return redirect()->route('admin.allocation')->with('success', 'Students have been assigned.');
     }
 
