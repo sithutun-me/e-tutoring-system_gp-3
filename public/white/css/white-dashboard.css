@@ -48,10 +48,6 @@
    display: none;
  }
 
- /* datetimepicker */
- #datetimepicker {
-   width: 320px;
- }
 
  #meetingdatepicker, #starttimepicker, #endtimepicker {
    background-color: white;
@@ -62,7 +58,9 @@
  }
 
  #selectMeetingType,
- #floatingSelect {
+ #selectDateMeeting,
+ #selectStudentMeeting,
+ #selectStudentMeetingDetail {
 
    font-family: 'Poppins';
    font-size: 0.8125rem;
