@@ -93,11 +93,12 @@
                                         </span>
                                     </td>
                                     <td data-title="S No" style="width: 59px;">{{ $count++;}}</td>
-                                    <td data-title="Allocation Date">{{__(@$allocation->allocation_date_time)}}</td>
+                                    <td data-title="Allocation Date">
+                                    {{ \Carbon\Carbon::parse($allocation->allocation_date_time)->format('d/m/Y')}}</td>
                                     <td data-title="Student code" style="width: 94px;">{{$allocation->student?->user_code ?? 'No user associated'}}</td>
                                     <td data-title="Student Name" style="width: 203px;">{{__(@$allocation->student->first_name) }} {{__(@$allocation->student->last_name) }}</td>
                                     <td data-title="Tutor code">{{__(@$allocation->tutor->user_code) }}</td>
-                                    <td data-title="Tutor Name">{{__(@$allocation->tutor->first_name) }} {{__(@$allocation->user->last_name) }}</td>
+                                    <td data-title="Tutor Name">{{__(@$allocation->tutor->first_name) }} {{__(@$allocation->tutor->last_name) }}</td>
                                     <td style="width:260px;">
                                         <button
                                             type="button"
@@ -146,8 +147,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Delete confirmation!</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                <i class="fa-solid fa-xmark"></i>
+                <button type="button" class="close btn" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <form action="{{route('admin.allocation.delete')}}" method="POST">
@@ -162,8 +163,7 @@
                 </div>
                 <div class="modal-footer ">
                     <button type="submit" class="btn btn-primary">Confirm</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
-                    Cancel
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Close</i>
                     </button>
                 </div>
             </form>
