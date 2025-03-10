@@ -66,9 +66,9 @@
                         <thead>
                             <tr class="custom-bg text-light">
                                 <th class="text-center" style="color: white; width: 72px;">No.</th>
-                                <th class="text-center" style="color: white; width:239px;">Student Code</th>
+                                <th class="text-center" style="color: white; width: 157px;">Student Code</th>
                                 <th class="text-center" style="color: white; width:239px;">Student Name</th>
-                                <th class="text-center" style="color: white; width:246px; ">Email</th>
+                                <th class="text-center" style="color: white; width:290px; ">Email</th>
                                 <th class="text-center" style="color: white; width:239px;">Assigned Tutor</th>
                                 <th></th>
 
@@ -79,9 +79,9 @@
                             @foreach ($students as $student)
                             <tr class="student-row">
                                 <td data-title="No" style="width: 60px;">{{ $count++;}}</td>
-                                <td data-title="Code" style="width: 241px;">{{ $student->user_code }}</td>
+                                <td data-title="Code" style="width: 150px;">{{ $student->user_code }}</td>
                                 <td data-title="Name" style="width: 241px;">{{ $student->first_name }} {{ $student->last_name }}</td>
-                                <td data-title="Email" style=" width:249px;" >{{ $student->email }}</td>
+                                <td data-title="Email" style=" width: 300px;" >{{ $student->email }}</td>
                                 <td data-title="Assigned Tutor" style="width: 241px;">{{ $student->tutor_name }}</td>
                                 <td style="text-align: center;"><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;">
                                         <a href="student/dashboard" class="text-decoration-none " style="color: white; ">View Dashboard >></a></button>

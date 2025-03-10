@@ -64,10 +64,39 @@
 
                 <div class="post mt-3" >
                        
-                       <div class="text-center fit">
+                       <div class="text-center fit mb-2">
                         <a href="/tutor/createposts" class="post-btn btn btn-primary shadow-none mb-3" style="background-color: #004AAD;">+ Start a post</a>
-                        
                        </div>
+
+                       <div class="form-group mb-4 row">
+                            <div class="row">
+                            
+                                <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
+
+                                    <div class="input-group" id="datetimepicker">
+                                        <input type="text" class="form-control" id="datepicker" placeholder="Select a date" readonly />
+                                        <span class="input-group-text" id="datepicker-icon">
+                                            <i class="fas fa-calendar-alt"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
+
+                                    <select class="form-select form--control" name="student_id" id="selectStudentMeeting" aria-label="Floating label select example">
+                                        <option value="" selected disabled>-- Choose Student --</option>
+                                        <option value="1">Student One</option>
+                                        <option value="2">Student Two</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 mb-2 d-flex flex-column align-items-start">
+
+                                    <div class="text-center">
+                                        <a href="#" class="btn btn-primary shadow-none">Search</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
 
                         <div class="post-container">
 
@@ -78,10 +107,10 @@
 
                             <p>
                                 <i class="fa-solid fa-circle-user me-3" style="font-size: 35px; color:#808080; vertical-align: middle;"></i>
-                                <strong class="me-4" style="vertical-align: middle; font-size: 1rem">Name</strong>
-                                <span class=" me-1" style="vertical-align: middle;">4 March 2025</span> 
-                                <span class=" me-4" style="vertical-align: middle;">9:00 PM</span> 
-                                <span class="me-0" style="vertical-align: middle;">Updated</span>
+                                <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">Name</strong>
+                                <span class="date me-1" style="vertical-align: middle;">4 March 2025</span> 
+                                <span class="time me-4" style="vertical-align: middle;">9:00 PM</span> 
+                                <span class="status me-0" style="vertical-align: middle;">Updated</span>
                             </p>
 
                             <h5>Project sample file</h5>
@@ -98,18 +127,27 @@
 
                             <div class="comments" id="commentsSection" style="display:none;">
                                 <hr>
-                                <p class="mb-1"><strong>Comments</strong></p>
-                                <p><strong class="me-2">Name</strong> <span class="text-muted me-2">3 March 2025 </span> <span class="text-muted me-2"> 8:10 PM</span></p>
+                                <p class="mb-2"><strong style="font-size: 0.875rem;">Comments</strong></p>
+                                <p>
+                                    <i class="fa-solid fa-circle-user me-2" style="font-size: 20px; color:#808080; vertical-align: middle;"></i>
+                                    <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">Name</strong>
+                                    <span class="date me-1" style="vertical-align: middle;">4 March 2025</span> 
+                                    <span class="time me-4" style="vertical-align: middle;">9:00 PM</span> 
+                                    
+                                </p>
                                 <p>Yes sir, well noted.<br>We will be missing you during the holidays sir.</p>
                             </div>
 
+                            
+
 
                             <form action="" method="" enctype="multipart/form-data">
-                                <div class="d-flex align-items-center gap-2 mt-3">
+                                <div class="d-flex align-items-center gap-2 mt-4">
                                     <input type="text" id="replyInput" class="form-control" placeholder="Reply" style="max-width: 1100px;">
                                     <button type="button" class="btn btn-primary ms-3" style="width: 110px;" onclick="checkReply()">Send</button>
                                 </div>
                             </form>
+
                         </div>
                         
                         <div class="post-container">
@@ -132,7 +170,7 @@
 
                             <div class="comments">
                                 <hr>
-                                <p class="mb-1"><strong style="font-size: 0.875rem;">Comments</strong></p>
+                                <p class="mb-2"><strong style="font-size: 0.875rem;">Comments</strong></p>
                                 <p>
                                     <i class="fa-solid fa-circle-user me-2" style="font-size: 20px; color:#808080; vertical-align: middle;"></i>
                                     <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">Name</strong>
@@ -211,6 +249,9 @@
         $('.sidebar').removeClass('active');
 
     });
+
+
+    // Comment section reply
 
     function checkReply() {
         const replyInput = document.getElementById('replyInput').value.trim();

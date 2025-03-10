@@ -882,6 +882,7 @@ h6 {
 
 .profile-img {
   font-size: 30px;
+  color: #808080;
 
 }
 
@@ -934,7 +935,9 @@ h6 {
   width: 30px;
 }
 
-@media only screen and (max-width: 800px) {
+
+
+@media only screen and (max-width: 1100px) {
   .edit-btn {
     float: none;
     margin-bottom: 10px;

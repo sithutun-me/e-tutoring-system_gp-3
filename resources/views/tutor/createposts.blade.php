@@ -70,7 +70,7 @@
    
 
                         <div class="d-flex align-items-center mb-3">
-                            <div class="profile-img"><i class="bi bi-person-circle"></i></div>
+                            <div class="profile-img"><i class="fa-solid fa-circle-user"></i></div>
                             
                             <strong class="ms-2">Name</strong>
                         </div>
@@ -109,7 +109,7 @@
                             <!--Selected/Chosen File List Display -->
                             <ul id="file-list" class="file-list"></ul>
 
-                            <button type="button" class="btn btn-primary w-100" style="background-color: #004AAD;">Post</button>
+                            <button type="button" class="btn btn-primary w-100 mt-2" style="background-color: #004AAD;">Post</button>
                         </form>
                     </div>
 
@@ -133,14 +133,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
 <script>
-    console.log("Script is loaded!");
-    $(document).ready(function() {
-        $('#datepicker').datepicker({
-            format: 'yyyy-mm-dd',
-            autoclose: true,
-            todayHighlight: true
-        });
-    });
+    
 
     // $(document).ready(function(){
     //     console.log("Data table is loading..");

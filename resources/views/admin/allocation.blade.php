@@ -75,8 +75,8 @@
                                 <tr class="custom-bg text-light">
                                     <th style="width: 74px;"></th>
                                     <th class="text-center" style="color: white; width: 90px;">No.</th>
-                                    <th class="text-center" style="color: white;">User Code</th>
-                                    <th class="text-center" style="color: white;">Student Name</th>
+                                    <th class="text-center" style="color: white; width: 365px;">User Code</th>
+                                    <th class="text-center" style="color: white; width: 365px;">Student Name</th>
 
                                     <th class="text-center" style="color: white;">Email</th>
 

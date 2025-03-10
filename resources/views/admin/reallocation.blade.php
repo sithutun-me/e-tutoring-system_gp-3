@@ -71,10 +71,10 @@
                         <table id="reallocationTable" class="table bg-white table-bordered" style="height:400px;">
                             <thead>
                                 <tr class="custom-bg text-light">
-                                    <th class="text-center" style="color: white;">S No</th>
-                                    <th class="text-center" style="color: white;">Student code</th>
+                                    <th class="text-center" style="color: white;">No.</th>
+                                    <th class="text-center" style="color: white;">Student Code</th>
                                     <th class="text-center" style="color: white;">Student Name</th>
-                                    <th class="text-center" style="color: white;">Tutor code</th>
+                                    <th class="text-center" style="color: white;">Tutor Code</th>
                                     <th class="text-center" style="color: white;">Tutor Name</th>
                                 </tr>
                             </thead>
@@ -93,10 +93,10 @@
                                             <label for="allocation_{{ $allocation->id }}"></label>
                                         </span>
                                     </td>
-                                    <td data-title="S No">{{ $count++;}}</td>
-                                    <td data-title="Student code">{{ $allocation->student?->user_code ?? 'No user associated'}}</td>
+                                    <td data-title="No.">{{ $count++;}}</td>
+                                    <td data-title="Student Code">{{ $allocation->student?->user_code ?? 'No user associated'}}</td>
                                     <td data-title="Student Name">{{__(@$allocation->student->first_name) }} {{__(@$allocation->student->last_name) }}</td>
-                                    <td data-title="Tutor code">{{__(@$allocation->tutor->user_code) }}</td>
+                                    <td data-title="Tutor Code">{{__(@$allocation->tutor->user_code) }}</td>
                                     <td data-title="Tutor Name">{{__(@$allocation->tutor->first_name) }} {{__(@$allocation->tutor->last_name) }}</td>
                                 </tr>
                                 @endforeach

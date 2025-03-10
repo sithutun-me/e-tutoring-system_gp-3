@@ -65,11 +65,11 @@
                         <table id="tutorTable" class="table bg-white table-bordered">
                             <thead>
                                 <tr class="custom-bg text-light">
-                                    <th class="text-center" style="color: white;">No.</th>
-                                    <th class="text-center" style="color: white;">Tutor Code</th>
-                                    <th class="text-center" style="color: white;">Tutor Name</th>
-                                    <th class="text-center" style="color: white;">Email</th>
-                                    <th class="text-center" style="color: white;">Assigned Students</th>
+                                    <th class="text-center" style="color: white; width:110px;">No.</th>
+                                    <th class="text-center" style="color: white; width:200px;">Tutor Code</th>
+                                    <th class="text-center" style="color: white; width: 293px;">Tutor Name</th>
+                                    <th class="text-center" style="color: white; width: 293px;">Email</th>
+                                    <th class="text-center" style="color: white;width: 118px;">Assigned Students</th>
                                     <th></th>
 
                                 </tr>
@@ -79,11 +79,11 @@
                                 @php $count = 1; @endphp
                                 @foreach ($tutors as $tutor)
                                     <tr class="tutor-row " id="no-record-row">
-                                        <td data-title="No">{{ $count++ }}</td>
-                                        <td data-title="Code">{{ $tutor->user_code }}</td>
-                                        <td data-title="Name">{{ $tutor->first_name }} {{ $tutor->last_name }}</td>
-                                        <td data-title="Email">{{ $tutor->email }}</td>
-                                        <td data-title="Assigned Students" >{{ $tutor->assigned_students_count }}</td>
+                                        <td data-title="No" style="width: 100px;">{{ $count++ }}</td>
+                                        <td data-title="Code" style="width:200px;">{{ $tutor->user_code }}</td>
+                                        <td data-title="Name" style="width: 300px;">{{ $tutor->first_name }} {{ $tutor->last_name }}</td>
+                                        <td data-title="Email" style="width: 300px;">{{ $tutor->email }}</td>
+                                        <td data-title="Assigned Students" style="width: 110px;" >{{ $tutor->assigned_students_count }}</td>
                                         <td><button type="button" class="btn btn-primary btn-sm shadow-none"
                                                 style="background-color:#004AAD; width:190px;">
                                                 <a href="tutor/dashboard" class="text-decoration-none "

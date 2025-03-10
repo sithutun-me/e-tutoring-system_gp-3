@@ -66,24 +66,24 @@
 
 
                   <div class="table-responsive" id="no-more-tables">
-                    <table id="assignedTable" class="table bg-white table-bordered" >
-                          <thead>
-                          <tr class="custom-bg  text-light">
-                                  <th style="width: 63px;"></th>
-                                  <th class="text-center" style="color: white; width: 70px;">No.</th>
-                                  <th class="text-center"  style="color: white; ">Student Name</th>
-                                  <th class="text-center"  style="color: white; ">Student Code</th>
-                                  <th class="text-center"  style="color: white; ">Tutor First Name</th>
-                                  <th class="text-center" style="color: white; ">Tutor Code</th>
-                                  <th class="text-center" style="color: white;">Tutor Full Name</th>
-                                  <th style="width:248px;"></th>
-                              </tr>
-                          </thead>
-                          <tbody class="form-group-table">
+                  <table id="assignedTable" class="table bg-white table-bordered">
+                            <thead>
+                                <tr class="custom-bg text-light">
+                                    <th style="width: 67px;"></th>
+                                    <th class="text-center" style="color: white; width: 70px;">No.</th>
+                                    <th class="text-center" style="color: white; width: 159px;">Allocation Date</th>
+                                    <th class="text-center" style="color: white; width: 109px;">Student Code</th>
+                                    <th class="text-center" style="color: white; width: 269px;">Student Name</th>
+                                    <th class="text-center" style="color: white; width: 110px;">Tutor Code</th>
+                                    <th class="text-center" style="color: white;width: 259px;">Tutor Name</th>
+                                    <th style="width:268px;"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="form-group-table">
                                 @php $count = 1; @endphp
                                 @foreach($allocations as $allocation)
                                 <tr class="assigned-row">
-                                    <td style="width: 50px;">
+                                    <td style="width: 52px;">
                                         <span class="allocate-checkbox">
                                             <input type="checkbox"
                                                 id="allocation_{{ $allocation->id }}"
@@ -93,13 +93,14 @@
                                             <label for="allocation_{{ $allocation->id }}"></label>
                                         </span>
                                     </td>
-                                    <td data-title="No." style="width: 59px;">{{ $count++;}}</td>
-                                    <td data-title="Student Name"  >{{__(@$allocation->student->first_name) }} {{__(@$allocation->student->last_name) }}</td>
-                                    <td data-title="Student Code">{{__(@$allocation->student->user_code) }}</td>
-                                    <td data-title="Tutor First Name">{{__(@$allocation->tutor->first_name) }} {{__(@$allocation->user->last_name) }}</td>
-                                    <td data-title="Tutor Code">{{__(@$allocation->tutor->user_code) }}</td>
-                                    <td data-title="Tutor Full Name">{{__(@$allocation->tutor->first_name) }} {{__(@$allocation->tutor->last_name) }}</td>
-                                    <td style="width:260px;">
+                                    <td data-title="No." style="width: 57px;">{{ $count++;}}</td>
+                                    <td data-title="Allocation Date" style="width: 153px;">
+                                    {{ \Carbon\Carbon::parse($allocation->allocation_date_time)->format('d/m/Y')}}</td>
+                                    <td data-title="Student Code" style="width: 99px;">{{$allocation->student?->user_code ?? 'No user associated'}}</td>
+                                    <td data-title="Student Name" style="width: 273px;">{{__(@$allocation->student->first_name) }} {{__(@$allocation->student->last_name) }}</td>
+                                    <td data-title="Tutor code"style="width: 99px;">{{__(@$allocation->tutor->user_code) }}</td>
+                                    <td data-title="Tutor Name" style="width: 260px;">{{__(@$allocation->tutor->first_name) }} {{__(@$allocation->tutor->last_name) }}</td>
+                                    <td style="width:255px;">
                                         <button
                                             type="button"
                                             data-route="{{ route('admin.reallocation') }}"
@@ -121,6 +122,8 @@
                                 @endforeach
                             </tbody>
                         </table>
+
+
 
 
             </form>
