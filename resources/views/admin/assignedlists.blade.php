@@ -65,7 +65,7 @@
 
 
                   <div class="table-responsive" id="no-more-tables">
-                  <table id="assignedTable" class="table bg-white table-bordered">
+                  <table id="assignedTable" class="table bg-white">
                             <thead>
                                 <tr class="custom-bg text-light">
                                     <th style="width: 67px;"></th>

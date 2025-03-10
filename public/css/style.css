@@ -264,7 +264,7 @@ h6 {
   }
 
   /* Allocation-table */
-  @media only screen and (max-width:1150px){
+  @media only screen and (max-width:1200px){
     #no-more-tables {
       overflow-y: auto;  /* Enable vertical scrolling */
       overflow-x: scroll;
@@ -390,6 +390,12 @@ h6 {
 #allocationTable {
   height: 500px; /* Fixed height */
   overflow-y: auto; /* Enable scrolling */
+
+}
+
+#allocationTable tr, td{
+  border: 1px solid #D3D3D3;
+  border-collapse: collapse;
 }
 
 #allocationTable {
@@ -421,7 +427,16 @@ h6 {
 #assignedTable{
   height: 500px; /* Fixed height */
   overflow-y: auto; /* Enable scrolling */
+ 
+  
 }
+
+#assignedTable  tr, td{
+  border: 1px solid #D3D3D3;
+  border-collapse: collapse;
+}
+
+
 
 #assignedTable {
   height: 100%; /* Ensure the table fills the container */
@@ -557,6 +572,11 @@ h6 {
   overflow-y: auto; /* Enable scrolling */
 }
 
+#reallocationTable  tr, td{
+  border: 1px solid #D3D3D3;
+  border-collapse: collapse;
+}
+
 #reallocationTable {
   height: 100%; /* Ensure the table fills the container */
   table-layout: fixed; /* Prevent column width issues */
@@ -633,6 +653,11 @@ h6 {
 #tutorTable {
   height: 500px; /* Fixed height */
   overflow-y: auto; /* Enable scrolling */
+}
+
+#tutorTable  tr, td{
+  border: 1px solid #D3D3D3;
+  border-collapse: collapse;
 }
 
 #tutorTable{
@@ -727,6 +752,10 @@ h6 {
   overflow-y: auto; /* Enable scrolling */
 }
 
+#studentTable  tr, td{
+  border: 1px solid #D3D3D3;
+  border-collapse: collapse;
+}
 
 
 #studentTable{

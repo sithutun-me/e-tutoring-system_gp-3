@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="table-responsive" id="no-more-tables">
-                    <table id="studentTable" class="table bg-white table-bordered">
+                    <table id="studentTable" class="table bg-white ">
                         <thead>
                             <tr class="custom-bg text-light">
                                 <th class="text-center" style="color: white; width: 72px;">No.</th>

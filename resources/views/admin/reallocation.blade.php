@@ -68,7 +68,7 @@
                     </div>
 
                     <div class="table-responsive" id="no-more-tables">
-                        <table id="reallocationTable" class="table bg-white table-bordered" style="height:400px;">
+                        <table id="reallocationTable" class="table bg-white " style="height:400px;">
                             <thead>
                                 <tr class="custom-bg text-light">
                                     <th class="text-center" style="color: white;">No.</th>

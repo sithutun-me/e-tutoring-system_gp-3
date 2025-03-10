@@ -70,7 +70,7 @@
 
 
                     <div class="table-responsive" id="no-more-tables">
-                        <table id="allocationTable" class="table bg-white table-bordered">
+                        <table id="allocationTable" class="table bg-white">
                             <thead>
                                 <tr class="custom-bg text-light">
                                     <th style="width: 74px;"></th>
@@ -101,7 +101,7 @@
                                     <td data-title="No." style="width: 79px;">{{$count++;}}</td>
                                     <td data-title="User Code">{{__($student->user_code)}}</td>
                                     <td data-title="Student Name">{{ $student->first_name }} {{ $student->last_name }}</td>
-                                    <td data-title="Email">{{__(@$student->email)}}</td>
+                                    <td data-title="Email" style="  overflow-x: auto; ">{{__(@$student->email)}}</td>
                                 </tr>
                                 @endforeach
 
