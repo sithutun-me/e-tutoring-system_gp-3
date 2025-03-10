@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 
 @section('content')
@@ -150,8 +149,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Delete confirmation!</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                <i class="fa-solid fa-xmark"></i>
+                <button type="button" class="close btn" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <form action="{{route('admin.allocation.delete')}}" method="POST">
@@ -166,8 +165,7 @@
                 </div>
                 <div class="modal-footer ">
                     <button type="submit" class="btn btn-primary">Confirm</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
-                    Cancel
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Close</i>
                     </button>
                 </div>
             </form>

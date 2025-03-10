@@ -98,11 +98,10 @@
                                             <label for="student_{{ $student->id }}"></label>
                                         </span>
                                     </td>
-                                    <td data-title="No." style="width: 79px;">{{$count++}}</td>
+                                    <td data-title="No." style="width: 79px;">{{$count++;}}</td>
                                     <td data-title="User Code">{{__($student->user_code)}}</td>
                                     <td data-title="Student Name">{{ $student->first_name }} {{ $student->last_name }}</td>
                                     <td data-title="Email">{{__(@$student->email)}}</td>
-
                                 </tr>
                                 @endforeach
 
