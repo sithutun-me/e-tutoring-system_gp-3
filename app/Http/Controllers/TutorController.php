@@ -32,6 +32,24 @@ class TutorController extends Controller
         return view('tutor.meetingdetail', ['id' => null]);
 
     }
+
+
+    public function blogging()
+    {
+        return view('tutor.blogging');
+    }
+
+    public function createposts()
+    {
+        return view('tutor.createposts');
+    }
+
+    public function updateposts()
+    {
+        return view('tutor.updateposts');
+    }
+
+
     // public function meetingdetail($id = null)
     // {
     //     $isEdit = $id ? true : false;

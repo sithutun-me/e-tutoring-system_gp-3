@@ -54,6 +54,10 @@ Route::middleware('auth')->group(function(){
         
         Route::post('/tutor/meetingdetail', [TutorController::class, 'save'])->name('save');
         Route::put('/tutor/meetingdetail/{id}', [TutorController::class, 'update'])->name('update');
+
+        Route::get('/tutor/blogging', [TutorController::class, 'blogging'])->name('tutor.blogging');
+        Route::get('/tutor/createposts', [TutorController::class, 'createposts'])->name('tutor.createposts');
+        Route::get('/tutor/updateposts', [TutorController::class, 'updateposts'])->name('tutor.updateposts');
     });
 
     // Student Dashboard Route
