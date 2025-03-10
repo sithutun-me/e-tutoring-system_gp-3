@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 
 @section('content')
@@ -65,21 +64,21 @@
                     </div>
 
 
-                  <div class="table-responsive" id="no-more-tables">
-                    <table id="assignedTable" class="table bg-white table-bordered" >
-                          <thead>
-                          <tr class="custom-bg  text-light">
-                                  <th style="width: 63px;"></th>
-                                  <th class="text-center" style="color: white; width: 70px;">No.</th>
-                                  <th class="text-center"  style="color: white; ">Student Name</th>
-                                  <th class="text-center"  style="color: white; ">Student Code</th>
-                                  <th class="text-center"  style="color: white; ">Tutor First Name</th>
-                                  <th class="text-center" style="color: white; ">Tutor Code</th>
-                                  <th class="text-center" style="color: white;">Tutor Full Name</th>
-                                  <th style="width:248px;"></th>
-                              </tr>
-                          </thead>
-                          <tbody class="form-group-table">
+                    <div class="table-responsive" id="no-more-tables">
+                        <table id="assignedTable" class="table bg-white table-bordered">
+                            <thead>
+                                <tr class="custom-bg text-light">
+                                    <th style="width: 63px;"></th>
+                                    <th class="text-center" style="color: white; width: 70px;">S No</th>
+                                    <th class="text-center" style="color: white;">Allocation Date</th>
+                                    <th class="text-center" style="color: white; width: 100px;">Student code</th>
+                                    <th class="text-center" style="color: white; width:200px;">Student Name</th>
+                                    <th class="text-center" style="color: white;">Tutor Code</th>
+                                    <th class="text-center" style="color: white;">Tutor Name</th>
+                                    <th style="width:248px;"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="form-group-table">
                                 @php $count = 1; @endphp
                                 @foreach($allocations as $allocation)
                                 <tr class="assigned-row">
@@ -93,12 +92,12 @@
                                             <label for="allocation_{{ $allocation->id }}"></label>
                                         </span>
                                     </td>
-                                    <td data-title="No." style="width: 59px;">{{ $count++;}}</td>
-                                    <td data-title="Student Name"  >{{__(@$allocation->student->first_name) }} {{__(@$allocation->student->last_name) }}</td>
-                                    <td data-title="Student Code">{{__(@$allocation->student->user_code) }}</td>
-                                    <td data-title="Tutor First Name">{{__(@$allocation->tutor->first_name) }} {{__(@$allocation->user->last_name) }}</td>
-                                    <td data-title="Tutor Code">{{__(@$allocation->tutor->user_code) }}</td>
-                                    <td data-title="Tutor Full Name">{{__(@$allocation->tutor->first_name) }} {{__(@$allocation->tutor->last_name) }}</td>
+                                    <td data-title="S No" style="width: 59px;">{{ $count++;}}</td>
+                                    <td data-title="Allocation Date">{{__(@$allocation->allocation_date_time)}}</td>
+                                    <td data-title="Student code" style="width: 94px;">{{$allocation->student?->user_code ?? 'No user associated'}}</td>
+                                    <td data-title="Student Name" style="width: 203px;">{{__(@$allocation->student->first_name) }} {{__(@$allocation->student->last_name) }}</td>
+                                    <td data-title="Tutor code">{{__(@$allocation->tutor->user_code) }}</td>
+                                    <td data-title="Tutor Name">{{__(@$allocation->tutor->first_name) }} {{__(@$allocation->user->last_name) }}</td>
                                     <td style="width:260px;">
                                         <button
                                             type="button"
