@@ -36,14 +36,28 @@ Route::middleware('auth')->group(function(){
         Route::get('/admin/allocation', [AllocationController::class, 'index'])->name('admin.allocation');
         Route::post('/admin/allocate', [AllocationController::class, 'allocate'])->name('admin.allocate');
         Route::get('/admin/assignedlists', [AllocationController::class, 'assignedLists'])->name('admin.assignedlists');
+
+        Route::get('/admin/reallocation', [AllocationController::class, 'reallocation'])->name('admin.reallocation');
+        Route::post('/admin/reallocate', [AllocationController::class, 'reallocate'])->name('admin.reallocate');
+
+        Route::post('/admin/allocation/delete', [AllocationController::class, 'deleteAllocation'])->name('admin.allocation.delete');
     });
 
     // Tutor Dashboard Route
     Route::middleware(['role:2'])->group(function () {
         Route::get('/tutor/dashboard', [TutorController::class, 'index'])->name('tutor.dashboard');
-    });
-    Route::middleware(['role:2'])->group(function () {
         Route::get('/tutor/meetinglists', [TutorController::class, 'meetinglists'])->name('tutor.meetinglists');
+        
+        Route::get('/tutor/meetingdetail', [TutorController::class, 'meetingdetail'])->name('tutor.meetingdetail.create');
+        Route::get('/tutor/meetingdetail/{id}/edit', [TutorController::class, 'meetingdetail'])->name('tutor.meetingdetail.update');
+        Route::get('/tutor/meetingdetail/{id}', [TutorController::class, 'meetingview'])->name('tutor.meetingdetail.view');
+        
+        Route::post('/tutor/meetingdetail', [TutorController::class, 'save'])->name('save');
+        Route::put('/tutor/meetingdetail/{id}', [TutorController::class, 'update'])->name('update');
+
+        Route::get('/tutor/blogging', [TutorController::class, 'blogging'])->name('tutor.blogging');
+        Route::get('/tutor/createposts', [TutorController::class, 'createposts'])->name('tutor.createposts');
+        Route::get('/tutor/updateposts', [TutorController::class, 'updateposts'])->name('tutor.updateposts');
     });
 
     // Student Dashboard Route

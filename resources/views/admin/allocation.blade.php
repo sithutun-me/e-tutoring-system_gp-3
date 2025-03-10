@@ -46,8 +46,6 @@
         </nav>
 
         <div class="dashboard-content px-2 pt-2">
-
-
             <section class="p-3">
                 <form action="{{ route('admin.allocate') }}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -72,13 +70,13 @@
 
 
                     <div class="table-responsive" id="no-more-tables">
-                        <table id="allocationTable" class="table bg-white table-bordered" style="height: 600px;">
+                        <table id="allocationTable" class="table bg-white">
                             <thead>
                                 <tr class="custom-bg text-light">
-                                    <th></th>
-                                    <th class="text-center" style="color: white;">S No</th>
-                                    <th class="text-center" style="color: white;">User code</th>
-                                    <th class="text-center" style="color: white;">Student Name</th>
+                                    <th style="width: 74px;"></th>
+                                    <th class="text-center" style="color: white; width: 90px;">No.</th>
+                                    <th class="text-center" style="color: white; width: 365px;">User Code</th>
+                                    <th class="text-center" style="color: white; width: 365px;">Student Name</th>
 
                                     <th class="text-center" style="color: white;">Email</th>
 
@@ -86,9 +84,11 @@
                                 </tr>
                             </thead>
                             <tbody>
+
+                                @php $count = 1; @endphp
                                 @foreach($students as $student)
                                 <tr class="allocation-row">
-                                    <td>
+                                    <td style="width: 60px;">
                                         <span class="allocate-checkbox">
                                             <input type="checkbox"
                                                 id="student_{{ $student->id }}"
@@ -98,11 +98,10 @@
                                             <label for="student_{{ $student->id }}"></label>
                                         </span>
                                     </td>
-                                    <td data-title="S No">{{__(@$student->id) }}</td>
-                                    <td data-title="User code">{{__($student->user_code)}}</td>
+                                    <td data-title="No." style="width: 79px;">{{$count++;}}</td>
+                                    <td data-title="User Code">{{__($student->user_code)}}</td>
                                     <td data-title="Student Name">{{ $student->first_name }} {{ $student->last_name }}</td>
-                                    <td data-title="Email">{{__(@$student->email)}}</td>
-
+                                    <td data-title="Email" style="  overflow-x: auto; ">{{__(@$student->email)}}</td>
                                 </tr>
                                 @endforeach
 
@@ -187,10 +186,10 @@
         });
     }
     document.getElementById('allocationSearch').addEventListener('input', function() {
-            if (this.value.trim() === '') {
-                filterAllocation();
-            }
-        });
+        if (this.value.trim() === '') {
+            filterAllocation();
+        }
+    });
 </script>
 
 @endpush

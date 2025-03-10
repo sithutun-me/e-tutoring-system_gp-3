@@ -6,13 +6,20 @@ use App\Models\Allocation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\StudentAssignedMail;
+use App\Mail\TutorAssignmentMail;
+
+use function PHPSTORM_META\type;
 
 class AllocationController extends Controller
 {
     public function index(){
         $pageTitle = 'Allocation';
         $tutors = User::where('role_id',2)->latest()->get();
-        $students = User::doesntHave('studentAllocations')->where('role_id',1)->get();
+        $students = User::whereDoesntHave('studentAllocations', function ($query) {
+            $query->where('active', 1);
+        })->where('role_id', 1)->get();
 
         return view('admin.allocation',compact('pageTitle','tutors','students'));
     }
@@ -37,7 +44,7 @@ class AllocationController extends Controller
 
         // dd(count($selectedStudents),$tutor,Auth::user()->id);
         $selectedStudentsCount = count($selectedStudents);
-        $studentCount = Allocation::where('tutor_id',$tutor->id)->count();
+        $studentCount = Allocation::where('tutor_id',$tutor->id)->where('active',1)->count();
         if($studentCount + $selectedStudentsCount > 15){
             $notify[] = ['Tutor has student limit.'];
             return back()->withErrors($notify);
@@ -54,36 +61,90 @@ class AllocationController extends Controller
                 $allocation->staff_id = Auth::user()->id;
                 $allocation->active = 1;
                 $allocation->save();
+                Mail::to($selectedStudent->email)->send(new StudentAssignedMail($selectedStudent, $tutor));
             }
             $studentCount++;
-            if ($studentCount >= 15) {
+            if ($studentCount > 15) {
                 break;
             }
         }
+        Mail::to($tutor->email)->send(new TutorAssignmentMail($tutor, $selectedStudents));
+
         return redirect()->route('admin.allocation')->with('success', 'Students have been assigned.');
     }
 
     public function assignedLists(Request $request){
 
         $pageTitle = 'Assigned List';
-        $allocations = Allocation::with(['staff','tutor','student'])->get();
+        $allocations = Allocation::with(['student','tutor'])->where('active',1)->get();
         $allocations = json_decode($allocations);
         return view('admin.assignedlists',compact('pageTitle','allocations'));
     }
 
-    public function filter(Request $request){
-        $pageTitle = 'Search students';
+    public function reallocation(Request $request){
+        $pageTitle = "Reallocation";
+        $request->validate([
+            'selected_allocations' => 'required|array|min:1', // Ensure at least one order is selected
+            'selected_allocations.*' => 'exists:allocation,id',   // Validate each selected order ID
+        ], [
+            'selected_allocations.required' => 'Please select at least one student.',
+            'selected_allocations.min' => 'You must select at least one student.',
+            'selected_allocations.*.exists' => 'One or more selected students are invalid.',
+        ]);
+        $selectedAllocationIds = $request->input('selected_allocations');
+        // dd(gettype($selectedAllocationIds));
+        $allocations = Allocation::whereIn('id',$selectedAllocationIds)->with(['student','tutor'])->where('active',1)->latest()->get();
         $tutors = User::where('role_id',2)->latest()->get();
-        $query = User::doesntHave('studentAllocations');
 
-        if($request->filled('search')) {
-            $query->where('user_code', 'LIKE', '%' . $request->input('search') . '%' )
-            ->orWhere('first_name', 'LIKE', '%' . $request->input('search') . '%')
-            ->orWhere('last_name', 'LIKE', '%' . $request->input('search') . '%')
-            ->orWhere('email', 'LIKE', '%' . $request->input('search') . '%');
+        return view('admin.reallocation', compact(['pageTitle','selectedAllocationIds','allocations','tutors']));
+    }
+
+    public function reallocate(Request $request){
+        $request->validate([
+            'tutor_id' => 'required',
+            'selected_allocations' => 'required|array|min:1', // Ensure at least one order is selected
+            'selected_allocations.*' => 'exists:allocation,id',   // Validate each selected order ID
+        ], [
+            'selected_allocations.required' => 'Please select at least one student.',
+            'selected_allocations.min' => 'You must select at least one student.',
+            'selected_allocations.*.exists' => 'One or more selected students are invalid.',
+        ]);
+        $tutor = User::findOrFail($request->tutor_id);
+
+        $selectedAllocationIds = $request->input('selected_allocations');
+        $selectedAllocations = Allocation::whereIn('id', $selectedAllocationIds)->get();
+        $selectedAllocations = json_decode($selectedAllocations);
+
+        $selectedAllocationCount = count($selectedAllocations);
+        $studentCount = Allocation::where('tutor_id',$tutor->id)->where('active',1)->count();
+        if($studentCount + $selectedAllocationCount > 15){
+            $notify[] = ['Tutor has student limit.'];
+            return back()->withErrors($notify);
         }
-        $students = $query->where('role_id',1)->get();
 
-        return view('admin.allocation', compact('pageTitle','tutors','students'));
+        foreach($selectedAllocations as $selectedAllocation){
+            $id = $selectedAllocation->id;
+            $allocation = Allocation::findOrFail($id);
+            $allocation->tutor_id = $request->tutor_id;
+            $allocation->allocation_date_time = now();
+            $allocation->active = 1;
+            $allocation->save();
+
+
+            $studentCount++;
+            if ($studentCount > 15) {
+                break;
+            }
+        }
+
+        return redirect()->route('admin.assignedlists')->with('success', 'Reallocation is successful');
+    }
+
+    public function deleteAllocation(Request $request){
+       $allocation = Allocation::where('active',1)->findOrFail($request->id);
+       $allocation->active = 0;
+       $allocation->save();
+
+       return back()->with('success', 'Reallocation is deleted');
     }
 }

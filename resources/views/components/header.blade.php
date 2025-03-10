@@ -14,16 +14,5 @@ $user = auth()->user();
             <button class="btn btn-danger">Logout</button>
         </form>
     </nav>
-    <!-- <div class="container" >
-        @if($errors->any())
-            <div class="alert alert-warning" style="margin-left: 100px;">
-                <ol>
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ol>
-            </div>
-        @endif
-    </div> -->
 </div>
 @endauth

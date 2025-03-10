@@ -55,21 +55,21 @@
 
 
                 <div class=" form-group mb-4">
-                    <input class="form-control me-2" id="studentSearch" type="search" placeholder="Search here" oninput="filterStudents()"
+                    <input class="form-control me-2" id="studentSearch" type="search" placeholder="Search here" 
                         aria-label="Search" style="width: 320px;">
-                    <button type="submit" name="submit" onclick="filterStudents()" class="btn btn-primary shadow-none">Search</button>
+                    <button type="button" name="submit" onclick="filterStudents()" class="btn btn-primary shadow-none">Search</button>
 
                 </div>
 
                 <div class="table-responsive" id="no-more-tables">
-                    <table id="studentTable" class="table bg-white table-bordered" style="height: 600px; ">
+                    <table id="studentTable" class="table bg-white ">
                         <thead>
                             <tr class="custom-bg text-light">
-                                <th class="text-center" style="color: white;">No.</th>
-                                <th class="text-center" style="color: white;">Student Code</th>
-                                <th class="text-center" style="color: white;">Student Name</th>
-                                <th class="text-center" style="color: white;">Email</th>
-                                <th class="text-center" style="color: white;">Assigned Tutor</th>
+                                <th class="text-center" style="color: white; width: 72px;">No.</th>
+                                <th class="text-center" style="color: white; width: 157px;">Student Code</th>
+                                <th class="text-center" style="color: white; width:239px;">Student Name</th>
+                                <th class="text-center" style="color: white; width:290px; ">Email</th>
+                                <th class="text-center" style="color: white; width:239px;">Assigned Tutor</th>
                                 <th></th>
 
                             </tr>
@@ -78,11 +78,11 @@
                             @php $count = 1; @endphp
                             @foreach ($students as $student)
                             <tr class="student-row">
-                                <td data-title="No">{{ $count++;}}</td>
-                                <td data-title="Code">{{ $student->user_code }}</td>
-                                <td data-title="Name">{{ $student->first_name }} {{ $student->last_name }}</td>
-                                <td data-title="Email">{{ $student->email }}</td>
-                                <td data-title="Assigned Tutor">{{ $student->tutor_name }}</td>
+                                <td data-title="No" style="width: 60px;">{{ $count++;}}</td>
+                                <td data-title="Code" style="width: 150px;">{{ $student->user_code }}</td>
+                                <td data-title="Name" style="width: 241px;">{{ $student->first_name }} {{ $student->last_name }}</td>
+                                <td data-title="Email" style=" width: 300px;" >{{ $student->email }}</td>
+                                <td data-title="Assigned Tutor" style="width: 241px;">{{ $student->tutor_name }}</td>
                                 <td style="text-align: center;"><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;">
                                         <a href="student/dashboard" class="text-decoration-none " style="color: white; ">View Dashboard >></a></button>
                                 </td>
@@ -95,6 +95,7 @@
                             @endif
                         </tbody>
                     </table>
+                    
 
 
                 </div>
@@ -141,9 +142,10 @@
 
     });
 
+    let table;
     $(document).ready(function() {
 
-        $('#studentTable').DataTable({
+         table = $('#studentTable').DataTable({
             paging: true,
             pageLength: 15,
             lengthChange: false,
@@ -158,6 +160,7 @@
     function filterStudents() {
         const searchInput = document.getElementById('studentSearch').value.toLowerCase();
         const rows = document.querySelectorAll('.student-row');
+        let visibleCount = 0;
 
         rows.forEach(row => {
             const userCode = row.cells[1].textContent.toLowerCase();
@@ -168,10 +171,26 @@
             // If search term matches any field, show the row; otherwise, hide it
             if (userCode.includes(searchInput) || name.includes(searchInput) || email.includes(searchInput) || tutor.includes(searchInput)) {
                 row.style.display = '';
+                visibleCount++;
             } else {
                 row.style.display = 'none';
             }
         });
+        $('#noRecordRow').remove();
+            if (visibleCount === 0) {
+                const noRecordRow = `<tr id="noRecordRow">
+                    <td colspan="5" class="text-center">No records found</td></tr>`;
+                $('#studentTable tbody').append(noRecordRow); // Add it to the table
+
+
+            } else {
+                $('#noRecordRow').remove();
+            }
+        const infoText = visibleCount === 0 ? 'No records found' : `Total Records: ${visibleCount}`;
+        $('#studentTable_info').text(infoText);
+        //table.draw(false);
+        console.log(infoText);
+        
 
     }
     document.getElementById('studentSearch').addEventListener('input', function() {

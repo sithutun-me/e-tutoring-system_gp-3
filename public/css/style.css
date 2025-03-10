@@ -226,10 +226,12 @@ h6 {
   .sidebar li a:hover {
   color: #fff;
   }
+
   .sidebar li a{
   color: #fff;
   font-family: "Poppins";
   font-size: 1rem;
+  margin-bottom: 8px;
   }
 
  
@@ -262,11 +264,19 @@ h6 {
   }
 
   /* Allocation-table */
-  @media only screen and (max-width:800px){
+  @media only screen and (max-width:1200px){
+    #no-more-tables {
+      overflow-y: auto;  /* Enable vertical scrolling */
+      overflow-x: scroll;
+      display: block; 
+    }
+
+    
     #no-more-tables tbody,
     #no-more-tables tr,
     #no-more-tables td{
       display: block;
+      
     }
    
     #no-more-tables thead tr{
@@ -277,7 +287,7 @@ h6 {
 
     #no-more-tables td{
       position: relative;
-      padding-left: 50%;
+      padding-left: 42%;
       border: none;
       border-bottom: 1px solid #eee;
     }
@@ -336,6 +346,8 @@ h6 {
 }
 
 
+
+
 /* Allocation Page Pagination container */
 #allocationTable_wrapper .dataTables_paginate {
   margin-top: 15px;
@@ -373,15 +385,94 @@ h6 {
   pointer-events: none;
 }
 
+/* Table Fixed height */
+
+#allocationTable {
+  height: 500px; /* Fixed height */
+  overflow-y: auto; /* Enable scrolling */
+
+}
+
+#allocationTable tr, td{
+  border: 1px solid #D3D3D3;
+  border-collapse: collapse;
+}
+
+#allocationTable {
+  height: 100%; /* Ensure the table fills the container */
+  table-layout: fixed; /* Prevent column width issues */
+}
+
+#allocationTable tbody {
+  display: block;
+  height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
+  overflow-y: auto; /* Enable scrolling inside tbody */
+}
+
+#allocationTable thead,
+#allocationTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed; /* Ensures alignment */
+}
 
 .allocation-row td {
-  padding: 8px; /* Adjust padding to control row height */
-  line-height: 1.8; /* Adjust line height for better spacing */
+  padding: 8px;
+  line-height: 1.8;
+  white-space: nowrap; /* Prevents breaking text */
 }
+
+
+
+#assignedTable{
+  height: 500px; /* Fixed height */
+  overflow-y: auto; /* Enable scrolling */
  
-#allocationTable {
-  height: auto !important; /* Ensures the table doesn't have a fixed height */
+  
 }
+
+#assignedTable  tr, td{
+  border: 1px solid #D3D3D3;
+  border-collapse: collapse;
+}
+
+
+
+#assignedTable {
+  height: 100%; /* Ensure the table fills the container */
+  table-layout: fixed; /* Prevent column width issues */
+}
+
+#assignedTable tbody {
+  display: block;
+  height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
+  overflow-y: auto; /* Enable scrolling inside tbody */
+}
+
+#assignedTable thead,
+#assignedTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed; /* Ensures alignment */
+}
+
+.assigned-row td {
+  padding: 8px;
+  line-height: 1.8;
+  white-space: nowrap; /* Prevents breaking text */
+}
+
+
+
+
+
+@media only screen and (max-width: 800px) {
+  #no-more-tables {
+    height: auto; /* Adjust for mobile */
+    
+  }
+}
+
 
  
 
@@ -428,14 +519,6 @@ h6 {
   pointer-events: none;
 }
 
-.assigned-row td {
-  padding: 8px; /* Adjust padding to control row height */
-  line-height: 1.8; /* Adjust line height for better spacing */
-}
- 
-#assignedTable {
-  height: auto !important; /* Ensures the table doesn't have a fixed height */
-}
 
 
 /* Hover effect */
@@ -448,6 +531,8 @@ h6 {
 /* Reallocation Page Pagination container */
 #reallocationTable_wrapper .dataTables_paginate {
   margin-top: 15px;
+  text-align: center;
+  display: block !important;
   text-align: center;
  
 }
@@ -474,25 +559,50 @@ h6 {
   font-weight: bold;
 }
 
-#reallocationTablee_wrapper .dataTables_paginate .paginate_button.disabled {
+#reallocationTable_wrapper .dataTables_paginate .paginate_button.disabled {
   background-color: #fff !important;
   color: #bfc1c4 !important;
   cursor: not-allowed !important;
   border-color: #bfc1c4 !important;
   pointer-events: none;
 }
-
-.reallocation-row td {
-  padding: 8px; /* Adjust padding to control row height */
-  line-height: 1.8; /* Adjust line height for better spacing */
-}
  
 #reallocationTable {
-  height: auto !important; /* Ensures the table doesn't have a fixed height */
+  height: 500px; /* Fixed height */
+  overflow-y: auto; /* Enable scrolling */
+}
+
+#reallocationTable  tr, td{
+  border: 1px solid #D3D3D3;
+  border-collapse: collapse;
+}
+
+#reallocationTable {
+  height: 100%; /* Ensure the table fills the container */
+  table-layout: fixed; /* Prevent column width issues */
+}
+
+#reallocationTable tbody {
+  display: block;
+  height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
+  overflow-y: auto; /* Enable scrolling inside tbody */
+}
+
+#reallocationTable thead,
+#reallocationTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed; /* Ensures alignment */
+}
+
+.reallocation-row td {
+  padding: 8px;
+  line-height: 1.8;
+  white-space: nowrap; /* Prevents breaking text */
 }
 
 
- 
+
 
 /* Hover effect */
 #reallocationTable_wrapper .dataTables_paginate .paginate_button:hover {
@@ -539,16 +649,59 @@ h6 {
 }
 
 
-.tutor-row td {
-  padding: 8px; /* Adjust padding to control row height */
-  line-height: 1.8; /* Adjust line height for better spacing */
-}
- 
+
 #tutorTable {
-  height: auto !important; /* Ensures the table doesn't have a fixed height */
+  height: 500px; /* Fixed height */
+  overflow-y: auto; /* Enable scrolling */
 }
 
- 
+#tutorTable  tr, td{
+  border: 1px solid #D3D3D3;
+  border-collapse: collapse;
+}
+
+#tutorTable{
+  height: 100%; /* Ensure the table fills the container */
+  table-layout: fixed; /* Prevent column width issues */
+}
+
+#tutorTable tbody {
+  display: block;
+  height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
+  overflow-y: auto; /* Enable scrolling inside tbody */
+}
+
+#tutorTable thead,
+#tutorTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed; /* Ensures alignment */
+}
+
+#tutorTable {
+  height: 500px; /* Fixed height */
+  overflow-y: auto; /* Enable scrolling */
+}
+
+#tutorTable{
+  height: 100%; /* Ensure the table fills the container */
+  table-layout: fixed; /* Prevent column width issues */
+}
+
+#tutorTable tbody {
+  display: block;
+  height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
+  overflow-y: auto; /* Enable scrolling inside tbody */
+}
+
+#tutorTable thead,
+#tutorTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed; /* Ensures alignment */
+}
+
+
 
 /* Hover effect */
 #tutorTable_wrapper .dataTables_paginate .paginate_button:hover {
@@ -594,13 +747,39 @@ h6 {
 }
 
 
-.student-row td {
-  padding: 8px; /* Adjust padding to control row height */
-  line-height: 1.8; /* Adjust line height for better spacing */
-}
- 
 #studentTable {
-  height: auto !important; /* Ensures the table doesn't have a fixed height */
+  height: 500px; /* Fixed height */
+  overflow-y: auto; /* Enable scrolling */
+}
+
+#studentTable  tr, td{
+  border: 1px solid #D3D3D3;
+  border-collapse: collapse;
+}
+
+
+#studentTable{
+  height: 100%; /* Ensure the table fills the container */
+  table-layout: fixed; /* Prevent column width issues */
+}
+
+#studentTable tbody {
+  display: block;
+  height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
+  overflow-y: auto; /* Enable scrolling inside tbody */
+}
+
+#studentTable thead,
+#studentTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed; /* Ensures alignment */
+}
+
+.student-row td {
+  padding: 8px;
+  line-height: 1.8;
+  white-space: nowrap; /* Prevents breaking text */
 }
 
 
@@ -642,6 +821,200 @@ h6 {
 
  
  
+}
+
+
+/* Tutor Blogging */
+
+
+.post-container {
+  background: white;
+  width: 1250px; /* Full width */
+  padding: 20px;
+  margin-bottom: 45px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+}
+
+.post-container span{
+  font-size: 0.875rem;
+}
+
+.edit-btn {
+  float: right;
+  height: 40px;
+  width: 100px; /* Ensuring consistent width */
+  display: flex;
+  align-items: center; /* Centers text vertically */
+  justify-content: center; /* Centers text horizontally */
+  text-align: center;
+}
+
+
+.file-attachment {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f1f1f1;
+  padding: 10px;
+  width: 300px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+.comments {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.post-btn {
+  height: 40px;
+  background-color: #004AAD;
+  display: flex;
+
+ 
+}
+
+
+ .post a {
+  font-family: "Poppins";
+  font-size: 0.813rem;
+}
+
+.post button{
+  background-color: #004AAD;
+  font-family: "Poppins";
+  font-size: 0.813rem;
+  height: 40px;
+}
+
+
+
+.create-container {
+  width: 700px;
+  background: white;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+
+}
+
+.edit-container {
+  width: 700px;
+  background: white;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+
+}
+
+.profile-img {
+  font-size: 30px;
+  color: #808080;
+
+}
+
+.file-list {
+  list-style: none;
+  padding: 0;
+  width: 100%; /* Ensures it takes full width of the container */
+}
+
+.file-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8f9fa;
+  padding: 8px;
+  border-radius: 5px;
+  margin-top: 5px;
+  flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+  word-break: break-word; /* Prevents overflow by breaking long filenames */
+}
+
+/* Ensure the file name and remove button are responsive */
+.file-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.remove-file {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+  padding-left: 10px;
+}
+
+.edit-container  .file-attachment {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f1f1f1;
+  padding: 10px;
+  border-radius: 5px;
+  width: 250px;
+}
+
+.edit-container  .file-attachment button{
+  width: 30px;
+}
+
+
+
+@media only screen and (max-width: 1100px) {
+  .edit-btn {
+    float: none;
+    margin-bottom: 10px;
+  }
+
+  .post-container {
+    width: 100%; /* Ensure responsiveness */
+    padding: 15px;
+  }
+
+  .create-container{
+    width: 100%;
+  }
+  .edit-container{
+    width: 100%;
+  }
+  .file-list {
+    list-style: none;
+    padding: 0;
+    width: 320px; /* Ensures it takes full width of the container */
+  }
+  .file-list li {
+    flex-direction: column; /* Stack file name and remove button on smaller screens */
+ 
+  }
+  .remove-file{
+    margin-top: 10px;
+  }
+
+ 
+
+  .post-btn{
+    width: 150px;
+  }
+
+  .edit-container  .file-attachment {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    width: 270px;
+  }
+  
+  .edit-container  .file-attachment button{
+    width: 30px;
+  }
 }
 
 

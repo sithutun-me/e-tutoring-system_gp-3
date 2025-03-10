@@ -14,5 +14,54 @@ class TutorController extends Controller
     {
         return view('tutor.meetinglists');
     }
+    public function meetingdetail($id = null) {
+        if($id) {
+            // $resource = Resource::findOrFail($id);
+            return view('tutor.meetingdetail', compact('id'));
+        }
+        // For create (no ID), just pass null or empty data
+        return view('tutor.meetingdetail', ['id' => null]);
+
+    }
+    public function meetingview($id = null) {
+        if($id) {
+            // $resource = Resource::findOrFail($id);
+            return view('tutor.meetingdetail', compact('id'));
+        }
+        // For create (no ID), just pass null or empty data
+        return view('tutor.meetingdetail', ['id' => null]);
+
+    }
+
+
+    public function blogging()
+    {
+        return view('tutor.blogging');
+    }
+
+    public function createposts()
+    {
+        return view('tutor.createposts');
+    }
+
+    public function updateposts()
+    {
+        return view('tutor.updateposts');
+    }
+
+
+    // public function meetingdetail($id = null)
+    // {
+    //     $isEdit = $id ? true : false;
+    //     return view('tutor.meetingdetail',compact('isEdit','id'));
+    // }
+    // public function meetingcreate(Request $request)
+    // {
+    //     return view('tutor.meetingdetail');
+    // }
+    // public function meetingupdate(Request $request, $id)
+    // {
+    //     return redirect()->route('tutor.meetingdetail.update', ['id' => $id]);
+    // }
 
 }

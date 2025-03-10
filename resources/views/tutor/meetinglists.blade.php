@@ -24,7 +24,7 @@
                         <img src="/icon images/meeting.png" style="width:20px; margin-right: 10px;"> Meetings
                     </a>
                 </li>
-                <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block ">
+                <li class=""><a href="/tutor/blogging" class="text-decoration-none px-3 py-2 d-block ">
                         <img src="/icon images/blogging.png" style="width:20px; margin-right: 10px;"> Blogging
 
                     </a>
@@ -63,25 +63,43 @@
                 <h2 class="fs-2 fw-bold">Meetings</h2>
                 <!-- <div class=" form-group mb-4"> -->
                 <div class="text-center fit mb-4 mt-4">
-                    <a href="#" class="btn btn-primary shadow-none">+ New Meeting</a>
+                    <a href="/tutor/meetingdetail" class="btn btn-primary shadow-none">+ New Meeting</a>
                 </div>
                 <!-- </div> -->
-                <div class="form-group mb-4">
-                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example" style="width: 320px;">
-                        <option selected>All</option>
-                        <option value="Real">Real</option>
-                        <option value="Virtual">Virtual</option>
-                    </select>
-                    <div class="input-group" id="datetimepicker">
-                        <input type="text" class="form-control" id="datepicker" placeholder="Select a date" readonly/>
-                        <span class="input-group-text" id="datepicker-icon">
-                            <i class="fas fa-calendar-alt"></i>
-                        </span>
+                <div class="form-group mb-4 row">
+                    <div class="row">
+                        <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
+                            <select class="form-select" id="selectDateMeeting" aria-label="Floating label select example">
+                                <option selected>All</option>
+                                <option value="Real">Real</option>
+                                <option value="Virtual">Virtual</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
+
+                            <div class="input-group" id="datetimepicker">
+                                <input type="text" class="form-control" id="datepicker" placeholder="Select a date" readonly />
+                                <span class="input-group-text" id="datepicker-icon">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
+
+                            <select class="form-select form--control" name="student_id" id="selectStudentMeeting" aria-label="Floating label select example">
+                                <option value="" selected disabled>-- Choose Student --</option>
+                                <option value="1">Student One</option>
+                                <option value="2">Student Two</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-2 d-flex flex-column align-items-start">
+
+                            <div class="text-center">
+                                <a href="#" class="btn btn-primary shadow-none">Search</a>
+                            </div>
+                        </div>
                     </div>
-                    <input class="form-control" type="search" placeholder="Search" aria-label="Search" style="width: 320px;">
-                    <div class="text-center">
-                        <a href="#" class="btn btn-primary shadow-none">Search</a>
-                    </div>
+
                 </div>
                 <div class="table-responsive">
                     <table class="table bg-white table-bordered card-table" id="table-meeting">
@@ -101,7 +119,7 @@
                                 <td class="w-15 no-border special" style="color: #004AAD;">Status</td>
                                 <td class="w-15 no-border special" style="color: #004AAD;">Meeting type</td>
                                 <td class="w-25 no-border special" style="color: #004AAD;">Meeting link</td>
-                                <td rowspan="2" class="text-center w-15 no-left-border special"><a href="#" class="btn btn-primary shadow-none">Detail</a></td>
+                                <td rowspan="2" class="text-center w-15 no-left-border special"><a href="/tutor/meetingdetail/1" class="btn btn-primary shadow-none">Detail</a></td>
                             </tr>
                             <tr class="no-top-border special">
                                 <td class="w-15 no-right-border padding-left special">Zoom Meeting</td>
@@ -122,7 +140,7 @@
                                 <td class="w-15 no-border special" style="color: #004AAD;">Status</td>
                                 <td class="w-15 no-border special" style="color: #004AAD;">Meeting type</td>
                                 <td class="w-25 no-border special" style="color: #004AAD;">Location</td>
-                                <td rowspan="2" class="text-center w-15 no-left-border special"><a href="#" class="btn btn-primary shadow-none">Detail</a></td>
+                                <td rowspan="2" class="text-center w-15 no-left-border special"><a href="/tutor/meetingdetail/1" class="btn btn-primary shadow-none">Detail</a></td>
                             </tr>
                             <tr class="no-top-border special">
                                 <td class="w-15 no-right-border padding-left special"></td>
@@ -147,7 +165,7 @@
                                 <td class="w-15 no-border special" style="color: #004AAD;">Status</td>
                                 <td class="w-15 no-border special" style="color: #004AAD;">Meeting type</td>
                                 <td class="w-25 no-border special" style="color: #004AAD;">Meeting link</td>
-                                <td rowspan="2" class="text-center w-15 no-left-border special"><a href="#" class="btn btn-primary shadow-none">Detail</a></td>
+                                <td rowspan="2" class="text-center w-15 no-left-border special"><a href="/tutor/meetingdetail/1" class="btn btn-primary shadow-none">Detail</a></td>
                             </tr>
                             <tr class="no-top-border special">
                                 <td class="w-15 no-right-border padding-left special">Zoom Meeting</td>
@@ -168,7 +186,7 @@
                                 <td class="w-15 no-border special" style="color: #004AAD;">Status</td>
                                 <td class="w-15 no-border special" style="color: #004AAD;">Meeting type</td>
                                 <td class="w-25 no-border special" style="color: #004AAD;">Location</td>
-                                <td rowspan="2" class="text-center w-15 no-left-border special"><a href="#" class="btn btn-primary shadow-none">Detail</a></td>
+                                <td rowspan="2" class="text-center w-15 no-left-border special"><a href="/tutor/meetingdetail/1" class="btn btn-primary shadow-none">Detail</a></td>
                             </tr>
                             <tr class="no-top-border special">
                                 <td class="w-15 no-right-border padding-left special"></td>
@@ -203,11 +221,10 @@
 <script>
     console.log("Script is loaded!");
     $(document).ready(function() {
-        console.log("Data table is loading..");
         $('#datepicker').datepicker({
-            format: 'yyyy-mm-dd', // Set the date format
-            autoclose: true, // Close the calendar when a date is selected
-            todayHighlight: true // Highlight today's date
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true
         });
     });
 
@@ -242,8 +259,5 @@
         $('.sidebar').removeClass('active');
 
     });
-    window.onload = function() {
-        console.log("DOM is fully loaded");
-    }
 </script>
 @endpush
