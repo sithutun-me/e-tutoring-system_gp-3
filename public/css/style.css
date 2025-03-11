@@ -302,6 +302,7 @@ h6 {
     #no-more-tables tr{
       border-bottom: 1px solid #ccc ;
     }
+   
 
     
 
@@ -311,6 +312,24 @@ h6 {
   #no-more-tables .allocation-row, .assigned-row, .tutor-row, .student-row, .reallocation-row{
     text-align: center;
   }
+
+  .assigned-button {
+    display: flex;
+    gap: 5px; /* Adjust spacing between buttons */
+    flex-wrap: wrap; /* Allow wrapping if necessary */
+    justify-content: center; /* Center buttons */
+    align-items: center; /* Align items */
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+
+
+
+
+.assigned-button button {
+  flex-shrink: 1; /* Allows buttons to shrink within the container */
+}
+
 
 
   /* admin table */
@@ -331,7 +350,7 @@ h6 {
   height: 40px;
   color: #FFFFFF;
   font-family: 'Poppins';
-  font-size: 1rem;
+  font-size: 0.875rem;
   background-color: #004AAD;
   width: 100px;
 }
@@ -422,6 +441,9 @@ h6 {
   white-space: nowrap; /* Prevents breaking text */
 }
 
+.assigned-row button{
+  font-size: 0.875rem;
+}
 
 
 #assignedTable{
@@ -701,6 +723,10 @@ h6 {
   table-layout: fixed; /* Ensures alignment */
 }
 
+.tutor-row button{
+  font-size: 0.875rem;
+}
+
 
 
 /* Hover effect */
@@ -781,6 +807,11 @@ h6 {
   line-height: 1.8;
   white-space: nowrap; /* Prevents breaking text */
 }
+
+.student-row button{
+  font-size: 0.875rem;
+}
+
 
 
 /* Hover effect */
@@ -863,7 +894,7 @@ h6 {
 }
 
 .comments {
-  margin-top: 15px;
+  margin-top: 10px;
   padding: 10px;
   border-radius: 5px;
 }
@@ -875,6 +906,8 @@ h6 {
 
  
 }
+
+
 
 
  .post a {
@@ -964,6 +997,15 @@ h6 {
   width: 30px;
 }
 
+#floatingSelect , #add-title, #file-input{
+  font-family: "Poppins";
+  font-size: 0.875rem;
+}
+
+textarea::placeholder {
+  font-size: 0.875rem; /* Adjust the size as needed */
+
+}
 
 
 @media only screen and (max-width: 1100px) {

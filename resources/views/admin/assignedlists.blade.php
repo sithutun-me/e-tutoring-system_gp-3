@@ -99,13 +99,13 @@
                                     <td data-title="Student Name" style="width: 273px;">{{__(@$allocation->student->first_name) }} {{__(@$allocation->student->last_name) }}</td>
                                     <td data-title="Tutor code"style="width: 99px;">{{__(@$allocation->tutor->user_code) }}</td>
                                     <td data-title="Tutor Name" style="width: 260px;">{{__(@$allocation->tutor->first_name) }} {{__(@$allocation->tutor->last_name) }}</td>
-                                    <td style="width:255px;">
+                                    <td class="assigned-button" style="width:255px;">
                                         <button
                                             type="button"
                                             data-route="{{ route('admin.reallocation') }}"
                                             data-allocation-id="{{ $allocation->id }}"
                                             class="btn btn-primary btn-sm shadow-none reallocate"
-                                            style="background-color:#004AAD">
+                                            style="background-color:#004AAD; ">
                                             Reallocate
                                         </button>
                                         <button
@@ -150,7 +150,7 @@
             <div class="modal-header">
                 <h5 class="modal-title">Delete confirmation!</h5>
                 <button type="button" class="close btn" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <i class="fa-solid fa-x"></i>
                 </button>
             </div>
             <form action="{{route('admin.allocation.delete')}}" method="POST">
