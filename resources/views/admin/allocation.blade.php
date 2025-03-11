@@ -47,15 +47,18 @@
 
         <div class="dashboard-content px-2 pt-2">
             <section class="p-3">
+                <h2 class="fs-2 fw-bold mb-4"> Allocation</h2>
+
+                <form action="{{ route('admin.students.filter') }}" method="get">
+                    @csrf
+                    <div class=" form-group mb-4">
+                        <input id="allocationSearch" name="search_student" class="form-control" type="search" placeholder="Search here" aria-label="Search" style="width: 320px;" value="{{ old('search_student', $searchKeyword ?? '') }}">
+                        <button type="submit" name="submit" class="btn btn-primary shadow-none">Search</button>
+                    </div>
+                </form>
+
                 <form action="{{ route('admin.allocate') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <h2 class="fs-2 fw-bold mb-4"> Allocation</h2>
-
-                    <div class=" form-group mb-4">
-                        <input id="allocationSearch" class="form-control" type="search" placeholder="Search here" aria-label="Search" style="width: 320px;">
-                        <button onclick="filterAllocation()" type="button" name="submit" class="btn btn-primary shadow-none">Search</button>
-                    </div>
-
                     <div class="form-group mb-4">
                         <select class="form-select form--control" name="tutor_id" id="floatingSelect" aria-label="Floating label select example" style="width: 320px;">
                             <option value="" {{ old('tutor_id') ? '' : 'selected' }}>Choose Tutor</option>
@@ -73,7 +76,7 @@
                         <table id="allocationTable" class="table bg-white">
                             <thead>
                                 <tr class="custom-bg text-light">
-                                    <th style="width: 74px;"></th>
+                                    <th class="text-center" style="width: 74px;"><input type="checkbox" id="select_all_students"></th>
                                     <th class="text-center" style="color: white; width: 90px;">No.</th>
                                     <th class="text-center" style="color: white; width: 365px;">User Code</th>
                                     <th class="text-center" style="color: white; width: 365px;">Student Name</th>
@@ -86,7 +89,7 @@
                             <tbody>
 
                                 @php $count = 1; @endphp
-                                @foreach($students as $student)
+                                @forelse($students as $student)
                                 <tr class="allocation-row">
                                     <td style="width: 60px;">
                                         <span class="allocate-checkbox">
@@ -103,7 +106,11 @@
                                     <td data-title="Student Name">{{ $student->first_name }} {{ $student->last_name }}</td>
                                     <td data-title="Email" style="  overflow-x: auto; ">{{__(@$student->email)}}</td>
                                 </tr>
-                                @endforeach
+                                @empty
+                                <tr>
+                                    <td class="text-muted text-center" colspan="100%">No records found</td>
+                                </tr>
+                                @endforelse
 
 
                             </tbody>
@@ -155,6 +162,13 @@
     });
 
     $(document).ready(function() {
+        'use strict';
+
+        const $input = $('#allocationSearch'); // Select the input field
+        if ($input.val().trim() === '') { // Check if the input is empty
+            $input.focus(); // Focus on the input field
+        }
+
         $('#allocationTable').DataTable({
             paging: true,
             pageLength: 15,
@@ -165,30 +179,22 @@
                 "info": "Total Records: _TOTAL_",
             }
         });
-    });
 
-    function filterAllocation() {
-        const searchInput = document.getElementById('allocationSearch').value.toLowerCase();
-        const rows = document.querySelectorAll('.allocation-row');
-
-        rows.forEach(row => {
-            const userCode = row.cells[1].textContent.toLowerCase();
-            const name = row.cells[2].textContent.toLowerCase();
-            const email = row.cells[3].textContent.toLowerCase();
-            const tutor = row.cells[4].textContent.toLowerCase();
-
-            // If search term matches any field, show the row; otherwise, hide it
-            if (userCode.includes(searchInput) || name.includes(searchInput) || email.includes(searchInput) || tutor.includes(searchInput)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
+        $('#allocationSearch').on('input', function() {
+            if (this.value.trim() === '') {
+                window.location.href = "{{ route('admin.allocation') }}";
             }
         });
-    }
-    document.getElementById('allocationSearch').addEventListener('input', function() {
-        if (this.value.trim() === '') {
-            filterAllocation();
-        }
+
+        var table = $('#allocationTable').DataTable();
+        $('#select_all_students').on('change', function() {
+            var checked = $(this).prop('checked');
+
+            table.rows({ page: 'current' }).every(function() {
+                var row = this.node();
+                $(row).find('input[type="checkbox"][name="selected_students[]"]').prop('checked', checked);
+            });
+        });
     });
 </script>
 

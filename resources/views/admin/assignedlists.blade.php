@@ -51,24 +51,23 @@
 
 
 
-            <form action="{{ route('admin.reallocation') }}" method="GET" enctype="multipart/form-data">
-                @csrf
-                <section class="p-3">
-                    <h2 class="fs-2 fw-bold mb-4"> Assigned Lists</h2>
-
-
+            <section class="p-3">
+                <h2 class="fs-2 fw-bold mb-4"> Assigned Lists</h2>
+                <form action="{{ route('admin.allocations.filter') }}" method="get">
+                    @csrf
                     <div class=" form-group mb-4">
-                        <input class="form-control me-2" type="search" placeholder="Search here" aria-label="Search" style="width: 320px;" id="assignedSearch">
-                        <button type="button" class="btn btn-primary shadow-none" onclick="filterAssigned()" style="width: 150px;">Search</button>
-                        <button type="submit" name="submit" class="btn btn-primary shadow-none" style="width: 150px;">Bulk Reallocate</button>
+                        <input id="assignedSearch" class="form-control me-2" name="search_allocation" type="search" placeholder="Search here" aria-label="Search" style="width: 320px;" value="{{ old('search_allocation', $searchKeyword ?? '') }}">
+                        <button type="submit" name="submit" class="btn btn-primary shadow-none" style="width: 150px;">Search</button>
                     </div>
-
-
-                  <div class="table-responsive" id="no-more-tables">
-                  <table id="assignedTable" class="table bg-white">
+                </form>
+                <form action="{{ route('admin.reallocation') }}" method="GET" enctype="multipart/form-data">
+                    @csrf
+                    <button type="submit" name="submit" class="btn btn-primary shadow-none mb-2" style="width: 150px;">Bulk Reallocate</button>
+                    <div class="table-responsive" id="no-more-tables">
+                        <table id="assignedTable" class="table bg-white">
                             <thead>
                                 <tr class="custom-bg text-light">
-                                    <th style="width: 67px;"></th>
+                                    <th class="text-center" style="width: 67px;"><input type="checkbox" id="select_all_allocation"></th>
                                     <th class="text-center" style="color: white; width: 70px;">No.</th>
                                     <th class="text-center" style="color: white; width: 159px;">Allocation Date</th>
                                     <th class="text-center" style="color: white; width: 109px;">Student Code</th>
@@ -80,7 +79,7 @@
                             </thead>
                             <tbody class="form-group-table">
                                 @php $count = 1; @endphp
-                                @foreach($allocations as $allocation)
+                                @forelse($allocations as $allocation)
                                 <tr class="assigned-row">
                                     <td style="width: 52px;">
                                         <span class="allocate-checkbox">
@@ -94,10 +93,11 @@
                                     </td>
                                     <td data-title="No." style="width: 57px;">{{ $count++;}}</td>
                                     <td data-title="Allocation Date" style="width: 153px;">
-                                    {{ \Carbon\Carbon::parse($allocation->allocation_date_time)->format('d/m/Y')}}</td>
+                                        {{ \Carbon\Carbon::parse($allocation->allocation_date_time)->format('d/m/Y')}}
+                                    </td>
                                     <td data-title="Student Code" style="width: 99px;">{{$allocation->student?->user_code ?? 'No user associated'}}</td>
                                     <td data-title="Student Name" style="width: 273px;">{{__(@$allocation->student->first_name) }} {{__(@$allocation->student->last_name) }}</td>
-                                    <td data-title="Tutor code"style="width: 99px;">{{__(@$allocation->tutor->user_code) }}</td>
+                                    <td data-title="Tutor code" style="width: 99px;">{{__(@$allocation->tutor->user_code) }}</td>
                                     <td data-title="Tutor Name" style="width: 260px;">{{__(@$allocation->tutor->first_name) }} {{__(@$allocation->tutor->last_name) }}</td>
                                     <td class="assigned-button" style="width:255px;">
                                         <button
@@ -116,16 +116,19 @@
                                             Delete
                                         </button>
                                     </td>
-
                                 </tr>
-                                @endforeach
+                                @empty
+                                <tr>
+                                    <td class="text-muted text-center">No records found</td>
+                                </tr>
+                                @endforelse
                             </tbody>
                         </table>
 
 
 
 
-            </form>
+                </form>
         </div>
 
 
@@ -164,8 +167,8 @@
                     </div>
                 </div>
                 <div class="modal-footer ">
-                    <button type="submit" class="btn btn-primary">Confirm</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Close</i>
+                        <button type="submit" class="btn btn-primary">Confirm</button>
                     </button>
                 </div>
             </form>
@@ -227,6 +230,26 @@
             var modal = $('#deleteModal');
             modal.find('input[name=id]').val($(this).data('id'));
             modal.modal('show');
+        });
+
+
+
+        $('#allocationSearch').on('input', function() {
+            if (this.value.trim() === '') {
+                window.location.href = "{{ route('admin.assignedlists') }}";
+            }
+        });
+
+        var table = $('#assignedTable').DataTable();
+        $('#select_all_allocation').on('change', function() {
+            var checked = $(this).prop('checked');
+
+            table.rows({
+                page: 'current'
+            }).every(function() {
+                var row = this.node();
+                $(row).find('input[type="checkbox"][name="selected_allocations[]"]').prop('checked', checked);
+            });
         });
 
     });
