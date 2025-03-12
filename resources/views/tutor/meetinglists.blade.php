@@ -60,20 +60,22 @@
                         Meeting</a>
                 </div>
                 <!-- </div> -->
+                <form action="{{ route('tutor.meetinglists') }}" method="GET">
+                
                 <div class="form-group mb-4 row">
                     <div class="row">
                         <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
-                            <select class="form-select" id="selectDateMeeting" aria-label="Floating label select example">
-                                <option selected>All</option>
-                                <option value="Real">Real</option>
-                                <option value="Virtual">Virtual</option>
+                            <select class="form-select" name="meeting_type" id="selectDateMeeting" aria-label="Meeting Type">
+                                <option value="" {{ request('meeting_type') == '' ? 'selected' : '' }}>All</option>
+                                <option value="Real" {{ request('meeting_type') == 'Real' ? 'selected' : '' }}>Real</option>
+                                <option value="Virtual" {{ request('meeting_type') == 'Virtual' ? 'selected' : '' }}>Virtual</option>
                             </select>
                         </div>
                         <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
 
                             <div class="input-group" id="datetimepicker">
-                                <input type="text" class="form-control" id="datepicker" placeholder="Select a date"
-                                    readonly />
+                                <input type="text" class="form-control" name="meeting_date" id="datepicker"
+                           value="{{ request('meeting_date') }}" placeholder="Select a date" readonly />
                                 <span class="input-group-text" id="datepicker-icon">
                                     <i class="fas fa-calendar-alt"></i>
                                 </span>
@@ -84,24 +86,26 @@
 
                             <select class="form-select form--control" name="student_id" id="selectStudentMeeting"
                                 aria-label="Floating label select example">
-                                <option value="" {{ empty($meeting_schedules->student_id) ? 'selected' : '' }}>--
-                                    Choose Student --</option>
-                                @foreach ($students as $allocated)
-                                    <option value="{{ $allocated->student->id }}">
-                                        {{ $allocated->student->first_name }}
-                                        {{ $allocated->student->last_name }}</option>
-                                @endforeach
+                                <option value="" {{ request('student_id') == '' ? 'selected' : '' }}>-- Choose Student --</option>
+                    @foreach ($students as $allocated)
+                        <option value="{{ $allocated->student->id }}"
+                                {{ request('student_id') == $allocated->student->id ? 'selected' : '' }}>
+                            {{ $allocated->student->first_name }} {{ $allocated->student->last_name }}
+                        </option>
+                    @endforeach
                             </select>
                         </div>
                         <div class="col-md-3 mb-2 d-flex flex-column align-items-start">
 
                             <div class="text-center">
-                                <a href="#" class="btn btn-primary shadow-none">Search</a>
+                                <button type="submit" class="btn btn-primary shadow-none">Search</button>
+                                {{-- <a href="{{route('tutor.meetinglists')}}" class="btn btn-primary shadow-none">Search</a> --}}
                             </div>
                         </div>
                     </div>
 
                 </div>
+            </form>
                 <div class="table-responsive">
                     <table class="table bg-white table-bordered card-table" id="table-meeting">
                         <tbody>
