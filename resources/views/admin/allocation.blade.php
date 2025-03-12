@@ -76,10 +76,10 @@
                         <table id="allocationTable" class="table bg-white">
                             <thead>
                                 <tr class="custom-bg text-light">
-                                    <th class="text-center" style="width: 74px;"><input type="checkbox" id="select_all_students"></th>
-                                    <th class="text-center" style="color: white; width: 90px;">No.</th>
-                                    <th class="text-center" style="color: white; width: 365px;">User Code</th>
-                                    <th class="text-center" style="color: white; width: 365px;">Student Name</th>
+                                    <th class="text-center" style="width: 50px;" ><input type="checkbox" id="select_all_students"></th>
+                                    <th class="text-center" style="color: white;">No.</th>
+                                    <th class="text-center" style="color: white; ">User Code</th>
+                                    <th class="text-center" style="color: white; ">Student Name</th>
 
                                     <th class="text-center" style="color: white;">Email</th>
 
@@ -91,7 +91,7 @@
                                 @php $count = 1; @endphp
                                 @forelse($students as $student)
                                 <tr class="allocation-row">
-                                    <td style="width: 60px;">
+                                    <td style="width: 50px;">
                                         <span class="allocate-checkbox">
                                             <input type="checkbox"
                                                 id="student_{{ $student->id }}"
@@ -101,8 +101,8 @@
                                             <label for="student_{{ $student->id }}"></label>
                                         </span>
                                     </td>
-                                    <td data-title="No." style="width: 79px;">{{$count++;}}</td>
-                                    <td data-title="User Code">{{__($student->user_code)}}</td>
+                                    <td data-title="No.">{{$count++;}}</td>
+                                    <td  data-title="User Code">{{__($student->user_code)}}</td>
                                     <td data-title="Student Name">{{ $student->first_name }} {{ $student->last_name }}</td>
                                     <td data-title="Email" style="  overflow-x: auto; ">{{__(@$student->email)}}</td>
                                 </tr>

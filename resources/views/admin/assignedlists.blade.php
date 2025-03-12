@@ -67,24 +67,25 @@
                     <button type="submit" name="submit" class="bulkre-btn btn btn-primary shadow-none " style="width: 150px; background-color:#004AAD;">Bulk Reallocate</button>
 
                     <div class="table-responsive" id="no-more-tables">
+                        <div id="assignedTable-container">
                         <table id="assignedTable" class="table bg-white">
                             <thead>
                                 <tr class="custom-bg text-light">
-                                    <th class="text-center" style="width: 67px;"><input type="checkbox" id="select_all_allocation"></th>
-                                    <th class="text-center" style="color: white; width: 70px;">No.</th>
-                                    <th class="text-center" style="color: white; width: 159px;">Allocation Date</th>
-                                    <th class="text-center" style="color: white; width: 109px;">Student Code</th>
-                                    <th class="text-center" style="color: white; width: 269px;">Student Name</th>
-                                    <th class="text-center" style="color: white; width: 110px;">Tutor Code</th>
-                                    <th class="text-center" style="color: white;width: 259px;">Tutor Name</th>
-                                    <th style="width:268px;"></th>
+                                    <th class="text-center small-col" ><input type="checkbox" id="select_all_allocation"></th>
+                                    <th class="text-center " style="color: white; ">No.</th>
+                                    <th class="text-center" style="color: white; ">Allocation Date</th>
+                                    <th class="text-center" style="color: white; ">Student Code</th>
+                                    <th class="text-center" style="color: white;">Student Name</th>
+                                    <th class="text-center" style="color: white; ">Tutor Code</th>
+                                    <th class="text-center" style="color: white;">Tutor Name</th>
+                                    <th ></th>
                                 </tr>
                             </thead>
                             <tbody class="form-group-table">
                                 @php $count = 1; @endphp
                                 @forelse($allocations as $allocation)
                                 <tr class="assigned-row">
-                                    <td style="width: 52px;">
+                                    <td class="small-col" >
                                         <span class="allocate-checkbox">
                                             <input type="checkbox"
                                                 id="allocation_{{ $allocation->id }}"
@@ -94,15 +95,15 @@
                                             <label for="allocation_{{ $allocation->id }}"></label>
                                         </span>
                                     </td>
-                                    <td data-title="No." style="width: 57px;">{{ $count++;}}</td>
-                                    <td data-title="Allocation Date" style="width: 153px;">
+                                    <td  data-title="No." >{{ $count++;}}</td>
+                                    <td data-title="Allocation Date">
                                         {{ \Carbon\Carbon::parse($allocation->allocation_date_time)->format('d/m/Y')}}
                                     </td>
-                                    <td data-title="Student Code" style="width: 99px;">{{$allocation->student?->user_code ?? 'No user associated'}}</td>
-                                    <td data-title="Student Name" style="width: 273px;">{{__(@$allocation->student->first_name) }} {{__(@$allocation->student->last_name) }}</td>
-                                    <td data-title="Tutor code" style="width: 99px;">{{__(@$allocation->tutor->user_code) }}</td>
-                                    <td data-title="Tutor Name" style="width: 260px;">{{__(@$allocation->tutor->first_name) }} {{__(@$allocation->tutor->last_name) }}</td>
-                                    <td class="assigned-button" style="width:255px;">
+                                    <td data-title="Student Code" >{{$allocation->student?->user_code ?? 'No user associated'}}</td>
+                                    <td data-title="Student Name" >{{__(@$allocation->student->first_name) }} {{__(@$allocation->student->last_name) }}</td>
+                                    <td data-title="Tutor code" >{{__(@$allocation->tutor->user_code) }}</td>
+                                    <td data-title="Tutor Name" >{{__(@$allocation->tutor->first_name) }} {{__(@$allocation->tutor->last_name) }}</td>
+                                    <td class="assigned-button" >
                                         <button
                                             type="button"
                                             data-route="{{ route('admin.reallocation') }}"
@@ -127,6 +128,7 @@
                                 @endforelse
                             </tbody>
                         </table>
+                        </div>
 
 
 
@@ -220,6 +222,9 @@
                 "info": "Total Records: _TOTAL_",
             }
         });
+
+
+
 
         $('.reallocate').on('click', function() {
             // Extract the route URL and allocation ID from the button's data attributes

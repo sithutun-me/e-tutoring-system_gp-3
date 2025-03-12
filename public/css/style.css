@@ -264,9 +264,9 @@ h6 {
   }
 
   /* Allocation-table */
-  @media only screen and (max-width:1200px){
+  @media only screen and (max-width: 1200px){
     #no-more-tables {
-      overflow-y: auto;  /* Enable vertical scrolling */
+      overflow-y: auto; 
       overflow-x: scroll;
       display: block; 
     }
@@ -278,6 +278,7 @@ h6 {
       display: block;
       
     }
+    
    
     #no-more-tables thead tr{
       position: absolute;
@@ -287,7 +288,7 @@ h6 {
 
     #no-more-tables td{
       position: relative;
-      padding-left: 42%;
+      padding-left: 40%;
       border: none;
       border-bottom: 1px solid #eee;
     }
@@ -307,12 +308,16 @@ h6 {
     margin-left: 10px;
    }
 
- 
-  
-   
+   .stu-button{
+    margin-left: 167px;
+   }
+
 
   }
 
+
+
+  
 
   
 
@@ -417,15 +422,44 @@ h6 {
 
 /* Table Fixed height */
 
+
 #allocationTable {
+  width: 100%;
+  border-collapse: collapse; /* Ensures borders are merged */
+  table-layout: fixed; /* Prevents shifting */
   height: 500px; /* Fixed height */
   overflow-y: auto; /* Enable scrolling */
-
 }
 
-#allocationTable tr, td{
+#allocationTable  tr, td{
   border: 1px solid #D3D3D3;
   border-collapse: collapse;
+}
+
+/* Header Styling */
+#allocationTable thead {
+  position: sticky;
+  top: 0;
+  background-color: #004AAD;
+  color: white;
+  z-index: 2;
+}
+
+/* Cell Borders - Ensures uniformity */
+#allocationTable th,
+#allocationTable td {
+
+  
+  padding: 10px; /* Consistent padding */
+}
+
+
+
+/* Fix Row Display */
+#allocationTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
 }
 
 #allocationTable {
@@ -452,24 +486,55 @@ h6 {
   white-space: nowrap; /* Prevents breaking text */
 }
 
-.assigned-row button{
+.assigned-row button {
   font-size: 0.875rem;
 }
 
+/* Table Fixed height */
 
-#assignedTable{
+
+#assignedTable {
+  width: 100%;
+  border-collapse: collapse; /* Ensures borders are merged */
+  table-layout: fixed; /* Prevents shifting */
   height: 500px; /* Fixed height */
   overflow-y: auto; /* Enable scrolling */
- 
-  
 }
 
-#assignedTable  tr, td{
+#assignedTable tr, td{
   border: 1px solid #D3D3D3;
   border-collapse: collapse;
 }
 
+/* Header Styling */
+#assignedTable thead {
+  position: sticky;
+  top: 0;
+  background-color: #004AAD;
+  color: white;
+  z-index: 2;
+}
 
+/* Cell Borders - Ensures uniformity */
+#assignedTable th,
+#assignedTable td {
+
+  
+  padding: 10px; /* Consistent padding */
+}
+
+
+#assignedTable .small-col {
+  width: 50px !important;
+}
+
+
+/* Fix Row Display */
+#assignedTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
 
 #assignedTable {
   height: 100%; /* Ensure the table fills the container */
@@ -495,47 +560,39 @@ h6 {
   white-space: nowrap; /* Prevents breaking text */
 }
 
-
-
-
-
-@media only screen and (max-width: 800px) {
-  #no-more-tables {
-    height: auto; /* Adjust for mobile */
-    
-  }
-}
-
-
-/* Assigned Page Pagination container */
 #assignedTable_wrapper .dataTables_paginate {
-  margin-top: 15px;
-  text-align: center;
- 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 10px;
+  position: relative;
 }
 
-/* Assigned List Page pagination button styling */
+/* Pagination buttons styling */
 #assignedTable_wrapper .dataTables_paginate .paginate_button {
   display: inline-block;
   background-color: #FFFFFF !important;
-  color:  #92969c !important; 
+  color: #92969c !important;
   border: 1px solid #D3D3D3 !important;
   border-radius: 5px;
-  margin: 3px; /* Add spacing between buttons */
+  margin: 3px;
   padding: 6px 12px;
   font-weight: bold;
   cursor: pointer;
   text-decoration: none;
 }
 
-/* Style the active page button */
+/* Active page button */
 #assignedTable_wrapper .dataTables_paginate .paginate_button.current {
-  background-color: #007bff !important; /* Blue background */
-  color: #FFFFFF !important; /* White text */
+  background-color: #007bff !important;
+  color: #FFFFFF !important;
   border: none !important;
   font-weight: bold;
 }
 
+/* Disabled button */
 #assignedTable_wrapper .dataTables_paginate .paginate_button.disabled {
   background-color: #fff !important;
   color: #bfc1c4 !important;
@@ -544,12 +601,17 @@ h6 {
   pointer-events: none;
 }
 
-
-
 /* Hover effect */
 #assignedTable_wrapper .dataTables_paginate .paginate_button:hover {
-  background-color: #007bff !important; /* Darker blue */
+  background-color: #007bff !important;
   color: #FFFFFF !important;
+}
+
+/* Responsive Design */
+@media only screen and (max-width: 800px) {
+  #assignedTable-container {
+    max-height: none;
+  }
 }
 
 
@@ -592,14 +654,44 @@ h6 {
   pointer-events: none;
 }
  
+
 #reallocationTable {
+  width: 100%;
+  border-collapse: collapse; /* Ensures borders are merged */
+  table-layout: fixed; /* Prevents shifting */
   height: 500px; /* Fixed height */
   overflow-y: auto; /* Enable scrolling */
 }
 
-#reallocationTable  tr, td{
+#reallocationTable tr, td{
   border: 1px solid #D3D3D3;
   border-collapse: collapse;
+}
+
+/* Header Styling */
+#reallocationTable thead {
+  position: sticky;
+  top: 0;
+  background-color: #004AAD;
+  color: white;
+  z-index: 2;
+}
+
+/* Cell Borders - Ensures uniformity */
+#reallocationTable th,
+#reallocationTable td {
+
+  
+  padding: 10px; /* Consistent padding */
+}
+
+
+
+/* Fix Row Display */
+#reallocationTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
 }
 
 #reallocationTable {
@@ -619,6 +711,7 @@ h6 {
   width: 100%;
   table-layout: fixed; /* Ensures alignment */
 }
+
 
 .reallocation-row td {
   padding: 8px;
@@ -675,40 +768,49 @@ h6 {
 
 
 
+/* Table Fixed height */
+
+
 #tutorTable {
+  width: 100%;
+  border-collapse: collapse; /* Ensures borders are merged */
+  table-layout: fixed; /* Prevents shifting */
   height: 500px; /* Fixed height */
   overflow-y: auto; /* Enable scrolling */
 }
 
-#tutorTable  tr, td{
+#tutorTable tr, td{
   border: 1px solid #D3D3D3;
   border-collapse: collapse;
 }
 
-#tutorTable{
-  height: 100%; /* Ensure the table fills the container */
-  table-layout: fixed; /* Prevent column width issues */
+/* Header Styling */
+#tutorTable thead {
+  position: sticky;
+  top: 0;
+  background-color: #004AAD;
+  color: white;
+  z-index: 2;
 }
 
-#tutorTable tbody {
-  display: block;
-  height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
-  overflow-y: auto; /* Enable scrolling inside tbody */
+/* Cell Borders - Ensures uniformity */
+#tutorTable th,
+#tutorTable td {
+
+  
+  padding: 10px; /* Consistent padding */
 }
 
-#tutorTable thead,
+
+
+/* Fix Row Display */
 #tutorTable tbody tr {
   display: table;
   width: 100%;
-  table-layout: fixed; /* Ensures alignment */
+  table-layout: fixed;
 }
 
 #tutorTable {
-  height: 500px; /* Fixed height */
-  overflow-y: auto; /* Enable scrolling */
-}
-
-#tutorTable{
   height: 100%; /* Ensure the table fills the container */
   table-layout: fixed; /* Prevent column width issues */
 }
@@ -725,6 +827,14 @@ h6 {
   width: 100%;
   table-layout: fixed; /* Ensures alignment */
 }
+
+.tutor-row td {
+  padding: 8px;
+  line-height: 1.8;
+  white-space: nowrap; /* Prevents breaking text */
+}
+
+
 
 .tutor-row button{
   font-size: 0.875rem;
@@ -776,18 +886,50 @@ h6 {
 }
 
 
+
+/* Table Fixed height */
+
+
 #studentTable {
+  width: 100%;
+  border-collapse: collapse; /* Ensures borders are merged */
+  table-layout: fixed; /* Prevents shifting */
   height: 500px; /* Fixed height */
   overflow-y: auto; /* Enable scrolling */
 }
 
-#studentTable  tr, td{
+#studentTable tr, td{
   border: 1px solid #D3D3D3;
   border-collapse: collapse;
 }
 
+/* Header Styling */
+#studentTable thead {
+  position: sticky;
+  top: 0;
+  background-color: #004AAD;
+  color: white;
+  z-index: 2;
+}
 
-#studentTable{
+/* Cell Borders - Ensures uniformity */
+#studentTable th,
+#studentTable td {
+
+  
+  padding: 10px; /* Consistent padding */
+}
+
+
+
+/* Fix Row Display */
+#studentTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+#studentTable {
   height: 100%; /* Ensure the table fills the container */
   table-layout: fixed; /* Prevent column width issues */
 }
@@ -811,10 +953,9 @@ h6 {
   white-space: nowrap; /* Prevents breaking text */
 }
 
-.student-row button{
+.student-row button {
   font-size: 0.875rem;
 }
-
 
 
 /* Hover effect */
@@ -848,7 +989,7 @@ h6 {
 
   
   #no-more-tables .allocation-row, .assigned-row, .tutor-row, .student-row, .reallocation-row{
-    text-align: left;
+    text-align: right;
 
   }
 
@@ -901,7 +1042,7 @@ h6 {
 }
 
 .comments {
-  margin-top: 7px;
+  margin-top: 8px;
   padding: 10px;
   border-radius: 5px;
 }
