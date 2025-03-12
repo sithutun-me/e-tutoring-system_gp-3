@@ -53,16 +53,19 @@
 
             <section class="p-3">
                 <h2 class="fs-2 fw-bold mb-4"> Assigned Lists</h2>
+           
                 <form action="{{ route('admin.allocations.filter') }}" method="get">
                     @csrf
                     <div class=" form-group mb-4">
                         <input id="assignedSearch" class="form-control me-2" name="search_allocation" type="search" placeholder="Search here" aria-label="Search" style="width: 320px;" value="{{ old('search_allocation', $searchKeyword ?? '') }}">
-                        <button type="submit" name="submit" class="btn btn-primary shadow-none" style="width: 150px;">Search</button>
+                        <button type="submit" name="submit" class="assign-btn btn btn-primary shadow-none" style="width: 150px;">Search</button>
                     </div>
                 </form>
                 <form action="{{ route('admin.reallocation') }}" method="GET" enctype="multipart/form-data">
                     @csrf
-                    <button type="submit" name="submit" class="btn btn-primary shadow-none mb-2" style="width: 150px;">Bulk Reallocate</button>
+        
+                    <button type="submit" name="submit" class="bulkre-btn btn btn-primary shadow-none " style="width: 150px; background-color:#004AAD;">Bulk Reallocate</button>
+
                     <div class="table-responsive" id="no-more-tables">
                         <table id="assignedTable" class="table bg-white">
                             <thead>
@@ -129,6 +132,7 @@
 
 
                 </form>
+               
         </div>
 
 
@@ -151,8 +155,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Delete confirmation!</h5>
-                <button type="button" class="close btn" data-bs-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title" style="font-weight: 500;">Delete confirmation!</h5>
+                <button type="button" class="confirm-btn close btn" data-bs-dismiss="modal" aria-label="Close">
                 <i class="fa-solid fa-x"></i>
                 </button>
             </div>
@@ -162,13 +166,13 @@
                     <input type="hidden" name="id">
                     <div class="modal-body">
                         <div class="form-group">
-                            <p>Are you sure want to delete this allocation?</p>
+                            <p style="font-family: 'Poppins'; font-size:1rem;">Are you sure want to delete this allocation?</p>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer ">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Close</i>
-                        <button type="submit" class="btn btn-primary">Confirm</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close" style=" width: 90px;">Close</i>
+                        <button type="submit" class="btn btn-primary" style="background-color: #004AAD; width: 90px;">Confirm</button>
                     </button>
                 </div>
             </form>

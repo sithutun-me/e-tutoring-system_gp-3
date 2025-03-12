@@ -99,6 +99,8 @@
 
                         <div class="post-container">
 
+                           <!-- post header -->
+
                             <div class="edit-btn text-center fit">
                           
                             <a href="/tutor/updateposts" class="edit-btn btn btn-primary shadow-none" style=" width: 100px; background-color: #004AAD;">Edit</a>
@@ -112,9 +114,11 @@
                                 <span class="status me-0" style="vertical-align: middle;">Updated</span>
                             </p>
 
+                            <!-- Post body -->
+
                             <div class="post-title-desc mt-2">
 
-                            <h5 class="mb-3">Project sample file</h5>
+                            <h5 class="mb-3 mt-2">Project sample file</h5>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.</p>
                             
                             </div>
@@ -159,6 +163,8 @@
                         <div class="post-container">
                             
                             <div class="edit-btn text-center fit">
+
+                            <!-- post header -->
                           
                             <a href="/tutor/updateposts" class="edit-btn btn btn-primary shadow-none" style=" width: 100px; background-color: #004AAD;">Edit</a>
                             </div>
@@ -171,13 +177,24 @@
                                 <span class="status me-0" style="vertical-align: middle;"></span>
                             </p>
 
+                            <!-- post body -->
+
                            
                             <div class="post-title-desc mt-2">
 
-                                <h5 class="mb-3">Project sample file</h5>
+                                <h5 class="mb-3 mt-2">Thingyan Holidays Announcement</h5>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.</p>
                             
                             </div>
+
+                            <!-- <div class="file-attachment">
+                                <img src="https://cdn-icons-png.flaticon.com/512/732/732220.png" width="30" alt="File">
+                                <a href="" style="text-decoration: none; color: black;" target="_blank">project_sample.docx</a>
+                            
+                            
+                            
+                                
+                            </div> -->
 
                             <div class="comments">
                                 <hr>
@@ -198,6 +215,7 @@
                                 <button  type="button" class="btn btn-primary ms-3" style="width: 110px;">Send</button>
                             </div>
                             </form>
+                            
                         </div>
 
                     </div>

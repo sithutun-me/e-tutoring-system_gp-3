@@ -302,12 +302,19 @@ h6 {
     #no-more-tables tr{
       border-bottom: 1px solid #ccc ;
     }
+
+   .assign-btn{
+    margin-left: 10px;
+   }
+
+ 
+  
    
 
-    
-
-
   }
+
+
+  
 
   #no-more-tables .allocation-row, .assigned-row, .tutor-row, .student-row, .reallocation-row{
     text-align: center;
@@ -323,7 +330,10 @@ h6 {
 }
 
 
-
+.bulkre-btn{
+  margin-left: 339px;
+  margin-bottom: 15px;
+}
 
 
 .assigned-button button {
@@ -367,6 +377,7 @@ h6 {
 
 
 
+
 /* Allocation Page Pagination container */
 #allocationTable_wrapper .dataTables_paginate {
   margin-top: 15px;
@@ -378,7 +389,7 @@ h6 {
 #allocationTable_wrapper .dataTables_paginate .paginate_button {
   display: inline-block;
   background-color: #FFFFFF !important;
-  color:  #92969c !important; /* Blue text */
+  color:  #92969c !important; 
   border: 1px solid #D3D3D3 !important;
   border-radius: 5px;
   margin: 3px; /* Add spacing between buttons */
@@ -496,14 +507,6 @@ h6 {
 }
 
 
- 
-
-/* Hover effect */
-#allocationTable_wrapper .dataTables_paginate .paginate_button:hover {
-  background-color: #007bff !important; /* Darker blue */
-  color: #FFFFFF !important;
-}
-
 /* Assigned Page Pagination container */
 #assignedTable_wrapper .dataTables_paginate {
   margin-top: 15px;
@@ -515,7 +518,7 @@ h6 {
 #assignedTable_wrapper .dataTables_paginate .paginate_button {
   display: inline-block;
   background-color: #FFFFFF !important;
-  color:  #92969c !important; /* Blue text */
+  color:  #92969c !important; 
   border: 1px solid #D3D3D3 !important;
   border-radius: 5px;
   margin: 3px; /* Add spacing between buttons */
@@ -563,7 +566,7 @@ h6 {
 #reallocationTable_wrapper .dataTables_paginate .paginate_button {
   display: inline-block;
   background-color: #FFFFFF !important;
-  color:  #92969c !important; /* Blue text */
+  color:  #92969c !important; 
   border: 1px solid #D3D3D3 !important;
   border-radius: 5px;
   margin: 3px; /* Add spacing between buttons */
@@ -849,6 +852,10 @@ h6 {
 
   }
 
+  .bulkre-btn{
+    margin-left: 10px;
+  }
+
 
  
  
@@ -894,7 +901,7 @@ h6 {
 }
 
 .comments {
-  margin-top: 10px;
+  margin-top: 7px;
   padding: 10px;
   border-radius: 5px;
 }
