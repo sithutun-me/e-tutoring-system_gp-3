@@ -7,7 +7,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
-                    
+
                    <div class="login-card">
                     <div class="card mb-3">
 
@@ -34,7 +34,7 @@
                                     <input type="password" name="password" class="form-control" id="yourPassword" required>
                                     <div class="invalid-feedback">@error('password') {{ $message }} @enderror</div>
                                 </div>
-                                <div class="col-12 mb-4">
+                                <div class="col-12 my-4">
                                     <button class="btn btn-primary w-100" type="submit">Login</button>
                                 </div>
                             </form>
