@@ -280,7 +280,7 @@
     });
 
 
-    // Comment section reply script
+    // Comment section reply script for now
 
     function checkReply() {
         const replyInput = document.getElementById('replyInput').value.trim();
