@@ -62,7 +62,7 @@
             <div class="dashboard-content px-3 pt-4">
             <h2 class="fs-2 fw-bold">Posts</h2>
 
-                <div class="post mt-3" >
+                <div class="post mt-4" >
                        
                        <div class="text-center fit mb-2">
                         <a href="/tutor/createposts" class="post-btn btn btn-primary shadow-none mb-3" style="background-color: #004AAD;">+ Start a post</a>
@@ -72,14 +72,13 @@
                             <div class="row">
                             
                                 <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
-
-                                    <div class="input-group" id="datetimepicker">
-                                        <input type="text" class="form-control" id="datepicker" placeholder="Select a date" readonly />
-                                        <span class="input-group-text" id="datepicker-icon">
-                                            <i class="fas fa-calendar-alt"></i>
-                                        </span>
-                                    </div>
+                                    <select class="form-select" id="selectDateMeeting" aria-label="Floating label select example">
+                                        <option selected>All</option>
+                                        <option value="Real">My Posts</option>
+                                        <option value="Virtual">Student Posts</option>
+                                    </select>
                                 </div>
+
                                 <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
 
                                     <select class="form-select form--control" name="student_id" id="selectStudentMeeting" aria-label="Floating label select example">
@@ -90,8 +89,8 @@
                                 </div>
                                 <div class="col-md-3 mb-2 d-flex flex-column align-items-start">
 
-                                    <div class="text-center">
-                                        <a href="#" class="btn btn-primary shadow-none">Search</a>
+                                    <div class=" text-center">
+                                        <button type="button"  class=" btn btn-primary shadow-none " style="width: 130px;">Search</button>
                                     </div>
                                 </div>
                             </div>
@@ -99,6 +98,8 @@
                         </div>
 
                         <div class="post-container">
+
+                           <!-- post header -->
 
                             <div class="edit-btn text-center fit">
                           
@@ -113,21 +114,30 @@
                                 <span class="status me-0" style="vertical-align: middle;">Updated</span>
                             </p>
 
-                            <h5>Project sample file</h5>
+                            <!-- Post body -->
+
+                            <div class="post-title-desc mt-2">
+
+                            <h5 class="mb-3 mt-2">Project sample file</h5>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.</p>
+                            
+                            </div>
+
 
                             <div class="file-attachment">
                                 <img src="https://cdn-icons-png.flaticon.com/512/732/732220.png" width="30" alt="File">
-                                <a href="" style="text-decoration: none; color: black;">project_sample.docx</a>
+                                <a href="" style="text-decoration: none; color: black;" target="_blank">project_sample.docx</a>
                             
                             
                             
-                                <!-- <span>project_sample.docx</span> -->
+                                
                             </div>
+
+                            <!-- Note:: this comment section has javascript interaction added for now, when reply button is clicked this will appear -->
 
                             <div class="comments" id="commentsSection" style="display:none;">
                                 <hr>
-                                <p class="mb-2"><strong style="font-size: 0.875rem;">Comments</strong></p>
+                                <p class="mb-3" style="font-size: 0.875rem; color:	#004AAD;">Comments</p>
                                 <p>
                                     <i class="fa-solid fa-circle-user me-2" style="font-size: 20px; color:#808080; vertical-align: middle;"></i>
                                     <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">Name</strong>
@@ -153,6 +163,8 @@
                         <div class="post-container">
                             
                             <div class="edit-btn text-center fit">
+
+                            <!-- post header -->
                           
                             <a href="/tutor/updateposts" class="edit-btn btn btn-primary shadow-none" style=" width: 100px; background-color: #004AAD;">Edit</a>
                             </div>
@@ -165,12 +177,28 @@
                                 <span class="status me-0" style="vertical-align: middle;"></span>
                             </p>
 
-                            <h5>Thingyan Holidays Announcement</h5>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.</p>
+                            <!-- post body -->
+
+                           
+                            <div class="post-title-desc mt-2">
+
+                                <h5 class="mb-3 mt-2">Thingyan Holidays Announcement</h5>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.</p>
+                            
+                            </div>
+
+                            <!-- <div class="file-attachment">
+                                <img src="https://cdn-icons-png.flaticon.com/512/732/732220.png" width="30" alt="File">
+                                <a href="" style="text-decoration: none; color: black;" target="_blank">project_sample.docx</a>
+                            
+                            
+                            
+                                
+                            </div> -->
 
                             <div class="comments">
                                 <hr>
-                                <p class="mb-2"><strong style="font-size: 0.875rem;">Comments</strong></p>
+                                <p class="mb-3" style="font-size: 0.875rem; color:	#004AAD;">Comments</p>
                                 <p>
                                     <i class="fa-solid fa-circle-user me-2" style="font-size: 20px; color:#808080; vertical-align: middle;"></i>
                                     <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">Name</strong>
@@ -187,6 +215,7 @@
                                 <button  type="button" class="btn btn-primary ms-3" style="width: 110px;">Send</button>
                             </div>
                             </form>
+                            
                         </div>
 
                     </div>
@@ -251,7 +280,7 @@
     });
 
 
-    // Comment section reply
+    // Comment section reply script for now
 
     function checkReply() {
         const replyInput = document.getElementById('replyInput').value.trim();

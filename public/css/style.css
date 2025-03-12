@@ -264,9 +264,9 @@ h6 {
   }
 
   /* Allocation-table */
-  @media only screen and (max-width:1200px){
+  @media only screen and (max-width: 1200px){
     #no-more-tables {
-      overflow-y: auto;  /* Enable vertical scrolling */
+      overflow-y: auto; 
       overflow-x: scroll;
       display: block; 
     }
@@ -278,6 +278,7 @@ h6 {
       display: block;
       
     }
+    
    
     #no-more-tables thead tr{
       position: absolute;
@@ -287,7 +288,7 @@ h6 {
 
     #no-more-tables td{
       position: relative;
-      padding-left: 42%;
+      padding-left: 40%;
       border: none;
       border-bottom: 1px solid #eee;
     }
@@ -303,14 +304,47 @@ h6 {
       border-bottom: 1px solid #ccc ;
     }
 
-    
+   .assign-btn{
+    margin-left: 10px;
+   }
+
+   .stu-button{
+    margin-left: 167px;
+   }
 
 
   }
+
+
+
+  
+
+  
 
   #no-more-tables .allocation-row, .assigned-row, .tutor-row, .student-row, .reallocation-row{
     text-align: center;
   }
+
+  .assigned-button {
+    display: flex;
+    gap: 5px; /* Adjust spacing between buttons */
+    flex-wrap: wrap; /* Allow wrapping if necessary */
+    justify-content: center; /* Center buttons */
+    align-items: center; /* Align items */
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+
+.bulkre-btn{
+  margin-left: 339px;
+  margin-bottom: 15px;
+}
+
+
+.assigned-button button {
+  flex-shrink: 1; /* Allows buttons to shrink within the container */
+}
+
 
 
   /* admin table */
@@ -331,7 +365,7 @@ h6 {
   height: 40px;
   color: #FFFFFF;
   font-family: 'Poppins';
-  font-size: 1rem;
+  font-size: 0.875rem;
   background-color: #004AAD;
   width: 100px;
 }
@@ -348,6 +382,7 @@ h6 {
 
 
 
+
 /* Allocation Page Pagination container */
 #allocationTable_wrapper .dataTables_paginate {
   margin-top: 15px;
@@ -359,7 +394,7 @@ h6 {
 #allocationTable_wrapper .dataTables_paginate .paginate_button {
   display: inline-block;
   background-color: #FFFFFF !important;
-  color:  #92969c !important; /* Blue text */
+  color:  #92969c !important; 
   border: 1px solid #D3D3D3 !important;
   border-radius: 5px;
   margin: 3px; /* Add spacing between buttons */
@@ -387,15 +422,44 @@ h6 {
 
 /* Table Fixed height */
 
+
 #allocationTable {
+  width: 100%;
+  border-collapse: collapse; /* Ensures borders are merged */
+  table-layout: fixed; /* Prevents shifting */
   height: 500px; /* Fixed height */
   overflow-y: auto; /* Enable scrolling */
-
 }
 
-#allocationTable tr, td{
+#allocationTable  tr, td{
   border: 1px solid #D3D3D3;
   border-collapse: collapse;
+}
+
+/* Header Styling */
+#allocationTable thead {
+  position: sticky;
+  top: 0;
+  background-color: #004AAD;
+  color: white;
+  z-index: 2;
+}
+
+/* Cell Borders - Ensures uniformity */
+#allocationTable th,
+#allocationTable td {
+  text-wrap: auto;
+  word-wrap: break-word;
+  padding: 10px; /* Consistent padding */
+}
+
+
+
+/* Fix Row Display */
+#allocationTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
 }
 
 #allocationTable {
@@ -423,12 +487,28 @@ h6 {
 }
 
 
+@media only screen and (min-width: 1200px){
+  #allocationTable .small-col {
+    width: 50px !important;
+  }
+  #allocationTable .medium-col {
+    width: 170px !important;
+  }
 
-#assignedTable{
+}
+.assigned-row button {
+  font-size: 0.875rem;
+}
+
+/* Table Fixed height */
+
+
+#assignedTable {
+  width: 100%;
+  border-collapse: collapse; /* Ensures borders are merged */
+  table-layout: fixed; /* Prevents shifting */
   height: 500px; /* Fixed height */
   overflow-y: auto; /* Enable scrolling */
- 
-  
 }
 
 #assignedTable  tr, td{
@@ -436,7 +516,32 @@ h6 {
   border-collapse: collapse;
 }
 
+/* Header Styling */
+#assignedTable thead {
+  position: sticky;
+  top: 0;
+  background-color: #004AAD;
+  color: white;
+  z-index: 2;
+}
 
+/* Cell Borders - Ensures uniformity */
+#assignedTable th,
+#assignedTable td {
+
+  text-wrap: auto;
+  word-wrap: break-word;
+  padding: 10px; /* Consistent padding */
+}
+
+
+
+/* Fix Row Display */
+#assignedTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
 
 #assignedTable {
   height: 100%; /* Ensure the table fills the container */
@@ -446,7 +551,7 @@ h6 {
 #assignedTable tbody {
   display: block;
   height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
-  overflow-y: auto; /* Enable scrolling inside tbody */
+  overflow-y: auto; /* Enable scrolling inside for the tbody */
 }
 
 #assignedTable thead,
@@ -456,61 +561,62 @@ h6 {
   table-layout: fixed; /* Ensures alignment */
 }
 
+
+
+
 .assigned-row td {
   padding: 8px;
   line-height: 1.8;
   white-space: nowrap; /* Prevents breaking text */
+
 }
 
-
-
-
-
-@media only screen and (max-width: 800px) {
-  #no-more-tables {
-    height: auto; /* Adjust for mobile */
-    
+@media only screen and (min-width: 1200px){
+  #assignedTable .small-col {
+    width: 50px !important;
   }
+  #assignedTable .medium-col {
+    width: 150px !important;
+  }
+  #assignedTable .large-col {
+    width: 200px !important;
+  }
+
 }
 
-
- 
-
-/* Hover effect */
-#allocationTable_wrapper .dataTables_paginate .paginate_button:hover {
-  background-color: #007bff !important; /* Darker blue */
-  color: #FFFFFF !important;
-}
-
-/* Assigned Page Pagination container */
 #assignedTable_wrapper .dataTables_paginate {
-  margin-top: 15px;
-  text-align: center;
- 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 10px;
+  position: relative;
 }
 
-/* Assigned List Page pagination button styling */
+/* Pagination buttons styling */
 #assignedTable_wrapper .dataTables_paginate .paginate_button {
   display: inline-block;
   background-color: #FFFFFF !important;
-  color:  #92969c !important; /* Blue text */
+  color: #92969c !important;
   border: 1px solid #D3D3D3 !important;
   border-radius: 5px;
-  margin: 3px; /* Add spacing between buttons */
+  margin: 3px;
   padding: 6px 12px;
   font-weight: bold;
   cursor: pointer;
   text-decoration: none;
 }
 
-/* Style the active page button */
+/* Active page button */
 #assignedTable_wrapper .dataTables_paginate .paginate_button.current {
-  background-color: #007bff !important; /* Blue background */
-  color: #FFFFFF !important; /* White text */
+  background-color: #007bff !important;
+  color: #FFFFFF !important;
   border: none !important;
   font-weight: bold;
 }
 
+/* Disabled button */
 #assignedTable_wrapper .dataTables_paginate .paginate_button.disabled {
   background-color: #fff !important;
   color: #bfc1c4 !important;
@@ -519,12 +625,17 @@ h6 {
   pointer-events: none;
 }
 
-
-
 /* Hover effect */
 #assignedTable_wrapper .dataTables_paginate .paginate_button:hover {
-  background-color: #007bff !important; /* Darker blue */
+  background-color: #007bff !important;
   color: #FFFFFF !important;
+}
+
+/* Responsive Design */
+@media only screen and (max-width: 800px) {
+  #assignedTable-container {
+    max-height: none;
+  }
 }
 
 
@@ -541,7 +652,7 @@ h6 {
 #reallocationTable_wrapper .dataTables_paginate .paginate_button {
   display: inline-block;
   background-color: #FFFFFF !important;
-  color:  #92969c !important; /* Blue text */
+  color:  #92969c !important; 
   border: 1px solid #D3D3D3 !important;
   border-radius: 5px;
   margin: 3px; /* Add spacing between buttons */
@@ -567,14 +678,54 @@ h6 {
   pointer-events: none;
 }
  
+
 #reallocationTable {
+  width: 100%;
+  border-collapse: collapse; /* Ensures borders are merged */
+  table-layout: fixed; /* Prevents shifting */
   height: 500px; /* Fixed height */
   overflow-y: auto; /* Enable scrolling */
 }
 
-#reallocationTable  tr, td{
+#reallocationTable tr, td{
   border: 1px solid #D3D3D3;
   border-collapse: collapse;
+}
+
+/* Header Styling */
+#reallocationTable thead {
+  position: sticky;
+  top: 0;
+  background-color: #004AAD;
+  color: white;
+  z-index: 2;
+}
+
+/* Cell Borders - Ensures uniformity */
+#reallocationTable th,
+#reallocationTable td {
+
+  text-wrap: auto;
+  word-wrap: break-word;
+  padding: 10px; /* Consistent padding */
+}
+
+
+@media only screen and (min-width: 1200px){
+  #reallocationTable .small-col {
+    width: 50px !important;
+  }
+  #reallocationTable .medium-col {
+    width: 170px !important;
+  }
+
+}
+
+/* Fix Row Display */
+#reallocationTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
 }
 
 #reallocationTable {
@@ -594,6 +745,7 @@ h6 {
   width: 100%;
   table-layout: fixed; /* Ensures alignment */
 }
+
 
 .reallocation-row td {
   padding: 8px;
@@ -650,40 +802,58 @@ h6 {
 
 
 
+/* Table Fixed height */
+
+
 #tutorTable {
+  width: 100%;
+  border-collapse: collapse; /* Ensures borders are merged */
+  table-layout: fixed; /* Prevents shifting */
   height: 500px; /* Fixed height */
   overflow-y: auto; /* Enable scrolling */
 }
 
-#tutorTable  tr, td{
+#tutorTable tr, td{
   border: 1px solid #D3D3D3;
   border-collapse: collapse;
 }
 
-#tutorTable{
-  height: 100%; /* Ensure the table fills the container */
-  table-layout: fixed; /* Prevent column width issues */
+/* Header Styling */
+#tutorTable thead {
+  position: sticky;
+  top: 0;
+  background-color: #004AAD;
+  color: white;
+  z-index: 2;
 }
 
-#tutorTable tbody {
-  display: block;
-  height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
-  overflow-y: auto; /* Enable scrolling inside tbody */
+/* Cell Borders - Ensures uniformity */
+#tutorTable th,
+#tutorTable td {
+  text-wrap: auto;
+  word-wrap: break-word;
+  padding: 10px; /* Consistent padding */
 }
 
-#tutorTable thead,
+@media only screen and (min-width: 1200px){
+  #tutorTable .small-col {
+    width: 50px !important;
+  }
+  #tutorTable .medium-col {
+    width: 170px !important;
+  }
+
+}
+
+
+/* Fix Row Display */
 #tutorTable tbody tr {
   display: table;
   width: 100%;
-  table-layout: fixed; /* Ensures alignment */
+  table-layout: fixed;
 }
 
 #tutorTable {
-  height: 500px; /* Fixed height */
-  overflow-y: auto; /* Enable scrolling */
-}
-
-#tutorTable{
   height: 100%; /* Ensure the table fills the container */
   table-layout: fixed; /* Prevent column width issues */
 }
@@ -699,6 +869,18 @@ h6 {
   display: table;
   width: 100%;
   table-layout: fixed; /* Ensures alignment */
+}
+
+.tutor-row td {
+  padding: 8px;
+  line-height: 1.8;
+  white-space: nowrap; /* Prevents breaking text */
+}
+
+
+
+.tutor-row button{
+  font-size: 0.875rem;
 }
 
 
@@ -747,18 +929,60 @@ h6 {
 }
 
 
+@media only screen and (min-width: 1200px){
+  #studentTable .small-col {
+    width: 50px !important;
+  }
+  #studentTable .medium-col {
+    width: 170px !important;
+  }
+
+}
+
+/* Table Fixed height */
+
+
 #studentTable {
+  width: 100%;
+  border-collapse: collapse; /* Ensures borders are merged */
+  table-layout: fixed; /* Prevents shifting */
   height: 500px; /* Fixed height */
   overflow-y: auto; /* Enable scrolling */
 }
 
-#studentTable  tr, td{
+#studentTable tr, td{
   border: 1px solid #D3D3D3;
   border-collapse: collapse;
 }
 
+/* Header Styling */
+#studentTable thead {
+  position: sticky;
+  top: 0;
+  background-color: #004AAD;
+  color: white;
+  z-index: 2;
+}
 
-#studentTable{
+/* Cell Borders - Ensures uniformity */
+#studentTable th,
+#studentTable td {
+
+  text-wrap: auto;
+  word-wrap: break-word;
+  padding: 10px; /* Consistent padding */
+}
+
+
+
+/* Fix Row Display */
+#studentTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+#studentTable {
   height: 100%; /* Ensure the table fills the container */
   table-layout: fixed; /* Prevent column width issues */
 }
@@ -780,6 +1004,10 @@ h6 {
   padding: 8px;
   line-height: 1.8;
   white-space: nowrap; /* Prevents breaking text */
+}
+
+.student-row button {
+  font-size: 0.875rem;
 }
 
 
@@ -814,8 +1042,12 @@ h6 {
 
   
   #no-more-tables .allocation-row, .assigned-row, .tutor-row, .student-row, .reallocation-row{
-    text-align: left;
+    text-align: right;
 
+  }
+
+  .bulkre-btn{
+    margin-left: 10px;
   }
 
 
@@ -863,7 +1095,7 @@ h6 {
 }
 
 .comments {
-  margin-top: 15px;
+  margin-top: 8px;
   padding: 10px;
   border-radius: 5px;
 }
@@ -875,6 +1107,8 @@ h6 {
 
  
 }
+
+
 
 
  .post a {
@@ -964,6 +1198,15 @@ h6 {
   width: 30px;
 }
 
+#floatingSelect , #add-title, #file-input{
+  font-family: "Poppins";
+  font-size: 0.875rem;
+}
+
+textarea::placeholder {
+  font-size: 0.875rem; /* Adjust the size as needed */
+
+}
 
 
 @media only screen and (max-width: 1100px) {

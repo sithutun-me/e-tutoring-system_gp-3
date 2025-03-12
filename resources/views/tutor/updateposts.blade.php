@@ -76,11 +76,8 @@
                         </div>
 
                         <form action="" method="" enctype="multipart/form-data">
-                            <div class="mb-3" >
-                                <input type="text" class="form-control" placeholder="Add title"  >
-                            </div>
 
-                            <div class="student-select mb-3">
+                        <!-- <div class="student-select mb-3">
                             <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
                                 <option  selected disabled>Choose Student</option>
                                     <option value="1">Student1</option>
@@ -94,16 +91,23 @@
                                     <option value="9">Student9</option>
                                     <option value="10">Student10</option>
                                 </select>
+                            </div> -->
+
+                            <div class="mb-3" >
+                                <input type="text" class="form-control" placeholder="Add title"  >
                             </div>
+
+                           
 
                             <div class="mb-3">
                                 <textarea class="form-control" rows="4" placeholder="Add Description" ></textarea>
                             </div>
 
                             <div class="file-attachment" id="file-attachment">
-                                <img src="https://cdn-icons-png.flaticon.com/512/732/732220.png" width="30" alt="File">
-                                <a href="" style="text-decoration: none; color:black;">project sample file</a>
-                                <!-- <span>project_sample.docx</span> -->
+                                <img src="/icon images/word.png" width="30" alt="File">
+                                <a href="" style="text-decoration: none; color:black;" target="_blank">project sample file</a>
+                                 
+                                <!-- Note:: this is for the file remove used with javascript for now -->
                                 <button class="remove-file btn btn-danger btn-sm ms-3" onclick="removeAttachment()"><i class="fa-solid fa-xmark"></i></button>
                             </div>
 

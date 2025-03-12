@@ -53,23 +53,23 @@
             <section class="p-3">
                 <h2 class="fs-2 fw-bold mb-4"> Student Lists</h2>
 
-
+                <form id="studentForm" action="{{ route('admin.studentlists') }}" method="GET">
                 <div class=" form-group mb-4">
-                    <input class="form-control me-2" id="studentSearch" type="search" placeholder="Search here" 
+                    <input class="form-control me-2" id="studentSearch" type="search" name="search" value="{{ request()->input('search') }}" placeholder="Search here" 
                         aria-label="Search" style="width: 320px;">
-                    <button type="button" name="submit" onclick="filterStudents()" class="btn btn-primary shadow-none">Search</button>
+                    <button type="submit" name="submit"  class="btn btn-primary shadow-none">Search</button>
 
                 </div>
-
+            </form>
                 <div class="table-responsive" id="no-more-tables">
                     <table id="studentTable" class="table bg-white ">
                         <thead>
                             <tr class="custom-bg text-light">
-                                <th class="text-center" style="color: white; width: 72px;">No.</th>
-                                <th class="text-center" style="color: white; width: 157px;">Student Code</th>
-                                <th class="text-center" style="color: white; width:239px;">Student Name</th>
-                                <th class="text-center" style="color: white; width:290px; ">Email</th>
-                                <th class="text-center" style="color: white; width:239px;">Assigned Tutor</th>
+                                <th class="text-center small-col" style="color: white; ">No.</th>
+                                <th class="text-center medium-col" style="color: white; ">Student Code</th>
+                                <th class="text-center" style="color: white;">Student Name</th>
+                                <th class="text-center" style="color: white;  ">Email</th>
+                                <th class="text-center" style="color: white; ">Assigned Tutor</th>
                                 <th></th>
 
                             </tr>
@@ -78,12 +78,12 @@
                             @php $count = 1; @endphp
                             @foreach ($students as $student)
                             <tr class="student-row">
-                                <td data-title="No" style="width: 60px;">{{ $count++;}}</td>
-                                <td data-title="Code" style="width: 150px;">{{ $student->user_code }}</td>
-                                <td data-title="Name" style="width: 241px;">{{ $student->first_name }} {{ $student->last_name }}</td>
-                                <td data-title="Email" style=" width: 300px;" >{{ $student->email }}</td>
-                                <td data-title="Assigned Tutor" style="width: 241px;">{{ $student->tutor_name }}</td>
-                                <td style="text-align: center;"><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;">
+                                <td class="small-col" data-title="No" >{{ $count++;}}</td>
+                                <td class="medium-col" data-title="Code" >{{ $student->user_code }}</td>
+                                <td data-title="Name" >{{ $student->first_name }} {{ $student->last_name }}</td>
+                                <td data-title="Email"  >{{ $student->email }}</td>
+                                <td data-title="Assigned Tutor" >{{ $student->tutor_name }}</td>
+                                <td class="stu-button" style="text-align: center;"><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;">
                                         <a href="student/dashboard" class="text-decoration-none " style="color: white; ">View Dashboard >></a></button>
                                 </td>
                             </tr>
@@ -193,9 +193,24 @@
         
 
     }
+//     function showAllStudents() {
+//     // You can trigger an AJAX call here to fetch all students from the database, or reload the entire list from the backend.
+//     // Example using AJAX (Assuming you have an endpoint for getting all students):
+//     fetch('/path/to/get-all-students') 
+//         .then(response => response.json())
+//         .then(data => {
+//             // Update the DOM with all the students data
+//             updateStudentList(data);
+//         })
+//         .catch(error => console.error('Error fetching all students:', error));
+// }
     document.getElementById('studentSearch').addEventListener('input', function() {
         if (this.value.trim() === '') {
-            filterStudents();
+           // showAllStudents();  // Call function to show all students when input is empty
+         
+
+
+            console.log("close search");
         }
     });
 </script>

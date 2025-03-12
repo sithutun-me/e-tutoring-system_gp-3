@@ -52,24 +52,24 @@
                 <section class="p-3">
                     <h2 class="fs-2 fw-bold mb-4"> Tutor Lists</h2>
 
-
+                    <form id="tutorForm" action="{{ route('admin.tutorlists') }}" method="GET">
                     <div class=" form-group mb-4">
-                        <input id="tutorSearch" class="form-control me-2" type="search" placeholder="Search here"
+                        <input id="tutorSearch" class="form-control me-2" name="search" value="{{ request()->input('search') }}" type="search" placeholder="Search here"
                             aria-label="Search" style="width: 320px;">
-                        <button type="button" name="submit" class="btn btn-primary shadow-none"
-                            onclick="filterTutors()">Search</button>
+                        <button type="submit" name="submit" class="btn btn-primary shadow-none"
+                            >Search</button>
 
                     </div>
-
+                    </form>
                     <div class="table-responsive" id="no-more-tables">
                         <table id="tutorTable" class="table bg-white">
                             <thead>
                                 <tr class="custom-bg text-light">
-                                    <th class="text-center" style="color: white; width:110px;">No.</th>
-                                    <th class="text-center" style="color: white; width:200px;">Tutor Code</th>
-                                    <th class="text-center" style="color: white; width: 293px;">Tutor Name</th>
-                                    <th class="text-center" style="color: white; width: 293px;">Email</th>
-                                    <th class="text-center" style="color: white;width: 118px;">Assigned Students</th>
+                                    <th class="text-center small-col" style="color: white;">No.</th>
+                                    <th class="text-center medium-col" style="color: white;">Tutor Code</th>
+                                    <th class="text-center" style="color: white;">Tutor Name</th>
+                                    <th class="text-center" style="color: white; ">Email</th>
+                                    <th class="text-center" style="color: white;">Assigned Students</th>
                                     <th></th>
 
                                 </tr>
@@ -79,11 +79,11 @@
                                 @php $count = 1; @endphp
                                 @foreach ($tutors as $tutor)
                                     <tr class="tutor-row " id="no-record-row">
-                                        <td data-title="No" style="width: 100px;">{{ $count++ }}</td>
-                                        <td data-title="Code" style="width:200px;">{{ $tutor->user_code }}</td>
-                                        <td data-title="Name" style="width: 300px;">{{ $tutor->first_name }} {{ $tutor->last_name }}</td>
-                                        <td data-title="Email" style="width: 300px;">{{ $tutor->email }}</td>
-                                        <td data-title="Assigned Students" style="width: 110px;" >{{ $tutor->assigned_students_count }}</td>
+                                        <td class="small-col" data-title="No">{{ $count++ }}</td>
+                                        <td class="medium-col" data-title="Code" >{{ $tutor->user_code }}</td>
+                                        <td data-title="Name" >{{ $tutor->first_name }} {{ $tutor->last_name }}</td>
+                                        <td data-title="Email" >{{ $tutor->email }}</td>
+                                        <td data-title="Assigned Students" >{{ $tutor->assigned_students_count }}</td>
                                         <td><button type="button" class="btn btn-primary btn-sm shadow-none"
                                                 style="background-color:#004AAD; width:190px;">
                                                 <a href="tutor/dashboard" class="text-decoration-none "
@@ -198,7 +198,7 @@
         }
         document.getElementById('tutorSearch').addEventListener('input', function() {
             if (this.value.trim() === '') {
-                filterTutors();
+                //filterTutors();
             }
         });
     </script>

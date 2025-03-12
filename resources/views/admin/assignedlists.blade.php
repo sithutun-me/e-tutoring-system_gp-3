@@ -53,35 +53,39 @@
 
             <section class="p-3">
                 <h2 class="fs-2 fw-bold mb-4"> Assigned Lists</h2>
+           
                 <form action="{{ route('admin.allocations.filter') }}" method="get">
                     @csrf
                     <div class=" form-group mb-4">
                         <input id="assignedSearch" class="form-control me-2" name="search_allocation" type="search" placeholder="Search here" aria-label="Search" style="width: 320px;" value="{{ old('search_allocation', $searchKeyword ?? '') }}">
-                        <button type="submit" name="submit" class="btn btn-primary shadow-none" style="width: 150px;">Search</button>
+                        <button type="submit" name="submit" class="assign-btn btn btn-primary shadow-none" style="width: 150px;">Search</button>
                     </div>
                 </form>
                 <form action="{{ route('admin.reallocation') }}" method="GET" enctype="multipart/form-data">
                     @csrf
-                    <button type="submit" name="submit" class="btn btn-primary shadow-none mb-2" style="width: 150px;">Bulk Reallocate</button>
+        
+                    <button type="submit" name="submit" class="bulkre-btn btn btn-primary shadow-none " style="width: 150px; background-color:#004AAD;">Bulk Reallocate</button>
+
                     <div class="table-responsive" id="no-more-tables">
+                   
                         <table id="assignedTable" class="table bg-white">
                             <thead>
                                 <tr class="custom-bg text-light">
-                                    <th class="text-center" style="width: 67px;"><input type="checkbox" id="select_all_allocation"></th>
-                                    <th class="text-center" style="color: white; width: 70px;">No.</th>
-                                    <th class="text-center" style="color: white; width: 159px;">Allocation Date</th>
-                                    <th class="text-center" style="color: white; width: 109px;">Student Code</th>
-                                    <th class="text-center" style="color: white; width: 269px;">Student Name</th>
-                                    <th class="text-center" style="color: white; width: 110px;">Tutor Code</th>
-                                    <th class="text-center" style="color: white;width: 259px;">Tutor Name</th>
-                                    <th style="width:268px;"></th>
+                                    <th class="text-center small-col" ><input type="checkbox" id="select_all_allocation"></th>
+                                    <th class="text-center small-col " style="color: white; ">No.</th>
+                                    <th class="text-center medium-col" style="color: white; ">Allocation Date</th>
+                                    <th class="text-center medium-col" style="color: white; ">Student Code</th>
+                                    <th class="text-center large-col" style="color: white;">Student Name</th>
+                                    <th class="text-center medium-col" style="color: white; ">Tutor Code</th>
+                                    <th class="text-center large-col" style="color: white;">Tutor Name</th>
+                                    <th ></th>
                                 </tr>
                             </thead>
                             <tbody class="form-group-table">
                                 @php $count = 1; @endphp
                                 @forelse($allocations as $allocation)
                                 <tr class="assigned-row">
-                                    <td style="width: 52px;">
+                                    <td class="small-col" >
                                         <span class="allocate-checkbox">
                                             <input type="checkbox"
                                                 id="allocation_{{ $allocation->id }}"
@@ -91,21 +95,21 @@
                                             <label for="allocation_{{ $allocation->id }}"></label>
                                         </span>
                                     </td>
-                                    <td data-title="No." style="width: 57px;">{{ $count++;}}</td>
-                                    <td data-title="Allocation Date" style="width: 153px;">
+                                    <td class="small-col"  data-title="No." >{{ $count++;}}</td>
+                                    <td class="medium-col" data-title="Allocation Date">
                                         {{ \Carbon\Carbon::parse($allocation->allocation_date_time)->format('d/m/Y')}}
                                     </td>
-                                    <td data-title="Student Code" style="width: 99px;">{{$allocation->student?->user_code ?? 'No user associated'}}</td>
-                                    <td data-title="Student Name" style="width: 273px;">{{__(@$allocation->student->first_name) }} {{__(@$allocation->student->last_name) }}</td>
-                                    <td data-title="Tutor code" style="width: 99px;">{{__(@$allocation->tutor->user_code) }}</td>
-                                    <td data-title="Tutor Name" style="width: 260px;">{{__(@$allocation->tutor->first_name) }} {{__(@$allocation->tutor->last_name) }}</td>
-                                    <td style="width:255px;">
+                                    <td class="medium-col" data-title="Student Code" >{{$allocation->student?->user_code ?? 'No user associated'}}</td>
+                                    <td class="large-col" data-title="Student Name" >{{__(@$allocation->student->first_name) }} {{__(@$allocation->student->last_name) }}</td>
+                                    <td class="medium-col" data-title="Tutor code" >{{__(@$allocation->tutor->user_code) }}</td>
+                                    <td class="large-col" data-title="Tutor Name" >{{__(@$allocation->tutor->first_name) }} {{__(@$allocation->tutor->last_name) }}</td>
+                                    <td class="assigned-button" >
                                         <button
                                             type="button"
                                             data-route="{{ route('admin.reallocation') }}"
                                             data-allocation-id="{{ $allocation->id }}"
                                             class="btn btn-primary btn-sm shadow-none reallocate"
-                                            style="background-color:#004AAD">
+                                            style="background-color:#004AAD; ">
                                             Reallocate
                                         </button>
                                         <button
@@ -124,11 +128,13 @@
                                 @endforelse
                             </tbody>
                         </table>
+                  
 
-
+                    </div>
 
 
                 </form>
+               
         </div>
 
 
@@ -151,9 +157,9 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Delete confirmation!</h5>
-                <button type="button" class="close btn" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <h5 class="modal-title" style="font-weight: 500;">Delete confirmation!</h5>
+                <button type="button" class="confirm-btn close btn" data-bs-dismiss="modal" aria-label="Close">
+                <i class="fa-solid fa-x"></i>
                 </button>
             </div>
             <form action="{{route('admin.allocation.delete')}}" method="POST">
@@ -162,13 +168,13 @@
                     <input type="hidden" name="id">
                     <div class="modal-body">
                         <div class="form-group">
-                            <p>Are you sure want to delete this allocation?</p>
+                            <p style="font-family: 'Poppins'; font-size:1rem;">Are you sure want to delete this allocation?</p>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer ">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Close</i>
-                        <button type="submit" class="btn btn-primary">Confirm</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close" style=" width: 90px;">Close</i>
+                        <button type="submit" class="btn btn-primary" style="background-color: #004AAD; width: 90px;">Confirm</button>
                     </button>
                 </div>
             </form>
@@ -216,6 +222,9 @@
                 "info": "Total Records: _TOTAL_",
             }
         });
+
+
+
 
         $('.reallocate').on('click', function() {
             // Extract the route URL and allocation ID from the button's data attributes

@@ -29,7 +29,7 @@
                                     <div class="invalid-feedback">@error('email') {{ $message }} @enderror</div>
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-12 mb-2">
                                     <label for="yourPassword" class="form-label">Password</label>
                                     <input type="password" name="password" class="form-control" id="yourPassword" required>
                                     <div class="invalid-feedback">@error('password') {{ $message }} @enderror</div>

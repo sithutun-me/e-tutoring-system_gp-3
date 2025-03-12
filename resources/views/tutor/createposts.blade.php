@@ -76,11 +76,8 @@
                         </div>
 
                         <form action="" method="" enctype="multipart/form-data">
-                            <div class="mb-3">
-                                <input type="text" class="form-control" placeholder="Add title">
-                            </div>
 
-                            <div class="mb-3">
+                        <div class="mb-3">
                             <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
                                 <option  selected disabled>Choose Student</option>
                                     <option value="1">Student1</option>
@@ -97,11 +94,17 @@
                             </div>
 
                             <div class="mb-3">
-                                <textarea class="form-control" rows="4" placeholder="Add Description"></textarea>
+                                <input type="text" id="add-title" class="form-control" placeholder="Add title">
+                            </div>
+
+                          
+
+                            <div class="mb-3">
+                                <textarea class="form-control" rows="4" id="description" placeholder="Add Description"></textarea>
                             </div>
 
                         
-                            <div class="mb-3 mt-3">
+                            <div class="mb-3 mt-4">
                                 <input type="file" id="file-input" class="form-control mb-3" multiple>
                                 <small id="file-count" >No file chosen</small>
                             </div>

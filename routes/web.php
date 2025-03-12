@@ -49,14 +49,36 @@ Route::middleware('auth')->group(function(){
     // Tutor Dashboard Route
     Route::middleware(['role:2'])->group(function () {
         Route::get('/tutor/dashboard', [TutorController::class, 'index'])->name('tutor.dashboard');
+
+        
         Route::get('/tutor/meetinglists', [TutorController::class, 'meetinglists'])->name('tutor.meetinglists');
 
+        
+        //show create form
         Route::get('/tutor/meetingdetail', [TutorController::class, 'meetingdetail'])->name('tutor.meetingdetail.create');
+        //show edit form
         Route::get('/tutor/meetingdetail/{id}/edit', [TutorController::class, 'meetingdetail'])->name('tutor.meetingdetail.update');
+        //view meeting detail
         Route::get('/tutor/meetingdetail/{id}', [TutorController::class, 'meetingview'])->name('tutor.meetingdetail.view');
 
+        
+
+        Route::get('/tutor/blogging', [TutorController::class, 'blogging'])->name('tutor.blogging');
+        Route::get('/tutor/createposts', [TutorController::class, 'createposts'])->name('tutor.createposts');
+        Route::get('/tutor/updateposts', [TutorController::class, 'updateposts'])->name('tutor.updateposts');
+        
+        //create meeting
         Route::post('/tutor/meetingdetail', [TutorController::class, 'save'])->name('save');
-        Route::put('/tutor/meetingdetail/{id}', [TutorController::class, 'update'])->name('update');
+        
+        //update meeting
+        Route::put('/tutor/meetingdetail/{id}', [TutorController::class, 'save'])->name('update');
+
+        //status toggle (completed/ new)
+        Route::put('/tutor/meetingdetail/{id}/toggle-status', [TutorController::class, 'toggleStatus'])
+        ->name('tutor.meetingdetail.toggleStatus');
+
+        Route::post('/tutor/meetingdetail/cancel', [TutorController::class, 'cancelMeeting'])->name('tutor.meetingdetail.cancelmeeting');
+
     });
 
     // Student Dashboard Route
@@ -73,5 +95,3 @@ Route::middleware('auth')->group(function(){
 Route::get('/student-inactivity', [AdminController::class, 'getInactiveStudentsData']);
 Route::get('/average_messages', [AdminController::class, 'getAverageMessage']);
 Route::get('/student_list_with_assigned_tutors', [AdminController::class, 'getStudentListWithAssignedTutors']);
-
-
