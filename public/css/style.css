@@ -486,6 +486,16 @@ h6 {
   white-space: nowrap; /* Prevents breaking text */
 }
 
+
+@media only screen and (min-width: 1200px){
+  #allocationTable .small-col {
+    width: 50px !important;
+  }
+  #allocationTable .medium-col {
+    width: 170px !important;
+  }
+
+}
 .assigned-row button {
   font-size: 0.875rem;
 }
@@ -501,7 +511,7 @@ h6 {
   overflow-y: auto; /* Enable scrolling */
 }
 
-#assignedTable tr, td{
+#assignedTable  tr, td{
   border: 1px solid #D3D3D3;
   border-collapse: collapse;
 }
@@ -523,10 +533,6 @@ h6 {
   padding: 10px; /* Consistent padding */
 }
 
-
-#assignedTable .small-col {
-  width: 50px !important;
-}
 
 
 /* Fix Row Display */
@@ -554,10 +560,27 @@ h6 {
   table-layout: fixed; /* Ensures alignment */
 }
 
+
+
+
 .assigned-row td {
   padding: 8px;
   line-height: 1.8;
   white-space: nowrap; /* Prevents breaking text */
+
+}
+
+@media only screen and (min-width: 1200px){
+  #assignedTable .small-col {
+    width: 50px !important;
+  }
+  #assignedTable .medium-col {
+    width: 170px !important;
+  }
+  #assignedTable .large-col {
+    width: 250px !important;
+  }
+
 }
 
 #assignedTable_wrapper .dataTables_paginate {
@@ -686,6 +709,15 @@ h6 {
 }
 
 
+@media only screen and (min-width: 1200px){
+  #reallocationTable .small-col {
+    width: 50px !important;
+  }
+  #reallocationTable .medium-col {
+    width: 170px !important;
+  }
+
+}
 
 /* Fix Row Display */
 #reallocationTable tbody tr {
@@ -801,6 +833,15 @@ h6 {
   padding: 10px; /* Consistent padding */
 }
 
+@media only screen and (min-width: 1200px){
+  #tutorTable .small-col {
+    width: 50px !important;
+  }
+  #tutorTable .medium-col {
+    width: 170px !important;
+  }
+
+}
 
 
 /* Fix Row Display */
@@ -886,6 +927,15 @@ h6 {
 }
 
 
+@media only screen and (min-width: 1200px){
+  #studentTable .small-col {
+    width: 50px !important;
+  }
+  #studentTable .medium-col {
+    width: 170px !important;
+  }
+
+}
 
 /* Table Fixed height */
 

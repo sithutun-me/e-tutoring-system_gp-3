@@ -71,7 +71,7 @@
                         <table id="reallocationTable" class="table bg-white " style="height:400px;">
                             <thead>
                                 <tr class="custom-bg text-light">
-                                    <th class="text-center" style="color: white;">No.</th>
+                                    <th class="text-center small-col" style="color: white;">No.</th>
                                     <th class="text-center" style="color: white;">Student Code</th>
                                     <th class="text-center" style="color: white;">Student Name</th>
                                     <th class="text-center" style="color: white;">Tutor Code</th>
@@ -93,7 +93,7 @@
                                             <label for="allocation_{{ $allocation->id }}"></label>
                                         </span>
                                     </td>
-                                    <td data-title="No.">{{ $count++;}}</td>
+                                    <td class="small-col" data-title="No.">{{ $count++;}}</td>
                                     <td data-title="Student Code">{{ $allocation->student?->user_code ?? 'No user associated'}}</td>
                                     <td data-title="Student Name">{{__(@$allocation->student->first_name) }} {{__(@$allocation->student->last_name) }}</td>
                                     <td data-title="Tutor Code">{{__(@$allocation->tutor->user_code) }}</td>

@@ -67,17 +67,17 @@
                     <button type="submit" name="submit" class="bulkre-btn btn btn-primary shadow-none " style="width: 150px; background-color:#004AAD;">Bulk Reallocate</button>
 
                     <div class="table-responsive" id="no-more-tables">
-                        <div id="assignedTable-container">
+                   
                         <table id="assignedTable" class="table bg-white">
                             <thead>
                                 <tr class="custom-bg text-light">
                                     <th class="text-center small-col" ><input type="checkbox" id="select_all_allocation"></th>
-                                    <th class="text-center " style="color: white; ">No.</th>
-                                    <th class="text-center" style="color: white; ">Allocation Date</th>
-                                    <th class="text-center" style="color: white; ">Student Code</th>
-                                    <th class="text-center" style="color: white;">Student Name</th>
-                                    <th class="text-center" style="color: white; ">Tutor Code</th>
-                                    <th class="text-center" style="color: white;">Tutor Name</th>
+                                    <th class="text-center small-col " style="color: white; ">No.</th>
+                                    <th class="text-center medium-col" style="color: white; ">Allocation Date</th>
+                                    <th class="text-center medium-col" style="color: white; ">Student Code</th>
+                                    <th class="text-center large-col" style="color: white;">Student Name</th>
+                                    <th class="text-center medium-col" style="color: white; ">Tutor Code</th>
+                                    <th class="text-center large-col" style="color: white;">Tutor Name</th>
                                     <th ></th>
                                 </tr>
                             </thead>
@@ -95,14 +95,14 @@
                                             <label for="allocation_{{ $allocation->id }}"></label>
                                         </span>
                                     </td>
-                                    <td  data-title="No." >{{ $count++;}}</td>
-                                    <td data-title="Allocation Date">
+                                    <td class="small-col"  data-title="No." >{{ $count++;}}</td>
+                                    <td class="medium-col" data-title="Allocation Date">
                                         {{ \Carbon\Carbon::parse($allocation->allocation_date_time)->format('d/m/Y')}}
                                     </td>
-                                    <td data-title="Student Code" >{{$allocation->student?->user_code ?? 'No user associated'}}</td>
-                                    <td data-title="Student Name" >{{__(@$allocation->student->first_name) }} {{__(@$allocation->student->last_name) }}</td>
-                                    <td data-title="Tutor code" >{{__(@$allocation->tutor->user_code) }}</td>
-                                    <td data-title="Tutor Name" >{{__(@$allocation->tutor->first_name) }} {{__(@$allocation->tutor->last_name) }}</td>
+                                    <td class="medium-col" data-title="Student Code" >{{$allocation->student?->user_code ?? 'No user associated'}}</td>
+                                    <td class="large-col" data-title="Student Name" >{{__(@$allocation->student->first_name) }} {{__(@$allocation->student->last_name) }}</td>
+                                    <td class="medium-col" data-title="Tutor code" >{{__(@$allocation->tutor->user_code) }}</td>
+                                    <td class="large-col" data-title="Tutor Name" >{{__(@$allocation->tutor->first_name) }} {{__(@$allocation->tutor->last_name) }}</td>
                                     <td class="assigned-button" >
                                         <button
                                             type="button"
@@ -128,9 +128,9 @@
                                 @endforelse
                             </tbody>
                         </table>
-                        </div>
+                  
 
-
+                    </div>
 
 
                 </form>

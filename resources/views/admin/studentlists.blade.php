@@ -65,7 +65,7 @@
                     <table id="studentTable" class="table bg-white ">
                         <thead>
                             <tr class="custom-bg text-light">
-                                <th class="text-center" style="color: white; ">No.</th>
+                                <th class="text-center small-col" style="color: white; ">No.</th>
                                 <th class="text-center" style="color: white; ">Student Code</th>
                                 <th class="text-center" style="color: white;">Student Name</th>
                                 <th class="text-center" style="color: white;  ">Email</th>
@@ -78,7 +78,7 @@
                             @php $count = 1; @endphp
                             @foreach ($students as $student)
                             <tr class="student-row">
-                                <td data-title="No" >{{ $count++;}}</td>
+                                <td class="small-col" data-title="No" >{{ $count++;}}</td>
                                 <td data-title="Code" >{{ $student->user_code }}</td>
                                 <td data-title="Name" >{{ $student->first_name }} {{ $student->last_name }}</td>
                                 <td data-title="Email"  >{{ $student->email }}</td>
