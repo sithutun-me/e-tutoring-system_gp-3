@@ -1,4 +1,4 @@
- @media only screen and (max-width:800px) {
+@media only screen and (max-width:800px) {
 
    .fixed-row {
      display: grid;
@@ -252,7 +252,7 @@
    width: 100% !important;
  }
 
- 
+
  @media (max-width: 575.98px) {
    .chart-card-body .table-responsive {
      overflow-x: auto !important;
@@ -266,11 +266,11 @@
      min-width: 540px;
    }
 
-   .chart-card {
+   .chart-container .chart-card {
      max-width: 540px;
    }
 
-   .chart-canvas {
+   .chart-container .chart-canvas {
      max-width: 540px;
    }
  }
@@ -280,11 +280,11 @@
      min-width: 720px;
    }
 
-   .chart-card {
+   .chart-container .chart-card {
      max-width: 450px;
    }
 
-   .chart-canvas {
+   .chart-container .chart-canvas {
      max-width: 450px;
    }
  }
@@ -294,11 +294,11 @@
      min-width: 960px;
    }
 
-   .chart-card {
+   .chart-container .chart-card {
      max-width: 430px;
    }
 
-   .chart-canvas {
+   .chart-container .chart-canvas {
      max-width: 430px;
    }
  }
@@ -308,11 +308,11 @@
      min-width: 1140px;
    }
 
-   .chart-card {
+   .chart-container .chart-card {
      max-width: 520px;
    }
 
-   .chart-canvas {
+   .chart-container .chart-canvas {
      max-width: 520px;
    }
  }
@@ -322,13 +322,18 @@
      min-width: 1320px;
    }
 
-   .chart-card {
+   .chart-container .chart-card {
      max-width: 540px;
    }
 
-   .chart-canvas {
+   .chart-container .chart-canvas {
      max-width: 540px;
    }
+ } 
+
+ .chart-container-full {
+  padding-left: 15px;
+  width: 100% !important;
  }
 
 

@@ -68,7 +68,7 @@
                     </div>
                 </div>
             </div>
-            <div class="chart-container">
+            <div class="chart-container-full">
 
                 <div class="chart-card">
                     <div class="chart-card-header">
@@ -147,7 +147,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script src="/bootstrap-5.0.2-dist/js/bootstrap.js"></script>
-<script src="{{ asset('white') }}/js/plugins/chartjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
+
+
 <script src="{{ asset('js/chart.js') }}"></script>
 
 <script>
