@@ -201,7 +201,7 @@ class AllocationController extends Controller
             $notify[] = [$tutor->first_name . ' ' . $tutor->last_name . ' already has ' . $studentCount . '.', 'Tutor has student limit.'];
             return back()->withErrors($notify);
         }
-
+        $selectedStudents = [];
         foreach ($selectedAllocations as $selectedAllocation) {
             $id = $selectedAllocation->id;
             $allocation = Allocation::findOrFail($id);
@@ -209,6 +209,11 @@ class AllocationController extends Controller
             $allocation->allocation_date_time = now();
             $allocation->active = 1;
             $allocation->save();
+            
+            // Get the student details
+            $selectedStudent = $allocation->student; // Assuming you have a 'student' relationship
+            $selectedStudents[] = $selectedStudent;
+            Mail::to($selectedStudent->email)->send(new StudentAssignedMail($selectedStudent, $tutor));
 
 
             $studentCount++;
@@ -218,7 +223,7 @@ class AllocationController extends Controller
                 break;
             }
         }
-
+        Mail::to($tutor->email)->send(new TutorAssignmentMail($tutor, $selectedStudents));
         return redirect()->route('admin.assignedlists')->with('success', 'Reallocation is successful');
     }
 

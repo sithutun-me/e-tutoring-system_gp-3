@@ -52,15 +52,15 @@
                 <section class="p-3">
                     <h2 class="fs-2 fw-bold mb-4"> Tutor Lists</h2>
 
-
+                    <form id="tutorForm" action="{{ route('admin.tutorlists') }}" method="GET">
                     <div class=" form-group mb-4">
-                        <input id="tutorSearch" class="form-control me-2" type="search" placeholder="Search here"
+                        <input id="tutorSearch" class="form-control me-2" name="search" value="{{ request()->input('search') }}" type="search" placeholder="Search here"
                             aria-label="Search" style="width: 320px;">
-                        <button type="button" name="submit" class="btn btn-primary shadow-none"
-                            onclick="filterTutors()">Search</button>
+                        <button type="submit" name="submit" class="btn btn-primary shadow-none"
+                            >Search</button>
 
                     </div>
-
+                    </form>
                     <div class="table-responsive" id="no-more-tables">
                         <table id="tutorTable" class="table bg-white">
                             <thead>
@@ -198,7 +198,7 @@
         }
         document.getElementById('tutorSearch').addEventListener('input', function() {
             if (this.value.trim() === '') {
-                filterTutors();
+                //filterTutors();
             }
         });
     </script>
