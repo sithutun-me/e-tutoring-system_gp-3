@@ -448,7 +448,7 @@ h6 {
 /* Cell Borders - Ensures uniformity */
 #allocationTable th,
 #allocationTable td {
-
+  text-wrap: auto;
   
   padding: 10px; /* Consistent padding */
 }
@@ -529,7 +529,7 @@ h6 {
 #assignedTable th,
 #assignedTable td {
 
-  
+  text-wrap: auto;
   padding: 10px; /* Consistent padding */
 }
 
@@ -575,10 +575,10 @@ h6 {
     width: 50px !important;
   }
   #assignedTable .medium-col {
-    width: 170px !important;
+    width: 150px !important;
   }
   #assignedTable .large-col {
-    width: 250px !important;
+    width: 200px !important;
   }
 
 }
@@ -704,7 +704,7 @@ h6 {
 #reallocationTable th,
 #reallocationTable td {
 
-  
+  text-wrap: auto;
   padding: 10px; /* Consistent padding */
 }
 
@@ -829,7 +829,7 @@ h6 {
 #tutorTable th,
 #tutorTable td {
 
-  
+  text-wrap: auto;
   padding: 10px; /* Consistent padding */
 }
 
@@ -966,7 +966,7 @@ h6 {
 #studentTable th,
 #studentTable td {
 
-  
+  text-wrap: auto;
   padding: 10px; /* Consistent padding */
 }
 
