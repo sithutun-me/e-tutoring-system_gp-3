@@ -37,10 +37,7 @@
    }
 
  }
-/* 
- .meeting-card {
-  width: auto !important;
- } */
+
 
  .hidden-div,
  .hidden-button,
@@ -49,7 +46,9 @@
  }
 
 
- #meetingdatepicker, #starttimepicker, #endtimepicker {
+ #meetingdatepicker,
+ #starttimepicker,
+ #endtimepicker {
    background-color: white;
  }
 
@@ -185,6 +184,9 @@
    font-size: 0.8125rem;
  }
 
+ #pagination-container .bottom .dataTables_paginate .pagination {
+   justify-content: center;
+ }
 
 
  .dataTables_paginate .paginate_button .page-link {
@@ -209,7 +211,7 @@
  }
 
  .dataTables_paginate {
-   margin-top: 30px;
+   margin-top: 15px;
  }
 
 
@@ -250,6 +252,7 @@
    width: 100% !important;
  }
 
+ 
  @media (max-width: 575.98px) {
    .chart-card-body .table-responsive {
      overflow-x: auto !important;
@@ -261,34 +264,28 @@
 
    .chart-container {
      min-width: 540px;
-     /* width: 100%; */
    }
 
    .chart-card {
      max-width: 540px;
-     /* width: 100%; */
    }
 
    .chart-canvas {
      max-width: 540px;
-     /* width: 100%; */
    }
  }
 
  @media (min-width: 768px) {
    .chart-container {
      min-width: 720px;
-     /* width: 100%; */
    }
 
    .chart-card {
      max-width: 450px;
-     /* width: 48%; */
    }
 
    .chart-canvas {
      max-width: 450px;
-     /* width: 48%; */
    }
  }
 
@@ -368,7 +365,7 @@
 
  .chart-card-title {
    margin-bottom: 1.25rem;
-   font-size: 0.8125rem;
+   font-size: 1rem;
    color: '#333333'
  }
 
@@ -408,8 +405,6 @@
    border-top-right-radius: 0;
  }
 
-
-
  .chart-card h1,
  .chart-card h2,
  .chart-card h3,
@@ -419,7 +414,6 @@
  .chart-card p {
    color: rgba(255, 255, 255, 0.8);
  }
-
 
  .chart-card {
    color: #9A9A9A;

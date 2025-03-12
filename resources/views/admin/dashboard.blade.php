@@ -67,6 +67,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="chart-container">
+
                 <div class="chart-card">
                     <div class="chart-card-header">
                         <h5 class="chart-card-category"></h5>
@@ -94,7 +97,7 @@
                                 <thead>
                                     <tr>
                                         <th class="normal-text">
-                                            Student ID
+                                            Student Code
                                         </th>
                                         <th class="normal-text">
                                             Student Name
@@ -121,8 +124,9 @@
                                     </tr>
                                     @endif
                                 </tbody>
-                                
+
                             </table>
+                            <div id="pagination-container"></div>
                         </div>
                     </div>
                 </div>
@@ -178,6 +182,7 @@
 
         console.log("Data table is loading..");
         $('#table-student-no-tutor').DataTable({
+            dom: 'rt<"bottom"ip>',
             paging: true,
             pageLength: 5,
             lengthChange: false,
@@ -188,6 +193,7 @@
                 "info": "Total Records: _TOTAL_",
             }
         });
+        $('.bottom').appendTo("#pagination-container");
 
 
     });

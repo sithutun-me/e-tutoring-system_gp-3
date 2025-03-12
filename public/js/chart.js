@@ -7,7 +7,7 @@ window.demo = {
     initStudentInteractionChart: async function () {
       
 
-      gradientBarChartConfiguration = {
+      gradientBarChartConfigurationStudent = {
         maintainAspectRatio: false,
         legend: {
           display: false
@@ -31,8 +31,8 @@ window.demo = {
             },
             ticks: {
               suggestedMin: 0,
-              suggestedMax: 20,
-              stepSize: 5,
+              suggestedMax: 50,
+              stepSize: 10,
               padding: 20,
               fontColor: "#333333",
               fontSize: 13,
@@ -116,7 +116,7 @@ window.demo = {
               data: data,
             }]
           },
-          options: gradientBarChartConfiguration
+          options: gradientBarChartConfigurationStudent
         });
         console.log('Chart Initialized:', myChart);
 
@@ -126,7 +126,7 @@ window.demo = {
 
     initTutorMessagesChart: async function () {
   
-      gradientBarChartConfiguration = {
+      gradientBarChartConfigurationTutor = {
         maintainAspectRatio: false,
         legend: {
           display: false
@@ -152,8 +152,8 @@ window.demo = {
             },
             ticks: {
               suggestedMin: 0,
-              suggestedMax: 50,
-              stepSize: 10,
+              suggestedMax: 5,
+              stepSize: 1,
               padding: 20,
               fontColor: "#333333",
               fontSize: 13,
@@ -170,14 +170,14 @@ window.demo = {
               padding: 20,
               fontColor: "#333333",
               fontSize: 13,
-              fontFamily: 'Poppins'
+              fontFamily: 'Poppins',
+              autoSkip: false
             }
           }]
         }
       };
   
   
-      var ctx = document.getElementById("TutorMessagesChart").getContext("2d");
       async function getAverageMessagesPerTutor() {
         try {
           const response = await fetch('/average_messages');
@@ -210,6 +210,8 @@ window.demo = {
     
       const { labels, averageMessageCounts } = await getAverageMessagesPerTutor();
 
+      var ctx = document.getElementById("TutorMessagesChart").getContext("2d");
+      // ctx.width = data.length * 50;
       
       var myChart = new Chart(ctx, {
         type: 'bar',
@@ -228,10 +230,10 @@ window.demo = {
             borderWidth: 2,
             borderDash: [],
             borderDashOffset: 0.0,
-            data: averageMessageCounts,
+            data: averageMessageCounts
           }]
         },
-        options: gradientBarChartConfiguration
+        options: gradientBarChartConfigurationTutor
       });
     }
   }
