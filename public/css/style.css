@@ -550,7 +550,7 @@ h6 {
 #assignedTable tbody {
   display: block;
   height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
-  overflow-y: auto; /* Enable scrolling inside tbody */
+  overflow-y: auto; /* Enable scrolling inside for the tbody */
 }
 
 #assignedTable thead,
