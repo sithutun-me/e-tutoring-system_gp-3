@@ -449,7 +449,7 @@ h6 {
 #allocationTable th,
 #allocationTable td {
   text-wrap: auto;
-  
+  word-wrap: break-word;
   padding: 10px; /* Consistent padding */
 }
 
@@ -530,6 +530,7 @@ h6 {
 #assignedTable td {
 
   text-wrap: auto;
+  word-wrap: break-word;
   padding: 10px; /* Consistent padding */
 }
 
@@ -705,6 +706,7 @@ h6 {
 #reallocationTable td {
 
   text-wrap: auto;
+  word-wrap: break-word;
   padding: 10px; /* Consistent padding */
 }
 
@@ -828,8 +830,8 @@ h6 {
 /* Cell Borders - Ensures uniformity */
 #tutorTable th,
 #tutorTable td {
-
   text-wrap: auto;
+  word-wrap: break-word;
   padding: 10px; /* Consistent padding */
 }
 
@@ -967,6 +969,7 @@ h6 {
 #studentTable td {
 
   text-wrap: auto;
+  word-wrap: break-word;
   padding: 10px; /* Consistent padding */
 }
 

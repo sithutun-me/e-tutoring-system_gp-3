@@ -66,7 +66,7 @@
                             <thead>
                                 <tr class="custom-bg text-light">
                                     <th class="text-center small-col" style="color: white;">No.</th>
-                                    <th class="text-center" style="color: white;">Tutor Code</th>
+                                    <th class="text-center medium-col" style="color: white;">Tutor Code</th>
                                     <th class="text-center" style="color: white;">Tutor Name</th>
                                     <th class="text-center" style="color: white; ">Email</th>
                                     <th class="text-center" style="color: white;">Assigned Students</th>
@@ -80,7 +80,7 @@
                                 @foreach ($tutors as $tutor)
                                     <tr class="tutor-row " id="no-record-row">
                                         <td class="small-col" data-title="No">{{ $count++ }}</td>
-                                        <td data-title="Code" >{{ $tutor->user_code }}</td>
+                                        <td class="medium-col" data-title="Code" >{{ $tutor->user_code }}</td>
                                         <td data-title="Name" >{{ $tutor->first_name }} {{ $tutor->last_name }}</td>
                                         <td data-title="Email" >{{ $tutor->email }}</td>
                                         <td data-title="Assigned Students" >{{ $tutor->assigned_students_count }}</td>
