@@ -67,6 +67,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="chart-container-full">
+
                 <div class="chart-card">
                     <div class="chart-card-header">
                         <h5 class="chart-card-category"></h5>
@@ -94,7 +97,7 @@
                                 <thead>
                                     <tr>
                                         <th class="normal-text">
-                                            Student ID
+                                            Student Code
                                         </th>
                                         <th class="normal-text">
                                             Student Name
@@ -121,8 +124,9 @@
                                     </tr>
                                     @endif
                                 </tbody>
-                                
+
                             </table>
+                            <div id="pagination-container"></div>
                         </div>
                     </div>
                 </div>
@@ -143,7 +147,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script src="/bootstrap-5.0.2-dist/js/bootstrap.js"></script>
-<script src="{{ asset('white') }}/js/plugins/chartjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
+
+
 <script src="{{ asset('js/chart.js') }}"></script>
 
 <script>
@@ -178,6 +184,7 @@
 
         console.log("Data table is loading..");
         $('#table-student-no-tutor').DataTable({
+            dom: 'rt<"bottom"ip>',
             paging: true,
             pageLength: 5,
             lengthChange: false,
@@ -188,6 +195,7 @@
                 "info": "Total Records: _TOTAL_",
             }
         });
+        $('.bottom').appendTo("#pagination-container");
 
 
     });
