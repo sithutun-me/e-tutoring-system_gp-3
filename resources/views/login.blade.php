@@ -34,7 +34,7 @@
                                     <input type="password" name="password" class="form-control" id="yourPassword" required>
                                     <div class="invalid-feedback">@error('password') {{ $message }} @enderror</div>
                                 </div>
-                                <div class="col-12 mb-3 mt-4">
+                                <div class="col-12 my-4">
                                     <button class="btn btn-primary w-100" type="submit">Login</button>
                                 </div>
                             </form>
