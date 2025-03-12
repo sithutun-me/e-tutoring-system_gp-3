@@ -24,7 +24,7 @@ class TutorController extends Controller
                 ->where('active', 1)
                 ->with('student') // Assuming you have a relationship
                 ->get();
-        $meeting_schedules = DB::table('meeting_schedules')
+        $query = DB::table('meeting_schedules')
             ->join('users as students', 'meeting_schedules.student_id', '=', 'students.id')
             ->select(
                 'meeting_schedules.id',
@@ -41,15 +41,34 @@ class TutorController extends Controller
                 'students.first_name',
                 'students.last_name'
             )
-            ->where('meeting_schedules.tutor_id', $tutorId)
-        //  ->where('meeting_schedules.active', 1)
-            ->orderBy('meeting_schedules.meeting_date')
-            ->orderBy('meeting_schedules.meeting_start_time')
-            ->get()
-            ->groupBy('meeting_date'); // Group by date
+            ->where('meeting_schedules.tutor_id', $tutorId);
+        
+            // Filter by meeting type if selected
+    if ($request->filled('meeting_type') && $request->meeting_type !== 'All') {
+        $query->where('meeting_schedules.meeting_type', $request->meeting_type);
+    }
+
+    // Filter by date if selected
+    if ($request->filled('meeting_date')) {
+        $query->where('meeting_schedules.meeting_date', $request->meeting_date);
+    }
+
+    // Filter by student if selected
+    if ($request->filled('student_id')) {
+        $query->where('meeting_schedules.student_id', $request->student_id);
+    }
+
+    // Get results and group by date
+    $meeting_schedules = $query
+        ->orderBy('meeting_schedules.meeting_date')
+        ->orderBy('meeting_schedules.meeting_start_time')
+        ->get()
+        ->groupBy('meeting_date');
             // if(is_null($meeting_schedules)){
             //     return view('tutor.meetinglists',compact('meeting_schedules'));
             // }   
+
+            
         return view('tutor.meetinglists', compact('meeting_schedules','students'));
         
     }

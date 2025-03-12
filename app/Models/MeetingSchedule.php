@@ -9,7 +9,7 @@ class MeetingSchedule extends Model
 {
     //
   //  use HasFactory;
-    protected $table = 'meeting_schedules';
+    protected $table = 'meeting_schedule';
     protected $fillable = [
         'meeting_title', 
         'meeting_description', 

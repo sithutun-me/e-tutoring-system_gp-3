@@ -30,9 +30,9 @@ class AdminController extends Controller
         return view('admin.reallocation');
     }
 
-    public function tutorlists()
+    public function tutorlists(Request $request)
     {
-        $tutors = $this->adminDashboardService->getTutorListWithAssignedStudentCount();
+        $tutors = $this->adminDashboardService->getTutorListWithAssignedStudentCount($request);
         return view('admin.tutorlists',compact('tutors'));
     }
 

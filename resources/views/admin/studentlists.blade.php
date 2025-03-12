@@ -53,14 +53,14 @@
             <section class="p-3">
                 <h2 class="fs-2 fw-bold mb-4"> Student Lists</h2>
 
-
+                <form id="studentForm" action="{{ route('admin.studentlists') }}" method="GET">
                 <div class=" form-group mb-4">
-                    <input class="form-control me-2" id="studentSearch" type="search" placeholder="Search here" 
+                    <input class="form-control me-2" id="studentSearch" type="search" name="search" value="{{ request()->input('search') }}" placeholder="Search here" 
                         aria-label="Search" style="width: 320px;">
-                    <button type="button" name="submit" onclick="filterStudents()" class="btn btn-primary shadow-none">Search</button>
+                    <button type="submit" name="submit"  class="btn btn-primary shadow-none">Search</button>
 
                 </div>
-
+            </form>
                 <div class="table-responsive" id="no-more-tables">
                     <table id="studentTable" class="table bg-white ">
                         <thead>
@@ -193,9 +193,24 @@
         
 
     }
+//     function showAllStudents() {
+//     // You can trigger an AJAX call here to fetch all students from the database, or reload the entire list from the backend.
+//     // Example using AJAX (Assuming you have an endpoint for getting all students):
+//     fetch('/path/to/get-all-students') 
+//         .then(response => response.json())
+//         .then(data => {
+//             // Update the DOM with all the students data
+//             updateStudentList(data);
+//         })
+//         .catch(error => console.error('Error fetching all students:', error));
+// }
     document.getElementById('studentSearch').addEventListener('input', function() {
         if (this.value.trim() === '') {
-            filterStudents();
+           // showAllStudents();  // Call function to show all students when input is empty
+         
+
+
+            console.log("close search");
         }
     });
 </script>

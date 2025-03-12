@@ -89,12 +89,9 @@ class AdminService
 
     public function studentsWithoutTutors()
     {
-        $students = User::where('role_id', 1)
-            ->whereNotIn('id', function ($query) {
-                $query->select('student_id')
-                      ->from('allocation');
-            })
-            ->get();
+       $students = User::whereDoesntHave('studentAllocations', function ($query) {
+                $query->where('active', 1);
+        })->where('role_id', 1)->get();
 
 
         return $students;
@@ -113,18 +110,22 @@ class AdminService
                 'students.email',
                 DB::raw("COALESCE(CONCAT(tutors.first_name, ' ', tutors.last_name), 'Unassigned') AS tutor_name")
             )
-            ->leftJoin('allocation', 'students.id', '=', 'allocation.student_id')
+            ->leftJoin('allocation', function ($join) {
+                $join->on('students.id', '=', 'allocation.student_id')
+                     ->where('allocation.active', 1); // Only active allocations
+            })
             ->leftJoin('users AS tutors', 'allocation.tutor_id', '=', 'tutors.id')
-            ->where('students.role_id', 1); // RoleID 1 for students
+            ->where('students.role_id', 1);// RoleID 1 for students
             
         
-            if ($search) {
+            if (!empty($search)) {
                 $students->where(function ($query) use ($search) {
                     $query->where('students.first_name', 'like', "%{$search}%")
                         ->orWhere('students.last_name', 'like', "%{$search}%")
                         ->orWhere('students.user_code', 'like', "%{$search}%")
                         ->orWhere('students.email', 'like', "%{$search}%")
-                        ->orWhereRaw("CONCAT(tutors.first_name, ' ', tutors.last_name) LIKE ?", ["%{$search}%"]);
+                        ->orWhereRaw("COALESCE(CONCAT(tutors.first_name, ' ', tutors.last_name), 'Unassigned') LIKE ?", ["%{$search}%"]);
+
                 });
             }
             $students = $students->orderBy('students.user_code')->get();
@@ -133,9 +134,10 @@ class AdminService
         
     }
 
-    public function getTutorListWithAssignedStudentCount()
+    public function getTutorListWithAssignedStudentCount(Request $request)
     {
-        $results = DB::table('users AS tutors')
+        $search = $request->input('search');
+        $tutors = DB::table('users AS tutors')
         ->select(
             'tutors.id AS tutor_id',
             'tutors.user_code',
@@ -144,17 +146,59 @@ class AdminService
             'tutors.email',
             DB::raw('COUNT(students.id) AS assigned_students_count')
         )
-        ->leftJoin('allocation AS a', 'a.tutor_id', '=', 'tutors.id')
+        ->leftJoin('allocation AS a', function ($join) {
+            $join->on('a.tutor_id', '=', 'tutors.id')
+                ->where('a.active', 1); // Only active allocations
+        })
         ->leftJoin('users AS students', function ($join) {
             $join->on('students.id', '=', 'a.student_id')
                 ->where('students.role_id', 1); // Only students
         })
         ->where('tutors.role_id', 2) // Only tutors
-        ->groupBy('tutors.id', 'tutors.user_code','tutors.first_name','tutors.last_name','tutors.email')
-        ->orderBy('tutors.user_code')
-        ->get();
+        ->groupBy('tutors.id', 'tutors.user_code','tutors.first_name','tutors.last_name','tutors.email');
 
-    return $results;
+        if (!empty($search)) {
+            $tutors->where(function ($query) use ($search) {
+                $query->where('students.first_name', 'like', "%{$search}%")
+                    ->orWhere('students.last_name', 'like', "%{$search}%")
+                    ->orWhere('students.user_code', 'like', "%{$search}%")
+                    ->orWhere('students.email', 'like', "%{$search}%");
+                   
+
+            });
+        }
+        $tutors = $tutors->orderBy('tutors.user_code')->get();
+
+
+        
+        
+
+
+
+        // Filter by meeting type if selected
+    // if ($request->filled('meeting_type') && $request->meeting_type !== 'All') {
+    //     $query->where('meeting_schedules.meeting_type', $request->meeting_type);
+    // }
+
+    // // Filter by date if selected
+    // if ($request->filled('meeting_date')) {
+    //     $query->where('meeting_schedules.meeting_date', $request->meeting_date);
+    // }
+
+    // // Filter by student if selected
+    // if ($request->filled('student_id')) {
+    //     $query->where('meeting_schedules.student_id', $request->student_id);
+    // }
+
+    // // Get results and group by date
+    // $meeting_schedules = $query
+    //     ->orderBy('meeting_schedules.meeting_date')
+    //     ->orderBy('meeting_schedules.meeting_start_time')
+    //     ->get()
+    //     ->groupBy('meeting_date');
+            
+
+    return $tutors;
         
     }
     
