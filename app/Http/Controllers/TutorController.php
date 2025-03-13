@@ -25,7 +25,7 @@ class TutorController extends Controller
                 ->where('active', 1)
                 ->with('student') // Assuming you have a relationship
                 ->get();
-        $query = DB::table('meeting_schedules')
+        $query = DB::table('meeting_schedule as meeting_schedules')
             ->join('users as students', 'meeting_schedules.student_id', '=', 'students.id')
             ->select(
                 'meeting_schedules.id',
@@ -134,7 +134,7 @@ class TutorController extends Controller
     public function save(Request $request,$id=null)
     {
         $request->validate([
-            'meeting_title' => 'required|string|max:255',
+            'meeting_title' => 'required|string|max:50',
             'meeting_description' => 'nullable|string',
             'meeting_type' => 'required|in:real,virtual',
             'meeting_platform' => 'nullable|string|required_if:meeting_type,virtual|max:255',
