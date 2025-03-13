@@ -159,10 +159,10 @@ class AdminService
 
         if (!empty($search)) {
             $tutors->where(function ($query) use ($search) {
-                $query->where('students.first_name', 'like', "%{$search}%")
-                    ->orWhere('students.last_name', 'like', "%{$search}%")
-                    ->orWhere('students.user_code', 'like', "%{$search}%")
-                    ->orWhere('students.email', 'like', "%{$search}%");
+                $query->where('tutors.first_name', 'like', "%{$search}%")
+                    ->orWhere('tutors.last_name', 'like', "%{$search}%")
+                    ->orWhere('tutors.user_code', 'like', "%{$search}%")
+                    ->orWhere('tutors.email', 'like', "%{$search}%");
                    
 
             });
