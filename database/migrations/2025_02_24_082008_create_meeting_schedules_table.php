@@ -13,18 +13,18 @@ return new class extends Migration
     {
         Schema::create('meeting_schedule', function (Blueprint $table) {
             $table->id();
-            $table->string('meeting_description');
-            $table->text('meeting_title');
-            $table->string('meeting_type');
-            $table->string('meeting_platform');
-            $table->string('meeting_link')->nullable();
-            $table->string('meeting_location')->nullable();
+            $table->text('meeting_title',50);
+            $table->string('meeting_description',255)->nullable();
+            $table->string('meeting_type',20);
+            $table->string('meeting_platform',255)->nullable();
+            $table->string('meeting_link',255)->nullable();
+            $table->string('meeting_location',255)->nullable();
             $table->date('meeting_date');
             $table->time('meeting_start_time');
             $table->time('meeting_end_time');
-            $table->string('meeting_status');
-            $table->foreignId('tutor_id')->constrained('users', 'id');
-            $table->foreignId('student_id')->constrained('users', 'id');
+            $table->string('meeting_status',20);
+            $table->foreignId('tutor_id')->constrained('users', 'id')->onDelete('NO ACTION')->onUpdate('CASCADE');
+            $table->foreignId('student_id')->constrained('users', 'id')->onDelete('NO ACTION')->onUpdate('CASCADE');
             $table->timestamps();
         });
     }

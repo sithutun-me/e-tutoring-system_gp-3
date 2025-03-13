@@ -8,6 +8,7 @@ use App\Models\Allocation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+use Carbon\Carbon;
 
 
 class TutorController extends Controller
@@ -148,16 +149,17 @@ class TutorController extends Controller
             'meeting_start_time' => [
                 'required',
                 'date_format:h:i A', // Validate the correct time format
-                function ($attribute, $value, $fail) {
-                    // Get the current date and time
-                    $currentDateTime = \Carbon\Carbon::now();
-                    
-                    // Combine today's date with the entered start time
-                    $startTime = \Carbon\Carbon::createFromFormat('Y-m-d h:i A', $currentDateTime->toDateString() . ' ' . $value);
-                    
-                    // Check if the start time is in the future
-                    if ($startTime->isBefore($currentDateTime)) {
-                        $fail('The ' . $attribute . ' must be a time in the future.');
+                function ($attribute, $value, $fail) use ($request) {
+                    if ($request->meeting_date) {
+                        // Combine date and time and set the correct timezone
+                        $meetingDateTime = Carbon::createFromFormat('Y-m-d h:i A', $request->meeting_date . ' ' . $value, 'Asia/Yangon');
+        
+                        // Get current date and time in the same timezone
+                        $currentDateTime = Carbon::now('Asia/Yangon');
+        
+                        if ($meetingDateTime->isBefore($currentDateTime)) {
+                            $fail('The meeting start time must be a time in the future.');
+                        }
                     }
                 }
             ],

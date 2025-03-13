@@ -27,17 +27,18 @@
                         </li>
                         <li class=""><a href="/tutor/blogging" class="text-decoration-none px-3 py-2 d-block ">
                                 <img src="/icon images/blogging.png" style="width:20px; margin-right: 10px;"> Blogging
-                    <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">
-                            <img src="/icon images/notification.png" style="width:20px; margin-right: 10px;"> Notifications
-                        </a>
-                    </li>
+                        <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">
+                                <img src="/icon images/notification.png" style="width:20px; margin-right: 10px;">
+                                Notifications
+                            </a>
+                        </li>
 
-                    <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">
-                            <img src="/icon images/reports.png" style="width:20px; margin-right: 10px;"> Reports
-                        </a>
-                    </li>
+                        <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">
+                                <img src="/icon images/reports.png" style="width:20px; margin-right: 10px;"> Reports
+                            </a>
+                        </li>
 
-                </ul>
+                    </ul>
 
 
 
@@ -56,7 +57,21 @@
 
                     </div>
                 </nav>
+                {{-- later to use for showing validation error --}}
 
+                {{-- @if ($errors->any())
+<div id="errorModal" class="modal" style="display:block;">
+    <div class="modal-content">
+        <h4>Validation Errors</h4>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+        <button onclick="closeModal()">Close</button>
+    </div>
+</div>
+@endif --}}
                 <div class="dashboard-content px-3 pt-4">
                     <span onclick="history.back()" style="cursor: pointer;" class="header-text">
                         <i class="fa-solid fa-chevron-left"></i> <u>Back</u>
@@ -308,7 +323,7 @@
                                         <div class="row">
                                             <div class="col-md-6 mb-2">
                                                 <div class="normal-text">
-                                                    <textarea class="form-control" name="meeting_description" {{ $readOnly ? 'readonly' : '' }}>{{ $meeting_schedules ? $meeting_schedules->meeting_description : old('meeting_description') }}</textarea>
+                                                    <textarea class="form-control" name="meeting_description"  {{ $readOnly ? 'readonly' : '' }}>{{ $meeting_schedules ? $meeting_schedules->meeting_description : old('meeting_description') }}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -339,12 +354,13 @@
                                             </div>
                                         @endif
                                         @if (isset($meeting_schedules))
-                                        <div class="row hidden-button detail-button-div">
-                                            <div class="col-md-6 mb-2 mt-1">
-                                                <button type="button" data-id="{{$meeting_schedules->id}}" 
-                                                    class="btn btn-secondary shadow-none full-button delete">Cancel Meeting</button>
+                                            <div class="row hidden-button detail-button-div">
+                                                <div class="col-md-6 mb-2 mt-1">
+                                                    <button type="button" data-id="{{ $meeting_schedules->id }}"
+                                                        class="btn btn-secondary shadow-none full-button delete">Cancel
+                                                        Meeting</button>
+                                                </div>
                                             </div>
-                                        </div>
                                         @endif
                                     </div>
                                 </div>
@@ -354,12 +370,13 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Delete confirmation!</h5>
-                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                        <i class="fa-solid fa-xmark"></i>
+                                        <h5 class="modal-title">Cancel confirmation!</h5>
+                                        <button type="button" class="close" data-bs-dismiss="modal"
+                                            aria-label="Close">
+                                            <i class="fa-solid fa-xmark"></i>
                                         </button>
                                     </div>
-                                    <form action="{{route('tutor.meetingdetail.cancelmeeting')}}" method="POST">
+                                    <form action="{{ route('tutor.meetingdetail.cancelmeeting') }}" method="POST">
                                         @csrf
                                         <div class="modal-body">
                                             <input type="hidden" name="id">
@@ -371,8 +388,9 @@
                                         </div>
                                         <div class="modal-footer ">
                                             <button type="submit" class="btn btn-primary">Confirm</button>
-                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
-                                            Cancel
+                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                                aria-label="Close">
+                                                Cancel
                                             </button>
                                         </div>
                                     </form>
@@ -457,31 +475,59 @@
             const startPicker = flatpickr("#starttimepicker", {
                 enableTime: true,
                 noCalendar: true,
-                dateFormat: "H:i K",
+                dateFormat: "h:i K",
                 minuteIncrement: 15,
                 clickOpens: false,
-                allowInput: false
+                allowInput: false,
+                formatDate: function(date) {
+                    const hours = date.getHours() % 12 || 12; // Convert to 12-hour format
+                    const paddedHours = hours.toString().padStart(2, "0"); // Add leading zero
+                    const minutes = date.getMinutes().toString().padStart(2, "0"); // Add leading zero
+                    const ampm = date.getHours() < 12 ? "AM" : "PM";
+                    return `${paddedHours}:${minutes} ${ampm}`;
+                }
             });
             const endPicker = flatpickr("#endtimepicker", {
                 enableTime: true,
                 noCalendar: true,
-                dateFormat: "H:i K",
+                dateFormat: "h:i K",
                 minuteIncrement: 15,
                 clickOpens: false,
-                allowInput: false
+                allowInput: false,
+                formatDate: function(date) {
+                    const hours = date.getHours() % 12 || 12; // Convert to 12-hour format
+                    const paddedHours = hours.toString().padStart(2, "0"); // Add leading zero
+                    const minutes = date.getMinutes().toString().padStart(2, "0"); // Add leading zero
+                    const ampm = date.getHours() < 12 ? "AM" : "PM";
+                    return `${paddedHours}:${minutes} ${ampm}`;
+                }
             });
         @else
             const startPicker = flatpickr("#starttimepicker", {
                 enableTime: true,
                 noCalendar: true,
-                dateFormat: "H:i K",
+                dateFormat: "h:i K",
                 minuteIncrement: 15,
+                formatDate: function(date) {
+                    const hours = date.getHours() % 12 || 12; // Convert to 12-hour format
+                    const paddedHours = hours.toString().padStart(2, "0"); // Add leading zero
+                    const minutes = date.getMinutes().toString().padStart(2, "0"); // Add leading zero
+                    const ampm = date.getHours() < 12 ? "AM" : "PM";
+                    return `${paddedHours}:${minutes} ${ampm}`;
+                }
             });
             const endPicker = flatpickr("#endtimepicker", {
                 enableTime: true,
                 noCalendar: true,
                 dateFormat: "H:i K",
                 minuteIncrement: 15,
+                formatDate: function(date) {
+                    const hours = date.getHours() % 12 || 12; // Convert to 12-hour format
+                    const paddedHours = hours.toString().padStart(2, "0"); // Add leading zero
+                    const minutes = date.getMinutes().toString().padStart(2, "0"); // Add leading zero
+                    const ampm = date.getHours() < 12 ? "AM" : "PM";
+                    return `${paddedHours}:${minutes} ${ampm}`;
+                }
 
             });
         @endif
@@ -525,6 +571,10 @@
             modal.find('input[name=id]').val($(this).data('id'));
             modal.modal('show');
         });
+
+        function closeModal() {
+            document.getElementById('errorModal').style.display = 'none';
+        }
         // function toggleMeetingType() {
         //     const real = document.getElementById('realmeeting').checked;
         //     document.querySelector('.location-div').style.display = real ? 'block' : 'none';
