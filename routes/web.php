@@ -50,10 +50,10 @@ Route::middleware('auth')->group(function(){
     Route::middleware(['role:2'])->group(function () {
         Route::get('/tutor/dashboard', [TutorController::class, 'index'])->name('tutor.dashboard');
 
-        
+
         Route::get('/tutor/meetinglists', [TutorController::class, 'meetinglists'])->name('tutor.meetinglists');
 
-        
+
         //show create form
         Route::get('/tutor/meetingdetail', [TutorController::class, 'meetingdetail'])->name('tutor.meetingdetail.create');
         //show edit form
@@ -61,15 +61,15 @@ Route::middleware('auth')->group(function(){
         //view meeting detail
         Route::get('/tutor/meetingdetail/{id}', [TutorController::class, 'meetingview'])->name('tutor.meetingdetail.view');
 
-        
+
 
         Route::get('/tutor/blogging', [TutorController::class, 'blogging'])->name('tutor.blogging');
         Route::get('/tutor/createposts', [TutorController::class, 'createposts'])->name('tutor.createposts');
         Route::get('/tutor/updateposts', [TutorController::class, 'updateposts'])->name('tutor.updateposts');
-        
+
         //create meeting
         Route::post('/tutor/meetingdetail', [TutorController::class, 'save'])->name('save');
-        
+
         //update meeting
         Route::put('/tutor/meetingdetail/{id}', [TutorController::class, 'save'])->name('update');
 
@@ -95,3 +95,8 @@ Route::middleware('auth')->group(function(){
 Route::get('/student-inactivity', [AdminController::class, 'getInactiveStudentsData']);
 Route::get('/average_messages', [AdminController::class, 'getAverageMessage']);
 Route::get('/student_list_with_assigned_tutors', [AdminController::class, 'getStudentListWithAssignedTutors']);
+
+
+Route::fallback(function () {
+    abort(404);
+});

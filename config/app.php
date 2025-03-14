@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => env('APP_TIMEZONE', 'Asiz/Yangon'),
+    'timezone' => env('APP_TIMEZONE', 'Asia/Yangon'),
 
     /*
     |--------------------------------------------------------------------------
