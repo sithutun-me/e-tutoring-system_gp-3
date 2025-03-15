@@ -135,7 +135,7 @@ class TutorController extends Controller
     {
         $request->validate([
             'meeting_title' => 'required|string|max:50',
-            'meeting_description' => 'nullable|string',
+            'meeting_description' => 'nullable|string|max:255',
             'meeting_type' => 'required|in:real,virtual',
             'meeting_platform' => 'nullable|string|required_if:meeting_type,virtual|max:255',
             'meeting_link' => 'nullable|url|required_if:meeting_type,virtual',
