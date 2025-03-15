@@ -11,9 +11,12 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
     <!-- font awsome css-->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
     <!-- Bootstrap Connection in public file -->
 
@@ -60,87 +63,14 @@
             $('.sidebar').removeClass('active');
 
         });
-
-
-    //     $(document).ready(function() {
-    //         $('#assignedTable').DataTable({
-    //             paging: true,
-    //             pageLength: 15,
-    //             lengthChange: false,
-    //             searching: false,
-    //             ordering: false,
-    //             "language": {
-    //                 "info": "Total Records: _TOTAL_",
-    //             }
-    //         });
-    //     });
-
-    //     $(document).ready(function() {
-    //     $('#allocationTable').DataTable({
-    //         paging: true,
-    //         pageLength: 15,
-    //         lengthChange: false,
-    //         searching: false,
-    //         ordering: false,
-    //         "language": {
-    //             "info": "Total Records: _TOTAL_",
-    //         }
-    //     });
-    // });
-
-
-    // $(document).ready(function () {
-    //     $('#reallocationTable').DataTable({
-    //         paging: true,
-    //         pageLength: 15,
-    //         lengthChange: false,
-    //         searching: false,
-    //         ordering: false,
-    //         "language": {
-    //             "info": "Total Records: _TOTAL_",
-    //         }
-    //     });
-    // });
-
-    // $(document).ready(function () {
-    //     $('#tutorTable').DataTable({
-    //         paging: true,
-    //         pageLength: 15,
-    //         lengthChange: false,
-    //         searching: false,
-    //         ordering: false,
-    //         "language": {
-    //             "info": "Total Records: _TOTAL_",
-    //         }
-    //     });
-    // });
-    
     </script>
     <script>
-        $(document).ready(function() {
-            toastr.options = {
-                closeBtton: true,
-                progressBar: true,
-                positionClass: "toast-bottom-right",
-                timeOut: "3500"
-            };
-
-            @if ($errors->any())
-                @foreach ($errors->all() as $error)
-                    toastr.error("{{ addslashes($error) }}");
-                @endforeach
-            @endif
-
-            @if (session('success'))
-                toastr.success("{{ session('success') }}");
-            @endif
-
-            @if (session('error'))
-                toastr.error("{{ session('error') }}");
-            @endif
-        });
+        window.errors = @json($errors->all());
+        window.successMessage = @json(session('success'));
+        window.errorMessage = @json(session('error'));
     </script>
     @stack('scripts')
+    <script src="{{ asset('js/toastr.js') }}"></script>
 </body>
 
 </html>

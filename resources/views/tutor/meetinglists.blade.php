@@ -106,7 +106,7 @@
 
                 </div>
             </form>
-                <div class="table-responsive">
+                <div class="table-responsive scroll-table">
                     <table class="table bg-white table-bordered card-table" id="table-meeting">
                         <tbody>
                             @forelse($meeting_schedules as $date => $dayMeetings)
@@ -124,13 +124,13 @@
                                     </tr>
                                     <!-- meeting detail body -->
                                     <tr class="no-border special">
-                                        <td class="w-15 no-right-border padding-left special">
+                                        <td style="width: 15%;" class="no-right-border padding-left special">
                                             {{ \Carbon\Carbon::parse($meeting->meeting_start_time)->format('h:i A') }} -
                                             {{ \Carbon\Carbon::parse($meeting->meeting_end_time)->format('h:i A') }}
                                         </td>
-                                        <td class="w-15 no-border special" style="color: #004AAD;">Student</td>
-                                        <td class="w-15 no-border special" style="color: #004AAD;">Status</td>
-                                        <td class="w-15 no-border special" style="color: #004AAD;">Meeting type</td>
+                                        <td style="width: 15%;" class="no-border special" style="color: #004AAD;">Student</td>
+                                        <td style="width: 15%;" class="no-border special" style="color: #004AAD;">Status</td>
+                                        <td style="width: 15%;" class="no-border special" style="color: #004AAD;">Meeting type</td>
                                         <td class="w-25 no-border special" style="color: #004AAD;">
                                             @if ($meeting->meeting_type === 'virtual')
                                                 Meeting link
@@ -138,20 +138,20 @@
                                                 Location
                                             @endif
                                         </td>
-                                        <td rowspan="2" class="text-center w-15 no-left-border special"><a
+                                        <td style="width: 15%;" rowspan="2" class="text-center no-left-border special"><a
                                                 href="{{ route('tutor.meetingdetail.view', $meeting->id) }}"
                                                 class="btn btn-primary shadow-none">Detail</a></td>
                                     </tr>
                                     <tr class="no-top-border special">
-                                        <td class="w-15 no-right-border padding-left special">
+                                        <td style="width: 15%;" class="no-right-border padding-left special">
                                             {{ $meeting->meeting_platform }}</td>
-                                        <td class="w-15 no-border special">{{ $meeting->student_id }}
+                                        <td style="width: 15%;" class="no-border special">{{ $meeting->student_id }}
                                             ({{ $meeting->first_name }} {{ $meeting->last_name }})
                                         </td>
-                                        <td class="w-15 no-border special">
+                                        <td style="width: 15%;" class="no-border special">
                                             <u>{{ ucfirst($meeting->meeting_status) }}</u>
                                         </td>
-                                        <td class="w-15 no-border special">{{ $meeting->meeting_type }}</td>
+                                        <td style="width: 15%;" class="no-border special">{{ $meeting->meeting_type }}</td>
                                         <td class="w-25 no-border padding-bot special overflow">
                                             @if ($meeting->meeting_type === 'virtual')
                                                 <a href="{{ $meeting->meeting_link }}"
