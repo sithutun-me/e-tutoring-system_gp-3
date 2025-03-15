@@ -168,7 +168,7 @@
                     <input type="hidden" name="id">
                     <div class="modal-body">
                         <div class="form-group">
-                            <p style="font-family: 'Poppins'; font-size:1rem;">Are you sure want to delete this allocation?</p>
+                            <p style="font-family: 'Poppins'; font-size:1rem;">Are you sure you want to delete this allocation?</p>
                         </div>
                     </div>
                 </div>

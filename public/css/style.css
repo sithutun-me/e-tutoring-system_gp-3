@@ -308,15 +308,39 @@ h6 {
     margin-left: 10px;
    }
 
-   .stu-button{
-    margin-left: 167px;
-   }
 
 
   }
 
 
+  @media only screen and (max-width: 900px){
+    .stu-button{
+      margin-left: 305px;
+     }
 
+  }
+
+  @media only screen and (max-width: 450px){
+    .stu-button{
+      margin-left: 167px;
+     }
+
+  }
+
+  @media only screen and (max-width: 420px){
+    .stu-button{
+      margin-left: 150px;
+     }
+
+  }
+
+  
+  @media only screen and (max-width: 400px){
+    .stu-button{
+      margin-left: 120px;
+     }
+
+  }
   
 
   
