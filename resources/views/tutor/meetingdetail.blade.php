@@ -91,19 +91,21 @@
                                             <div class="col-md-2 mt-4 d-flex justify-content-center align-items-center">
                                                 <h4 class="chart-card-title" style="font-size:1rem;">Meeting Detail</h4>
                                             </div>
-
+                                            @if (isset($meeting_schedules))
                                             <div class="col-md-2 mt-4 d-flex align-items-start flex-column ">
                                                 <div class="text-center">
                                                     <button type="submit" onclick="setAction('toggle_status')"
-                                                        class="btn btn-primary shadow-none" style="width: auto;">
-                                                        @if (isset($meeting_schedules))
+                                                        class="btn btn-primary shadow-none" style="width: auto;" 
+                                                        @if ($meeting_schedules->meeting_status === 'cancelled') disabled @endif>
+                                                       
                                                             {{ $meeting_schedules->meeting_status === 'completed' ? 'Mark as new' : 'Mark as Complete' }}
-                                                        @endif
+                                                        
 
                                                     </button>
 
                                                 </div>
                                             </div>
+                                            @endif
 
                                         </div>
                                         <div class="row hidden-title new-title-div">
@@ -119,7 +121,7 @@
                                         <div class="row">
                                             <div class="col-md-6 mb-2">
                                                 <div class="normal-text">
-                                                    Meeting Title
+                                                    Meeting Title *
                                                 </div>
                                             </div>
                                         </div>
@@ -136,7 +138,7 @@
                                         <div class="row">
                                             <div class="col-md-6 mb-2">
                                                 <div class="normal-text">
-                                                    Student
+                                                    Student *
                                                 </div>
                                             </div>
                                         </div>
@@ -146,12 +148,24 @@
                                                 <select class="form-select" id="selectStudentMeetingDetail"
                                                     {{ $disabled }} name="student_id"
                                                     aria-label="Floating label select example">
-                                                    <option value="" selected disabled
-                                                        {{ empty($meeting_schedules->student_id) ? 'selected' : '' }}>--
-                                                        Choose Student --</option>
+                                                    {{-- Show the currently assigned student (even if not allocated) --}}
+                                                    @if ($currentStudent && !in_array($currentStudent->id, $students->pluck('student.id')->toArray()))
+                                                        <option value="{{ $currentStudent->id }}" selected>
+                                                            {{ $currentStudent->first_name }}
+                                                            {{ $currentStudent->last_name }} (Unassigned)
+                                                        </option>
+                                                    @endif
+
+                                                    {{-- Choose Student Option --}}
+                                                    <option value="" disabled
+                                                        {{ empty($meeting_schedules->student_id) ? 'selected' : '' }}>
+                                                        -- Choose Student --
+                                                    </option>
+
+                                                    {{-- Allocated Students --}}
                                                     @foreach ($students as $allocated)
                                                         <option value="{{ $allocated->student->id }}"
-                                                            {{ old('student_id', optional($meeting_schedules)->student_id) == $allocated->student->id ? 'selected' : '' }}>
+                                                            {{ (int) old('student_id', $meeting_schedules->student_id??'') === $allocated->student->id ? 'selected' : '' }}>
                                                             {{ $allocated->student->first_name }}
                                                             {{ $allocated->student->last_name }}
                                                         </option>
@@ -162,7 +176,7 @@
                                         <div class="row">
                                             <div class="col-md-6 mb-2">
                                                 <div class="normal-text">
-                                                    Date
+                                                    Date *
                                                 </div>
                                             </div>
                                         </div>
@@ -183,7 +197,7 @@
                                         <div class="row">
                                             <div class="col-md-2 mb-2">
                                                 <div class="normal-text">
-                                                    Start time
+                                                    Start time *
                                                 </div>
                                             </div>
                                             <div class="col-md-2 mb-2">
@@ -191,7 +205,7 @@
                                             </div>
                                             <div class="col-md-2 mb-2">
                                                 <div class="normal-text">
-                                                    End time
+                                                    End time *
                                                 </div>
                                             </div>
                                         </div>
@@ -220,7 +234,7 @@
                                         <div class="row">
                                             <div class="col-md-6 mb-2">
                                                 <div class="normal-text">
-                                                    Meeting type
+                                                    Meeting type *
                                                 </div>
                                             </div>
                                         </div>
@@ -249,7 +263,7 @@
                                         <div class="row location-div hidden-div">
                                             <div class="col-md-6 mb-2">
                                                 <div class="normal-text">
-                                                    Location
+                                                    Location *
                                                 </div>
                                             </div>
                                         </div>
@@ -266,7 +280,7 @@
                                         <div class="row platform-div hidden-div">
                                             <div class="col-md-6 mb-2">
                                                 <div class="normal-text">
-                                                    Platform
+                                                    Platform *
                                                 </div>
                                             </div>
                                         </div>
@@ -274,22 +288,22 @@
                                             <div class="col-md-6 mb-2">
                                                 <select class="form-select" name="meeting_platform" {{ $disabled }}
                                                     id="selectMeetingType" aria-label="Floating label select example">
-                                                    <option value="Zoom"
-                                                        {{ isset($meeting_schedules->meeting_platform) && $meeting_schedules->meeting_platform == 'Zoom' ? 'selected' : '' }}>
+                                                    <option value="Zoom Meeting"
+                                                        {{ isset($meeting_schedules->meeting_platform) && $meeting_schedules->meeting_platform == 'Zoom Meeting' ? 'selected' : '' }}>
                                                         Zoom Meeting</option>
-                                                    <option value="Google"
-                                                        {{ isset($meeting_schedules->meeting_platform) && $meeting_schedules->meeting_platform == 'Google' ? 'selected' : '' }}>
+                                                    <option value="Google Meet"
+                                                        {{ isset($meeting_schedules->meeting_platform) && $meeting_schedules->meeting_platform == 'Google Meet' ? 'selected' : '' }}>
                                                         Google Meet</option>
-                                                    <option value="Teams"
-                                                        {{ isset($meeting_schedules->meeting_platform) && $meeting_schedules->meeting_platform == 'Teams' ? 'selected' : '' }}>
-                                                        Microsoft Teams Meeting</option>
+                                                    <option value="Teams Meeting"
+                                                        {{ isset($meeting_schedules->meeting_platform) && $meeting_schedules->meeting_platform == 'Teams Meeting' ? 'selected' : '' }}>
+                                                        Teams Meeting</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="row link-div hidden-div">
                                             <div class="col-md-6 mb-2">
                                                 <div class="normal-text">
-                                                    Meeting Link
+                                                    Meeting Link *
                                                 </div>
                                             </div>
                                         </div>
@@ -336,7 +350,7 @@
                                             <div class="row hidden-button detail-button-div">
                                                 <div class="col-md-6 mb-2 mt-2">
                                                     <button type="button" class="btn btn-primary shadow-none full-button"
-                                                        onclick="console.log('Reschedule clicked: {{ $meeting_schedules->id }}')"><a
+                                                    @if ($meeting_schedules->meeting_status === 'completed' ||  $meeting_schedules->meeting_status === 'cancelled' || !$isStudentAllocated) disabled @endif><a
                                                             href="{{ route('tutor.meetingdetail.update', $meeting_schedules->id ?? '') }}"
                                                             class="text-decoration-none"
                                                             style="color: white;">Reschedule</a></button>
@@ -347,7 +361,8 @@
                                             <div class="row hidden-button detail-button-div">
                                                 <div class="col-md-6 mb-2 mt-1">
                                                     <button type="button" data-id="{{ $meeting_schedules->id }}"
-                                                        class="btn btn-secondary shadow-none full-button delete">Cancel
+                                                        class="btn btn-secondary shadow-none full-button delete"
+                                                        @if ($meeting_schedules->meeting_status === 'completed' || $meeting_schedules->meeting_status === 'cancelled') disabled @endif>Cancel
                                                         Meeting</button>
                                                 </div>
                                             </div>
