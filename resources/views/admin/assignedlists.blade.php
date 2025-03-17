@@ -12,14 +12,34 @@
                     <i class="fa-solid fa-square-xmark"></i>
                 </button>
             </div>
-            <form action="{{route('admin.allocation.delete')}}" method="POST">
-                @csrf
-                <div class="modal-body">
-                    <input type="hidden" name="id">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <p style="font-family: 'Poppins'; font-size:1rem;">Are you sure you want to delete this allocation?</p>
-                        </div>
+
+            <ul class="list-unstyled px-2">
+                <li><a href="/admin/dashboard" class="text-decoration-none px-3 py-2 d-block">
+                        <img src="/icon images/dashboard.png" style="width:20px; margin-right: 10px;"> Dashboard
+                    </a></li>
+                <li><a href="/admin/allocation" class="text-decoration-none px-3 py-2 d-block">
+                        <img src="/icon images/allocation.png" style="width:20px; margin-right: 10px;"> Allocation
+                    </a></li>
+                <li><a href="/admin/assignedlists" class="text-decoration-none px-3 py-2 d-block">
+                        <img src="/icon images/assigned list.png" style="width:20px; margin-right: 10px;"> Assigned List
+                    </a></li>
+                <li><a href="/admin/tutorlists" class="text-decoration-none px-3 py-2 d-block">
+                        <img src="/icon images/tutor.png" style="width:20px; margin-right: 10px;"> Tutor
+                    </a></li>
+                <li><a href="/admin/studentlists" class="text-decoration-none px-3 py-2 d-block">
+                        <img src="/icon images/student.png" style="width:20px; margin-right: 10px;"> Student
+                    </a></li>
+                <li><a href="#" class="text-decoration-none px-3 py-2 d-block">
+                        <img src="/icon images/reports.png" style="width:20px; margin-right: 10px;"> Reports
+                    </a></li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <nav class="navbar navbar-expand-md navbar-light bg-light">
+                <div class="container-fluid">
+                    <div class="d-flex justify-content-between d-md-none d-block">
+                        <button class="btn px-1 py-0 open-btn me-2"><i class="fa-solid fa-bars"></i></button>
                     </div>
                 </div>
             </nav>

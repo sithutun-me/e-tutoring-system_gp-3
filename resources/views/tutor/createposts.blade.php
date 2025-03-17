@@ -59,12 +59,12 @@
                 </div>
             </nav>
 
-            <div class="dashboard-content px-2 pt-4">
-           
+            <div class="dashboard-content px-3 pt-4">
 
                     <span onclick="history.back()" style="cursor: pointer;" class="header-text ms-3">
                     <i class="fa-solid fa-chevron-left"></i> <u>Back</u>
                     </span>
+                    
 
                     <div class="create-container" style="margin-left: 20px;">
    

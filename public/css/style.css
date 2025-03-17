@@ -1085,11 +1085,12 @@ h6 {
 
 .post-container {
   background: white;
-  width: 1250px; /* Full width */
+  /* width: 1250px;  */
   padding: 20px;
   margin-bottom: 45px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   margin-top: 10px;
+  margin-right: 10px;
 }
 
 .post-container span{
@@ -1157,6 +1158,8 @@ h6 {
   margin-top: 20px;
 
 }
+
+
 
 .edit-container {
   width: 700px;
@@ -1246,6 +1249,7 @@ textarea::placeholder {
 
   .create-container{
     width: 100%;
+    
   }
   .edit-container{
     width: 100%;
