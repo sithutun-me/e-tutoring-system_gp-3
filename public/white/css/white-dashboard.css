@@ -69,6 +69,7 @@
 
 #selectMeetingType,
 #selectDateMeeting,
+#selectInteraction,
 #selectStudentMeeting,
 #selectTutorMeeting,
 #selectStudentMeetingDetail,
@@ -187,19 +188,24 @@ input {
   padding-bottom: 10px;
 }
 
-#table-student-no-tutor tbody {
+#table-student-no-tutor tbody,
+#table-upcoming-meetings tbody {
   min-height: 300px;
 }
 
-#table-student-no-tutor {
+#table-student-no-tutor,
+#table-upcoming-meetings {
   flex-grow: 1;
-  /* min-height: 300px; */
   overflow-y: auto;
+  table-layout: fixed;
 }
 
-#table-student-no-tutor td {
+#table-student-no-tutor td,
+#table-upcoming-meetings td {
   font-family: 'Poppins';
   font-size: 0.8125rem;
+  word-wrap: break-word;
+  text-wrap: auto;
 }
 
 #pagination-container .bottom .dataTables_paginate .pagination {
