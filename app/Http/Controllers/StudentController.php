@@ -10,4 +10,12 @@ class StudentController extends Controller
     {
         return view('student.dashboard');
     }
+    public function meetinglists()
+    {
+        return view('student.meetinglists');
+    }
+    public function meetingdetail()
+    {
+        return view('student.meetingdetail');
+    }
 }

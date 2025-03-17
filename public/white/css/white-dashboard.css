@@ -70,7 +70,9 @@
 #selectMeetingType,
 #selectDateMeeting,
 #selectStudentMeeting,
-#selectStudentMeetingDetail {
+#selectTutorMeeting,
+#selectStudentMeetingDetail,
+#selectTutorMeetingDetail {
 
   font-family: 'Poppins';
   font-size: 0.8125rem;
