@@ -136,11 +136,11 @@
                                                 -
                                                 {{ \Carbon\Carbon::parse($meeting->meeting_end_time)->format('h:i A') }}
                                             </td>
-                                            <td style="width: 15%;" class="no-border special" style="color: #004AAD;">
+                                            <td style="width: 15%;color: #004AAD;" class="no-border special">
                                                 Student</td>
-                                            <td style="width: 15%;" class="no-border special" style="color: #004AAD;">
+                                            <td style="width: 15%;color: #004AAD;" class="no-border special">
                                                 Status</td>
-                                            <td style="width: 15%;" class="no-border special" style="color: #004AAD;">
+                                            <td style="width: 15%;color: #004AAD;" class="no-border special">
                                                 Meeting type</td>
                                             <td class="w-25 no-border special" style="color: #004AAD;">
                                                 @if ($meeting->meeting_type === 'virtual')
