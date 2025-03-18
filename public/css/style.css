@@ -239,6 +239,15 @@ h6 {
     color: #fff;
   }
 
+  /* active sidebar page  */
+
+  .sidebar li a.active {
+    background-color: #7895CB; 
+    color: #fff; /* Ensure text is visible */
+    border-radius: 5px;
+  }
+  
+
    @media(max-width: 767px){
     #side_nav{
       margin-left: -250px;
@@ -504,6 +513,13 @@ h6 {
   white-space: nowrap; /* Prevents breaking text */
 }
 
+/* Remove extra border under checkbox */
+#allocationTable thead th:first-child,
+#allocationTable tbody td:first-child {
+  border-bottom: none !important; /* Remove bottom border */
+
+}
+
 
 @media only screen and (min-width: 1200px){
   #allocationTable .small-col {
@@ -588,6 +604,20 @@ h6 {
   white-space: nowrap; /* Prevents breaking text */
 
 }
+
+/* Remove extra border under checkbox and button */
+#assignedTable thead th:first-child,
+#assignedTable tbody td:first-child {
+  border-bottom: none !important; /* Remove bottom border */
+ 
+}
+
+#assignedTable thead th:last-child,
+#assignedTable tbody td:last-child {
+  border-bottom: none !important; /* Remove bottom border */
+}
+
+
 
 @media only screen and (min-width: 1200px){
   #assignedTable .small-col {
@@ -895,10 +925,13 @@ h6 {
   white-space: nowrap; /* Prevents breaking text */
 }
 
-
-
 .tutor-row button{
   font-size: 0.875rem;
+}
+
+#tutorTable thead th:last-child,
+#tutorTable tbody td:last-child {
+  border-bottom: none !important; /* Remove bottom border */
 }
 
 
@@ -1026,6 +1059,11 @@ h6 {
 
 .student-row button {
   font-size: 0.875rem;
+}
+
+#studentTable thead th:last-child,
+#studentTable tbody td:last-child {
+  border-bottom: none !important; /* Remove bottom border */
 }
 
 

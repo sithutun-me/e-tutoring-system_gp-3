@@ -63,6 +63,20 @@
             $('.sidebar').removeClass('active');
 
         });
+
+        //sidebar active page script
+
+        document.addEventListener("DOMContentLoaded", function () {
+        let links = document.querySelectorAll(".sidebar li a");
+        let currentUrl = window.location.pathname;
+
+        links.forEach((link) => {
+            if (link.getAttribute("href") === currentUrl) {
+            link.classList.add("active");
+            }
+        });
+        });
+
     </script>
     <script>
         window.errors = @json($errors->all());
