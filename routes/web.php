@@ -100,3 +100,8 @@ Route::middleware(['auth','protect_auth'])->group(function(){
 Route::get('/student-inactivity', [AdminController::class, 'getInactiveStudentsData']);
 Route::get('/average_messages', [AdminController::class, 'getAverageMessage']);
 Route::get('/student_list_with_assigned_tutors', [AdminController::class, 'getStudentListWithAssignedTutors']);
+
+
+Route::fallback(function () {
+    abort(404);
+});
