@@ -8,7 +8,7 @@ use App\Http\Controllers\TutorController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['guest'])->group(function(){
+Route::middleware(['guest','protect_auth'])->group(function(){
 
     Route::get('/', function () {
         return view('login');
@@ -19,7 +19,7 @@ Route::middleware(['guest'])->group(function(){
 
 });
 
-Route::middleware('auth')->group(function(){
+Route::middleware(['auth','protect_auth'])->group(function(){
 
     // Admin Dashboard Route
     Route::middleware(['role:3'])->group(function () {
@@ -61,8 +61,10 @@ Route::middleware('auth')->group(function(){
         Route::get('/tutor/createposts', [TutorController::class, 'createposts'])->name('tutor.createposts');
         Route::get('/tutor/updateposts', [TutorController::class, 'updateposts'])->name('tutor.updateposts');
 
+
         //create meeting
         Route::post('/tutor/meetingdetail', [TutorController::class, 'save'])->name('save');
+
 
         //update meeting
         Route::put('/tutor/meetingdetail/{id}', [TutorController::class, 'save'])->name('update');
@@ -78,6 +80,7 @@ Route::middleware('auth')->group(function(){
     // Student Dashboard Route
     Route::middleware(['role:1'])->group(function () {
         Route::get('/student/dashboard', [StudentController::class, 'index'])->name('student.dashboard');
+
 
         Route::get('/student/meetinglists', [StudentController::class, 'meetinglists'])->name('student.meetinglists');
         //show create form
@@ -97,8 +100,3 @@ Route::middleware('auth')->group(function(){
 Route::get('/student-inactivity', [AdminController::class, 'getInactiveStudentsData']);
 Route::get('/average_messages', [AdminController::class, 'getAverageMessage']);
 Route::get('/student_list_with_assigned_tutors', [AdminController::class, 'getStudentListWithAssignedTutors']);
-
-
-Route::fallback(function () {
-    abort(404);
-});
