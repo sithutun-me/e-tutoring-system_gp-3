@@ -17,7 +17,7 @@ class AllocationController extends Controller
 {
     public function index($id = null)
     {
-        if($id){
+        if ($id) {
             $student = User::findOrFail($id);
             if ($student) {
                 // Redirect to the admin.allocation route with the search_student query parameter
@@ -32,7 +32,7 @@ class AllocationController extends Controller
             ->whereHas('tutorAllocations', function ($query) {
                 $query->where('active', 1);
             }, '<', 15)
-            ->latest()
+            ->orderBy('first_name')
             ->get();
         $students = User::whereDoesntHave('studentAllocations', function ($query) {
             $query->where('active', 1);
@@ -99,22 +99,25 @@ class AllocationController extends Controller
         $tutors = User::where('role_id', 2)
             ->whereHas('tutorAllocations', function ($query) {
                 $query->where('active', 1);
-            }, '<', 15) // Ensure the user has less than 15 active allocations
-            ->latest()
+            }, '<', 15)
+            ->orderBy('first_name')
             ->get();
         $query = User::whereDoesntHave('studentAllocations', function ($query) {
             $query->where('active', 1);
-        })->where('role_id', 1);
+        });
 
-        if ($request->filled('search_student')) {
-            $query->where('user_code', 'LIKE', '%' . $request->input('search_student') . '%')
-                ->orWhere('first_name', 'LIKE', '%' . $request->input('search_student') . '%')
-                ->orWhere('last_name', 'LIKE', '%' . $request->input('search_student') . '%')
-                ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ['%' . $request->input('search_student') . '%'])
-                ->orWhere('email', 'LIKE', '%' . $request->input('search_student') . '%');
+        if ($searchKeyword) {
+            $query->where(function ($q) use ($searchKeyword) {
+                $q->where('user_code', 'LIKE', '%' . $searchKeyword . '%')
+                  ->orWhere('first_name', 'LIKE', '%' . $searchKeyword . '%')
+                  ->orWhere('last_name', 'LIKE', '%' . $searchKeyword . '%')
+                  ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ['%' . $searchKeyword . '%'])
+                  ->orWhere('email', 'LIKE', '%' . $searchKeyword . '%');
+            });
         }
 
-        $students = $query->latest()->get();
+
+        $students = $query->where('role_id', 1)->latest()->get();
 
         return view('admin.allocation', compact('pageTitle', 'tutors', 'students', 'searchKeyword'));
     }
@@ -123,33 +126,30 @@ class AllocationController extends Controller
     {
         $pageTitle = 'Assigned List';
         $allocations = Allocation::with(['student', 'tutor'])->where('active', 1)->latest()->get();
-        $allocations = json_decode($allocations);
         return view('admin.assignedlists', compact('pageTitle', 'allocations'));
     }
     public function filterAllocations(Request $request)
     {
         $searchKeyword = $request->input('search_allocation');
         $pageTitle = 'Search Allocations';
-        $query =  Allocation::with(['student', 'tutor']);
+        $query =  Allocation::with(['student', 'tutor'])->where('active',1);
 
-        if ($request->filled('search_allocation')) {
-            $searchTerm = '%' . $request->input('search_allocation') . '%';
-
-            $query->whereHas('student', function ($q) use ($searchTerm) {
-                $q->where('user_code', 'LIKE', $searchTerm)
-                  ->orWhere('first_name', 'LIKE', $searchTerm)
-                  ->orWhere('last_name', 'LIKE', $searchTerm)
-                  ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", [$searchTerm]);
+        if ($searchKeyword) {
+            $query->whereHas('student',function ($q) use ($searchKeyword) {
+                $q->where('user_code', 'LIKE', '%'.$searchKeyword.'%')
+                    ->orWhere('first_name', 'LIKE', '%'.$searchKeyword.'%')
+                    ->orWhere('last_name', 'LIKE', '%'.$searchKeyword.'%')
+                    ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", '%'.$searchKeyword.'%');
             })
-            ->orWhereHas('tutor', function ($q) use ($searchTerm) {
-                $q->where('user_code', 'LIKE', $searchTerm)
-                  ->orWhere('first_name', 'LIKE', $searchTerm)
-                  ->orWhere('last_name', 'LIKE', $searchTerm)
-                  ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", [$searchTerm]);
-            });
+                ->orWhereHas('tutor', function ($q) use ($searchKeyword) {
+                    $q->where('user_code', 'LIKE', '%'.$searchKeyword.'%')
+                        ->orWhere('first_name', 'LIKE', '%'.$searchKeyword.'%')
+                        ->orWhere('last_name', 'LIKE', '%'.$searchKeyword.'%')
+                        ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", '%'.$searchKeyword.'%');
+                });
         }
 
-        $allocations = $query->latest()->get();
+        $allocations = $query->where('active',1)->latest()->get();
 
         return view('admin.assignedlists', compact('pageTitle', 'allocations', 'searchKeyword'));
     }
@@ -173,7 +173,7 @@ class AllocationController extends Controller
             ->whereHas('tutorAllocations', function ($query) {
                 $query->where('active', 1);
             }, '<', 15) // Ensure the user has less than 15 active allocations
-            ->latest()
+            ->orderBy('first_name')
             ->get();
         return view('admin.reallocation', compact(['pageTitle', 'selectedAllocationIds', 'allocations', 'tutors']));
     }
@@ -209,7 +209,7 @@ class AllocationController extends Controller
             $allocation->allocation_date_time = now();
             $allocation->active = 1;
             $allocation->save();
-            
+
             // Get the student details
             $selectedStudent = $allocation->student; // Assuming you have a 'student' relationship
             $selectedStudents[] = $selectedStudent;
