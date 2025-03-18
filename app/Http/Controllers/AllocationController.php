@@ -36,7 +36,7 @@ class AllocationController extends Controller
             ->get();
         $students = User::whereDoesntHave('studentAllocations', function ($query) {
             $query->where('active', 1);
-        })->where('role_id', 1)->get();
+        })->where('role_id', 1)->orderBy('user_code')->get();
 
         return view('admin.allocation', compact('pageTitle', 'tutors', 'students'));
     }
@@ -117,7 +117,7 @@ class AllocationController extends Controller
         }
 
 
-        $students = $query->where('role_id', 1)->latest()->get();
+        $students = $query->where('role_id', 1)->orderBy('user_code')->get();
 
         return view('admin.allocation', compact('pageTitle', 'tutors', 'students', 'searchKeyword'));
     }
@@ -125,7 +125,7 @@ class AllocationController extends Controller
     public function assignedLists(Request $request)
     {
         $pageTitle = 'Assigned List';
-        $allocations = Allocation::with(['student', 'tutor'])->where('active', 1)->latest()->get();
+        $allocations = Allocation::with(['student', 'tutor'])->where('active', 1)->orderBy('allocation_date_time','desc')->get();
         return view('admin.assignedlists', compact('pageTitle', 'allocations'));
     }
     public function filterAllocations(Request $request)
