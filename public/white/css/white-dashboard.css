@@ -189,19 +189,22 @@ input {
 }
 
 #table-student-no-tutor tbody,
-#table-upcoming-meetings tbody {
+#tutor-upcoming-meetings tbody,
+#student-upcoming-meetings tbody {
   min-height: 300px;
 }
 
 #table-student-no-tutor,
-#table-upcoming-meetings {
+#tutor-upcoming-meetings,
+#student-upcoming-meetings {
   flex-grow: 1;
   overflow-y: auto;
   table-layout: fixed;
 }
 
 #table-student-no-tutor td,
-#table-upcoming-meetings td {
+#tutor-upcoming-meetings td,
+#student-upcoming-meetings td {
   font-family: 'Poppins';
   font-size: 0.8125rem;
   word-wrap: break-word;
