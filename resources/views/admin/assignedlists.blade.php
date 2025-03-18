@@ -51,25 +51,22 @@
                 <section class="p-3">
                     <h2 class="fs-2 fw-bold mb-4"> Assigned Lists</h2>
 
-                    <form action="{{ route('admin.allocations.filter') }}" method="get">
+                    <form id="assignedListForm" method="GET" enctype="multipart/form-data">
                         @csrf
                         <div class=" form-group mb-4">
                             <input id="assignedSearch" class="form-control me-2" name="search_allocation" type="search"
                                 placeholder="Search here" aria-label="Search" style="width: 320px;"
                                 value="{{ old('search_allocation', $searchKeyword ?? '') }}">
-                            <button type="submit" name="submit" class="assign-btn btn btn-primary shadow-none"
-                                style="width: 150px;">Search</button>
+                            <button class="assign-btn btn btn-primary shadow-none" style="width: 150px;"
+                                onclick="submitForm('{{ route('admin.allocations.filter') }}')">Search</button>
+                            <button class="bulkre-btn btn btn-primary shadow-none "
+                                style="width: 150px; background-color:#004AAD;"
+                                onclick="submitForm('{{ route('admin.reallocation') }}')">Bulk Reallocate</button>
+
                         </div>
-                    </form>
-                    <form action="{{ route('admin.reallocation') }}" method="GET" enctype="multipart/form-data">
-                        @csrf
-
-                        <button type="submit" name="submit" class="bulkre-btn btn btn-primary shadow-none "
-                            style="width: 150px; background-color:#004AAD;">Bulk Reallocate</button>
-
                         <div class="table-responsive" id="no-more-tables">
 
-                            <table id="assignedTable" class="table bg-white">
+                            <table id="assignedTable" class="table bg-white w-100">
                                 <thead>
                                     <tr class="custom-bg text-light">
                                         <th class="text-center small-col"><input type="checkbox" id="select_all_allocation">
@@ -131,23 +128,20 @@
                                 </tbody>
                             </table>
 
-
-                        </div>
-
-
                     </form>
 
             </div>
-
-
-
-
-            </section>
-
-
-
-
         </div>
+
+
+
+
+        </section>
+
+
+
+
+    </div>
 
 
     </div>
@@ -292,5 +286,11 @@
                 filterAssigned();
             }
         });
+
+        function submitForm(action) {
+            const form = document.getElementById("assignedListForm");
+            form.action = action;
+            form.submit();
+        }
     </script>
 @endpush
