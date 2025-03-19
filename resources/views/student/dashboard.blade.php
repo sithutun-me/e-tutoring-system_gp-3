@@ -16,7 +16,7 @@
                 </div>
 
                 <ul class="list-unstyled px-2">
-                    <li class=""><a href="/admindashboard" class="text-decoration-none px-3 py-2 d-block">
+                    <li class=""><a href="/student/dashboard" class="text-decoration-none px-3 py-2 d-block">
                             <img src="/icon images/dashboard.png" style="width:20px; margin-right: 10px;"> Dashboard
                         </a>
                     </li>
@@ -62,6 +62,47 @@
                 <section class="p-3">
                     <div class="dashboard-content px-2 pt-4">
                         <h2 class="fs-2 fw-bold"> Student Dashboard</h2>
+                        <div class="row mt-4">
+                            <div class="chart-container">
+                                <div class="chart-card col-md-6">
+                                    <div class="chart-card-header">
+                                        <h5 class="chart-card-category"></h5>
+                                        <h3 class="chart-card-title">Meeting count</h3>
+                                    </div>
+                                    <div class="chart-card-body">
+
+                                        <div class="chart-area">
+                                            <canvas id="MeetingCountChart" class="chart-canvas"></canvas>
+                                            {{-- <div class="box-align-right">
+                                                <a href="#" class="small-text">View Report>>></a>
+                                            </div> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="parent-post">
+                                    <div class="post-title">
+                                        Posts
+                                    </div>
+                                    <div class="rounded-box col-md-6">
+                                        <div style="width: 100%;" class="flex-step-box">
+                                            <div class="top-row">
+                                                <div class="center-text large-font">
+                                                    3
+                                                </div>
+                                                <div class="center-text">
+                                                    new posts by tutor
+                                                </div>
+                                            </div>
+                                            <div class="box-align-bottom center-text">
+                                                <a href="#"> View posts>></a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                         <div class="row mt-4">
                             <div class="chart-container">
                                 <div class="chart-card">
@@ -123,16 +164,19 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td class="normal-text">Supervision meeting Supervision meeting</td>
+                                                        <td class="normal-text">Supervision meeting Supervision meeting
+                                                        </td>
                                                         <td class="normal-text">10 Mar 2025</td>
                                                         <td class="normal-text">09:00 AM - 11:00 AM</td>
                                                         <td class="normal-text">Virtual</td>
                                                         <td class="text-center">
-                                                            <a href="#" class="btn btn-primary shadow-none">Detail</a>
+                                                            <a href="#"
+                                                                class="btn btn-primary shadow-none">Detail</a>
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="normal-text">Supervision meeting Supervision meeting</td>
+                                                        <td class="normal-text">Supervision meeting Supervision meeting
+                                                        </td>
                                                         <td class="normal-text">10 Mar 2025</td>
                                                         <td class="normal-text">09:00 AM - 11:00 AM</td>
                                                         <td class="normal-text">Virtual</td>
@@ -192,8 +236,10 @@
 
     <script src="/bootstrap-5.0.2-dist/js/bootstrap.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 
     <script src="{{ asset('js/chart_student.js') }}"></script>
+
 
     <script>
         // Script for the side bar nav
@@ -214,6 +260,7 @@
         });
 
         $(document).ready(function() {
+            Chart.register(ChartDataLabels);
 
             var studentActivityChartElement = document.getElementById('StudentActivityChart');
             if (studentActivityChartElement && typeof demo !== 'undefined') {
@@ -223,21 +270,25 @@
             if (tutorActivityChartElement && typeof demo !== 'undefined') {
                 demo.initTutorActivityChart();
             }
+            var meetingCountChartElement = document.getElementById('MeetingCountChart');
+            if (meetingCountChartElement && typeof demo !== 'undefined') {
+                demo.initMeetingCountChart();
+            }
 
-            // console.log("Data table is loading..");
-            // $('#table-upcoming-meetings').DataTable({
-            //     dom: 'rt<"bottom"ip>',
-            //     paging: true,
-            //     pageLength: 5,
-            //     lengthChange: false,
-            //     searching: false,
-            //     scrollY: '280px',
-            //     ordering: true,
-            //     "language": {
-            //         "info": "Total Records: _TOTAL_",
-            //     }
-            // });
-            // $('.bottom').appendTo("#pagination-container");
+            console.log("Data table is loading..");
+            $('#student-upcoming-meetings').DataTable({
+                dom: 'rt<"bottom"ip>',
+                paging: true,
+                pageLength: 5,
+                lengthChange: false,
+                searching: false,
+                scrollY: '280px',
+                ordering: true,
+                "language": {
+                    "info": "Total Records: _TOTAL_",
+                }
+            });
+            $('.bottom').appendTo("#pagination-container");
 
 
         });
