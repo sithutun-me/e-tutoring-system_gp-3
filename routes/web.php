@@ -89,6 +89,16 @@ Route::middleware(['auth','protect_auth'])->group(function(){
         Route::get('/student/meetingdetail/{id}/edit', [StudentController::class, 'meetingdetail'])->name('student.meetingdetail.update');
         //view meeting detail
         Route::get('/student/meetingdetail/{id}', [StudentController::class, 'meetingview'])->name('student.meetingdetail.view');
+
+        Route::post('/student/meetingdetail', [StudentController::class, 'save'])->name('save');
+        Route::put('/student/meetingdetail/{id}', [StudentController::class, 'save'])->name('update');
+
+        //status toggle (completed/ new)
+        Route::put('/student/meetingdetail/{id}/toggle-status', [StudentController::class, 'toggleStatus'])
+        ->name('student.meetingdetail.toggleStatus');
+
+        Route::post('/student/meetingdetail/cancel', [StudentController::class, 'cancelMeeting'])->name('student.meetingdetail.cancelmeeting');
+
     });
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

@@ -105,6 +105,18 @@ class TutorController extends Controller
     public function meetingdetail($id = null) {
         \Log::info('Meetingdetail called with ID: ' . $id);
         $tutorId = Auth::id(); // Get logged-in tutor’s ID
+        // $userRole = DB::table('users') // Assuming your users table is named "users"
+        //             ->where('id', $tutorId)
+        //             ->value('role_id'); // Retrieve the 'role' column value
+        // if ($userRole === 2) {// User is a tutor
+        //     //$tutorId = $userId; // Assign the user ID to $tutorId
+        //     // ... your tutor-specific logic ...
+        // } elseif ($userRole === 1) {
+        //     $students = Allocation::where('tutor_id', $tutorId)
+        //         ->where('active', 1)
+        //         ->with('student') // Assuming you have a relationship
+        //         ->get();
+        // }            
         $students = Allocation::where('tutor_id', $tutorId)
                 ->where('active', 1)
                 ->with('student') // Assuming you have a relationship
