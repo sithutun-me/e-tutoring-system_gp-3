@@ -7,16 +7,16 @@
 <div class="main-container d-flex">
         <div class="sidebar" id="side_nav">
             <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between">
-            <h1 class=" header-title fs-4 mt-3">
-                <span class="text-white fw-bold" style="margin-left:20px;">TripleEDU</span>
-            </h1>
+                <h1 class=" header-title fs-2 mt-3">
+                    <span class="text-white fw-bold" style="margin-left:10px;">TripleEDU</span>
+                </h1>
             
                 <button class="btn d-md-none d-block close-btn px-1 py-0 text-white">
                 <i class="fa-solid fa-square-xmark"></i></button>
             </div>
 
             <ul class="list-unstyled px-2">
-                <li class=""><a href="/admindashboard" class="text-decoration-none px-3 py-2 d-block">
+                <li class=""><a href="/student/dashboard" class="text-decoration-none px-3 py-2 d-block">
                     <img src="/icon images/dashboard.png" style="width:20px; margin-right: 10px;"> Dashboard
                     </a>
                 </li>
@@ -73,7 +73,7 @@
 
 </div>
 @endsection
-@push('script')
+@push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -97,7 +97,9 @@ $(".sidebar ul li").on('click', function () {
         $('.close-btn').on('click', function () {
             $('.sidebar').removeClass('active');
 
-        })
+        });
+
+       
 
 </script>
 @endpush

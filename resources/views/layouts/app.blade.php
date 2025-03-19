@@ -63,8 +63,7 @@
             $('.sidebar').removeClass('active');
 
         });
-
-        //sidebar active page script
+         //sidebar active page script
 
         document.addEventListener("DOMContentLoaded", function () {
         let links = document.querySelectorAll(".sidebar li a");

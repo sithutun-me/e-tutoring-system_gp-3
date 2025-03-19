@@ -242,10 +242,11 @@ h6 {
   /* active sidebar page  */
 
   .sidebar li a.active {
-    background-color: #7895CB; 
-    color: #fff; /* Ensure text is visible */
-    border-radius: 5px;
-  }
+    background-color: #7895CB !important; 
+    color: #fff !important; 
+    border-radius: 5px !important;
+}
+
   
 
    @media(max-width: 767px){
