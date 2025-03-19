@@ -63,11 +63,11 @@ Route::middleware(['auth','protect_auth'])->group(function(){
 
 
         //create meeting
-        Route::post('/tutor/meetingdetail', [TutorController::class, 'save'])->name('save');
+        Route::post('/tutor/meetingdetail', [TutorController::class, 'save'])->name('tutor.save');
 
 
         //update meeting
-        Route::put('/tutor/meetingdetail/{id}', [TutorController::class, 'save'])->name('update');
+        Route::put('/tutor/meetingdetail/{id}', [TutorController::class, 'save'])->name('tutor.update');
 
         //status toggle (completed/ new)
         Route::put('/tutor/meetingdetail/{id}/toggle-status', [TutorController::class, 'toggleStatus'])

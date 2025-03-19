@@ -66,7 +66,7 @@
                     </span>
                     <div class="form-group mb-4 mt-4">
                         <form id="meetingForm"
-                            action="{{ isset($meeting_schedules->id) ? route('update', $meeting_schedules->id) : route('save') }}"
+                            action="{{ isset($meeting_schedules->id) ? route('tutor.update', $meeting_schedules->id) : route('tutor.save') }}"
                             method="POST" enctype="multipart/form-data">
 
                             @csrf

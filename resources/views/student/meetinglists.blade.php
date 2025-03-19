@@ -153,7 +153,12 @@
                                         <td style="width: 15%;" class="no-right-border padding-left special">
                                             {{ $meeting->meeting_platform }}</td>
                                         <td style="width: 15%;" class="no-border special">{{ $meeting->tutor_id }}
-                                            ({{ $meeting->first_name }} {{ $meeting->last_name }})
+                                            @if ($meeting->isTutorAssigned)
+                                                ({{ $meeting->first_name }} {{ $meeting->last_name }})
+                                            @else
+                                                ({{ $meeting->first_name }} {{ $meeting->last_name }})  (Unassigned)
+                                            @endif
+
                                         </td>
                                         <td style="width: 15%;" class="no-border special">
                                             <u>{{ ucfirst($meeting->meeting_status) }}</u>

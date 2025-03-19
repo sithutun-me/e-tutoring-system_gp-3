@@ -24,6 +24,9 @@ class StudentController extends Controller
                 ->where('active', 1)
                 ->with('tutor') 
                 ->get();
+        $assignedTutorIds = $assignedTutor->pluck('tutor.id')->toArray();
+
+
         $this->overdueStatus();
                 
         $query = DB::table('meeting_schedule as meeting_schedules')
@@ -39,11 +42,14 @@ class StudentController extends Controller
                 'meeting_schedules.meeting_link',
                 'meeting_schedules.meeting_location',
                 'meeting_schedules.meeting_status',
+                'tutor.id as tutorId',
                 'tutor.user_code as tutor_id',
                 'tutor.first_name',
-                'tutor.last_name'
+                'tutor.last_name' 
             )
             ->where('meeting_schedules.student_id', $studentId);
+           
+            
         
             // Filter by meeting type if selected
     if ($request->filled('meeting_type') && $request->meeting_type !== 'All') {
@@ -69,8 +75,11 @@ class StudentController extends Controller
             // if(is_null($meeting_schedules)){
             //     return view('tutor.meetinglists',compact('meeting_schedules'));
             // }   
-
-            
+            foreach ($meeting_schedules as $date => $meetings) {
+                foreach ($meetings as $meeting) {
+                    $meeting->isTutorAssigned = in_array($meeting->tutorId, $assignedTutorIds);
+                }
+            }
         return view('student.meetinglists', compact('meeting_schedules','assignedTutor'));
         
     }
@@ -116,22 +125,25 @@ class StudentController extends Controller
         ->where('active', 1)
         ->with('tutor') // Assuming you have a relationship
         ->get();
+        
+        
         $meeting_schedules = $id ? MeetingSchedule::find($id) : null;
         $currentStudent = $id? User::find($meeting_schedules->tutor_id):null;
-        
+       
 
        // $readOnly = request()->routeIs('tutor.meetingdetail.update') ? false : true;
 
         if($id) {
             // $resource = Resource::findOrFail($id);
             $readOnly = false;
-            $isStudentAllocated =  Allocation::where('student_id', $meeting_schedules->tutor_id)
+            $isTutorAllocated = Allocation::where('student_id', $meeting_schedules->student_id)
+            ->where('tutor_id', $meeting_schedules->tutor_id)
             ->where('active', 1)
             ->exists();
-            return view('student.meetingdetail', compact('id','assignedTutor','meeting_schedules','readOnly','currentStudent','isStudentAllocated'));
+            return view('student.meetingdetail', compact('id','assignedTutor','meeting_schedules','readOnly','isTutorAllocated'));
         }
         // For create (no ID), just pass null or empty data
-        return view('student.meetingdetail', ['id' => null,'assignedTutor' => $assignedTutor,'meeting_schedules'=>$meeting_schedules,'readOnly'=>false,'currentStudent'=>null,'isStudentAllocated'=>false]);
+        return view('student.meetingdetail', ['id' => null,'assignedTutor' => $assignedTutor,'meeting_schedules'=>$meeting_schedules,'readOnly'=>false,'currentStudent'=>null,'isTutorAllocated'=>false]);
 
     }
 
@@ -148,16 +160,18 @@ class StudentController extends Controller
             $meeting_schedules = MeetingSchedule::findOrFail($id);
            // $currentStudent = User::find($meeting_schedules->student_id);
             
-            $isStudentAllocated =  Allocation::where('student_id', $meeting_schedules->student_id)
+            $isTutorAllocated = Allocation::where('student_id', $meeting_schedules->student_id)
+            ->where('tutor_id', $meeting_schedules->tutor_id)
             ->where('active', 1)
             ->exists();
+            
             $readOnly = true;
-            return view('student.meetingdetail', compact('id','meeting_schedules','readOnly','assignedTutor','isStudentAllocated'));
+            return view('student.meetingdetail', compact('id','meeting_schedules','readOnly','assignedTutor','isTutorAllocated'));
         }
         $meeting_schedules=null;
         
         // For create (no ID), just pass null or empty data
-        return view('student.meetingdetail', ['id' => null,'meeting_schedules' =>$meeting_schedules,'assignedTutor'=>$assignedTutor,'isStudentAllocated'=>false]);
+        return view('student.meetingdetail', ['id' => null,'meeting_schedules' =>$meeting_schedules,'assignedTutor'=>$assignedTutor,'isTutorAllocated'=>false]);
     }
 
     public function save(Request $request,$id=null)
