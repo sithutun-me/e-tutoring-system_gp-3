@@ -56,56 +56,60 @@
                 <h2 class="fs-2 fw-bold">Meetings</h2>
                 <!-- <div class=" form-group mb-4"> -->
                 <div class="text-center fit mb-4 mt-4">
-                    <a href="{{ route('tutor.meetingdetail.create') }}" class="btn btn-primary shadow-none">+ New
+                    <a href="{{ route('student.meetingdetail.create') }}" class="btn btn-primary shadow-none">+ New
                         Meeting</a>
                 </div>
                 <!-- </div> -->
-                <form action="{{ route('tutor.meetinglists') }}" method="GET">
-                
-                <div class="form-group mb-4 row">
-                    <div class="row">
-                        <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
-                            <select class="form-select" name="meeting_type" id="selectDateMeeting" aria-label="Meeting Type">
-                                <option value="" {{ request('meeting_type') == '' ? 'selected' : '' }}>All</option>
-                                <option value="Real" {{ request('meeting_type') == 'Real' ? 'selected' : '' }}>Real</option>
-                                <option value="Virtual" {{ request('meeting_type') == 'Virtual' ? 'selected' : '' }}>Virtual</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
+                <form action="{{ route('student.meetinglists') }}" method="GET">
 
-                            <div class="input-group" id="datetimepicker">
-                                <input type="text" class="form-control" name="meeting_date" id="datepicker"
-                           value="{{ request('meeting_date') }}" placeholder="Select a date" readonly />
-                                <span class="input-group-text" id="datepicker-icon">
-                                    <i class="fas fa-calendar-alt"></i>
-                                </span>
+                    <div class="form-group mb-4 row">
+                        <div class="row">
+                            <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
+                                <select class="form-select" name="meeting_type" id="selectDateMeeting"
+                                    aria-label="Meeting Type">
+                                    <option value="" {{ request('meeting_type') == '' ? 'selected' : '' }}>All
+                                    </option>
+                                    <option value="Real" {{ request('meeting_type') == 'Real' ? 'selected' : '' }}>Real
+                                    </option>
+                                    <option value="Virtual" {{ request('meeting_type') == 'Virtual' ? 'selected' : '' }}>
+                                        Virtual</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
+
+                                <div class="input-group" id="datetimepicker">
+                                    <input type="text" class="form-control" name="meeting_date" id="datepicker"
+                                        value="{{ request('meeting_date') }}" placeholder="Select a date" readonly />
+                                    <span class="input-group-text" id="datepicker-icon">
+                                        <i class="fas fa-calendar-alt"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
+
+
+                                <select class="form-select form--control" name="tutor_id" id="selectTutorMeeting"
+                                    aria-label="Floating label select example" disabled>
+                                    {{-- <option value="" {{ request('tutor_id') == '' ? 'selected' : '' }}>-- Choose Tutor --</option> --}}
+                                    @foreach ($assignedTutor as $allocated)
+                                        <option value="{{ $allocated->tutor->id }}"
+                                            {{ request('tutor_id') == $allocated->tutor->id ? 'selected' : '' }}>
+                                            {{ $allocated->tutor->first_name }} {{ $allocated->tutor->last_name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-2 d-flex flex-column align-items-start">
+
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary shadow-none">Search</button>
+                                    {{-- <a href="{{route('tutor.meetinglists')}}" class="btn btn-primary shadow-none">Search</a> --}}
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
 
-
-                            <select class="form-select form--control" name="student_id" id="selectTutorMeeting"
-                                aria-label="Floating label select example">
-                                <option value="" {{ request('student_id') == '' ? 'selected' : '' }}>-- Choose Tutor --</option>
-                    @foreach ($students as $allocated)
-                        <option value="{{ $allocated->student->id }}"
-                                {{ request('student_id') == $allocated->student->id ? 'selected' : '' }}>
-                            {{ $allocated->student->first_name }} {{ $allocated->student->last_name }}
-                        </option>
-                    @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-3 mb-2 d-flex flex-column align-items-start">
-
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary shadow-none">Search</button>
-                                {{-- <a href="{{route('tutor.meetinglists')}}" class="btn btn-primary shadow-none">Search</a> --}}
-                            </div>
-                        </div>
                     </div>
-
-                </div>
-            </form>
+                </form>
                 <div class="table-responsive scroll-table">
                     <table class="table bg-white table-bordered card-table" id="table-meeting">
                         <tbody>
@@ -128,9 +132,11 @@
                                             {{ \Carbon\Carbon::parse($meeting->meeting_start_time)->format('h:i A') }} -
                                             {{ \Carbon\Carbon::parse($meeting->meeting_end_time)->format('h:i A') }}
                                         </td>
-                                        <td style="width: 15%;" class="no-border special" style="color: #004AAD;">Tutor</td>
-                                        <td style="width: 15%;" class="no-border special" style="color: #004AAD;">Status</td>
-                                        <td style="width: 15%;" class="no-border special" style="color: #004AAD;">Meeting type</td>
+                                        <td style="width: 15%;color: #004AAD;" class="no-border special">Tutor</td>
+                                        <td style="width: 15%;color: #004AAD;" class="no-border special"class="no-border special">Status
+                                        </td>
+                                        <td style="width: 15%;color: #004AAD;" class="no-border special" class="no-border special">Meeting
+                                            type</td>
                                         <td class="w-25 no-border special" style="color: #004AAD;">
                                             @if ($meeting->meeting_type === 'virtual')
                                                 Meeting link
@@ -138,20 +144,27 @@
                                                 Location
                                             @endif
                                         </td>
-                                        <td style="width: 15%;" rowspan="2" class="text-center no-left-border special"><a
-                                                href="{{ route('tutor.meetingdetail.view', $meeting->id) }}"
+                                        <td style="width: 15%;" rowspan="2"
+                                            class="text-center no-left-border special"><a
+                                                href="{{ route('student.meetingdetail.view', $meeting->id) }}"
                                                 class="btn btn-primary shadow-none">Detail</a></td>
                                     </tr>
                                     <tr class="no-top-border special">
                                         <td style="width: 15%;" class="no-right-border padding-left special">
                                             {{ $meeting->meeting_platform }}</td>
-                                        <td style="width: 15%;" class="no-border special">{{ $meeting->student_id }}
-                                            ({{ $meeting->first_name }} {{ $meeting->last_name }})
+                                        <td style="width: 15%;" class="no-border special">{{ $meeting->tutor_id }}
+                                            @if ($meeting->isTutorAssigned)
+                                                ({{ $meeting->first_name }} {{ $meeting->last_name }})
+                                            @else
+                                                ({{ $meeting->first_name }} {{ $meeting->last_name }})  (Unassigned)
+                                            @endif
+
                                         </td>
                                         <td style="width: 15%;" class="no-border special">
                                             <u>{{ ucfirst($meeting->meeting_status) }}</u>
                                         </td>
-                                        <td style="width: 15%;" class="no-border special">{{ $meeting->meeting_type }}</td>
+                                        <td style="width: 15%;" class="no-border special">{{ $meeting->meeting_type }}
+                                        </td>
                                         <td class="w-25 no-border padding-bot special overflow">
                                             @if ($meeting->meeting_type === 'virtual')
                                                 <a href="{{ $meeting->meeting_link }}"
@@ -182,7 +195,7 @@
 @endsection
 @push('scripts')
     <!-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-            <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script> -->
+                <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet"

@@ -17,15 +17,15 @@
 
                 <ul class="list-unstyled px-2">
                     <ul class="list-unstyled px-2">
-                        <li class=""><a href="/tutor/dashboard" class="text-decoration-none px-3 py-2 d-block">
+                        <li class=""><a href="/student/dashboard" class="text-decoration-none px-3 py-2 d-block">
                                 <img src="/icon images/dashboard.png" style="width:20px; margin-right: 10px;"> Dashboard
                             </a>
                         </li>
-                        <li class=""><a href="/tutor/meetinglists" class="text-decoration-none px-3 py-2 d-block">
+                        <li class=""><a href="/student/meetinglists" class="text-decoration-none px-3 py-2 d-block">
                                 <img src="/icon images/meeting.png" style="width:20px; margin-right: 10px;"> Meetings
                             </a>
                         </li>
-                        <li class=""><a href="/tutor/blogging" class="text-decoration-none px-3 py-2 d-block ">
+                        <li class=""><a href="/student/blogging" class="text-decoration-none px-3 py-2 d-block ">
                                 <img src="/icon images/blogging.png" style="width:20px; margin-right: 10px;"> Blogging
                         <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">
                                 <img src="/icon images/notification.png" style="width:20px; margin-right: 10px;">
@@ -58,7 +58,6 @@
                     </div>
                 </nav>
 
-                {{-- later to use for showing validation error --}}
 
                 <div class="dashboard-content px-3 pt-4">
                     <span onclick="history.back()" style="cursor: pointer;" class="header-text">
@@ -92,19 +91,19 @@
                                                 <h4 class="chart-card-title" style="font-size:1rem;">Meeting Detail</h4>
                                             </div>
                                             @if (isset($meeting_schedules))
-                                            <div class="col-md-2 mt-4 d-flex align-items-start flex-column ">
-                                                <div class="text-center">
-                                                    <button type="submit" onclick="setAction('toggle_status')"
-                                                        class="btn btn-primary shadow-none" style="width: auto;" 
-                                                        @if ($meeting_schedules->meeting_status === 'cancelled') disabled @endif>
-                                                       
+                                                <div class="col-md-2 mt-4 d-flex align-items-start flex-column ">
+                                                    <div class="text-center">
+                                                        <button type="submit" onclick="setAction('toggle_status')"
+                                                            class="btn btn-primary shadow-none" style="width: auto;"
+                                                            @if ($meeting_schedules->meeting_status === 'cancelled') disabled @endif>
+
                                                             {{ $meeting_schedules->meeting_status === 'completed' ? 'Mark as new' : 'Mark as Complete' }}
-                                                        
 
-                                                    </button>
 
+                                                        </button>
+
+                                                    </div>
                                                 </div>
-                                            </div>
                                             @endif
 
                                         </div>
@@ -138,7 +137,7 @@
                                         <div class="row">
                                             <div class="col-md-6 mb-2">
                                                 <div class="normal-text">
-                                                    Student *
+                                                    Tutor
                                                 </div>
                                             </div>
                                         </div>
@@ -146,10 +145,12 @@
                                             <div class="col-md-6 mb-2">
                                                 @php $disabled = $readOnly ? 'disabled' : '' @endphp
                                                 <select class="form-select" id="selectTutorMeetingDetail"
-                                                    {{ $disabled }} name="student_id"
+                                                    disabled name="tutor_id" 
                                                     aria-label="Floating label select example">
+                                                    
+                                                    
                                                     {{-- Show the currently assigned student (even if not allocated) --}}
-                                                    @if ($currentStudent && !in_array($currentStudent->id, $students->pluck('student.id')->toArray()))
+                                                    {{-- @if ($currentStudent && !in_array($currentStudent->id, $students->pluck('student.id')->toArray()))
                                                         <option value="{{ $currentStudent->id }}" selected>
                                                             {{ $currentStudent->first_name }}
                                                             {{ $currentStudent->last_name }} (Unassigned)
@@ -157,17 +158,23 @@
                                                     @endif
 
                                                     {{-- Choose Student Option --}}
-                                                    <option value="" disabled
+                                                    {{-- <option value="" disabled
                                                         {{ empty($meeting_schedules->student_id) ? 'selected' : '' }}>
                                                         -- Choose Student --
-                                                    </option>
+                                                    </option> --}} 
 
                                                     {{-- Allocated Students --}}
-                                                    @foreach ($students as $allocated)
-                                                        <option value="{{ $allocated->student->id }}"
-                                                            {{ (int) old('student_id', $meeting_schedules->student_id??'') === $allocated->student->id ? 'selected' : '' }}>
-                                                            {{ $allocated->student->first_name }}
-                                                            {{ $allocated->student->last_name }}
+                                                    @foreach ($assignedTutor as $allocated)
+                                                        <option value="{{ $allocated->tutor->id }}"
+                                                            {{ request('tutor_id') == $allocated->tutor->id ? 'selected' : '' }}>
+                                                            @if(!$isTutorAllocated)
+                                                            {{ $allocated->tutor->first_name }}
+                                                            {{ $allocated->tutor->last_name }}
+                                                                (Unassigned)
+                                                            @else
+                                                            {{ $allocated->tutor->first_name }}
+                                                            {{ $allocated->tutor->last_name }}
+                                                            @endif
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -331,14 +338,14 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        @if (request()->routeIs('tutor.meetingdetail.create'))
+                                        @if (request()->routeIs('student.meetingdetail.create'))
                                             <div class="row hidden-button new-button-div">
                                                 <div class="col-md-6 mb-2 mt-2">
                                                     <button type="submit"
                                                         class="btn btn-primary shadow-none full-button">Save</button>
                                                 </div>
                                             </div>
-                                        @elseif(request()->routeIs('tutor.meetingdetail.update'))
+                                        @elseif(request()->routeIs('student.meetingdetail.update'))
                                             <div class="row hidden-button update-button-div">
                                                 <div class="col-md-6 mb-2 mt-2">
                                                     <button type="submit"
@@ -350,8 +357,12 @@
                                             <div class="row hidden-button detail-button-div">
                                                 <div class="col-md-6 mb-2 mt-2">
                                                     <button type="button" class="btn btn-primary shadow-none full-button"
-                                                    @if ($meeting_schedules->meeting_status === 'completed' ||  $meeting_schedules->meeting_status === 'cancelled' || !$isStudentAllocated) disabled @endif><a
-                                                            href="{{ route('tutor.meetingdetail.update', $meeting_schedules->id ?? '') }}"
+                                                        @if (
+                                                            $meeting_schedules->meeting_status === 'completed' ||
+                                                                $meeting_schedules->meeting_status === 'cancelled' ||
+                                                                $meeting_schedules-> meeting_status === 'overdue' ||
+                                                                !$isTutorAllocated) disabled @endif><a
+                                                            href="{{ route('student.meetingdetail.update', $meeting_schedules->id ?? '') }}"
                                                             class="text-decoration-none"
                                                             style="color: white;">Reschedule</a></button>
                                                 </div>
@@ -390,7 +401,7 @@
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
-                <form action="{{ route('tutor.meetingdetail.cancelmeeting') }}" method="POST">
+                <form action="{{ route('student.meetingdetail.cancelmeeting') }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <input type="hidden" name="id">
@@ -563,7 +574,7 @@
 
         var currentRoute = "{{ Route::currentRouteName() }}";
         var currentRouteId = "{{ request()->route('id') }}";
-        var isEditPage = currentRoute === 'tutor.meetingdetail.update';
+        var isEditPage = currentRoute === 'student.meetingdetail.update';
 
         if (currentRouteId) {
             if (isEditPage) {
@@ -585,7 +596,7 @@
             @if (isset($meeting_schedules))
                 if (action === 'toggle_status') {
                     document.getElementById('meetingForm').action =
-                        "{{ route('tutor.meetingdetail.toggleStatus', $meeting_schedules->id) }}";
+                        "{{ route('student.meetingdetail.toggleStatus', $meeting_schedules->id) }}";
                 } else {
                     document.getElementById('meetingForm').action =
                         "{{ route('update', $meeting_schedules->id) }}";

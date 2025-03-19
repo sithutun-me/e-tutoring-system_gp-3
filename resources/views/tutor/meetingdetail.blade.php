@@ -66,7 +66,7 @@
                     </span>
                     <div class="form-group mb-4 mt-4">
                         <form id="meetingForm"
-                            action="{{ isset($meeting_schedules->id) ? route('update', $meeting_schedules->id) : route('save') }}"
+                            action="{{ isset($meeting_schedules->id) ? route('tutor.update', $meeting_schedules->id) : route('tutor.save') }}"
                             method="POST" enctype="multipart/form-data">
 
                             @csrf
@@ -350,7 +350,7 @@
                                             <div class="row hidden-button detail-button-div">
                                                 <div class="col-md-6 mb-2 mt-2">
                                                     <button type="button" class="btn btn-primary shadow-none full-button"
-                                                    @if ($meeting_schedules->meeting_status === 'completed' ||  $meeting_schedules->meeting_status === 'cancelled' || !$isStudentAllocated) disabled @endif><a
+                                                    @if ($meeting_schedules->meeting_status === 'completed' ||  $meeting_schedules->meeting_status === 'cancelled' || $meeting_schedules->meeting_status === 'overdue' || !$isStudentAllocated) disabled @endif><a
                                                             href="{{ route('tutor.meetingdetail.update', $meeting_schedules->id ?? '') }}"
                                                             class="text-decoration-none"
                                                             style="color: white;">Reschedule</a></button>

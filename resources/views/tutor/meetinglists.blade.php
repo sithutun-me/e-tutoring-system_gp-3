@@ -52,15 +52,14 @@
                 </div>
             </nav>
 
-            <section class="p-3">
-                <div class="dashboard-content px-2 pt-4">
-                    <h2 class="fs-2 fw-bold">Meetings</h2>
-                    <!-- <div class=" form-group mb-4"> -->
-                    <div class="text-center fit mb-4 mt-4">
-                        <a href="{{ route('tutor.meetingdetail.create') }}" class="btn btn-primary shadow-none">+ New
-                            Meeting</a>
-                    </div>
-                    <!-- </div> -->
+            <div class="dashboard-content px-3 pt-4">
+                <h2 class="fs-2 fw-bold">Meetings</h2>
+                <!-- <div class=" form-group mb-4"> -->
+                <div class="text-center fit mb-4 mt-4">
+                    <a href="{{ route('tutor.meetingdetail.create') }}" class="btn btn-primary shadow-none">+ New
+                        Meeting</a>
+                </div>
+                
                     <form action="{{ route('tutor.meetinglists') }}" method="GET">
 
                         <div class="form-group mb-4 row">
