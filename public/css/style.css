@@ -335,12 +335,6 @@ h6 {
 }
 
 
-.bulkre-btn{
-  margin-left: 339px;
-  margin-bottom: 15px;
-}
-
-
 .assigned-button button {
   flex-shrink: 1; /* Allows buttons to shrink within the container */
 }
