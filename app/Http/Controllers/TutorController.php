@@ -83,15 +83,19 @@ class TutorController extends Controller
         $meetings = DB::table('meeting_schedule')
         ->orderBy('meeting_date')
         ->orderBy('meeting_start_time')
+        ->whereNotIn('meeting_status', ['completed', 'cancelled'])
         ->get();
 
     foreach ($meetings as $meeting) {
         $meetingEndDateTime = Carbon::parse($meeting->meeting_date . ' ' . $meeting->meeting_end_time);
 
-        if ($meetingEndDateTime->isPast() && $meeting->meeting_status !== 'completed') {
-            DB::table('meeting_schedule')
+        if ($meetingEndDateTime->isPast()) {
+            
+                DB::table('meeting_schedule')
                 ->where('id', $meeting->id)
                 ->update(['meeting_status' => 'overdue']);
+            
+           
         }
     }
 
@@ -170,8 +174,8 @@ class TutorController extends Controller
     public function save(Request $request,$id=null)
     {
         $request->validate([
-            'meeting_title' => 'required|string|max:50',
-            'meeting_description' => 'nullable|string|max:255',
+            'meeting_title' => 'required|string|max:255',
+            'meeting_description' => 'nullable|string|max:500',
             'meeting_type' => 'required|in:real,virtual',
             'meeting_platform' => 'nullable|string|required_if:meeting_type,virtual|max:255',
             'meeting_link' => 'nullable|url|required_if:meeting_type,virtual',
@@ -267,7 +271,7 @@ class TutorController extends Controller
         $meeting->save();
        // $meeting->delete();
 
-        return redirect()->route('tutor.meetinglists')->with('success', 'Meeting is canceled!');
+        return redirect()->route('tutor.meetinglists')->with('success', 'Meeting is cancelled!');
     }
 
     

@@ -75,7 +75,7 @@
 
                             <div class="input-group" id="datetimepicker">
                                 <input type="text" class="form-control" name="meeting_date" id="datepicker"
-                           value="{{ request('meeting_date') }}" placeholder="Select a date" readonly />
+                           value="{{ request('meeting_date') }}" placeholder="Select a date"  />
                                 <span class="input-group-text" id="datepicker-icon">
                                     <i class="fas fa-calendar-alt"></i>
                                 </span>
