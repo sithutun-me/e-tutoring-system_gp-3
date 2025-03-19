@@ -207,7 +207,7 @@ h6 {
     position: fixed;
     top: 0;
     left: 0;
-    height: 100vh;
+    height: 150vh;
     overflow-y: auto; /* Enables scrolling if content overflows */
   }
 
@@ -253,7 +253,7 @@ h6 {
     #side_nav{
       margin-left: -250px;
       position: absolute;
-      min-height: 100vh;
+      min-height: 150vh;
       z-index: 1;
 
     }

@@ -7,8 +7,8 @@
         <div class="main-container d-flex">
             <div class="sidebar" id="side_nav">
                 <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between">
-                    <h1 class=" header-title fs-4 mt-3">
-                        <span class="text-white fw-bold" style="margin-left:20px;">TripleEDU</span>
+                    <h1 class=" header-title fs-2 mt-3">
+                        <span class="text-white fw-bold" style="margin-left:10px;">TripleEDU</span>
                     </h1>
 
                     <button class="btn d-md-none d-block close-btn px-1 py-0 text-white">
@@ -43,45 +43,8 @@
 
 
 
-<<<<<<< HEAD
-<div class="main-container d-flex">
-        <div class="sidebar" id="side_nav">
-            <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between">
-                <h1 class=" header-title fs-2 mt-3">
-                    <span class="text-white fw-bold" style="margin-left:10px;">TripleEDU</span>
-                </h1>
-            
-                <button class="btn d-md-none d-block close-btn px-1 py-0 text-white">
-                <i class="fa-solid fa-square-xmark"></i></button>
             </div>
 
-            <ul class="list-unstyled px-2">
-                <li class=""><a href="/student/dashboard" class="text-decoration-none px-3 py-2 d-block">
-                    <img src="/icon images/dashboard.png" style="width:20px; margin-right: 10px;"> Dashboard
-                    </a>
-                </li>
-                <li class=""><a href="/student/meetinglists" class="text-decoration-none px-3 py-2 d-block">
-                    <img src="/icon images/meeting.png" style="width:20px; margin-right: 10px;"> Meetings
-                    </a>
-                </li>
-                <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block ">
-                    <img src="/icon images/blogging.png" style="width:20px; margin-right: 10px;"> Blogging
-                        
-                    </a>
-                </li>
-                <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">
-                    <img src="/icon images/notification.png" style="width:20px; margin-right: 10px;"> Notifications
-                    </a>
-                </li>
-               
-                <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">
-                    <img src="/icon images/reports.png" style="width:20px; margin-right: 10px;"> Reports
-                    </a>
-                </li>
-=======
-            </div>
-
->>>>>>> d3aa5ac01634faef41d70ddcf7f9f5f20b7185f8
 
             <div class="content">
                 <nav class="navbar navbar-expand-md navbar-light bg-light">
@@ -265,14 +228,9 @@
     </div>
 @endsection
 @push('scripts')
-<<<<<<< HEAD
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-=======
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
->>>>>>> d3aa5ac01634faef41d70ddcf7f9f5f20b7185f8
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -300,11 +258,6 @@
             $('.sidebar').removeClass('active');
 
         });
-<<<<<<< HEAD
-
-       
-=======
->>>>>>> d3aa5ac01634faef41d70ddcf7f9f5f20b7185f8
 
         $(document).ready(function() {
             Chart.register(ChartDataLabels);
