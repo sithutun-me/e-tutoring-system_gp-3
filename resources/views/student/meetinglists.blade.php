@@ -132,10 +132,10 @@
                                             {{ \Carbon\Carbon::parse($meeting->meeting_start_time)->format('h:i A') }} -
                                             {{ \Carbon\Carbon::parse($meeting->meeting_end_time)->format('h:i A') }}
                                         </td>
-                                        <td style="width: 15%;" class="no-border special" style="color: #004AAD;">Tutor</td>
-                                        <td style="width: 15%;" class="no-border special" style="color: #004AAD;">Status
+                                        <td style="width: 15%;color: #004AAD;" class="no-border special">Tutor</td>
+                                        <td style="width: 15%;color: #004AAD;" class="no-border special"class="no-border special">Status
                                         </td>
-                                        <td style="width: 15%;" class="no-border special" style="color: #004AAD;">Meeting
+                                        <td style="width: 15%;color: #004AAD;" class="no-border special" class="no-border special">Meeting
                                             type</td>
                                         <td class="w-25 no-border special" style="color: #004AAD;">
                                             @if ($meeting->meeting_type === 'virtual')
@@ -146,14 +146,19 @@
                                         </td>
                                         <td style="width: 15%;" rowspan="2"
                                             class="text-center no-left-border special"><a
-                                                href="{{ route('tutor.meetingdetail.view', $meeting->id) }}"
+                                                href="{{ route('student.meetingdetail.view', $meeting->id) }}"
                                                 class="btn btn-primary shadow-none">Detail</a></td>
                                     </tr>
                                     <tr class="no-top-border special">
                                         <td style="width: 15%;" class="no-right-border padding-left special">
                                             {{ $meeting->meeting_platform }}</td>
-                                        <td style="width: 15%;" class="no-border special">{{ $meeting->student_id }}
-                                            ({{ $meeting->first_name }} {{ $meeting->last_name }})
+                                        <td style="width: 15%;" class="no-border special">{{ $meeting->tutor_id }}
+                                            @if ($meeting->isTutorAssigned)
+                                                ({{ $meeting->first_name }} {{ $meeting->last_name }})
+                                            @else
+                                                ({{ $meeting->first_name }} {{ $meeting->last_name }})  (Unassigned)
+                                            @endif
+
                                         </td>
                                         <td style="width: 15%;" class="no-border special">
                                             <u>{{ ucfirst($meeting->meeting_status) }}</u>

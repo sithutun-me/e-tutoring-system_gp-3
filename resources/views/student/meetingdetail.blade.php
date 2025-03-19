@@ -145,8 +145,10 @@
                                             <div class="col-md-6 mb-2">
                                                 @php $disabled = $readOnly ? 'disabled' : '' @endphp
                                                 <select class="form-select" id="selectTutorMeetingDetail"
-                                                    disabled name="tutor_id"
+                                                    disabled name="tutor_id" 
                                                     aria-label="Floating label select example">
+                                                    
+                                                    
                                                     {{-- Show the currently assigned student (even if not allocated) --}}
                                                     {{-- @if ($currentStudent && !in_array($currentStudent->id, $students->pluck('student.id')->toArray()))
                                                         <option value="{{ $currentStudent->id }}" selected>
@@ -165,8 +167,14 @@
                                                     @foreach ($assignedTutor as $allocated)
                                                         <option value="{{ $allocated->tutor->id }}"
                                                             {{ request('tutor_id') == $allocated->tutor->id ? 'selected' : '' }}>
+                                                            @if(!$isTutorAllocated)
                                                             {{ $allocated->tutor->first_name }}
                                                             {{ $allocated->tutor->last_name }}
+                                                                (Unassigned)
+                                                            @else
+                                                            {{ $allocated->tutor->first_name }}
+                                                            {{ $allocated->tutor->last_name }}
+                                                            @endif
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -353,8 +361,8 @@
                                                             $meeting_schedules->meeting_status === 'completed' ||
                                                                 $meeting_schedules->meeting_status === 'cancelled' ||
                                                                 $meeting_schedules-> meeting_status === 'overdue' ||
-                                                                !$isStudentAllocated) disabled @endif><a
-                                                            href="{{ route('tutor.meetingdetail.update', $meeting_schedules->id ?? '') }}"
+                                                                !$isTutorAllocated) disabled @endif><a
+                                                            href="{{ route('student.meetingdetail.update', $meeting_schedules->id ?? '') }}"
                                                             class="text-decoration-none"
                                                             style="color: white;">Reschedule</a></button>
                                                 </div>
@@ -393,7 +401,7 @@
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
-                <form action="{{ route('tutor.meetingdetail.cancelmeeting') }}" method="POST">
+                <form action="{{ route('student.meetingdetail.cancelmeeting') }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <input type="hidden" name="id">
@@ -566,7 +574,7 @@
 
         var currentRoute = "{{ Route::currentRouteName() }}";
         var currentRouteId = "{{ request()->route('id') }}";
-        var isEditPage = currentRoute === 'tutor.meetingdetail.update';
+        var isEditPage = currentRoute === 'student.meetingdetail.update';
 
         if (currentRouteId) {
             if (isEditPage) {
@@ -588,7 +596,7 @@
             @if (isset($meeting_schedules))
                 if (action === 'toggle_status') {
                     document.getElementById('meetingForm').action =
-                        "{{ route('tutor.meetingdetail.toggleStatus', $meeting_schedules->id) }}";
+                        "{{ route('student.meetingdetail.toggleStatus', $meeting_schedules->id) }}";
                 } else {
                     document.getElementById('meetingForm').action =
                         "{{ route('update', $meeting_schedules->id) }}";

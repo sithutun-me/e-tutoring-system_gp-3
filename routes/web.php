@@ -63,11 +63,11 @@ Route::middleware(['auth','protect_auth'])->group(function(){
 
 
         //create meeting
-        Route::post('/tutor/meetingdetail', [TutorController::class, 'save'])->name('save');
+        Route::post('/tutor/meetingdetail', [TutorController::class, 'save'])->name('tutor.save');
 
 
         //update meeting
-        Route::put('/tutor/meetingdetail/{id}', [TutorController::class, 'save'])->name('update');
+        Route::put('/tutor/meetingdetail/{id}', [TutorController::class, 'save'])->name('tutor.update');
 
         //status toggle (completed/ new)
         Route::put('/tutor/meetingdetail/{id}/toggle-status', [TutorController::class, 'toggleStatus'])
@@ -91,6 +91,14 @@ Route::middleware(['auth','protect_auth'])->group(function(){
         Route::get('/student/meetingdetail/{id}', [StudentController::class, 'meetingview'])->name('student.meetingdetail.view');
 
         Route::post('/student/meetingdetail', [StudentController::class, 'save'])->name('save');
+        Route::put('/student/meetingdetail/{id}', [StudentController::class, 'save'])->name('update');
+
+        //status toggle (completed/ new)
+        Route::put('/student/meetingdetail/{id}/toggle-status', [StudentController::class, 'toggleStatus'])
+        ->name('student.meetingdetail.toggleStatus');
+
+        Route::post('/student/meetingdetail/cancel', [StudentController::class, 'cancelMeeting'])->name('student.meetingdetail.cancelmeeting');
+
     });
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
