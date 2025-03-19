@@ -89,6 +89,8 @@ Route::middleware(['auth','protect_auth'])->group(function(){
         Route::get('/student/meetingdetail/{id}/edit', [StudentController::class, 'meetingdetail'])->name('student.meetingdetail.update');
         //view meeting detail
         Route::get('/student/meetingdetail/{id}', [StudentController::class, 'meetingview'])->name('student.meetingdetail.view');
+
+        Route::post('/student/meetingdetail', [StudentController::class, 'save'])->name('save');
     });
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
