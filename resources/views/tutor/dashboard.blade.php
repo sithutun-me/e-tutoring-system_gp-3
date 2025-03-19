@@ -104,7 +104,7 @@
                                 </div>
                                 <div class="chart-card-body">
                                     <div class="table-responsive">
-                                        <table class="table tablesorter" id="table-upcoming-meetings">
+                                        <table class="table tablesorter" id="tutors-upcoming-meetings">
                                             <thead>
                                                 <tr>
                                                     <th class="normal-text" style="width: 25%;">
@@ -224,7 +224,7 @@
             }
 
             console.log("Data table is loading..");
-            $('#table-upcoming-meetings').DataTable({
+            $('#tutor-upcoming-meetings').DataTable({
                 dom: 'rt<"bottom"ip>',
                 paging: true,
                 pageLength: 5,

@@ -43,9 +43,11 @@ window.demo = {
           },
           ticks: {
             stepSize: 10,
-            fontColor: "#333333",
-            fontSize: 13,
-            fontFamily: 'Poppins'
+            color: "#333333",
+            font: {
+              size: 13,
+              family: 'Poppins'
+            }
           }
         },
 
@@ -60,10 +62,12 @@ window.demo = {
           },
           ticks: {
             padding: 20,
-            fontColor: "#333333",
-            fontSize: 13,
-            fontFamily: 'Poppins',
+            color: "#333333",
             autoSkip: false,
+            font: {
+              size: 13,
+              family: 'Poppins'
+            },
             callback: function (value, index) {
               const label = this.chart.data.labels[index]
               return label.split(" ")[0];  // Only the first word
