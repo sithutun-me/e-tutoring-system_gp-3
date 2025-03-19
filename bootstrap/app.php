@@ -14,8 +14,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'role' => RoleMiddleware::class,
-            'guest' => RedirectIfAuthenticated::class
+            'protect_auth' => App\Http\Middleware\ProtectAuth::class,
+            'role' => App\Http\Middleware\RoleMiddleware::class,
+            'guest' => App\Http\Middleware\RedirectIfAuthenticated::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
