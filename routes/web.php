@@ -32,7 +32,6 @@ Route::middleware(['auth','protect_auth'])->group(function(){
         Route::get('/admin/student/dashboard', [StudentController::class, 'index'])->name('admin.student.dashboard');
         Route::get('/admin/tutor/dashboard', [TutorController::class, 'index'])->name('admin.tutor.dashboard');
 
-
         Route::get('/admin/allocation/{id?}', [AllocationController::class, 'index'])->name('admin.allocation');
         Route::post('/admin/allocate', [AllocationController::class, 'allocate'])->name('admin.allocate');
         Route::get('/admin/assignedlists', [AllocationController::class, 'assignedLists'])->name('admin.assignedlists');
@@ -44,6 +43,8 @@ Route::middleware(['auth','protect_auth'])->group(function(){
 
         Route::get('/admin/students/filter', [AllocationController::class, 'filterStudents'])->name('admin.students.filter');
         Route::get('/admin/allocations/filter', [AllocationController::class, 'filterAllocations'])->name('admin.allocations.filter');
+
+        // Route::get('/admin/report', [AdminController::class, 'report'])->name('admin.report');
     });
 
     // Tutor Dashboard Route
@@ -75,6 +76,8 @@ Route::middleware(['auth','protect_auth'])->group(function(){
 
         Route::post('/tutor/meetingdetail/cancel', [TutorController::class, 'cancelMeeting'])->name('tutor.meetingdetail.cancelmeeting');
 
+        Route::get('/tutor/report', [TutorController::class, 'report'])->name('tutor.report');
+
     });
 
     // Student Dashboard Route
@@ -98,6 +101,8 @@ Route::middleware(['auth','protect_auth'])->group(function(){
         ->name('student.meetingdetail.toggleStatus');
 
         Route::post('/student/meetingdetail/cancel', [StudentController::class, 'cancelMeeting'])->name('student.meetingdetail.cancelmeeting');
+
+        Route::get('/student/report', [StudentController::class, 'report'])->name('student.report');
 
     });
 

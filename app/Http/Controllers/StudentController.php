@@ -281,5 +281,10 @@ class StudentController extends Controller
 
         return redirect()->route('student.meetinglists')->with('success', 'Meeting is cancelled!');
     }
+
+    public function report()
+    {
+        return view('student.report');
+    }
     
 }

@@ -34,7 +34,7 @@
                     </a>
                 </li>
 
-                <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">
+                <li class=""><a href="/tutor/report" class="text-decoration-none px-3 py-2 d-block">
                         <img src="/icon images/reports.png" style="width:20px; margin-right: 10px;"> Reports
                     </a>
                 </li>
@@ -145,7 +145,7 @@
                                     <span class="time me-4" style="vertical-align: middle;">9:00 PM</span> 
                                     
                                 </p>
-                                <p>Yes sir, well noted.<br>We will be missing you during the holidays sir.</p>
+                                <p class="comment-body ms-4">Yes sir, well noted.<br>We will be missing you during the holidays sir.</p>
                             </div>
 
                             
@@ -206,7 +206,7 @@
                                     <span class="time me-4" style="vertical-align: middle;">9:00 PM</span> 
                                     
                                 </p>
-                                <p>Yes sir, well noted.<br>We will be missing you during the holidays sir.</p>
+                                <p class="comment-body ms-4">Yes sir, well noted.<br>We will be missing you during the holidays sir.</p>
                             </div>
 
                             <form action="" method="" enctype="multipart/form-data">

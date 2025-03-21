@@ -34,7 +34,7 @@
                     </a>
                 </li>
 
-                <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">
+                <li class=""><a href="/tutor/report" class="text-decoration-none px-3 py-2 d-block">
                         <img src="/icon images/reports.png" style="width:20px; margin-right: 10px;"> Reports
                     </a>
                 </li>
@@ -66,9 +66,7 @@
                     </span>
                     
 
-                    <div class="create-container" style="margin-left: 20px;">
-   
-
+                    <div class="create-container">
                         <div class="d-flex align-items-center mb-3">
                             <div class="profile-img"><i class="fa-solid fa-circle-user"></i></div>
                             
@@ -115,6 +113,7 @@
                             <button type="button" class="btn btn-primary w-100 mt-2" style="background-color: #004AAD;">Post</button>
                         </form>
                     </div>
+                    
 
                
             </div>

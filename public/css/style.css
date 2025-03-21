@@ -499,6 +499,8 @@ h6 {
   display: block;
   height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
   overflow-y: auto; /* Enable scrolling inside tbody */
+  font-family: "Poppins";
+  font-size: 0.875rem;
 }
 
 #allocationTable thead,
@@ -587,6 +589,8 @@ h6 {
   display: block;
   height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
   overflow-y: auto; /* Enable scrolling inside for the tbody */
+  font-family: "Poppins";
+  font-size: 0.875rem;
 }
 
 #assignedTable thead,
@@ -786,6 +790,8 @@ h6 {
   display: block;
   height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
   overflow-y: auto; /* Enable scrolling inside tbody */
+  font-family: "Poppins";
+  font-size: 0.875rem;
 }
 
 #reallocationTable thead,
@@ -911,6 +917,8 @@ h6 {
   display: block;
   height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
   overflow-y: auto; /* Enable scrolling inside tbody */
+  font-family: "Poppins";
+  font-size: 0.875rem;
 }
 
 #tutorTable thead,
@@ -1043,6 +1051,8 @@ h6 {
   display: block;
   height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
   overflow-y: auto; /* Enable scrolling inside tbody */
+  font-family: "Poppins";
+  font-size: 0.875rem;
 }
 
 #studentTable thead,
@@ -1098,7 +1108,7 @@ h6 {
   }
 
   
-  #no-more-tables .allocation-row, .assigned-row, .tutor-row, .student-row, .reallocation-row{
+  #no-more-tables .allocation-row, .assigned-row, .tutor-row, .student-row, .reallocation-row, .adminreport-row{
     text-align: right;
 
   }
@@ -1114,7 +1124,6 @@ h6 {
 
 
 /* Tutor Blogging */
-
 
 .post-container {
   background: white;
@@ -1166,9 +1175,6 @@ h6 {
  
 }
 
-
-
-
  .post a {
   font-family: "Poppins";
   font-size: 0.813rem;
@@ -1189,10 +1195,14 @@ h6 {
   padding: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
+  margin-left: 13px;
 
 }
 
-
+/* .parent-container {
+  display: flex;
+  width: 1280px;
+} */
 
 .edit-container {
   width: 700px;
@@ -1200,6 +1210,7 @@ h6 {
   padding: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
+  margin-left: 13px;
 
 }
 
@@ -1284,6 +1295,12 @@ textarea::placeholder {
     width: 100%;
     
   }
+
+  /* .parent-container {
+    display: flex;
+    width: 100%;
+  } */
+  
   .edit-container{
     width: 100%;
   }
@@ -1321,6 +1338,27 @@ textarea::placeholder {
   }
 }
 
+@media only screen and (max-width: 400px) {
+  .create-container {
+    width: 100%;
+    background: white;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    
+  
+  }
+
+  .edit-container {
+    width: 100%;
+    background: white;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    
+  
+  }
+
+}
+
 /* .modal {
   position: fixed;
   top: 30%;
@@ -1336,5 +1374,388 @@ textarea::placeholder {
 } */
 
 
+/* Student and Tutor Report Page */
 
+.tabs {
+  display: flex;
+  margin: 10px 0;
+  margin-top: 20px;
+
+}
+.tabs button {
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  border: 1px solid #004AAD;
+  background-color: #FDFAF6;
+  width: 200px;
+  height: 50px;
+  font-family: "Poppins";
+
+}
+/* Left-most button (rounds left side) */
+.tabs button:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+/* Right-most button (rounds right side) */
+.tabs button:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.tabs .active {
+  background: #004AAD;
+  color: #fff;
+ 
+  
+}
+.content-area {
+  display: none;
+}
+.content-area.active {
+  display: block;
+}
+
+#selectmonth {
+  font-size: 0.875rem; /* Set dropdown font size */
+  font-family: "Poppins";
+}
+
+#selectmonth option {
+  font-size: 0.875rem; /* Set font size for dropdown options */
+  font-family: "Poppins";
+}
+
+
+.studentreport {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  
+}
+.studentreport thead {
+  background: #004AAD;
+  color: white;
+  
+}
+/* .studentreport th, .studentreport td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  border-collapse: collapse;
+  border: 1px solid #D3D3D3;
+} */
+
+/* .studentreport-container {
+  height: 400px; 
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+} */
+
+.studentreport {
+  width: 100%;
+  table-layout: fixed; /* Prevents layout shift */
+  border-collapse: collapse;
+  height: 100%;
+}
+
+.studentreport tbody {
+  display: block;
+  overflow-y: auto;
+  height: 400px; /* Adjust based on your needs */
+  font-family: "Poppins";
+  font-size: 0.875rem;
+}
+
+.studentreport thead,
+.studentreport tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+
+.studentreport {
+width: 100%;
+border-collapse: collapse;
+}
+
+.studentreport th, 
+.studentreport td {
+padding: 10px;
+text-align: center;
+border-top: 1px solid #D3D3D3;  /* Keeps horizontal lines */
+border-bottom: 1px solid #D3D3D3; /* Keeps horizontal lines */
+border-left: none;  /* Remove vertical borders */
+border-right: none; /* Remove vertical borders */
+}
+
+/* Keep the first column's left border */
+.studentreport th:first-child, 
+.studentreport td:first-child {
+border-left: 1px solid #D3D3D3;
+}
+
+/* Keep the last column's right border */
+.studentreport th:last-child, 
+.studentreport td:last-child {
+border-right: 1px solid #D3D3D3;
+}
+
+
+
+@media only screen and (min-width: 1200px){
+  #studentreportTable .small-col {
+    width: 50px !important;
+  }
+
+}
+
+/* @media only screen and (min-width: 1200px){
+
+
+  #studentreportTabletu .small-col {
+    width: 50px !important;
+  }
+
+  #studentreportTabletu thead .small-col {
+    width: 50px !important;
+}
+
+
+
+} */
+
+/* Pagination */
+
+#studentreportTable_wrapper .dataTables_wrapper {
+  min-height: 450px; /* Ensures consistent height */
+}
+
+#studentreportTable_wrapper .dataTables_paginate {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+}
+
+#studentreportTable_wrapper .dataTables_paginate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 10px;
+  position: relative;
+}
+
+/* Pagination buttons styling */
+#studentreportTable_wrapper .dataTables_paginate .paginate_button {
+  display: inline-block;
+  background-color: #FFFFFF !important;
+  color: #92969c !important;
+  border: 1px solid #D3D3D3 !important;
+  border-radius: 5px;
+  margin: 3px;
+  padding: 6px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Active page button */
+#studentreportTable_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: #007bff !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  font-weight: bold;
+}
+
+/* Disabled button */
+#studentreportTable_wrapper .dataTables_paginate .paginate_button.disabled {
+  background-color: #fff !important;
+  color: #bfc1c4 !important;
+  cursor: not-allowed !important;
+  border-color: #bfc1c4 !important;
+  pointer-events: none;
+}
+
+/* Hover effect */
+#studentreportTable_wrapper .dataTables_paginate .paginate_button:hover {
+  background-color: #007bff !important;
+  color: #FFFFFF !important;
+}
+
+.tutor-container {
+  font-family: "Poppins";
+  font-size: 1rem;
+}
+
+.tutorreport {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+.tutorreport thead {
+  background: #004AAD;
+  color: white;
+}
+/* .tutorreport th, .tutorreport td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  border-collapse: collapse;
+  border: 1px solid #D3D3D3;
+} */
+
+.tutorreport-container {
+  height: 400px; /* Adjust as needed */
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.tutorreport {
+  width: 100%;
+  table-layout: fixed; /* Prevents layout shift */
+  border-collapse: collapse;
+  height: 100%;
+}
+
+.tutorreport tbody {
+  display: block;
+  overflow-y: auto;
+  height: 400px; /* Adjust based on your needs */
+  font-family: "Poppins";
+  font-size: 0.875rem;
+
+}
+
+.tutorreport thead,
+.tutorreport tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+
+.tutorreport {
+width: 100%;
+border-collapse: collapse;
+}
+
+.tutorreport th, 
+.tutorreport td {
+padding: 10px;
+text-align: center;
+border-top: 1px solid #D3D3D3;  /* Keeps horizontal lines */
+border-bottom: 1px solid #D3D3D3; /* Keeps horizontal lines */
+border-left: none;  /* Remove vertical borders */
+border-right: none; /* Remove vertical borders */
+}
+
+/* Keep the first column's left border */
+.tutorreport th:first-child, 
+.tutorreport td:first-child {
+border-left: 1px solid #D3D3D3;
+}
+
+/* Keep the last column's right border */
+.tutorreport th:last-child, 
+.tutorreport td:last-child {
+border-right: 1px solid #D3D3D3;
+}
+
+@media only screen and (min-width: 1200px){
+  #tutorreportTable .small-col {
+    width: 50px !important;
+  }
+ 
+
+}
+
+/* Pagination */
+
+#tutorreportTable_wrapper .dataTables_wrapper {
+  min-height: 450px; /* Ensures consistent height */
+}
+
+#tutorreportTable_wrapper .dataTables_paginate {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+}
+
+#tutorreportTable_wrapper .dataTables_paginate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 10px;
+  position: relative;
+}
+
+/* Pagination buttons styling */
+#tutorreportTable_wrapper .dataTables_paginate .paginate_button {
+  display: inline-block;
+  background-color: #FFFFFF !important;
+  color: #92969c !important;
+  border: 1px solid #D3D3D3 !important;
+  border-radius: 5px;
+  margin: 3px;
+  padding: 6px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Active page button */
+#tutorreportTable_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: #007bff !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  font-weight: bold;
+}
+
+/* Disabled button */
+#tutorreportTable_wrapper .dataTables_paginate .paginate_button.disabled {
+  background-color: #fff !important;
+  color: #bfc1c4 !important;
+  cursor: not-allowed !important;
+  border-color: #bfc1c4 !important;
+  pointer-events: none;
+}
+
+/* Hover effect */
+#tutorreportTable_wrapper .dataTables_paginate .paginate_button:hover {
+  background-color: #007bff !important;
+  color: #FFFFFF !important;
+}
+
+
+@media (max-width: 768px) {
+  .tabs {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  }
+
+
+  .studentreport{
+    margin-top: 10px;
+  }
+
+  .tutorreport{
+    margin-top: 10px;
+  }
+
+
+}
 

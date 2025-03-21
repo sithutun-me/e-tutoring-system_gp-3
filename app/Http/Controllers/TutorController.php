@@ -181,6 +181,11 @@ class TutorController extends Controller
         return view('tutor.updateposts');
     }
 
+    public function report()
+    {
+        return view('tutor.report');
+    }
+
 
     //update or create function 
     public function save(Request $request,$id=null)
