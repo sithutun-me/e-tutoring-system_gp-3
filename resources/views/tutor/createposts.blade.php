@@ -59,63 +59,58 @@
                 </div>
             </nav>
 
-            <div class="dashboard-content px-3 pt-4">
+            <div class="dashboard-content px-2 pt-4">
 
-                    <span onclick="history.back()" style="cursor: pointer;" class="header-text ms-3">
+
+                <span onclick="history.back()" style="cursor: pointer;" class="header-text ms-3">
                     <i class="fa-solid fa-chevron-left"></i> <u>Back</u>
-                    </span>
-                    
+                </span>
 
-                    <div class="create-container">
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="profile-img"><i class="fa-solid fa-circle-user"></i></div>
-                            
-                            <strong class="ms-2">Name</strong>
+                <div class="create-container" style="margin-left: 20px;">
+
+
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="profile-img"><i class="fa-solid fa-circle-user"></i></div>
+
+                        <strong class="ms-2">{{ $tutor->first_name }} {{ $tutor->last_name }}</strong>
+                    </div>
+
+                    <form action="{{ route('tutor.saveposts') }}" method="POST" enctype="multipart/form-data">
+
+                        <input type="hidden" name="tutor_id">
+                        <div class="mb-3">
+                            <select class="form-select" name="selected_student" id="floatingSelect" aria-label="Floating label select example">
+                                <option selected disabled>Choose Student</option>
+                                @foreach ($students as $student)
+                                <option value="{{ $student->id }}" @if(@request()->student_filter == $student->id) selected @endif>{{ $student->first_name }} {{ $student->last_name }}</option>
+                                @endforeach
+                            </select>
                         </div>
 
-                        <form action="" method="" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <input type="text" id="add-title" class="form-control" name="post_title" value="{{ old('post_title') }}" placeholder="Add title">
+                        </div>
+
+
 
                         <div class="mb-3">
-                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                                <option  selected disabled>Choose Student</option>
-                                    <option value="1">Student1</option>
-                                    <option value="2">Student2</option>
-                                    <option value="3">Student3</option>
-                                    <option value="4">Student4</option>
-                                    <option value="5">Student5</option>
-                                    <option value="6">Student6</option>
-                                    <option value="7">Student7</option>
-                                    <option value="8">Student8</option>
-                                    <option value="9">Student9</option>
-                                    <option value="10">Student10</option>
-                                </select>
-                            </div>
+                            <textarea class="form-control" rows="4" id="description" placeholder="Add Description" name="post_desc" value="{{ old('post_desc') }}"></textarea>
+                        </div>
 
-                            <div class="mb-3">
-                                <input type="text" id="add-title" class="form-control" placeholder="Add title">
-                            </div>
 
-                          
+                        <div class="mb-3 mt-4">
+                            <input type="file" id="file-input" name="post_files" class="form-control mb-3" multiple>
+                            <small id="file-count">No file chosen</small>
+                        </div>
 
-                            <div class="mb-3">
-                                <textarea class="form-control" rows="4" id="description" placeholder="Add Description"></textarea>
-                            </div>
+                        <!--Selected/Chosen File List Display -->
+                        <ul id="file-list" class="file-list" name="doc_files"></ul>
 
-                        
-                            <div class="mb-3 mt-4">
-                                <input type="file" id="file-input" class="form-control mb-3" multiple>
-                                <small id="file-count" >No file chosen</small>
-                            </div>
+                        <button type="submit" class="btn btn-primary w-100 mt-2" style="background-color: #004AAD;">Post</button>
+                    </form>
+                </div>
 
-                            <!--Selected/Chosen File List Display -->
-                            <ul id="file-list" class="file-list"></ul>
 
-                            <button type="button" class="btn btn-primary w-100 mt-2" style="background-color: #004AAD;">Post</button>
-                        </form>
-                    </div>
-                    
-
-               
             </div>
 
 
@@ -135,8 +130,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
 <script>
-    
-
     // $(document).ready(function(){
     //     console.log("Data table is loading..");
     //     $('#table-meeting').DataTable({
@@ -169,9 +162,9 @@
 
     });
 
-        // Selected File List Display and Remove
-        
-        document.getElementById("file-input").addEventListener("change", function(event) {
+    // Selected File List Display and Remove
+
+    document.getElementById("file-input").addEventListener("change", function(event) {
         const fileList = document.getElementById("file-list");
         const fileCount = document.getElementById("file-count");
         fileList.innerHTML = ""; // Clear previous file list
@@ -214,7 +207,5 @@
         // Trigger change event to update UI
         fileInput.dispatchEvent(new Event("change"));
     }
-
-  
 </script>
 @endpush
