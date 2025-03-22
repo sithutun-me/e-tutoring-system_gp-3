@@ -61,23 +61,27 @@
             <section class="p-3">
                 <div class="dashboard-content px-2 pt-4">
                     <h2 class="fw-bold" style="font-size:2rem;">Tutor Dashboard</h2>
-                    <div class="form-group mb-4 row mt-4">
-                        <div class="col-md-3 mb-2">
-                            <select class="form-select" name="interaction_type" id="selectInteraction"
-                                aria-label="Interaction Type">
-                                <option value="All">All Interactions</option>
-                                <option value="Posts">Posts</option>
-                                <option value="Comments">Comments</option>
-                                <option value="Documents">Documents</option>
-                                <option value="Meetings">Meetings</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3 mb-2 d-flex flex-column align-items-start">
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary shadow-none">Search</button>
+                    <form method="GET" action="{{ route('tutor.interactions') }}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group mb-4 row mt-4">
+                            <div class="col-md-3 mb-2">
+                                <select class="form-select" name="interaction_type" id="selectInteraction"
+                                    aria-label="Interaction Type">
+                                    <option value="All">All Interactions</option>
+                                    <option value="Posts">Posts</option>
+                                    <option value="Comments">Comments</option>
+                                    <option value="Documents">Documents</option>
+                                    <option value="Meetings">Meetings</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-2 d-flex flex-column align-items-start">
+                                <div class="text-center">
+                                    <button id="filterButton" type="button"
+                                        class="btn btn-primary shadow-none">Search</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                     <div class="row mt-4">
                         <div class="chart-container-full">
                             <div class="chart-card">
@@ -100,11 +104,11 @@
                         <div class="chart-container">
                             <div class="chart-card chart-card-full">
                                 <div class="chart-card-header">
-                                    <h4 class="chart-card-title">Upcoming meetings</h4>
+                                    <h4 class="chart-card-title">Upcoming meetings within the next week</h4>
                                 </div>
                                 <div class="chart-card-body">
                                     <div class="table-responsive">
-                                        <table class="table tablesorter" id="tutors-upcoming-meetings">
+                                        <table class="table tablesorter" id="tutor-upcoming-meetings">
                                             <thead>
                                                 <tr>
                                                     <th class="normal-text" style="width: 25%;">
@@ -127,47 +131,27 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td class="normal-text">Supervision meeting Supervision meeting</td>
-                                                    <td class="normal-text">10 Mar 2025</td>
-                                                    <td class="normal-text">09:00 AM - 11:00 AM</td>
-                                                    <td class="normal-text">Moon Johnh wiMoon Johnhwi</td>
-                                                    <td class="normal-text">Virtual</td>
-                                                    <td class="text-center">
-                                                        <a href="#" class="btn btn-primary shadow-none">Detail</a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="normal-text">Supervision meeting Supervision meeting</td>
-                                                    <td class="normal-text">10 Mar 2025</td>
-                                                    <td class="normal-text">09:00 AM - 11:00 AM</td>
-                                                    <td class="normal-text">Moon Johnh wiMoon Johnhwi</td>
-                                                    <td class="normal-text">Virtual</td>
-                                                    <td class="text-center">
-                                                        <a href="#" class="btn btn-primary shadow-none">Detail</a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="normal-text">Supervision meeting Supervision meeting</td>
-                                                    <td class="normal-text">10 Mar 2025</td>
-                                                    <td class="normal-text">09:00 AM - 11:00 AM</td>
-                                                    <td class="normal-text">Moon Johnh wiMoon Johnhwi</td>
-                                                    <td class="normal-text">Virtual</td>
-                                                    <td class="text-center">
-                                                        <a href="#" class="btn btn-primary shadow-none">Detail</a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="normal-text">Supervision meeting Supervision meeting</td>
-                                                    <td class="normal-text">10 Mar 2025</td>
-                                                    <td class="normal-text">09:00 AM - 11:00 AM</td>
-                                                    <td class="normal-text">Moon Johnh wiMoon Johnhwi</td>
-                                                    <td class="normal-text">Virtual</td>
-                                                    <td class="text-center">
-                                                        <a href="#" class="btn btn-primary shadow-none">Detail</a>
-                                                    </td>
-                                                </tr>
-
+                                                @foreach ($meetings as $meeting)
+                                                    <tr>
+                                                        <td class="normal-text">{{ $meeting->meeting_title }}</td>
+                                                        <td class="normal-text">
+                                                            {{ \Carbon\Carbon::parse($meeting->meeting_date)->format('d M Y') }}
+                                                        </td>
+                                                        <td class="normal-text">
+                                                            {{ \Carbon\Carbon::parse($meeting->meeting_start_time)->format('h:i A') }}
+                                                            -
+                                                            {{ \Carbon\Carbon::parse($meeting->meeting_end_time)->format('h:i A') }}
+                                                        </td>
+                                                        <td class="normal-text">{{ $meeting->first_name }}
+                                                            {{ $meeting->last_name }}</td>
+                                                        <td class="normal-text">{{ $meeting->meeting_type }}</td>
+                                                        <td class="text-center">
+                                                            <a href="{{ route('tutor.meetingdetail.view', $meeting->id) }}"
+                                                                class="btn btn-primary shadow-none">Detail</a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                              
                                             </tbody>
 
                                         </table>
@@ -217,11 +201,39 @@
         });
 
         $(document).ready(function() {
+            $.ajax({
+                url: '/tutor_student_interaction_dashboard', // Adjust this to your correct route
+                method: 'GET',
+                data: {
+                    interaction_type: "All"
+                },
+                success: function(response) {
+                    console.log("Data received:", response);
 
-            var studentInteractionChartElement = document.getElementById('StudentInteractionCountChart');
-            if (studentInteractionChartElement && typeof demo !== 'undefined') {
-                demo.initStudentInteractionsChart();
-            }
+                    const studentNames = response.map(item => item.student.first_name + " " + item
+                        .student.last_name);
+                    const interactionCounts = response.map(item => item.interactions);
+                    // Assuming response contains the interaction counts
+                    var studentInteractionChartElement = document.getElementById(
+                        'StudentInteractionCountChart');
+
+                    if (studentInteractionChartElement) {
+                        if (typeof demo !== 'undefined') {
+                            demo.initStudentInteractionsChart(
+                                studentNames, interactionCounts
+                                ); // Pass the data to your chart function
+                        }
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX request failed:", error);
+                }
+            });
+            // var studentInteractionChartElement = document.getElementById('StudentInteractionCountChart');
+            // if (studentInteractionChartElement && typeof demo !== 'undefined') {
+
+            //     demo.initStudentInteractionsChart();
+            // }
 
             console.log("Data table is loading..");
             $('#tutor-upcoming-meetings').DataTable({
@@ -239,6 +251,73 @@
             $('.bottom').appendTo("#pagination-container");
 
 
+        });
+        async function getInteractionCounts(filterValue) {
+            try {
+
+                const response = await fetch('/tutor_student_interaction_dashboard?interaction_type=${filterValue}');
+                const data = await response.json();
+
+                // Extract student names and interaction counts
+                const studentNames = data.map(item => item.student.first_name + " " + item.student.last_name);
+                const interactionCounts = data.map(item => item.interactions);
+                console.log("method called try")
+                return {
+                    studentNames,
+                    interactionCounts
+                };
+
+            } catch (error) {
+                console.error('Error fetching student interaction data:', error);
+                return {
+                    studentNames: [],
+                    interactionCounts: []
+                };
+
+            }
+        }
+        $("#filterButton").on("click", async function() {
+            console.log("button clicked");
+            var selectedInteractionType = $("#selectInteraction").val();
+            console.log(selectedInteractionType);
+            const {
+                studentNames,
+                interactionCounts
+            } = getInteractionCounts(selectedInteractionType);
+            console.log(interactionCounts);
+            $.ajax({
+                url: '/tutor_student_interaction_dashboard', // Adjust this to your correct route
+                method: 'GET',
+                data: {
+                    interaction_type: selectedInteractionType
+                },
+                success: function(response) {
+                    console.log("Data received:", response);
+
+                    const studentNames = response.map(item => item.student.first_name + " " + item
+                        .student.last_name);
+                    const interactionCounts = response.map(item => item.interactions);
+                    // Assuming response contains the interaction counts
+                    var studentInteractionChartElement = document.getElementById(
+                        'StudentInteractionCountChart');
+
+                    if (studentInteractionChartElement) {
+                        if (typeof demo !== 'undefined') {
+                            demo.initStudentInteractionsChart(
+                                studentNames, interactionCounts
+                                ); // Pass the data to your chart function
+                        }
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX request failed:", error);
+                }
+            });
+            // var studentInteractionChartElement = document.getElementById('StudentInteractionCountChart');
+
+            // if (studentInteractionChartElement && typeof demo !== 'undefined') {
+            //     demo.initStudentInteractionsChart();
+            // }
         });
     </script>
 @endpush

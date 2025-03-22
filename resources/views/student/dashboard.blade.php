@@ -61,7 +61,14 @@
 
                 <section class="p-3">
                     <div class="dashboard-content px-2 pt-4">
-                        <h2 class="fs-2 fw-bold"> Student Dashboard</h2>
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <h2 class="fs-2 fw-bold"> Student Dashboard</h2>
+                            </div>
+                            <div class="col-md-6 header-text text-end">
+                                Tutor - {{$tutorName}}
+                            </div>
+                        </div>
                         <div class="row mt-4">
                             <div class="chart-container">
                                 <div class="chart-card col-md-6">
@@ -87,7 +94,7 @@
                                         <div style="width: 100%;" class="flex-step-box">
                                             <div class="top-row">
                                                 <div class="center-text large-font">
-                                                    3
+                                                    {{ $postCount }}
                                                 </div>
                                                 <div class="center-text">
                                                     new posts by tutor
@@ -163,51 +170,25 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td class="normal-text">Supervision meeting Supervision meeting
-                                                        </td>
-                                                        <td class="normal-text">10 Mar 2025</td>
-                                                        <td class="normal-text">09:00 AM - 11:00 AM</td>
-                                                        <td class="normal-text">Virtual</td>
-                                                        <td class="text-center">
-                                                            <a href="#"
-                                                                class="btn btn-primary shadow-none">Detail</a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="normal-text">Supervision meeting Supervision meeting
-                                                        </td>
-                                                        <td class="normal-text">10 Mar 2025</td>
-                                                        <td class="normal-text">09:00 AM - 11:00 AM</td>
-                                                        <td class="normal-text">Virtual</td>
-                                                        <td class="text-center">
-                                                            <a href="#"
-                                                                class="btn btn-primary shadow-none">Detail</a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="normal-text">Supervision meeting Supervision meeting
-                                                        </td>
-                                                        <td class="normal-text">10 Mar 2025</td>
-                                                        <td class="normal-text">09:00 AM - 11:00 AM</td>
-                                                        <td class="normal-text">Virtual</td>
-                                                        <td class="text-center">
-                                                            <a href="#"
-                                                                class="btn btn-primary shadow-none">Detail</a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="normal-text">Supervision meeting Supervision meeting
-                                                        </td>
-                                                        <td class="normal-text">10 Mar 2025</td>
-                                                        <td class="normal-text">09:00 AM - 11:00 AM</td>
-                                                        <td class="normal-text">Virtual</td>
-                                                        <td class="text-center">
-                                                            <a href="#"
-                                                                class="btn btn-primary shadow-none">Detail</a>
-                                                        </td>
-                                                    </tr>
+                                                    @foreach ($meetings as $meeting)
+                                                        <tr>
+                                                            <td class="normal-text">{{ $meeting->meeting_title }}</td>
+                                                            <td class="normal-text">
+                                                                {{ \Carbon\Carbon::parse($meeting->meeting_date)->format('d M Y') }}
+                                                            </td>
+                                                            <td class="normal-text">
+                                                                {{ \Carbon\Carbon::parse($meeting->meeting_start_time)->format('h:i A') }}
+                                                                -
+                                                                {{ \Carbon\Carbon::parse($meeting->meeting_end_time)->format('h:i A') }}
+                                                            </td>
+                                                            <td class="normal-text">{{ $meeting->meeting_type }}</td>
 
+                                                            <td class="text-center">
+                                                                <a href="{{ route('student.meetingdetail.view', $meeting->id) }}"
+                                                                    class="btn btn-primary shadow-none">Detail</a>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
                                                 </tbody>
 
                                             </table>
