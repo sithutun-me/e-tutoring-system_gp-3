@@ -13,9 +13,114 @@ class StudentController extends Controller
 {
     public function index()
     {
-        return view('student.dashboard');
+        $studentId = auth()->id();
+        $tutorId = DB::table('allocation')
+                ->where('student_id', $studentId)
+                ->value('tutor_id'); 
+        
+        $postCount = DB::table('post')
+            ->where('post_create_by', $tutorId)
+            ->where('is_meeting',0)
+            ->where('post_status','new') //case sensitive
+            ->count();
+
+        //getting upcoming meeting list within one week.
+        
+        $meetings = DB::table('meeting_schedule')
+                    ->leftjoin('users as students', 'meeting_schedule.student_id', '=', 'students.id') 
+                    ->where('meeting_schedule.tutor_id', $tutorId)
+                    ->where('meeting_schedule.meeting_status', 'new')
+                    ->where('meeting_schedule.meeting_date', '<=', Carbon::now()->addDays(7))
+                    ->orderBy('meeting_schedule.meeting_date','asc')
+                    ->select(
+                        'meeting_schedule.id',
+                        'meeting_schedule.meeting_title',
+                        'meeting_schedule.meeting_type',
+                        'meeting_schedule.meeting_date',
+                        'meeting_schedule.meeting_start_time',
+                        'meeting_schedule.meeting_end_time',
+                        'meeting_schedule.updated_at',
+                        'students.first_name',
+                        'students.last_name'
+                    )
+                    ->get();
+        return view('student.dashboard',compact('postCount','meetings'));
+    }
+    //for dashboard
+    public function getMeetingPieData(){
+        $studentId = auth()->id();
+
+        $meetingCounts = DB::table('meeting_schedule')
+        ->where('student_id', $studentId)
+        ->select(
+            DB::raw("COUNT(CASE WHEN meeting_status = 'completed' THEN 1 END) as completed"),
+            DB::raw("COUNT(CASE WHEN meeting_status = 'new' THEN 1 END) as new"),
+            DB::raw("COUNT(CASE WHEN meeting_status = 'cancelled' THEN 1 END) as cancelled")
+        )
+        ->first();
+
+        // Format data for Pie Chart
+        $chartData = [
+            'labels' => ['Completed', 'New', 'Cancelled'],
+            'data' => [$meetingCounts->completed, $meetingCounts->new, $meetingCounts->cancelled]
+        ];
+
+        return response()->json($chartData);
+    }
+    public function getNewPostData(){
+       
+        
+    }
+    public function myActivities(){
+        $studentId = auth()->id();
+        $postCount = DB::table('post')
+            ->where('post_create_by', $studentId)
+            ->where('is_meeting',0)
+            ->count();
+
+        $commentCount = DB::table('comment')
+            ->where('user_id', $studentId)
+            ->count();
+
+        $documentCount = DB::table('document')
+                ->join('post', 'document.post_id', '=', 'post.id')
+                ->where('post.post_create_by', $studentId)
+                ->count();
+        $interactionCounts = [
+            'labels' =>['Posts', 'Comments', 'Documents'],
+            'data' => [$postCount,$commentCount,$documentCount]
+        ];
+        return response()->json($interactionCounts);
+    }
+    public function tutorActivities(){
+        $studentId = auth()->id();
+        $tutorId = DB::table('allocation')
+                ->where('student_id', $studentId)
+                ->value('tutor_id'); 
+        
+        $postCount = DB::table('post')
+            ->where('post_create_by', $tutorId)
+            ->where('is_meeting',0)
+            ->count();
+
+        $commentCount = DB::table('comment')
+            ->where('user_id', $tutorId)
+            ->count();
+
+        $documentCount = DB::table('document')
+                ->join('post', 'document.post_id', '=', 'post.id')
+                ->where('post.post_create_by', $tutorId)
+                ->count();
+        $interactionCounts = [
+            'labels' =>['Posts', 'Comments', 'Documents'],
+            'data' => [$postCount,$commentCount,$documentCount]
+        ];
+        return response()->json($interactionCounts);
     }
 
+
+
+    //for meeting schedule 
     public function meetinglists(Request $request)
     {   
         $studentId = Auth::id(); 
