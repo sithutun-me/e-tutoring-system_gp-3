@@ -61,7 +61,14 @@
 
                 <section class="p-3">
                     <div class="dashboard-content px-2 pt-4">
-                        <h2 class="fs-2 fw-bold"> Student Dashboard</h2>
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <h2 class="fs-2 fw-bold"> Student Dashboard</h2>
+                            </div>
+                            <div class="col-md-6 header-text text-end">
+                                Tutor - {{$tutorName}}
+                            </div>
+                        </div>
                         <div class="row mt-4">
                             <div class="chart-container">
                                 <div class="chart-card col-md-6">
