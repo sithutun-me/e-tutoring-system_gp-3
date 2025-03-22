@@ -108,7 +108,7 @@
                                 </div>
                                 <div class="chart-card-body">
                                     <div class="table-responsive">
-                                        <table class="table tablesorter" id="tutors-upcoming-meetings">
+                                        <table class="table tablesorter" id="tutor-upcoming-meetings">
                                             <thead>
                                                 <tr>
                                                     <th class="normal-text" style="width: 25%;">
