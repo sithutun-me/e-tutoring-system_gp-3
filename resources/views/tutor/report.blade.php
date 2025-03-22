@@ -99,9 +99,9 @@
                                         <td data-title="Meetings">5</td>
                                     </tr>
                                     <tr>
-                                        <td class="small-col" data-title="No.">1.</td>
+                                        <td class="small-col" data-title="No.">2.</td>
                                         <td data-title="Student Code">std0001</td>
-                                        <td data-title="Student Name">Jennie</td>
+                                        <td data-title="Student Name">Jake</td>
                                         <td data-title="Posts">8</td>
                                         <td data-title="Comments">15</td>
                                         <td data-title="Documents">5</td>
@@ -170,6 +170,34 @@
                                         <td data-title="Documents">5</td>
                                         <td data-title="Meetings">5</td>
                                     </tr>
+                                    <tr>
+                                        <td class="small-col" data-title="No.">1.</td>
+                                        <td data-title="Student Code">std0001</td>
+                                        <td data-title="Student Name">Jennie</td>
+                                        <td data-title="Posts">8</td>
+                                        <td data-title="Comments">15</td>
+                                        <td data-title="Documents">5</td>
+                                        <td data-title="Meetings">5</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="small-col" data-title="No.">1.</td>
+                                        <td data-title="Student Code">std0001</td>
+                                        <td data-title="Student Name">Jennie</td>
+                                        <td data-title="Posts">8</td>
+                                        <td data-title="Comments">15</td>
+                                        <td data-title="Documents">5</td>
+                                        <td data-title="Meetings">5</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="small-col" data-title="No.">1.</td>
+                                        <td data-title="Student Code">std0001</td>
+                                        <td data-title="Student Name">Jennie</td>
+                                        <td data-title="Posts">8</td>
+                                        <td data-title="Comments">15</td>
+                                        <td data-title="Documents">5</td>
+                                        <td data-title="Meetings">5</td>
+                                    </tr>
+
                                     <tr>
                                         <td class="small-col" data-title="No.">1.</td>
                                         <td data-title="Student Code">std0001</td>
@@ -232,6 +260,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
+<!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"> -->
+
 <script>
   
 
@@ -269,17 +299,18 @@
 
     
         $(document).ready(function() {
-            $('#tutorreportTable').DataTable({
-                paging: true,
-                pageLength: 15,
-                lengthChange: false,
-                searching: false,
-                ordering: false,
-                "language": {
-                    "info": "Total Records: _TOTAL_",
-                }
-            });
+        $('#tutorreportTable').DataTable({
+            paging: true,
+            pageLength: 15,
+            lengthChange: false,
+            searching: false,
+            ordering: true, // Enable column sorting
+            "language": {
+                "info": "Total Records: _TOTAL_",
+            }
         });
+    });
+
 
         
         document.addEventListener("DOMContentLoaded", function() {
