@@ -49,6 +49,8 @@ Route::middleware(['auth','protect_auth'])->group(function(){
     // Tutor Dashboard Route
     Route::middleware(['role:2'])->group(function () {
         Route::get('/tutor/dashboard', [TutorController::class, 'index'])->name('tutor.dashboard');
+        Route::get('/tuotr/dashboard', [TutorController::class, 'interactionCounts'])->name('tutor.interactions');
+
         Route::get('/tutor/meetinglists', [TutorController::class, 'meetinglists'])->name('tutor.meetinglists');
 
         //show create form
@@ -111,6 +113,7 @@ Route::get('/student-inactivity', [AdminController::class, 'getInactiveStudentsD
 Route::get('/average_messages', [AdminController::class, 'getAverageMessage']);
 Route::get('/student_list_with_assigned_tutors', [AdminController::class, 'getStudentListWithAssignedTutors']);
 
+Route::get('/tutor_student_interaction_dashboard', [TutorController::class, 'interactionCounts']);
 
 Route::fallback(function () {
     abort(404);

@@ -16,8 +16,113 @@ class TutorController extends Controller
 {
     public function index()
     {
-        return view('tutor.dashboard');
+        $tutorId = Auth::id(); 
+
+        //getting upcoming meeting list within one week.
+        $oneWeek = Carbon::now()->subDays(7);
+        $meetings = DB::table('meeting_schedule')
+                    ->leftjoin('users as students', 'meeting_schedule.student_id', '=', 'students.id') 
+                    ->where('meeting_schedule.tutor_id', $tutorId)
+                    ->where('meeting_schedule.meeting_status', 'new')
+                    ->where('meeting_schedule.meeting_date', '<=', Carbon::now()->addDays(7))
+                    ->orderBy('meeting_schedule.meeting_date','asc')
+                    ->select(
+                        'meeting_schedule.id',
+                        'meeting_schedule.meeting_title',
+                        'meeting_schedule.meeting_type',
+                        'meeting_schedule.meeting_date',
+                        'meeting_schedule.meeting_start_time',
+                        'meeting_schedule.meeting_end_time',
+                        'meeting_schedule.updated_at',
+                        'students.first_name',
+                        'students.last_name'
+                    )
+                    ->get();
+       
+        return view('tutor.dashboard',compact('meetings'));
     }
+
+    public function interactionCounts(Request $request) {
+        $tutorId = Auth::id(); // Get logged-in tutor ID
+        $filter = $request->query('interaction_type', 'All');
+       // $filter = 'Posts';
+        // Get students assigned to the tutor (max 15)
+        $students = Allocation::where('tutor_id', $tutorId)
+            ->where('active', 1)
+            ->with('student')
+            ->get();
+    
+        // Prepare an array to store interaction counts
+        $interactionCounts = [];
+        
+        foreach ($students as $student) {
+            $studentId = $student->student_id;
+            
+            // Interaction counts based on filter
+            $postCount = $commentCount = $documentCount = $meetingCount = 0;
+
+            if ($filter === 'All' || $filter === 'Posts') {
+                $postCount = DB::table('post')
+                    ->where('post_create_by', $studentId)
+                    ->where('is_meeting',0)
+                    ->count();
+            }
+
+            if ($filter === 'All' || $filter === 'Comments') {
+                $commentCount = DB::table('comment')
+                    ->where('user_id', $studentId)
+                    ->count();
+            }
+
+            if ($filter === 'All' || $filter === 'Documents') {
+                $documentCount = DB::table('document')
+                    ->join('post', 'document.post_id', '=', 'post.id')
+                    ->where('post.post_create_by', $studentId)
+                    ->where('post.post_received_by', $tutorId)
+                    ->count();
+            }
+
+            if ($filter === 'All' || $filter === 'Meetings') {
+                $meetingCount = DB::table('meeting_schedule')
+                    ->where('student_id', $studentId)
+                    ->where('tutor_id', $tutorId)
+                    ->where('meeting_status', 'completed')
+                    ->count();
+            }
+
+            // Total interactions based on filter
+            $totalInteractions = $postCount + $commentCount + $documentCount + $meetingCount;
+
+            // Store in array
+            $interactionCounts[] = [
+                'student' => $student->student,
+                'interactions' => $totalInteractions
+            ];
+        }
+      
+        return response()->json($interactionCounts);
+        // // Sort by highest interaction count
+        // usort($interactionCounts, function ($a, $b) {
+        //     return $b['interactions'] - $a['interactions'];
+        // });
+    
+        // return view('tutor.interaction_list', compact('interactionCounts'));
+    }
+
+    public function getUpcomingMeetingWithinOneWeek(){
+        $oneWeek = Carbon::now()->subDays(7);
+        $meetingCount = DB::table('meeting_schedule')
+                    ->where('student_id', $studentId)
+                    ->where('tutor_id', $tutorId)
+                    ->where('meeting_status', 'new')
+                    ->where('updated_at', '>=', $oneWeek)
+                    ->orderBy('meeting_date')
+                    ->get();
+    }
+    
+
+
+    //meeting code start
     public function meetinglists(Request $request)
     {   
         $tutorId = Auth::id(); // Get the logged-in tutor’s ID
@@ -285,7 +390,7 @@ class TutorController extends Controller
 
         return redirect()->route('tutor.meetinglists')->with('success', 'Meeting is cancelled!');
     }
-
+    //meeting code end
     
     // public function meetingdetail($id = null)
     // {
