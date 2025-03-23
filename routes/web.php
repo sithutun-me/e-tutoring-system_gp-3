@@ -59,12 +59,16 @@ Route::middleware(['auth','protect_auth'])->group(function(){
         Route::get('/tutor/meetingdetail/{id}/edit', [TutorController::class, 'meetingdetail'])->name('tutor.meetingdetail.update');
         //view meeting detail
         Route::get('/tutor/meetingdetail/{id}', [TutorController::class, 'meetingview'])->name('tutor.meetingdetail.view');
-        Route::get('/tutor/createposts', [TutorController::class, 'createposts'])->name('tutor.createposts');
-        Route::post('/tutor/saveposts', [TutorController::class, 'saveposts'])->name('tutor.saveposts');
-        Route::get('/tutor/updateposts', [TutorController::class, 'updateposts'])->name('tutor.updateposts');
 
+        //crud posts
+        Route::get('/tutor/createpost', [TutorController::class, 'createpost'])->name('tutor.createpost');
+        Route::post('/tutor/savepost', [TutorController::class, 'savepost'])->name('tutor.savepost');
+        Route::get('/tutor/editpost/{id}', [TutorController::class, 'editpost'])->name('tutor.editpost');
+        Route::post('/tutor/updatepost/{id}', [TutorController::class, 'updatepost'])->name('tutor.updatepost');
+        //view posts
         Route::get('/tutor/blogging', [TutorController::class, 'blogging'])->name('tutor.blogging');
-        Route::get('/tutor/blogging/filter', [TutorController::class, 'postFilter'])->name('tutor.blogging.filter');
+        //comment
+        Route::post('/tutor/postcomment/{id}', [TutorController::class, 'postcomment'])->name('tutor.postcomment');
 
         //create meeting
         Route::post('/tutor/meetingdetail', [TutorController::class, 'save'])->name('tutor.save');
