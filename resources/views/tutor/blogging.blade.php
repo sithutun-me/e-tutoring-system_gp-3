@@ -87,6 +87,12 @@
                                         <option value="2">Student Two</option>
                                     </select>
                                 </div>
+
+                                <div class="postSearch col-md-3 mb-2 d-flex justify-content-center align-items-center">
+
+                                    <input id="postSearch" name="search_post" class="form-control" type="search" placeholder="Search here" aria-label="Search" value="">
+                                </div>
+
                                 <div class="col-md-3 mb-2 d-flex flex-column align-items-start">
 
                                     <div class=" text-center">

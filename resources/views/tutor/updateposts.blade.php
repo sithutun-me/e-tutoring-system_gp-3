@@ -101,7 +101,7 @@
                            
 
                             <div class="mb-3">
-                                <textarea class="form-control" rows="4" placeholder="Add Description" ></textarea>
+                                <textarea class="form-control" rows="4" id="description" placeholder="Add Description" ></textarea>
                             </div>
 
                             <div class="file-attachment" id="file-attachment">

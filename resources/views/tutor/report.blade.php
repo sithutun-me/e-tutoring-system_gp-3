@@ -65,16 +65,31 @@
                 <div class="report-container">
                         
                        
-                            <div class="form-group mt-4 mb-3">
-                                <label for="selectmonth" class="sort-label" style="font-family: 'Poppins'; font-size:0.875rem; ">Sort by Name</label>
+                            <div class="form-group mt-4 mb-4">
+                                <label for="selectmonth" class="sort-label" style="font-family: 'Poppins'; font-size:0.875rem; ">Search by Name</label>
                                 <select class="form-select" id="selectmonth" aria-label="Floating label select example" style="width: 320px;">
                                     <option selected>All</option>
-                                    <option value="Ascending">Ascending</option>
-                                    <option value="Descending">Descending</option>
+                                    <option value="Jennie">Jennie</option>
+                                    <option value="Jake">Jake</option>
                                    
                                 </select>
-                                <!-- <button type="submit" name="submit" class="btn btn-primary shadow-none">Search</button> -->
+
+                                <label for="selectmonth" class="sort-label" style="font-family: 'Poppins'; font-size:0.875rem; ">Search by Month</label>
+                                <select class="form-select" id="selectmonth" aria-label="Floating label select example" style="width: 320px;">
+                                    <option selected>All</option>
+                                    <option value="January">January</option>
+                                    <option value="February">February</option>
+                                    <option value="March">March</option>
+                                    <option value="April">April</option>
+                                    <option value="May">May</option>
+                                    <option value="June">June</option>
+                                    <option value="July">July</option>
+                                </select>
+
+                               
+                                <!-- <button type="button" name="submit" class="btn btn-primary shadow-none">Search</button> -->
                             </div>
+
                         <div class="table-responsive " id="no-more-tables">
                             <table  class="tutorreport" id="tutorreportTable">
                                 <thead>
@@ -108,27 +123,27 @@
                                         <td data-title="Meetings">5</td>
                                     </tr>
                                     <tr>
-                                        <td class="small-col" data-title="No.">1.</td>
+                                        <td class="small-col" data-title="No.">3.</td>
                                         <td data-title="Student Code">std0001</td>
-                                        <td data-title="Student Name">Jennie</td>
+                                        <td data-title="Student Name">Joshua</td>
                                         <td data-title="Posts">8</td>
                                         <td data-title="Comments">15</td>
                                         <td data-title="Documents">5</td>
                                         <td data-title="Meetings">5</td>
                                     </tr>
                                     <tr>
-                                        <td class="small-col" data-title="No.">1.</td>
+                                        <td class="small-col" data-title="No.">4.</td>
                                         <td data-title="Student Code">std0001</td>
-                                        <td data-title="Student Name">Jennie</td>
+                                        <td data-title="Student Name">Jay</td>
                                         <td data-title="Posts">8</td>
                                         <td data-title="Comments">15</td>
                                         <td data-title="Documents">5</td>
                                         <td data-title="Meetings">5</td>
                                     </tr>
                                     <tr>
-                                        <td class="small-col" data-title="No.">1.</td>
+                                        <td class="small-col" data-title="No.">5.</td>
                                         <td data-title="Student Code">std0001</td>
-                                        <td data-title="Student Name">Jennie</td>
+                                        <td data-title="Student Name">Jenniefer</td>
                                         <td data-title="Posts">8</td>
                                         <td data-title="Comments">15</td>
                                         <td data-title="Documents">5</td>
@@ -234,7 +249,7 @@
                    
 
 
-                    </div>
+                </div>
            
 
 
@@ -260,24 +275,10 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
-<!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"> -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
 
 <script>
   
-
-    // $(document).ready(function(){
-    //     console.log("Data table is loading..");
-    //     $('#table-meeting').DataTable({
-    //         paging: true,
-    //         pageLength: 5,
-    //         lengthChange: false,
-    //         searching: false,
-    //         ordering: true,
-    //         "language": {
-    //             "info": "Total Records: _TOTAL_",
-    //         }
-    //     });
-    // });
 
 
     // Script for the side bar nav
