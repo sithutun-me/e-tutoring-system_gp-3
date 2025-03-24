@@ -1,9 +1,15 @@
 
+var studentInteractionChart; // Declare a global variable to store the chart instance
 
 window.demo = {
 
-  initStudentInteractionsChart: async function () {
-
+  initStudentInteractionsChart: async function (studentNames,interactionCounts) {
+    if (studentInteractionChart) {
+      studentInteractionChart.destroy();
+    }
+    
+    console.log("init respone" + studentNames + interactionCounts);
+    
     gradientBarChartConfigurationTutor = {
 
       barPercentage: 0.8,      
@@ -76,31 +82,56 @@ window.demo = {
         }
       }
     };
+    
+    // async function getInteractionCounts() {
+    //   try {
 
-
-    var ctx = document.getElementById("StudentInteractionCountChart").getContext("2d");
-
-    var myChart = new Chart(ctx, {
-      type: 'bar',
-      responsive: true,
-      legend: {
-        display: false
-      },
-      data: {
-        labels: ['Kyaw Kyaw','Su Su','Min Min','Tun Tun','std5','std6','Kyaw Kyaw','Su Su','Min Min','Tun Tun','std5','std6'],
-        datasets: [{
-          label: "Messages",
-          fill: true,
-          backgroundColor: '#004AAD',
-          hoverBackgroundColor: '#004AAD',
-          borderColor: '#004AAD',
-          borderWidth: 1,
-          borderDash: [],
-          borderDashOffset: 0.0,
-          data: [10,30,20,25,40,15,10,30,20,25,40,15],
-        }]
-      },
-      options: gradientBarChartConfigurationTutor,
-    });
+    //     const response = await fetch('/tutor_student_interaction_dashboard');
+    //     const data = await response.json(); 
+      
+    //     // Extract student names and interaction counts
+    //     const studentNames = data.map(item => item.student.first_name + " " + item.student.last_name);
+    //     const interactionCounts = data.map(item => item.interactions);
+    //     console.log("method called try")
+    //     return {studentNames,interactionCounts};
+        
+    //   } catch (error) {
+    //     console.error('Error fetching student interaction data:', error);
+    //     return {studentNames: [], interactionCounts: []};
+        
+    //   }
+    // }
+    // const { studentNames, interactionCounts } = await getInteractionCounts();
+    
+    
+      var ctx = document.getElementById("StudentInteractionCountChart").getContext("2d");
+      if(studentInteractionChart){
+        studentInteractionChart.destroy();
+      }
+      studentInteractionChart = new Chart(ctx, {
+        type: 'bar',
+        responsive: true,
+        legend: {
+          display: false
+        },
+        data: {
+          labels: studentNames,
+          datasets: [{
+            label: "Messages",
+            fill: true,
+            backgroundColor: '#004AAD',
+            hoverBackgroundColor: '#004AAD',
+            borderColor: '#004AAD',
+            borderWidth: 1,
+            borderDash: [],
+            borderDashOffset: 0.0,
+            data: interactionCounts,
+          }]
+        },
+        options: gradientBarChartConfigurationTutor,
+      });
+      console.log(studentInteractionChart);
+      console.log(interactionCounts);
+   
   }
 }

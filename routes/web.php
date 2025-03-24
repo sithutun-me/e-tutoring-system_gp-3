@@ -51,6 +51,8 @@ Route::middleware(['auth','protect_auth'])->group(function(){
     // Tutor Dashboard Route
     Route::middleware(['role:2'])->group(function () {
         Route::get('/tutor/dashboard', [TutorController::class, 'index'])->name('tutor.dashboard');
+        Route::get('/tuotr/dashboard', [TutorController::class, 'interactionCounts'])->name('tutor.interactions');
+
         Route::get('/tutor/meetinglists', [TutorController::class, 'meetinglists'])->name('tutor.meetinglists');
 
         //show create form
