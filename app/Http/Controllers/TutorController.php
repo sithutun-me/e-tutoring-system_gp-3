@@ -316,6 +316,8 @@ class TutorController extends Controller
         $students = $query = User::whereHas('studentAllocations', function ($query) use ($tutorId) {
             $query->where('tutor_id', $tutorId)->where('active', 1);
         })->where('role_id', 1)->get();
+
+        \Log::info('back to blogging: ' ); // Log success
         return view('tutor.blogging', compact(['pageTitle', 'posts', 'students', 'tutor']));
     }
 
@@ -342,7 +344,7 @@ class TutorController extends Controller
         $post = new Post();
         $post->post_title = $request->post_title;
         $post->post_description = $request->post_desc;
-        $post->post_status = 'New';
+        $post->post_status = 'new';
         $post->post_create_by = $request->create_by;
         $post->post_received_by = $request->selected_student;
         $post->save();
@@ -395,15 +397,30 @@ class TutorController extends Controller
         $post = Post::findOrFail($id);
         $post->post_title = $request->update_title;
         $post->post_description = $request->update_desc;
-        $post->post_status = 'Updated';
+        $post->post_status = 'updated';
         $post->save();
+        \Log::info("Removed Documents: " . json_encode($request->input('removed_documents')));
         // dd($request->input('removed_documents'));
         if ($request->has('removed_documents') && !empty($request->removed_documents)) {
             $removedDocumentIds = json_decode($request->removed_documents, true);
-            dd($removedDocumentIds);
+            //dd($removedDocumentIds);
             if (is_array($removedDocumentIds)) {
                 foreach ($removedDocumentIds as $docId) {
+                    $document = Document::find($docId);
+            if ($document) {
+                $filePath = $document->doc_file_path; // Get full file path
+
+                // Delete the file from the storage directory
+                if (file_exists($filePath)) {
+                    unlink($filePath); // Delete file
+                    \Log::info("Deleted file: " . $filePath);
+                } else {
+                    \Log::warning("File not found: " . $filePath);
+                }
+            }
                     Document::where('id', $docId)->delete();
+                    //\Log::info('doc delete ' . $docId); // Log the post ID
+
                 }
             }
         }
@@ -437,14 +454,17 @@ class TutorController extends Controller
         $request->validate([
             'comment' => 'required',
         ]);
+        \Log::info('Received comment submission for post ID: ' . $id); // Log the post ID
+        \Log::info('Comment data: ' . $request->comment); // Log the comment text
         $comment = new Comment();
         $comment->text = $request->comment;
         $comment->post_id = $id;
         // dd($id);
         $comment->user_id = Auth::user()->id;
+       
         $comment->save();
 
-        return redirect()->route('tutor.blogging')->with('success', 'Post upload success!');
+        return redirect()->route('tutor.blogging')->with('success', 'Comment upload success!');
     }
 
     public function report()

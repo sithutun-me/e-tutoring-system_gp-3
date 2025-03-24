@@ -106,15 +106,16 @@
 
                         @foreach ($post->documents as $document)
 
-                        <div class="file-attachment w-100 position-relative" id="file-attachment">
+                        <div class="file-attachment w-100 position-relative" id="file-attachment-{{ $document->id }}">
                             <img src="/icon images/word.png" width="30" alt="File">
                             <a href="" style="text-decoration: none; color:black;" target="_blank">{{ $document->doc_name }}</a>
 
                             <!-- Note:: this is for the file remove used with javascript for now -->
-                            <button class="remove-file btn btn-danger btn-sm ms-3 float-right position-absolute end-0 me-2" onclick="removeAttachment()"><i class="fa-solid fa-xmark"></i></button>
+                            <button class="remove-file btn btn-danger btn-sm ms-3 float-right position-absolute end-0 me-2" onclick="removeAttachment({{ $document->id }}, this)"><i class="fa-solid fa-xmark"></i></button>
                         </div>
                         @endforeach
-
+                        <!-- Hidden input field to store removed documents -->
+                        <input type="hidden" name="removed_documents" id="removed-documents" value="[]">
 
                         <div class="mb-3 mt-4">
                             <input type="file" id="file-input" name="post_files_upload[]" class="form-control mb-3" multiple>
@@ -229,11 +230,20 @@
 
     // Attached File  Display and Remove
 
-    function removeAttachment() {
-        const attachmentDiv = document.getElementById("file-attachment");
-        if (attachmentDiv) {
-            attachmentDiv.remove(); // Removes the file attachment div
-        }
+    function removeAttachment(docId, element) {
+        //console.log("Doc id" + docId);
+        let removedDocsInput = document.getElementById("removed-documents");
+        let removedDocs = removedDocsInput.value ? JSON.parse(removedDocsInput.value) : [];
+
+        removedDocs.push(docId);  // Add the document ID to the list
+        removedDocsInput.value = JSON.stringify(removedDocs);
+        
+        //console.log("removed" + removedDocsInput.value);
+        element.closest(".file-attachment").remove();
+        // const attachmentDiv = document.getElementById("file-attachment");
+        // if (attachmentDiv) {
+        //     attachmentDiv.remove(); // Removes the file attachment div
+        // }
     }
     let removedDocuments = new Set();
     $(document).ready(function() {
