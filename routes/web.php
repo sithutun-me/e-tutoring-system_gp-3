@@ -142,6 +142,10 @@ Route::get('/tutorActivities', [StudentController::class, 'tutorActivities']);
 
 Route::post('tutor/blogging/{id}/comment', [TutorController::class, 'postcomment'])->name('tutor.postcomment');
 
+//student dashboard chart
+Route::get('/meeting_counts', [StudentController::class, 'getMeetingPieData']);
+Route::get('/myActivities', [StudentController::class, 'myActivities']);
+Route::get('/tutorActivities', [StudentController::class, 'tutorActivities']);
 
 Route::fallback(function () {
     abort(404);
