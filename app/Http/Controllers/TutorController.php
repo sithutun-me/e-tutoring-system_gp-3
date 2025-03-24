@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\MeetingSchedule;
 use App\Models\Allocation;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Document;
 use App\Rules\FileTypeValidate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 use Carbon\Carbon;
-
 
 class TutorController extends Controller
 {
@@ -125,9 +126,9 @@ class TutorController extends Controller
         $tutorId = Auth::id(); // Get the logged-in tutor’s ID
 
         $students = Allocation::where('tutor_id', $tutorId)
-                ->where('active', 1)
-                ->with('student') // Assuming you have a relationship
-                ->get();
+            ->where('active', 1)
+            ->with('student') // Assuming you have a relationship
+            ->get();
         $this->overdueStatus();
 
         $query = DB::table('meeting_schedule as meeting_schedules')
@@ -149,62 +150,61 @@ class TutorController extends Controller
             )
             ->where('meeting_schedules.tutor_id', $tutorId);
 
-            // Filter by meeting type if selected
-    if ($request->filled('meeting_type') && $request->meeting_type !== 'All') {
-        $query->where('meeting_schedules.meeting_type', $request->meeting_type);
+        // Filter by meeting type if selected
+        if ($request->filled('meeting_type') && $request->meeting_type !== 'All') {
+            $query->where('meeting_schedules.meeting_type', $request->meeting_type);
+        }
+
+        // Filter by date if selected
+        if ($request->filled('meeting_date')) {
+            $query->where('meeting_schedules.meeting_date', $request->meeting_date);
+        }
+
+        // Filter by student if selected
+        if ($request->filled('student_id')) {
+            $query->where('meeting_schedules.student_id', $request->student_id);
+        }
+
+        // Get results and group by date
+        $meeting_schedules = $query
+            ->orderBy('meeting_schedules.meeting_date')
+            ->orderBy('meeting_schedules.meeting_start_time')
+            ->get()
+            ->groupBy('meeting_date');
+        // if(is_null($meeting_schedules)){
+        //     return view('tutor.meetinglists',compact('meeting_schedules'));
+        // }
+
+
+        return view('tutor.meetinglists', compact('meeting_schedules', 'students'));
     }
-
-    // Filter by date if selected
-    if ($request->filled('meeting_date')) {
-        $query->where('meeting_schedules.meeting_date', $request->meeting_date);
-    }
-
-    // Filter by student if selected
-    if ($request->filled('student_id')) {
-        $query->where('meeting_schedules.student_id', $request->student_id);
-    }
-
-    // Get results and group by date
-    $meeting_schedules = $query
-        ->orderBy('meeting_schedules.meeting_date')
-        ->orderBy('meeting_schedules.meeting_start_time')
-        ->get()
-        ->groupBy('meeting_date');
-            // if(is_null($meeting_schedules)){
-            //     return view('tutor.meetinglists',compact('meeting_schedules'));
-            // }
-
-
-        return view('tutor.meetinglists', compact('meeting_schedules','students'));
-
-    }
-    public function overdueStatus(){
+    public function overdueStatus()
+    {
         $now = Carbon::now();
 
         // Fetch meetings
         $meetings = DB::table('meeting_schedule')
-        ->orderBy('meeting_date')
-        ->orderBy('meeting_start_time')
-        ->whereNotIn('meeting_status', ['completed', 'cancelled'])
-        ->get();
+            ->orderBy('meeting_date')
+            ->orderBy('meeting_start_time')
+            ->whereNotIn('meeting_status', ['completed', 'cancelled'])
+            ->get();
 
-    foreach ($meetings as $meeting) {
-        $meetingEndDateTime = Carbon::parse($meeting->meeting_date . ' ' . $meeting->meeting_end_time);
+        foreach ($meetings as $meeting) {
+            $meetingEndDateTime = Carbon::parse($meeting->meeting_date . ' ' . $meeting->meeting_end_time);
 
-        if ($meetingEndDateTime->isPast()) {
+            if ($meetingEndDateTime->isPast()) {
 
                 DB::table('meeting_schedule')
-                ->where('id', $meeting->id)
-                ->update(['meeting_status' => 'overdue']);
-
-
+                    ->where('id', $meeting->id)
+                    ->update(['meeting_status' => 'overdue']);
+            }
         }
-    }
 
-      //  return view('tutor.meetinglists', compact('meeting_schedules', 'students'));
+        //  return view('tutor.meetinglists', compact('meeting_schedules', 'students'));
     }
     //create or update view
-    public function meetingdetail($id = null) {
+    public function meetingdetail($id = null)
+    {
         \Log::info('Meetingdetail called with ID: ' . $id);
         $tutorId = Auth::id(); // Get logged-in tutor’s ID
         // $userRole = DB::table('users') // Assuming your users table is named "users"
@@ -220,68 +220,106 @@ class TutorController extends Controller
         //         ->get();
         // }
         $students = Allocation::where('tutor_id', $tutorId)
-                ->where('active', 1)
-                ->with('student') // Assuming you have a relationship
-                ->get();
+            ->where('active', 1)
+            ->with('student') // Assuming you have a relationship
+            ->get();
         $meeting_schedules = $id ? MeetingSchedule::find($id) : null;
-        $currentStudent = $id? User::find($meeting_schedules->student_id):null;
+        $currentStudent = $id ? User::find($meeting_schedules->student_id) : null;
 
 
-       // $readOnly = request()->routeIs('tutor.meetingdetail.update') ? false : true;
+        // $readOnly = request()->routeIs('tutor.meetingdetail.update') ? false : true;
 
-        if($id) {
+        if ($id) {
             // $resource = Resource::findOrFail($id);
             $readOnly = false;
             $isStudentAllocated =  Allocation::where('student_id', $meeting_schedules->student_id)
-            ->where('active', 1)
-            ->exists();
-            return view('tutor.meetingdetail', compact('id','students','meeting_schedules','readOnly','currentStudent','isStudentAllocated'));
+                ->where('active', 1)
+                ->exists();
+            return view('tutor.meetingdetail', compact('id', 'students', 'meeting_schedules', 'readOnly', 'currentStudent', 'isStudentAllocated'));
         }
         // For create (no ID), just pass null or empty data
-        return view('tutor.meetingdetail', ['id' => null,'students' => $students,'meeting_schedules'=>$meeting_schedules,'readOnly'=>false,'currentStudent'=>null,'isStudentAllocated'=>false]);
-
+        return view('tutor.meetingdetail', ['id' => null, 'students' => $students, 'meeting_schedules' => $meeting_schedules, 'readOnly' => false, 'currentStudent' => null, 'isStudentAllocated' => false]);
     }
     //showing detail form with data for reschedule
-    public function meetingview($id=null) {
+    public function meetingview($id = null)
+    {
 
         $tutorId = Auth::id(); // Get logged-in tutor’s ID
         $students = Allocation::where('tutor_id', $tutorId)
-                ->where('active', 1)
-                ->with('student') // Assuming you have a relationship
-                ->get();
+            ->where('active', 1)
+            ->with('student') // Assuming you have a relationship
+            ->get();
 
-        if( $id) {
+        if ($id) {
             // $resource = Resource::findOrFail($id);
             $meeting_schedules = MeetingSchedule::findOrFail($id);
             $currentStudent = User::find($meeting_schedules->student_id);
 
             $isStudentAllocated =  Allocation::where('student_id', $meeting_schedules->student_id)
-            ->where('active', 1)
-            ->exists();
+                ->where('active', 1)
+                ->exists();
             $readOnly = true;
-            return view('tutor.meetingdetail', compact('id','students','meeting_schedules','readOnly','currentStudent','isStudentAllocated'));
+            return view('tutor.meetingdetail', compact('id', 'students', 'meeting_schedules', 'readOnly', 'currentStudent', 'isStudentAllocated'));
         }
-        $meeting_schedules=null;
-        $currentStudent=null;
+        $meeting_schedules = null;
+        $currentStudent = null;
         // For create (no ID), just pass null or empty data
-        return view('tutor.meetingdetail', ['id' => null,'students' => $students,'meeting_schedules' =>$meeting_schedules,'currentStudent'=>$currentStudent,'isStudentAllocated'=>false]);
+        return view('tutor.meetingdetail', ['id' => null, 'students' => $students, 'meeting_schedules' => $meeting_schedules, 'currentStudent' => $currentStudent, 'isStudentAllocated' => false]);
     }
 
 
     public function blogging(Request $request)
     {
-        $pageTitle = "Posts";
-        $posts = Post::with(['documents', 'creator', 'receiver', 'comments'])->orderBy('updated_at', 'desc')->get();
+        $pageTitle = 'Posts';
         $tutor = Auth::user();
-        $tutorId = $tutor->id;
-        // dd($tutor->id);
+        $tutorId = $tutor->id; // Get the logged-in tutor’s ID
+        $query = Post::with(['documents', 'creator', 'receiver', 'comments']);
+        // dd($tutorId);
+        // Filter by post by if selected to MyPosts
+        if ($request->filled('post_by') && $request->post_by == 'MyPosts') {
+            $query->where('post_create_by', $tutorId);
+        }
+        // Filter by post_by if selected as 'StudentPosts'
+        if ($request->filled('post_by') && $request->post_by == 'StudentPosts') {
+            $query->where(function ($q) {
+                $q->whereHas('creator', function ($subQuery) {
+                    $subQuery->where('role_id', 1);
+                })
+                    ->orWhereHas('receiver', function ($subQuery) {
+                        $subQuery->where('role_id', 1);
+                    });
+            });
+
+            // Filter by specific student if 'student_filter' is provided
+            if ($request->filled('student_filter')) {
+                $studentId = $request->student_filter;
+
+                $query->where(function ($q) use ($studentId) {
+                    $q->where('post_create_by', $studentId)
+                        ->orWhere('post_received_by', $studentId);
+                });
+            }
+        }
+        // Filter by specific student if 'student_filter' is provided
+        if ($request->filled('student_filter')) {
+            $studentId = $request->student_filter;
+
+            $query->where(function ($q) use ($studentId) {
+                $q->where('post_create_by', $studentId)
+                    ->orWhere('post_received_by', $studentId);
+            });
+        }
+
+
+
+        $posts = $query->orderBy('updated_at', 'desc')->get();
         $students = $query = User::whereHas('studentAllocations', function ($query) use ($tutorId) {
             $query->where('tutor_id', $tutorId)->where('active', 1);
         })->where('role_id', 1)->get();
         return view('tutor.blogging', compact(['pageTitle', 'posts', 'students', 'tutor']));
     }
 
-    public function createposts(Request $request)
+    public function createpost(Request $request)
     {
         $pageTitle = "Create Post";
         $tutor = Auth::user();
@@ -289,33 +327,124 @@ class TutorController extends Controller
         $students = $query = User::whereHas('studentAllocations', function ($query) use ($tutorId) {
             $query->where('tutor_id', $tutorId)->where('active', 1);
         })->where('role_id', 1)->get();
-        return view('tutor.createposts', compact(['pageTitle', 'tutor', 'students']));
+        return view('tutor.createpost', compact(['pageTitle', 'tutor', 'students']));
     }
 
-    public function saveposts(Request $request, $id)
+    public function savepost(Request $request)
     {
         $request->validate([
             'selected_student' => 'required',
             'post_title' => 'required|string|max:50',
             'post_desc' => 'nullable|string|max:255',
-            'post_files' => ['nullable','image',new FileTypeValidate(['pdf','word','excel','jpg','jpeg','png'])]
+            'post_files' => ['nullable', 'array', 'max:20480'],  // 'array' for multiple files
+            'post_files.*' => 'mimes:pdf,docx,xlsx,jpeg,jpg,png|max:20480',
         ]);
         $post = new Post();
+        $post->post_title = $request->post_title;
+        $post->post_description = $request->post_desc;
+        $post->post_status = 'New';
+        $post->post_create_by = $request->create_by;
+        $post->post_received_by = $request->selected_student;
+        $post->save();
         if ($request->hasFile('post_files')) {
             try {
+                foreach ($request->file('post_files') as $file) {
+                    $document = new Document();
+                    $path = 'private/var/folders/jy/';
+                    if (!$path) {
+                        mkdir($path);
+                    }
+                    $fileName = $file->getClientOriginalName();
+                    $fileSize = $file->getSize();
+                    // Store or process the file
+                    $file->move($path, $fileName);
 
-                $post->documents->doc_name = fileUploader($request->logo, getFilePath('category'), getFileSize('category'));
+                    $document->doc_name = $fileName;
+                    $document->doc_file_path = $path . $fileName;
+                    $document->doc_size = $fileSize;
+                    $document->post_id = $post->id;
+                    $document->save();
+                }
             } catch (\Exception $exp) {
-                $notify[] = ['error', 'Couldn\'t upload your image'];
-                return back()->withNotify($notify);
+                return redirect()->back()->withErrors(['file_upload' => 'File upload failed: ' . $exp->getMessage()]);
             }
         }
-        return redirect()->route('tutor.blogging')->with('Success', 'Post upload success!');
+        return redirect()->route('tutor.blogging')->with('success', 'Post upload success!');
     }
 
-    public function updateposts()
+    public function editpost($id)
     {
-        return view('tutor.updateposts');
+        $pageTitle = "Update";
+        $post = Post::findOrFail($id);
+        $tutor = Auth::user();
+        // $post = $post->with('creator','receiver','document','comment');
+        if ($post->post_create_by != Auth::user()->id) {
+            return redirect()->back()->withErrors(['warning' => 'You do not have access to edit this post.']);
+        }
+        return view('tutor.updatepost', compact(['post', 'tutor']));
+    }
+
+    public function updatepost(Request $request, $id)
+    {
+        $request->validate([
+            'update_title' => 'required|string|max:50',
+            'update_desc' => 'nullable|string|max:255',
+            'post_files_upload' => ['nullable', 'array', 'max:20480'],  // 'array' for multiple files
+            'post_files_upload.*' => 'mimes:pdf,docx,xlsx,jpeg,jpg,png|max:20480',
+        ]);
+        $post = Post::findOrFail($id);
+        $post->post_title = $request->update_title;
+        $post->post_description = $request->update_desc;
+        $post->post_status = 'Updated';
+        $post->save();
+        // dd($request->input('removed_documents'));
+        if ($request->has('removed_documents') && !empty($request->removed_documents)) {
+            $removedDocumentIds = json_decode($request->removed_documents, true);
+            dd($removedDocumentIds);
+            if (is_array($removedDocumentIds)) {
+                foreach ($removedDocumentIds as $docId) {
+                    Document::where('id', $docId)->delete();
+                }
+            }
+        }
+        if ($request->hasFile('post_files_upload')) {
+            try {
+                foreach ($request->file('post_files_upload') as $file) {
+                    $document = new Document();
+                    $path = 'private/var/folders/jy/';
+                    if (!$path) {
+                        mkdir($path);
+                    }
+                    $fileName = $file->getClientOriginalName();
+                    $fileSize = $file->getSize();
+                    // Store or process the file
+                    $file->move($path, $fileName);
+
+                    $document->doc_name = $fileName;
+                    $document->doc_file_path = $path . $fileName;
+                    $document->doc_size = $fileSize;
+                    $document->post_id = $post->id;
+                    $document->save();
+                }
+            } catch (\Exception $exp) {
+                return redirect()->back()->withErrors(['file_upload' => 'File upload failed: ' . $exp->getMessage()]);
+            }
+        }
+        return to_route('tutor.blogging')->with('success', 'Post is successfully updated.');
+    }
+
+    public function postcomment(Request $request,$id){
+        $request->validate([
+            'comment' => 'required',
+        ]);
+        $comment = new Comment();
+        $comment->text = $request->comment;
+        $comment->post_id = $id;
+        // dd($id);
+        $comment->user_id = Auth::user()->id;
+        $comment->save();
+
+        return redirect()->route('tutor.blogging')->with('success', 'Post upload success!');
     }
 
     public function report()
@@ -323,31 +452,8 @@ class TutorController extends Controller
         return view('tutor.report');
     }
 
-    public function postFilter(Request $request)
-    {
-        $pageTitle = "Post Search";
-        $query = Post::with(['documents', 'creator', 'receiver', 'comments']);
-        if ($request->filled('post_by') == 'student' ) {
-            $query->where('post_create_by', $request->input('post_by'));
-            $query->orWhere('post_received_by', $request->input('post_by'));
-        }
-        if ($request->filled('student_filter')) {
-            $query->where('post_create_by', $request->input('student_filter'));
-            $query->orWhere('post_received_by', $request->input('student_filter'));
-        }
-
-        $posts = $query->orderBy('created_at', 'desc')->get();
-        $tutor = Auth::user();
-        $tutorId = $tutor->id;
-        $students = $query = User::whereHas('studentAllocations', function ($query) use ($tutorId) {
-            $query->where('tutor_id', $tutorId)->where('active', 1);
-        })->where('role_id', 1)->get();
-        return view('tutor.blogging', compact(['pageTitle', 'posts', 'students', 'tutor']));
-    }
-
-
     //update or create function
-    public function save(Request $request,$id=null)
+    public function save(Request $request, $id = null)
     {
         $request->validate([
             'meeting_title' => 'required|string|max:255',
@@ -361,7 +467,7 @@ class TutorController extends Controller
             // ? 'required|date' // For updates
             // : 'required|date|after_or_equal:today', // For creates
 
-           'meeting_date' => 'required|date|after_or_equal:today',
+            'meeting_date' => 'required|date|after_or_equal:today',
             'meeting_start_time' => [
                 'required',
                 'date_format:h:i A', // Validate the correct time format
@@ -399,7 +505,7 @@ class TutorController extends Controller
                 'meeting_start_time' => $start_time,
                 'meeting_end_time' => $end_time,
                 'meeting_description' => $request->meeting_description,
-                'meeting_status' =>"New",
+                'meeting_status' => "New",
                 'student_id' => $request->student_id,
                 'tutor_id' => Auth::id(),
                 'meeting_location' => $request->meeting_type === 'real' ? $request->meeting_location : null,
@@ -430,22 +536,23 @@ class TutorController extends Controller
 
             return redirect()->route('tutor.meetinglists')->with('success', 'Meeting created!');
         }
-
     }
-    public function toggleStatus($id){
+    public function toggleStatus($id)
+    {
         $meeting = MeetingSchedule::findOrFail($id);
 
         // Toggle status between "completed" and "new"
         $meeting->meeting_status = $meeting->meeting_status === 'completed' ? 'new' : 'completed';
         $meeting->save();
         return redirect()->route('tutor.meetinglists')->with('success', 'Meeting status updated successfully!')->header('Cache-Control', 'no-store');
-      //  return redirect()->back()->with('success', 'Meeting status updated successfully!');
+        //  return redirect()->back()->with('success', 'Meeting status updated successfully!');
     }
-    public function cancelMeeting(Request $request){
+    public function cancelMeeting(Request $request)
+    {
         $meeting = MeetingSchedule::findOrFail($request->id);
         $meeting->meeting_status = 'cancelled';
         $meeting->save();
-       // $meeting->delete();
+        // $meeting->delete();
 
         return redirect()->route('tutor.meetinglists')->with('success', 'Meeting is cancelled!');
     }
