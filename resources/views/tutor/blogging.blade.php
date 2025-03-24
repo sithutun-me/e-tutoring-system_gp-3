@@ -46,9 +46,12 @@
                 <div class="text-center fit mb-2">
                     <a href="{{ route('tutor.createpost') }}" class="post-btn btn btn-primary shadow-none mb-3" style="background-color: #004AAD;">+ Start a post</a>
                 </div>
-                <form action="{{ route('tutor.blogging') }}" method="GET">
+                
+                    
                     <div class="form-group mb-4 row">
+                        <form action="{{ route('tutor.blogging') }}" method="GET" enctype="multipart/form-data">
                         <div class="row">
+                            
                             <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
                                 <select class="form-select" id="postBy" name="post_by" aria-label="Floating label select example">
                                     <option value="" {{ request('post_by') == '' ? 'selected' : '' }}>All</option>
@@ -69,7 +72,9 @@
                                     <button type="submit" class=" btn btn-primary shadow-none " style="width: 130px;">Search</button>
                                 </div>
                             </div>
+                            
                         </div>
+                    </form>
                     </div>
                     @forelse ($posts as $post)
                     <div class="post-container">
@@ -128,11 +133,11 @@
                             <p>{{ $comment->text }}</p>
                         </div>
                         @endforeach
-                        <form action="{{ route('tutor.postcomment', $post->id) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('tutor.postcomment', $post->id) }}" method="POST" enctype="multipart/form-data" id="commentForm_{{ $post->id }}" class="comment-form">
                             @csrf
                             <div class="d-flex align-items-center gap-2 mt-4">
                                 <input type="text" id="replyInput" name="comment" class="form-control" placeholder="Reply" style="max-width: 1100px;">
-                                <button type="submit" class="btn btn-primary ms-3" style="width: 110px;" onclick="checkReply()">Send</button>
+                                <button type="submit" class="btn btn-primary ms-3" style="width: 110px;" onclick="checkReply({{ $post->id }})">Send</button>
                             </div>
                         </form>
                     </div>
@@ -143,7 +148,7 @@
                         </div>
                     </div>
                     @endforelse
-                </form>
+                
             </div>
         </div>
     </div>
@@ -213,16 +218,21 @@
 
     // Comment section reply script for now
 
-    function checkReply() {
+    function checkReply(postId) {
+       // event.preventDefault(); // Prevent the default form submission  
         const replyInput = document.getElementById('replyInput').value.trim();
         const commentsSection = document.getElementById('commentsSection');
 
-        // If replyInput is not empty, show the comments section
-        if (replyInput !== "") {
+        
+         if (replyInput !== "") {
             commentsSection.style.display = 'block'; // Show comments section if reply is entered
         } else {
             commentsSection.style.display = 'none'; // Hide comments section if no reply is entered
         }
+        console.log("Post id : " + postId);
+        
+       
     }
+    
 </script>
 @endpush

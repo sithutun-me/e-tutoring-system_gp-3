@@ -123,6 +123,8 @@ Route::get('/student-inactivity', [AdminController::class, 'getInactiveStudentsD
 Route::get('/average_messages', [AdminController::class, 'getAverageMessage']);
 Route::get('/student_list_with_assigned_tutors', [AdminController::class, 'getStudentListWithAssignedTutors']);
 
+Route::post('tutor/blogging/{id}/comment', [TutorController::class, 'postcomment'])->name('tutor.postcomment');
+
 
 Route::fallback(function () {
     abort(404);
