@@ -120,13 +120,19 @@ Route::middleware(['auth','protect_auth'])->group(function(){
 
 
 });
-
+//admin dashboard chart
 Route::get('/student-inactivity', [AdminController::class, 'getInactiveStudentsData']);
 Route::get('/average_messages', [AdminController::class, 'getAverageMessage']);
 Route::get('/student_list_with_assigned_tutors', [AdminController::class, 'getStudentListWithAssignedTutors']);
 
+//tutor dashboard chart
+Route::get('/tutor_student_interaction_dashboard', [TutorController::class, 'interactionCounts']);
 Route::post('tutor/blogging/{id}/comment', [TutorController::class, 'postcomment'])->name('tutor.postcomment');
 
+//student dashboard chart
+Route::get('/meeting_counts', [StudentController::class, 'getMeetingPieData']);
+Route::get('/myActivities', [StudentController::class, 'myActivities']);
+Route::get('/tutorActivities', [StudentController::class, 'tutorActivities']);
 
 Route::fallback(function () {
     abort(404);

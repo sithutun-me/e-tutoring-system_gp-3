@@ -47,6 +47,8 @@ class TutorController extends Controller
 
     public function interactionCounts(Request $request) {
         $tutorId = Auth::id(); // Get logged-in tutor ID
+        $startOfMonth = Carbon::now()->startOfMonth(); // First day of the current month
+        $today = Carbon::now(); // Current day
         $filter = $request->query('interaction_type', 'All');
        // $filter = 'Posts';
         // Get students assigned to the tutor (max 15)
@@ -68,12 +70,14 @@ class TutorController extends Controller
                 $postCount = DB::table('post')
                     ->where('post_create_by', $studentId)
                     ->where('is_meeting',0)
+                    ->whereBetween('updated_at', [$startOfMonth, $today])
                     ->count();
             }
 
             if ($filter === 'All' || $filter === 'Comments') {
                 $commentCount = DB::table('comment')
                     ->where('user_id', $studentId)
+                    ->whereBetween('updated_at', [$startOfMonth, $today])
                     ->count();
             }
 
@@ -81,7 +85,7 @@ class TutorController extends Controller
                 $documentCount = DB::table('document')
                     ->join('post', 'document.post_id', '=', 'post.id')
                     ->where('post.post_create_by', $studentId)
-                    ->where('post.post_received_by', $tutorId)
+                    ->whereBetween('document.updated_at', [$startOfMonth, $today])
                     ->count();
             }
 
@@ -90,6 +94,7 @@ class TutorController extends Controller
                     ->where('student_id', $studentId)
                     ->where('tutor_id', $tutorId)
                     ->where('meeting_status', 'completed')
+                    ->whereBetween('updated_at', [$startOfMonth, $today])
                     ->count();
             }
 
@@ -112,16 +117,6 @@ class TutorController extends Controller
         // return view('tutor.interaction_list', compact('interactionCounts'));
     }
 
-    public function getUpcomingMeetingWithinOneWeek(){
-        $oneWeek = Carbon::now()->subDays(7);
-        $meetingCount = DB::table('meeting_schedule')
-                    ->where('student_id', $studentId)
-                    ->where('tutor_id', $tutorId)
-                    ->where('meeting_status', 'new')
-                    ->where('updated_at', '>=', $oneWeek)
-                    ->orderBy('meeting_date')
-                    ->get();
-    }
 
 
 

@@ -79,8 +79,21 @@ window.demo = {
         }
       }
     };
-
-
+    async function getStudentActivities() {
+      try {
+          const response = await fetch('/myActivities'); 
+          const chartData = await response.json();
+          const labels = chartData.labels;
+          const counts = chartData.data;
+          return { labels, counts };
+      }catch(error){
+        return {
+          labels: [],
+          counts: []
+        };
+      }
+    }
+    const { labels, counts } = await getStudentActivities();
     var ctx = document.getElementById("StudentActivityChart").getContext("2d");
 
     var myChart = new Chart(ctx, {
@@ -90,7 +103,7 @@ window.demo = {
         display: false
       },
       data: {
-        labels: ['Posts', 'Comments', 'Documents'],
+        labels: labels,
         datasets: [{
           label: "Messages",
           fill: true,
@@ -114,7 +127,7 @@ window.demo = {
           borderWidth: 1,
           borderDash: [],
           borderDashOffset: 0.0,
-          data: [10, 40, 15],
+          data: counts,
         }]
       },
       options: gradientBarChartConfigurationStudent,
@@ -198,7 +211,21 @@ window.demo = {
       }
     };
 
-
+    async function getTutorActivities() {
+      try {
+          const response = await fetch('/tutorActivities'); 
+          const chartData = await response.json();
+          const labels = chartData.labels;
+          const counts = chartData.data;
+          return { labels, counts };
+      }catch(error){
+        return {
+          labels: [],
+          counts: []
+        };
+      }
+    }
+    const { labels, counts } = await getTutorActivities();
     var ctx = document.getElementById("TutorActivityChart").getContext("2d");
 
     var myChart = new Chart(ctx, {
@@ -208,7 +235,7 @@ window.demo = {
         display: false
       },
       data: {
-        labels: ['Posts', 'Comments', 'Documents'],
+        labels: labels,
         datasets: [{
           label: "Messages",
           fill: true,
@@ -232,7 +259,7 @@ window.demo = {
           borderWidth: 1,
           borderDash: [],
           borderDashOffset: 0.0,
-          data: [10, 30, 20],
+          data: counts,
         }]
       },
       options: gradientBarChartConfigurationTutor,
@@ -273,15 +300,30 @@ window.demo = {
       }
     };
 
+    async function getMeetingStatusCounts() {
+      try {
+          const response = await fetch('/meeting_counts'); 
+          const chartData = await response.json();
+          const labels = chartData.labels;
+          const statusCounts = chartData.data;
+          return { labels, statusCounts };
+      }catch(error){
+        return {
+          labels: [],
+          statusCounts: []
+        };
+      }
+    }
+    const { labels, statusCounts } = await getMeetingStatusCounts();
     var ctx = document.getElementById("MeetingCountChart").getContext("2d");
 
     var myChart = new Chart(document.getElementById("MeetingCountChart"), {
       type: 'pie',
       data: {
-        labels: ["Completed", "New", "Cancelled"],
+        labels: labels,
         datasets: [{
           backgroundColor: ["#00B312", "#004AAD", "#D73030"],
-          data: [586, 52, 434]
+          data: statusCounts  
         }]
       },
       options: pieChartConfiguration
