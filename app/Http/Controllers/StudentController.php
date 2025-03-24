@@ -16,14 +16,14 @@ class StudentController extends Controller
         $studentId = auth()->id();
         $tutorId = DB::table('allocation')
                 ->where('student_id', $studentId)
-                ->value('tutor_id'); 
+                ->value('tutor_id');
 
         $tutorName = DB::table('users')
         ->where('id', $tutorId)
         ->selectRaw('CONCAT(first_name, " ", last_name) as full_name')
         ->value('full_name');
-            
-        
+
+
         $postCount = DB::table('post')
             ->where('post_create_by', $tutorId)
             ->where('is_meeting',0)
@@ -31,9 +31,9 @@ class StudentController extends Controller
             ->count();
 
         //getting upcoming meeting list within one week.
-        
+
         $meetings = DB::table('meeting_schedule')
-                    ->leftjoin('users as students', 'meeting_schedule.student_id', '=', 'students.id') 
+                    ->leftjoin('users as students', 'meeting_schedule.student_id', '=', 'students.id')
                     ->where('meeting_schedule.tutor_id', $tutorId)
                     ->where('meeting_schedule.meeting_status', 'new')
                     ->where('meeting_schedule.meeting_date', '<=', Carbon::now()->addDays(7))
@@ -74,8 +74,8 @@ class StudentController extends Controller
         return response()->json($chartData);
     }
     public function getNewPostData(){
-       
-        
+
+
     }
     public function myActivities(){
         $studentId = auth()->id();
@@ -102,8 +102,8 @@ class StudentController extends Controller
         $studentId = auth()->id();
         $tutorId = DB::table('allocation')
                 ->where('student_id', $studentId)
-                ->value('tutor_id'); 
-        
+                ->value('tutor_id');
+
         $postCount = DB::table('post')
             ->where('post_create_by', $tutorId)
             ->where('is_meeting',0)
@@ -126,20 +126,20 @@ class StudentController extends Controller
 
 
 
-    //for meeting schedule 
+    //for meeting schedule
     public function meetinglists(Request $request)
-    {   
-        $studentId = Auth::id(); 
-        
+    {
+        $studentId = Auth::id();
+
         $assignedTutor = Allocation::where('student_id', $studentId)
                 ->where('active', 1)
-                ->with('tutor') 
+                ->with('tutor')
                 ->get();
         $assignedTutorIds = $assignedTutor->pluck('tutor.id')->toArray();
 
 
         $this->overdueStatus();
-                
+
         $query = DB::table('meeting_schedule as meeting_schedules')
             ->join('users as tutor', 'meeting_schedules.tutor_id', '=', 'tutor.id')
             ->select(
@@ -156,12 +156,12 @@ class StudentController extends Controller
                 'tutor.id as tutorId',
                 'tutor.user_code as tutor_id',
                 'tutor.first_name',
-                'tutor.last_name' 
+                'tutor.last_name'
             )
             ->where('meeting_schedules.student_id', $studentId);
-           
-            
-        
+
+
+
             // Filter by meeting type if selected
     if ($request->filled('meeting_type') && $request->meeting_type !== 'All') {
         $query->where('meeting_schedules.meeting_type', $request->meeting_type);
@@ -185,14 +185,14 @@ class StudentController extends Controller
         ->groupBy('meeting_date');
             // if(is_null($meeting_schedules)){
             //     return view('tutor.meetinglists',compact('meeting_schedules'));
-            // }   
+            // }
             foreach ($meeting_schedules as $date => $meetings) {
                 foreach ($meetings as $meeting) {
                     $meeting->isTutorAssigned = in_array($meeting->tutorId, $assignedTutorIds);
                 }
             }
         return view('student.meetinglists', compact('meeting_schedules','assignedTutor'));
-        
+
     }
     public function overdueStatus(){
         $now = Carbon::now();
@@ -231,16 +231,16 @@ class StudentController extends Controller
         //         ->where('active', 1)
         //         ->with('student') // Assuming you have a relationship
         //         ->get();
-        // }            
+        // }
         $assignedTutor = Allocation::where('student_id', $studentId)
         ->where('active', 1)
         ->with('tutor') // Assuming you have a relationship
         ->get();
-        
-        
+
+
         $meeting_schedules = $id ? MeetingSchedule::find($id) : null;
         $currentStudent = $id? User::find($meeting_schedules->tutor_id):null;
-       
+
 
        // $readOnly = request()->routeIs('tutor.meetingdetail.update') ? false : true;
 
@@ -259,28 +259,28 @@ class StudentController extends Controller
     }
 
     public function meetingview($id=null) {
-        
+
         $studentId = Auth::id(); // Get logged-in tutor’s ID
         $assignedTutor = Allocation::where('student_id', $studentId)
                 ->where('active', 1)
-                ->with('tutor') 
+                ->with('tutor')
                 ->get();
 
         if( $id) {
             // $resource = Resource::findOrFail($id);
             $meeting_schedules = MeetingSchedule::findOrFail($id);
            // $currentStudent = User::find($meeting_schedules->student_id);
-            
+
             $isTutorAllocated = Allocation::where('student_id', $meeting_schedules->student_id)
             ->where('tutor_id', $meeting_schedules->tutor_id)
             ->where('active', 1)
             ->exists();
-            
+
             $readOnly = true;
             return view('student.meetingdetail', compact('id','meeting_schedules','readOnly','assignedTutor','isTutorAllocated'));
         }
         $meeting_schedules=null;
-        
+
         // For create (no ID), just pass null or empty data
         return view('student.meetingdetail', ['id' => null,'meeting_schedules' =>$meeting_schedules,'assignedTutor'=>$assignedTutor,'isTutorAllocated'=>false]);
     }
@@ -290,7 +290,7 @@ class StudentController extends Controller
         $studentId = Auth::id();
         $assignedTutor = Allocation::where('student_id', $studentId)->first();
 
-            
+
         $request->validate([
             'meeting_title' => 'required|string|max:50',
             'meeting_description' => 'nullable|string|max:255',
@@ -298,12 +298,12 @@ class StudentController extends Controller
             'meeting_platform' => 'nullable|string|required_if:meeting_type,virtual|max:255',
             'meeting_link' => 'nullable|url|required_if:meeting_type,virtual',
             'meeting_location' => 'nullable|string|required_if:meeting_type,real|max:255',
-            // 'meeting_date' => 
+            // 'meeting_date' =>
             // $id
             // ? 'required|date' // For updates
             // : 'required|date|after_or_equal:today', // For creates
-    
-           'meeting_date' => 'required|date|after_or_equal:today', 
+
+           'meeting_date' => 'required|date|after_or_equal:today',
             'meeting_start_time' => [
                 'required',
                 'date_format:h:i A', // Validate the correct time format
@@ -311,10 +311,10 @@ class StudentController extends Controller
                     if ($request->meeting_date) {
                         // Combine date and time and set the correct timezone
                         $meetingDateTime = Carbon::createFromFormat('Y-m-d h:i A', $request->meeting_date . ' ' . $value, 'Asia/Yangon');
-        
+
                         // Get current date and time in the same timezone
                         $currentDateTime = Carbon::now('Asia/Yangon');
-        
+
                         if ($meetingDateTime->isBefore($currentDateTime)) {
                             $fail('The meeting start time must be a time in the future.');
                         }
@@ -322,17 +322,17 @@ class StudentController extends Controller
                 }
             ],
             'meeting_end_time' => 'required|date_format:h:i A|after:meeting_start_time',
-           
-            
+
+
         ]);
-        
-        
+
+
         $start_time = date("H:i", strtotime($request->meeting_start_time));
         $end_time = date("H:i", strtotime($request->meeting_end_time));
 
-        
+
         if ($id) {
-            
+
             $meeting = MeetingSchedule::findOrFail($id);
             $meeting->update([
                 'meeting_title' => $request->meeting_title,
@@ -348,12 +348,12 @@ class StudentController extends Controller
                 'meeting_platform' => $request->meeting_type === 'virtual' ? $request->meeting_platform : null,
                 'meeting_link' => $request->meeting_type === 'virtual' ? $request->meeting_link : null,
             ]);
-    
-            
+
+
             return redirect()->route('student.meetinglists')->with('success', 'Meeting updated!');
         } else {
-            
-            
+
+
             $meeting = MeetingSchedule::create([
                 'meeting_title' => $request->meeting_title,
                 'meeting_type' => $request->meeting_type,
@@ -368,12 +368,12 @@ class StudentController extends Controller
                 'meeting_platform' => $request->meeting_type === 'virtual' ? $request->meeting_platform : null,
                 'meeting_link' => $request->meeting_type === 'virtual' ? $request->meeting_link : null,
             ]);
-    
-            
+
+
             return redirect()->route('student.meetinglists')->with('success', 'Meeting created!');
         }
 
-        
+
     }
     public function toggleStatus($id){
         $meeting = MeetingSchedule::findOrFail($id);
@@ -397,5 +397,5 @@ class StudentController extends Controller
     {
         return view('student.report');
     }
-    
+
 }
