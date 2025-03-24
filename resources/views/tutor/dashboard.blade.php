@@ -79,27 +79,8 @@
                                     <button id="filterButton" type="button"
                                         class="btn btn-primary shadow-none">Search</button>
                                 </div>
-                    <form method="GET" action="{{ route('tutor.interactions') }}" enctype="multipart/form-data">
-                        @csrf
-                        <div class="form-group mb-4 row mt-4">
-                            <div class="col-md-3 mb-2">
-                                <select class="form-select" name="interaction_type" id="selectInteraction"
-                                    aria-label="Interaction Type">
-                                    <option value="All">All Interactions</option>
-                                    <option value="Posts">Posts</option>
-                                    <option value="Comments">Comments</option>
-                                    <option value="Documents">Documents</option>
-                                    <option value="Meetings">Meetings</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3 mb-2 d-flex flex-column align-items-start">
-                                <div class="text-center">
-                                    <button id="filterButton" type="button"
-                                        class="btn btn-primary shadow-none">Search</button>
-                                </div>
                             </div>
                         </div>
-                    </form>
                     </form>
                     <div class="row mt-4">
                         <div class="chart-container-full">
@@ -123,7 +104,6 @@
                         <div class="chart-container">
                             <div class="chart-card chart-card-full">
                                 <div class="chart-card-header">
-                                    <h4 class="chart-card-title">Upcoming meetings within the next week</h4>
                                     <h4 class="chart-card-title">Upcoming meetings within the next week</h4>
                                 </div>
                                 <div class="chart-card-body">
@@ -171,7 +151,6 @@
                                                         </td>
                                                     </tr>
                                                 @endforeach
-                                              
                                             </tbody>
 
                                         </table>
@@ -254,39 +233,6 @@
 
             //     demo.initStudentInteractionsChart();
             // }
-            $.ajax({
-                url: '/tutor_student_interaction_dashboard', // Adjust this to your correct route
-                method: 'GET',
-                data: {
-                    interaction_type: "All"
-                },
-                success: function(response) {
-                    console.log("Data received:", response);
-
-                    const studentNames = response.map(item => item.student.first_name + " " + item
-                        .student.last_name);
-                    const interactionCounts = response.map(item => item.interactions);
-                    // Assuming response contains the interaction counts
-                    var studentInteractionChartElement = document.getElementById(
-                        'StudentInteractionCountChart');
-
-                    if (studentInteractionChartElement) {
-                        if (typeof demo !== 'undefined') {
-                            demo.initStudentInteractionsChart(
-                                studentNames, interactionCounts
-                                ); // Pass the data to your chart function
-                        }
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error("AJAX request failed:", error);
-                }
-            });
-            // var studentInteractionChartElement = document.getElementById('StudentInteractionCountChart');
-            // if (studentInteractionChartElement && typeof demo !== 'undefined') {
-
-            //     demo.initStudentInteractionsChart();
-            // }
 
             console.log("Data table is loading..");
             $('#tutor-upcoming-meetings').DataTable({
@@ -304,73 +250,6 @@
             $('.bottom').appendTo("#pagination-container");
 
 
-        });
-        async function getInteractionCounts(filterValue) {
-            try {
-
-                const response = await fetch('/tutor_student_interaction_dashboard?interaction_type=${filterValue}');
-                const data = await response.json();
-
-                // Extract student names and interaction counts
-                const studentNames = data.map(item => item.student.first_name + " " + item.student.last_name);
-                const interactionCounts = data.map(item => item.interactions);
-                console.log("method called try")
-                return {
-                    studentNames,
-                    interactionCounts
-                };
-
-            } catch (error) {
-                console.error('Error fetching student interaction data:', error);
-                return {
-                    studentNames: [],
-                    interactionCounts: []
-                };
-
-            }
-        }
-        $("#filterButton").on("click", async function() {
-            console.log("button clicked");
-            var selectedInteractionType = $("#selectInteraction").val();
-            console.log(selectedInteractionType);
-            const {
-                studentNames,
-                interactionCounts
-            } = getInteractionCounts(selectedInteractionType);
-            console.log(interactionCounts);
-            $.ajax({
-                url: '/tutor_student_interaction_dashboard', // Adjust this to your correct route
-                method: 'GET',
-                data: {
-                    interaction_type: selectedInteractionType
-                },
-                success: function(response) {
-                    console.log("Data received:", response);
-
-                    const studentNames = response.map(item => item.student.first_name + " " + item
-                        .student.last_name);
-                    const interactionCounts = response.map(item => item.interactions);
-                    // Assuming response contains the interaction counts
-                    var studentInteractionChartElement = document.getElementById(
-                        'StudentInteractionCountChart');
-
-                    if (studentInteractionChartElement) {
-                        if (typeof demo !== 'undefined') {
-                            demo.initStudentInteractionsChart(
-                                studentNames, interactionCounts
-                                ); // Pass the data to your chart function
-                        }
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error("AJAX request failed:", error);
-                }
-            });
-            // var studentInteractionChartElement = document.getElementById('StudentInteractionCountChart');
-
-            // if (studentInteractionChartElement && typeof demo !== 'undefined') {
-            //     demo.initStudentInteractionsChart();
-            // }
         });
         async function getInteractionCounts(filterValue) {
             try {
