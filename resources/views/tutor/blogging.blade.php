@@ -60,31 +60,38 @@
             </nav>
 
             <div class="dashboard-content px-3 pt-4">
-            <h2 class="fs-2 fw-bold">Posts</h2>
+                <h2 class="fs-2 fw-bold">Posts</h2>
 
-                <div class="post mt-4" >
-                       
-                       <div class="text-center fit mb-2">
-                        <a href="/tutor/createposts" class="post-btn btn btn-primary shadow-none mb-3" style="background-color: #004AAD;">+ Start a post</a>
-                       </div>
+                <div class="post mt-4">
 
-                       <div class="form-group mb-4 row">
-                            <div class="row">
-                            
+                    <div class="text-center fit mb-2">
+                        <a href="{{ route('tutor.createposts') }}" class="post-btn btn btn-primary shadow-none mb-3" style="background-color: #004AAD;">+ Start a post</a>
+                    </div>
+                    <div class="form-group mb-4 row">
+                        <div class="row">
+                            <form action="{{ route('tutor.blogging.filter') }}" method="GET">
+
                                 <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
-                                    <select class="form-select" id="selectDateMeeting" aria-label="Floating label select example">
-                                        <option selected>All</option>
-                                        <option value="Real">My Posts</option>
-                                        <option value="Virtual">Student Posts</option>
+                                    <select class="form-select" id="post_by" name="post_by" aria-label="Floating label select example">
+                                        <option value="all" {{ old('post_by', 'all') == 'all' ? 'selected' : '' }}>All</option>
+
+
+                                        <option value="{{ $tutor->id }}" {{ old('post_by') == $tutor->id ? 'selected' : '' }}>My Posts</option>
+
+
+                                        <option value="student" {{ old('post_by') == 'student' ? 'selected' : '' }}>Student Posts</option>
                                     </select>
+
+
                                 </div>
 
                                 <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
 
-                                    <select class="form-select form--control" name="student_id" id="selectStudentMeeting" aria-label="Floating label select example">
-                                        <option value="" selected disabled>-- Choose Student --</option>
-                                        <option value="1">Student One</option>
-                                        <option value="2">Student Two</option>
+                                    <select class="form-select form--control" name="student_filter" id="student_filter" aria-label="Floating label select example" disabled>
+                                        <option value="" {{ old('student_filter') ? '' : 'selected' }}>-- Choose Student --</option>
+                                        @foreach ($students as $student)
+                                        <option value="{{ $student->id }}" @if(@request()->student_filter == $student->id) selected @endif>{{ $student->first_name }} {{ $student->last_name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 
@@ -96,9 +103,10 @@
                                 <div class="col-md-3 mb-2 d-flex flex-column align-items-start">
 
                                     <div class=" text-center">
-                                        <button type="button"  class=" btn btn-primary shadow-none " style="width: 130px;">Search</button>
+                                        <button type="submit" class="btn btn-primary shadow-none" style="width: 130px;">Search</button>
                                     </div>
                                 </div>
+
                             </div>
 
                         </div>
@@ -108,15 +116,15 @@
                            <!-- post header -->
 
                             <div class="edit-btn text-center fit">
-                          
+
                             <a href="/tutor/updateposts" class="edit-btn btn btn-primary shadow-none" style=" width: 100px; background-color: #004AAD;">Edit</a>
                             </div>
 
                             <p>
                                 <i class="fa-solid fa-circle-user me-3" style="font-size: 35px; color:#808080; vertical-align: middle;"></i>
                                 <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">Name</strong>
-                                <span class="date me-1" style="vertical-align: middle;">4 March 2025</span> 
-                                <span class="time me-4" style="vertical-align: middle;">9:00 PM</span> 
+                                <span class="date me-1" style="vertical-align: middle;">4 March 2025</span>
+                                <span class="time me-4" style="vertical-align: middle;">9:00 PM</span>
                                 <span class="status me-0" style="vertical-align: middle;">Updated</span>
                             </p>
 
@@ -126,17 +134,17 @@
 
                             <h5 class="mb-3 mt-2">Project sample file</h5>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.</p>
-                            
+
                             </div>
 
 
                             <div class="file-attachment">
                                 <img src="https://cdn-icons-png.flaticon.com/512/732/732220.png" width="30" alt="File">
                                 <a href="" style="text-decoration: none; color: black;" target="_blank">project_sample.docx</a>
-                            
-                            
-                            
-                                
+
+
+
+
                             </div>
 
                             <!-- Note:: this comment section has javascript interaction added for now, when reply button is clicked this will appear -->
@@ -147,14 +155,14 @@
                                 <p>
                                     <i class="fa-solid fa-circle-user me-2" style="font-size: 20px; color:#808080; vertical-align: middle;"></i>
                                     <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">Name</strong>
-                                    <span class="date me-1" style="vertical-align: middle;">4 March 2025</span> 
-                                    <span class="time me-4" style="vertical-align: middle;">9:00 PM</span> 
-                                    
+                                    <span class="date me-1" style="vertical-align: middle;">4 March 2025</span>
+                                    <span class="time me-4" style="vertical-align: middle;">9:00 PM</span>
+
                                 </p>
                                 <p class="comment-body ms-4">Yes sir, well noted.<br>We will be missing you during the holidays sir.</p>
                             </div>
 
-                            
+
 
 
                             <form action="" method="" enctype="multipart/form-data">
@@ -165,41 +173,41 @@
                             </form>
 
                         </div>
-                        
+
                         <div class="post-container">
-                            
+
                             <div class="edit-btn text-center fit">
 
                             <!-- post header -->
-                          
+
                             <a href="/tutor/updateposts" class="edit-btn btn btn-primary shadow-none" style=" width: 100px; background-color: #004AAD;">Edit</a>
                             </div>
 
                             <p>
                                 <i class="fa-solid fa-circle-user me-3" style="font-size: 35px; color:#808080; vertical-align: middle;"></i>
                                 <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">Name</strong>
-                                <span class="date me-1" style="vertical-align: middle;">4 March 2025</span> 
-                                <span class="time me-4" style="vertical-align: middle;">9:00 PM</span> 
+                                <span class="date me-1" style="vertical-align: middle;">4 March 2025</span>
+                                <span class="time me-4" style="vertical-align: middle;">9:00 PM</span>
                                 <span class="status me-0" style="vertical-align: middle;"></span>
                             </p>
 
                             <!-- post body -->
 
-                           
+
                             <div class="post-title-desc mt-2">
 
                                 <h5 class="mb-3 mt-2">Thingyan Holidays Announcement</h5>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.</p>
-                            
+
                             </div>
 
                             <!-- <div class="file-attachment">
                                 <img src="https://cdn-icons-png.flaticon.com/512/732/732220.png" width="30" alt="File">
                                 <a href="" style="text-decoration: none; color: black;" target="_blank">project_sample.docx</a>
-                            
-                            
-                            
-                                
+
+
+
+
                             </div> -->
 
                             <div class="comments">
@@ -208,9 +216,9 @@
                                 <p>
                                     <i class="fa-solid fa-circle-user me-2" style="font-size: 20px; color:#808080; vertical-align: middle;"></i>
                                     <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">Name</strong>
-                                    <span class="date me-1" style="vertical-align: middle;">4 March 2025</span> 
-                                    <span class="time me-4" style="vertical-align: middle;">9:00 PM</span> 
-                                    
+                                    <span class="date me-1" style="vertical-align: middle;">4 March 2025</span>
+                                    <span class="time me-4" style="vertical-align: middle;">9:00 PM</span>
+
                                 </p>
                                 <p class="comment-body ms-4">Yes sir, well noted.<br>We will be missing you during the holidays sir.</p>
                             </div>
@@ -221,83 +229,170 @@
                                 <button  type="button" class="btn btn-primary ms-3" style="width: 110px;">Send</button>
                             </div>
                             </form>
-                            
+
+                            </form>
                         </div>
 
                     </div>
+
+                    @forelse ($posts as $post)
+                    <div class="post-container">
+
+                        <!-- post header -->
+
+                        <div class="edit-btn text-center fit">
+
+                            <a href="/tutor/updateposts" class="edit-btn btn btn-primary shadow-none" style=" width: 100px; background-color: #004AAD;">Edit</a>
+                        </div>
+
+                        <p>
+                            <i class="fa-solid fa-circle-user me-3" style="font-size: 35px; color:#808080; vertical-align: middle;"></i>
+                            <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">{{ $post->creator?->first_name }} {{ $post->creator?->last_name }}</strong>
+                            <span class="date me-1" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($post->updated_at)->format('d M Y') }}</span>
+                            <span class="time me-4" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($post->updated_at)->format('h:m A') }}</span>
+                            <span class="status me-0" style="vertical-align: middle;">
+                                @if ($post->created_at != $post->updated_at)
+                                Updated
+                                @else
+                                {{ $post->post_status }}
+                                @endif
+                            </span>
+                        </p>
+
+                        <!-- Post body -->
+
+                        <div class="post-title-desc mt-2">
+
+                            <h5 class="mb-3 mt-2">{{ $post->post_title }}</h5>
+                            <p>{{ $post->post_description }}</p>
+
+                        </div>
+
+
+                        @foreach ($post->documents as $document)
+                        <div class="file-attachment d-flex row" id="docFile">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <img src="https://cdn-icons-png.flaticon.com/512/732/732220.png" width="30" alt="File">
+                                <a href="{{ $document->doc_file_path }}" style="text-decoration: none; color: black;" target="_blank">{{ $document->doc_name }}</a>
+                            </div>
+                        </div>
+                        @endforeach
+
+                        <!-- Note:: this comment section has javascript interaction added for now, when reply button is clicked this will appear -->
+                        @foreach ($post->comments as $comment)
+                        <div class="comments pb-0" id="commentsSection">
+                            <hr>
+                            <p class="mb-3" style="font-size: 0.875rem; color:	#004AAD;">Comments</p>
+                            <p>
+                                <i class="fa-solid fa-circle-user me-2" style="font-size: 20px; color:#808080; vertical-align: middle;"></i>
+                                <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">{{ $comment->user->first_name }} {{ $comment->user->last_name }}</strong>
+                                <span class="date me-1" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($post->updated_at)->format('d M Y') }}</span>
+                                <span class="time me-4" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($post->updated_at)->format('h:m A') }}</span>
+
+                            </p>
+                            <p>{{ $comment->text }}</p>
+                        </div>
+                        @endforeach
+
+
+
+
+                        <form action="" method="" enctype="multipart/form-data">
+                            <div class="d-flex align-items-center gap-2 mt-4">
+                                <input type="text" id="replyInput" class="form-control" placeholder="Reply" style="max-width: 1100px;">
+                                <button type="button" class="btn btn-primary ms-3" style="width: 110px;" onclick="checkReply()">Send</button>
+                            </div>
+                        </form>
+
+                    </div>
+                    @empty
+                    <div class="post-container">
+                        <div class="post-title-desc mt-2">
+                            <p>No Post found!!</p>
+                        </div>
+                    </div>
+
+                    @endforelse
+
+
+
+                </div>
             </div>
 
-
-
         </div>
-    </div>
-
-</div>
-@endsection
-@push('scripts')
-<!-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+        @endsection
+        @push('scripts')
+        <!-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script> -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
-<script>
-    console.log("Script is loaded!");
-    $(document).ready(function() {
-        $('#datepicker').datepicker({
-            format: 'yyyy-mm-dd',
-            autoclose: true,
-            todayHighlight: true
-        });
-    });
+        <script>
+            console.log("Script is loaded!");
+            $(document).ready(function() {
+                $('#datepicker').datepicker({
+                    format: 'yyyy-mm-dd',
+                    autoclose: true,
+                    todayHighlight: true
+                });
 
-    // $(document).ready(function(){
-    //     console.log("Data table is loading..");
-    //     $('#table-meeting').DataTable({
-    //         paging: true,
-    //         pageLength: 5,
-    //         lengthChange: false,
-    //         searching: false,
-    //         ordering: true,
-    //         "language": {
-    //             "info": "Total Records: _TOTAL_",
-    //         }
-    //     });
-    // });
+                $('#post_by').change(function() {
+                    if ($(this).val() != 'student') {
+                        $('#student_filter').prop('disabled', true);
+                    } else {
+                        $('#student_filter').prop('disabled', false);
+                    }
+                });
+            });
 
-
-    // Script for the side bar nav
-    $(".sidebar ul li").on('click', function() {
-        $(".sidebar ul li.active").removeClass('active');
-        $(this).addClass('active');
-    });
-
-    $('.open-btn').on('click', function() {
-        $('.sidebar').addClass('active');
-
-    });
+            // $(document).ready(function(){
+            //     console.log("Data table is loading..");
+            //     $('#table-meeting').DataTable({
+            //         paging: true,
+            //         pageLength: 5,
+            //         lengthChange: false,
+            //         searching: false,
+            //         ordering: true,
+            //         "language": {
+            //             "info": "Total Records: _TOTAL_",
+            //         }
+            //     });
+            // });
 
 
-    $('.close-btn').on('click', function() {
-        $('.sidebar').removeClass('active');
+            // Script for the side bar nav
+            $(".sidebar ul li").on('click', function() {
+                $(".sidebar ul li.active").removeClass('active');
+                $(this).addClass('active');
+            });
 
-    });
+            $('.open-btn').on('click', function() {
+                $('.sidebar').addClass('active');
+
+            });
 
 
-    // Comment section reply script for now
+            $('.close-btn').on('click', function() {
+                $('.sidebar').removeClass('active');
 
-    function checkReply() {
-        const replyInput = document.getElementById('replyInput').value.trim();
-        const commentsSection = document.getElementById('commentsSection');
+            });
 
-        // If replyInput is not empty, show the comments section
-        if (replyInput !== "") {
-            commentsSection.style.display = 'block'; // Show comments section if reply is entered
-        } else {
-            commentsSection.style.display = 'none'; // Hide comments section if no reply is entered
-        }
-    }
-</script>
-@endpush
+
+            // Comment section reply script for now
+
+            function checkReply() {
+                const replyInput = document.getElementById('replyInput').value.trim();
+                const commentsSection = document.getElementById('commentsSection');
+
+                // If replyInput is not empty, show the comments section
+                if (replyInput !== "") {
+                    commentsSection.style.display = 'block'; // Show comments section if reply is entered
+                } else {
+                    commentsSection.style.display = 'none'; // Hide comments section if no reply is entered
+                }
+            }
+        </script>
+        @endpush

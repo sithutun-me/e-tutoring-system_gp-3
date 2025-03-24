@@ -24,7 +24,7 @@ class Document extends Model
     // Define the relationship with the Post model
     public function post()
     {
-        return $this->belongsTo(Post::class, 'post_id');
+        return $this->belongsTo(Post::class, 'post_id', 'id');
     }
 
 }

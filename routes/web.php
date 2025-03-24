@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AllocationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\Tutor\PostController;
 use App\Http\Controllers\TutorController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -60,10 +61,12 @@ Route::middleware(['auth','protect_auth'])->group(function(){
         Route::get('/tutor/meetingdetail/{id}/edit', [TutorController::class, 'meetingdetail'])->name('tutor.meetingdetail.update');
         //view meeting detail
         Route::get('/tutor/meetingdetail/{id}', [TutorController::class, 'meetingview'])->name('tutor.meetingdetail.view');
-        Route::get('/tutor/blogging', [TutorController::class, 'blogging'])->name('tutor.blogging');
         Route::get('/tutor/createposts', [TutorController::class, 'createposts'])->name('tutor.createposts');
+        Route::post('/tutor/saveposts', [TutorController::class, 'saveposts'])->name('tutor.saveposts');
         Route::get('/tutor/updateposts', [TutorController::class, 'updateposts'])->name('tutor.updateposts');
 
+        Route::get('/tutor/blogging', [TutorController::class, 'blogging'])->name('tutor.blogging');
+        Route::get('/tutor/blogging/filter', [TutorController::class, 'postFilter'])->name('tutor.blogging.filter');
 
         //create meeting
         Route::post('/tutor/meetingdetail', [TutorController::class, 'save'])->name('tutor.save');
