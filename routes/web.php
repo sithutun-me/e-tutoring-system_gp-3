@@ -9,7 +9,7 @@ use App\Http\Controllers\TutorController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['guest','protect_auth'])->group(function(){
+Route::middleware(['guest', 'protect_auth'])->group(function () {
 
     Route::get('/', function () {
         return view('login');
@@ -17,10 +17,9 @@ Route::middleware(['guest','protect_auth'])->group(function(){
 
     Route::view('/login', 'login')->name('login');
     Route::post('/login', [AuthController::class, 'login']);
-
 });
 
-Route::middleware(['auth','protect_auth'])->group(function(){
+Route::middleware(['auth', 'protect_auth'])->group(function () {
 
     // Admin Dashboard Route
     Route::middleware(['role:3'])->group(function () {
@@ -45,7 +44,7 @@ Route::middleware(['auth','protect_auth'])->group(function(){
         Route::get('/admin/students/filter', [AllocationController::class, 'filterStudents'])->name('admin.students.filter');
         Route::get('/admin/allocations/filter', [AllocationController::class, 'filterAllocations'])->name('admin.allocations.filter');
 
-        // Route::get('/admin/report', [AdminController::class, 'report'])->name('admin.report');
+        Route::get('/admin/report', [AdminController::class, 'report'])->name('admin.report');
     });
 
     // Tutor Dashboard Route
@@ -81,12 +80,11 @@ Route::middleware(['auth','protect_auth'])->group(function(){
 
         //status toggle (completed/ new)
         Route::put('/tutor/meetingdetail/{id}/toggle-status', [TutorController::class, 'toggleStatus'])
-        ->name('tutor.meetingdetail.toggleStatus');
+            ->name('tutor.meetingdetail.toggleStatus');
 
         Route::post('/tutor/meetingdetail/cancel', [TutorController::class, 'cancelMeeting'])->name('tutor.meetingdetail.cancelmeeting');
 
         Route::get('/tutor/report', [TutorController::class, 'report'])->name('tutor.report');
-
     });
 
     // Student Dashboard Route
@@ -107,18 +105,14 @@ Route::middleware(['auth','protect_auth'])->group(function(){
 
         //status toggle (completed/ new)
         Route::put('/student/meetingdetail/{id}/toggle-status', [StudentController::class, 'toggleStatus'])
-        ->name('student.meetingdetail.toggleStatus');
+            ->name('student.meetingdetail.toggleStatus');
 
         Route::post('/student/meetingdetail/cancel', [StudentController::class, 'cancelMeeting'])->name('student.meetingdetail.cancelmeeting');
 
         Route::get('/student/report', [StudentController::class, 'report'])->name('student.report');
-
     });
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-
-
 });
 //admin dashboard chart
 Route::get('/student-inactivity', [AdminController::class, 'getInactiveStudentsData']);

@@ -30,7 +30,7 @@
             <li><a href="/admin/studentlists" class="text-decoration-none px-3 py-2 d-block">
                     <img src="/icon images/student.png" style="width:20px; margin-right: 10px;"> Student
                 </a></li>
-            <li><a href="#" class="text-decoration-none px-3 py-2 d-block">
+            <li><a href="/admin/report" class="text-decoration-none px-3 py-2 d-block">
                     <img src="/icon images/reports.png" style="width:20px; margin-right: 10px;"> Reports
                 </a></li>
         </ul>
