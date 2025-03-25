@@ -121,12 +121,6 @@ Route::get('/student_list_with_assigned_tutors', [AdminController::class, 'getSt
 
 //tutor dashboard chart
 Route::get('/tutor_student_interaction_dashboard', [TutorController::class, 'interactionCounts']);
-Route::post('tutor/blogging/{id}/comment', [TutorController::class, 'postcomment'])->name('tutor.postcomment');
-
-//student dashboard chart
-Route::get('/meeting_counts', [StudentController::class, 'getMeetingPieData']);
-Route::get('/myActivities', [StudentController::class, 'myActivities']);
-Route::get('/tutorActivities', [StudentController::class, 'tutorActivities']);
 
 //student dashboard chart
 Route::get('/meeting_counts', [StudentController::class, 'getMeetingPieData']);

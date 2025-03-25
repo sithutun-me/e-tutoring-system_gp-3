@@ -59,6 +59,8 @@
                                     <option value="StudentPosts" {{ request('post_by') == 'StudentPosts' ? 'selected' : '' }}>Student Posts</option>
                                 </select>
                             </div>
+
+
                             <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
                                 <select class="form-select form--control" name="student_filter" id="studentFilter" aria-label="Floating label select example">
                                     <option value="" {{ request('student_filter') == '' ? 'selected' : '' }}>-- Choose Student --</option>
@@ -72,7 +74,7 @@
                             </div>
                             <div class="col-md-3 mb-2 d-flex flex-column align-items-start">
                                 <div class=" text-center">
-                                    <button type="submit" class=" btn btn-primary shadow-none " style="width: 130px;">Search</button>
+                                    <button type="submit" class=" btn btn-primary shadow-none " >Search</button>
                                 </div>
                             </div>
 
@@ -88,14 +90,16 @@
                     @if($post->creator->id == $user->id)
                     <div class="edit-btn text-center fit">
                         <a href="{{  route('tutor.editpost',$post->id) }}" class="edit-btn btn btn-primary shadow-none" style=" width: 100px; background-color: #004AAD;">Edit</a>
+                        <a href="{{  route('tutor.editpost',$post->id) }}" class="delete-btn btn  shadow-none" style=" width:50px; background-color:#d9534f "><i class="fa-solid fa-trash"></i></a>
+
                     </div>
                     @endif
                     <p>
                         <i class="fa-solid fa-circle-user me-3" style="font-size: 35px; color:#808080; vertical-align: middle;"></i>
-                        <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">{{ $post->creator?->first_name }} {{ $post->creator?->last_name }}</strong>
-                        <span class="date me-1" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($post->updated_at)->format('d M Y') }}</span>
-                        <span class="time me-4" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($post->updated_at)->format('h:m A') }}</span>
-                        <span class="status me-0" style="vertical-align: middle;">
+                        <strong class="name me-4" style="vertical-align: middle; font-size: 1rem; font-family:'Poppins';">{{ $post->creator?->first_name }} {{ $post->creator?->last_name }}</strong>
+                        <span class="date me-1" style="vertical-align: middle; font-family:'Poppins';">{{ \Carbon\Carbon::parse($post->updated_at)->format('d M Y') }}</span>
+                        <span class="time me-4" style="vertical-align: middle; font-family:'Poppins';">{{ \Carbon\Carbon::parse($post->updated_at)->format('h:m A') }}</span>
+                        <span class="status me-0" style="vertical-align: middle; font-family:'Poppins';">
                             @if ($post->created_at != $post->updated_at)
                             Updated
                             @else
@@ -109,9 +113,9 @@
                         <p>{{ $post->post_description }}</p>
                     </div>
                     @foreach ($post->documents as $document)
-                    <div class="file-attachment d-flex row w-100 sm-w-100 mx-2" id="docFile">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <img src="https://cdn-icons-png.flaticon.com/512/732/732220.png" width="30" alt="File">
+                    <div class="file-attachment d-flex row mx-1" id="docFile">
+                        <div class="d-flex  align-items-center">
+                            <img src="/icon images/document.png" width="30" alt="File">
                             <a href="{{ asset($document->doc_file_path) }}" style="text-decoration: none; color: black;" target="_blank">
                                 @if(strlen(__(@$document->doc_name)) > 30)
                                 {{substr(__(@$document->doc_name), 0,30).'...' }}
@@ -123,19 +127,43 @@
                     </div>
                     @endforeach
                     <!-- Note:: this comment section has javascript interaction added for now, when reply button is clicked this will appear -->
-                    @foreach ($post->comments as $comment)
                     <div class="comments pb-0" id="commentsSection">
-                        <hr>
-                        <p class="mb-3" style="font-size: 0.875rem; color:	#004AAD;">Comments</p>
-                        <p>
-                            <i class="fa-solid fa-circle-user me-2" style="font-size: 20px; color:#808080; vertical-align: middle;"></i>
-                            <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">{{ $comment->user->first_name }} {{ $comment->user->last_name }}</strong>
-                            <span class="date me-1" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($comment->updated_at)->format('d M Y') }}</span>
-                            <span class="time me-4" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($comment->updated_at)->format('h:m A') }}</span>
-                        </p>
-                        <p>{{ $comment->text }}</p>
-                    </div>
-                    @endforeach
+                            <hr>
+                            <p class="mb-3" style="font-size: 0.875rem; color:  #004AAD;">Comments</p>
+                        @foreach ($post->comments as $comment)
+                        <div class="comment-item">
+
+                            <p>
+                                <i class="fa-solid fa-circle-user me-2" style="font-size: 20px; color:#808080; vertical-align: middle;"></i>
+                                <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">{{ $comment->user->first_name }} {{ $comment->user->last_name }}</strong>
+                                <span class="date me-1" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($post->updated_at)->format('d M Y') }}</span>
+                                <span class="time me-4" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($post->updated_at)->format('h:m A') }}</span>
+
+                                    <!-- Three-dot Menu for comment edit and delete next to Time -->
+                                    <span class="three-dots" onclick="toggleMenu(this)" style="cursor: pointer; vertical-align: middle;">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </span>
+
+                                    <!-- Hidden Edit & Delete Options -->
+                                    <span class="ms-2 options-menu" style="display: none;">
+                                        <button class="edit-comment btn btn-primary">Edit</button>
+                                        <button class="delete-comment btn btn-danger" style="background-color: #d9534f;" >Delete</button>
+                                    </span>
+
+
+                            </p>
+                            <p class="comments-body" style="margin-left: 30px;">{{ $comment->text }}</p>
+
+                        </div>
+
+                        @endforeach
+                            <!-- See More & See less Button -->
+                            <!-- Unique Show More & Show Less Buttons for each post -->
+                            <button class="btn btn-primary show-more-btn mt-2" data-post-id="{{ $post->id }}" style="display: none;">See More</button>
+                            <button class="btn btn-primary show-less-btn mt-2" data-post-id="{{ $post->id }}" style="display: none;">See Less</button>
+                        </div>
+
+
                     <form action="{{ route('tutor.postcomment', $post->id) }}" method="POST" enctype="multipart/form-data" id="commentForm_{{ $post->id }}" class="comment-form">
                         @csrf
                         <div class="d-flex align-items-center gap-2 mt-4">
@@ -235,5 +263,102 @@
 
 
     }
+
+    // For see more and see less comment section
+
+//     document.addEventListener("DOMContentLoaded", function () {
+//     let comments = document.querySelectorAll('#commentsSection .comment-item');
+//     let showMoreBtn = document.getElementById('showMoreBtn');
+//     let showLessBtn = document.getElementById('showLessBtn');
+
+//     // Hide comments beyond the first 3
+//     if (comments.length > 3) {
+//         comments.forEach((comment, index) => {
+//             if (index >= 3) {
+//                 comment.style.display = "none";
+//             }
+//         });
+
+//         // Show "Show More" button if more than 3 comments exist
+//         showMoreBtn.style.display = "block";
+
+//         // "Show More" Button Click Event
+//         showMoreBtn.addEventListener("click", function () {
+//             comments.forEach(comment => comment.style.display = "block");
+//             showMoreBtn.style.display = "none"; // Hide Show More button
+//             showLessBtn.style.display = "block"; // Show Show Less button
+//         });
+
+//         // "Show Less" Button Click Event
+//         showLessBtn.addEventListener("click", function () {
+//             comments.forEach((comment, index) => {
+//                 if (index >= 3) {
+//                     comment.style.display = "none"; // Hide comments beyond the first 3
+//                 }
+//             });
+//             showMoreBtn.style.display = "block"; // Show Show More button
+//             showLessBtn.style.display = "none"; // Hide Show Less button
+//         });
+//     }
+// });
+
+
+   // For see more and see less comment section
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll('.comments').forEach(commentsSection => {
+        let comments = commentsSection.querySelectorAll('.comment-item');
+        let showMoreBtn = commentsSection.querySelector('.show-more-btn');
+        let showLessBtn = commentsSection.querySelector('.show-less-btn');
+
+        // Ensure at least 3 comments exist before hiding
+        if (comments.length > 3) {
+            comments.forEach((comment, index) => {
+                if (index >= 3) {
+                    comment.style.display = "none"; // Hide extra comments
+                }
+            });
+
+            // Show "See More" button
+            showMoreBtn.style.display = "block";
+
+            // Show More Click Event (Scoped to Current Post)
+            showMoreBtn.addEventListener("click", function () {
+                comments.forEach(comment => comment.style.display = "block"); // Show all comments
+                showMoreBtn.style.display = "none";  // Hide "See More" button
+                showLessBtn.style.display = "block"; // Show "See Less" button
+            });
+
+            // Show Less Click Event (Scoped to Current Post)
+            showLessBtn.addEventListener("click", function () {
+                comments.forEach((comment, index) => {
+                    if (index >= 3) {
+                        comment.style.display = "none"; // Hide comments beyond the first 3
+                    }
+                });
+                showMoreBtn.style.display = "block";  // Show "See More" button
+                showLessBtn.style.display = "none";   // Hide "See Less" button
+            });
+        }
+    });
+});
+
+
+
+// Three dot menu for edit and delete btn
+
+function toggleMenu(dotIcon) {
+    // Find the closest <p> tag
+    let parentP = dotIcon.closest('p');
+
+    // Find the options menu within the same <p>
+    let menu = parentP.querySelector('.options-menu');
+
+    // Toggle the display of the menu
+    menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "inline-block" : "none";
+}
+
+
+
 </script>
 @endpush
