@@ -81,7 +81,7 @@
                         </div>
                         <div class="mb-3">
                             <select class="form-select" name="selected_student" id="floatingSelect" aria-label="Floating label select example">
-                                <option value="" {{ request('selected_student') == '' ? 'selected' : '' }}>Choose Student</option>
+                                <option value="" {{ request('selected_student') == '' ? 'selected' : '' }}>Choose Student *</option>
                                 @foreach ($students as $student)
                                 <option value="{{ $student->id }}" {{ old('selected_student') == $student->id ? 'selected' : '' }}>{{ $student->first_name }} {{ $student->last_name }}</option>
                                 @endforeach
@@ -89,7 +89,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <input type="text" id="add-title" class="form-control" name="post_title" value="{{ old('post_title') }}" placeholder="Add title">
+                            <input type="text" id="add-title" class="form-control" name="post_title" value="{{ old('post_title') }}" placeholder="Add title *">
                         </div>
 
 

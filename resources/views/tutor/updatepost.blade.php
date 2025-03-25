@@ -96,7 +96,7 @@
                             </div> -->
 
                         <div class="mb-3">
-                            <input type="text" class="form-control" name="update_title" placeholder="Add title" value="{{ $post->post_title }}">
+                            <input type="text" class="form-control" name="update_title" placeholder="Add title *" value="{{ $post->post_title }}">
                         </div>
 
 
@@ -127,7 +127,7 @@
 
                         <button type="submit" class="btn btn-primary w-100 mt-2" style="background-color: #004AAD;">Update</button>
 
-                    
+
 
                     </form>
                 </div>
@@ -140,6 +140,33 @@
         </div>
     </div>
 
+</div>
+
+<div id="errorModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="font-weight: 500;">Validation Errors!</h5>
+                <button type="button" class="confirm-btn close btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" name="id">
+                <div class="modal-body">
+                    @foreach ($errors->all() as $error)
+                    <li style="font-family: 'Poppins'; font-size:1rem;margin-bottom:10px;">
+                        {{ $error }}
+                    </li>
+                    @endforeach
+                </div>
+            </div>
+            <div class="modal-footer ">
+                <button onclick="closeModal()" type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                    aria-label="Close" style=" width: 90px;">Close</i></button>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
 @push('scripts')
@@ -240,7 +267,7 @@
 
         removedDocs.push(docId);  // Add the document ID to the list
         removedDocsInput.value = JSON.stringify(removedDocs);
-        
+
         //console.log("removed" + removedDocsInput.value);
         element.closest(".file-attachment").remove();
         // const attachmentDiv = document.getElementById("file-attachment");
@@ -267,4 +294,11 @@
         });
     });
 </script>
+@if ($errors->any())
+<script>
+    // window.errors = @json($errors->all());
+    var myModal = new bootstrap.Modal(document.getElementById('errorModal'));
+    myModal.show();
+</script>
+@endif
 @endpush
