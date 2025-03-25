@@ -192,7 +192,7 @@ class TutorController extends Controller
 
         // Get results and group by date
         $meeting_schedules = $query
-            ->orderBy('meeting_schedules.meeting_date','desc')
+            ->orderBy('meeting_schedules.meeting_date')
             ->orderBy('meeting_schedules.meeting_start_time')
             ->get()
             ->groupBy('meeting_date');
@@ -312,7 +312,7 @@ class TutorController extends Controller
 
                 $query->where(function ($q) use ($studentId) {
                     $q->where('post_create_by', $studentId)
-                    ->orWhere('post_received_by', $studentId);
+                        ->orWhere('post_received_by', $studentId);
                 });
             }
 
@@ -356,7 +356,7 @@ class TutorController extends Controller
             // Filter by specific student if 'student_filter' is provided
             if ($request->filled('student_filter')) {
                 $studentId = $request->student_filter;
-dd($request->input('student_filter'));
+                dd($request->input('student_filter'));
                 $query->where(function ($q) use ($studentId) {
                     $q->where('post_create_by', $studentId)
                         ->orWhere('post_received_by', $studentId);
@@ -395,10 +395,24 @@ dd($request->input('student_filter'));
     {
         $request->validate([
             'selected_student' => 'required',
-            'post_title' => 'required|string|max:50',
-            'post_desc' => 'nullable|string|max:255',
+            'post_title' => 'required|string|max:255',
+            'post_desc' => 'nullable|string|max:500',
             'post_files' => ['nullable', 'array', 'max:20480'],  // 'array' for multiple files
-            'post_files.*' => 'mimes:pdf,docx,xlsx,jpeg,jpg,png|max:20480',
+            'post_files.*' => 'mimes:pdf,docx,xlsx,jpeg,jpg,png,zip|max:20480',
+        ], [
+            'selected_students.required' => 'Please select at least one student.',
+            'post_title.required' => 'The post title field is required.',
+            'post_title.string' => 'The post title must be a string.',
+            'post_title.max' => 'The post title may not be greater than 255 characters.',
+
+            'post_desc.string' => 'The post description must be a string.',
+            'post_desc.max' => 'The post description may not be greater than 500 characters.',
+
+            'post_files.array' => 'The uploaded files must be an array.',
+            'post_files.max' => 'Total file size must not exceed 20MB.',
+
+            'post_files.*.mimes' => 'Each uploaded file must be a PDF, DOCX, XLSX, JPEG, JPG, or PNG.',
+            'post_files.*.max' => 'Each uploaded file must not exceed 20MB.',
         ]);
         $post = new Post();
         $post->post_title = $request->post_title;
@@ -427,7 +441,9 @@ dd($request->input('student_filter'));
                     $document->save();
                 }
             } catch (\Exception $exp) {
-                return redirect()->back()->withErrors(['file_upload' => 'File upload failed: ' . $exp->getMessage()]);
+                return view('tutor.createpost', [
+                    'error' => 'File upload failed: ' . $exp->getMessage()
+                ]);
             }
         }
         return redirect()->route('tutor.blogging')->with('success', 'Post upload success!');
@@ -448,10 +464,23 @@ dd($request->input('student_filter'));
     public function updatepost(Request $request, $id)
     {
         $request->validate([
-            'update_title' => 'required|string|max:50',
-            'update_desc' => 'nullable|string|max:255',
+            'update_title' => 'required|string|max:255',
+            'update_desc' => 'nullable|string|max:500',
             'post_files_upload' => ['nullable', 'array', 'max:20480'],  // 'array' for multiple files
-            'post_files_upload.*' => 'mimes:pdf,docx,xlsx,jpeg,jpg,png|max:20480',
+            'post_files_upload.*' => 'mimes:pdf,docx,xlsx,jpeg,jpg,png,zip|max:20480',
+        ], [
+            'update_title.required' => 'The post title field is required.',
+            'update_title.string' => 'The post title must be a string.',
+            'update_title.max' => 'The post title may not be greater than 255 characters.',
+
+            'update_desc.string' => 'The post description must be a string.',
+            'update_desc.max' => 'The post description may not be greater than 500 characters.',
+
+            'post_files_upload.array' => 'The uploaded files must be an array.',
+            'post_files_upload.max' => 'Total file size must not exceed 20MB.',
+
+            'post_files_upload.*.mimes' => 'Each uploaded file must be a PDF, DOCX, XLSX, JPEG, JPG, or PNG.',
+            'post_files_upload.*.max' => 'Each uploaded file must not exceed 20MB.',
         ]);
         $post = Post::findOrFail($id);
         $post->post_title = $request->update_title;
@@ -503,7 +532,9 @@ dd($request->input('student_filter'));
                     $document->save();
                 }
             } catch (\Exception $exp) {
-                return redirect()->back()->withErrors(['file_upload' => 'File upload failed: ' . $exp->getMessage()]);
+                return view('tutor.updatepost', [
+                    'error' => 'File upload failed: ' . $exp->getMessage()
+                ]);
             }
         }
         return to_route('tutor.blogging')->with('success', 'Post is successfully updated.');
