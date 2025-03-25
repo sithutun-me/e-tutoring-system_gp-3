@@ -82,7 +82,7 @@
                         </div>
                         <div class="mb-3">
                             <select class="form-select" name="selected_student" id="floatingSelect" aria-label="Floating label select example">
-                                <option value="" {{ request('selected_student') == '' ? 'selected' : '' }} >Choose Student</option>
+                                <option value="" {{ request('selected_student') == '' ? 'selected' : '' }}>Choose Student</option>
                                 @foreach ($students as $student)
                                 <option value="{{ $student->id }}" {{ old('selected_student') == $student->id ? 'selected' : '' }}>{{ $student->first_name }} {{ $student->last_name }}</option>
 =======
@@ -171,6 +171,34 @@
         </div>
     </div>
 
+</div>
+
+
+<div id="errorModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="font-weight: 500;">Validation Errors!</h5>
+                <button type="button" class="confirm-btn close btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" name="id">
+                <div class="modal-body">
+                    @foreach ($errors->all() as $error)
+                    <li style="font-family: 'Poppins'; font-size:1rem;margin-bottom:10px;">
+                        {{ $error }}
+                    </li>
+                    @endforeach
+                </div>
+            </div>
+            <div class="modal-footer ">
+                <button onclick="closeModal()" type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                    aria-label="Close" style=" width: 90px;">Close</i></button>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
 @push('scripts')
@@ -261,4 +289,11 @@
         fileInput.dispatchEvent(new Event("change"));
     }
 </script>
+@if ($errors->any())
+<script>
+    // window.errors = @json($errors->all());
+    var myModal = new bootstrap.Modal(document.getElementById('errorModal'));
+    myModal.show();
+</script>
+@endif
 @endpush
