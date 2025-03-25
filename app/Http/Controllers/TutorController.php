@@ -94,14 +94,14 @@ class TutorController extends Controller
                 $postCount = DB::table('post')
                     ->where('post_create_by', $studentId)
                     ->where('is_meeting',0)
-                    ->whereBetween('updated_at', [$startOfMonth, $today]) 
+                    ->whereBetween('updated_at', [$startOfMonth, $today])
                     ->count();
             }
 
             if ($filter === 'All' || $filter === 'Comments') {
                 $commentCount = DB::table('comment')
                     ->where('user_id', $studentId)
-                    ->whereBetween('updated_at', [$startOfMonth, $today]) 
+                    ->whereBetween('updated_at', [$startOfMonth, $today])
                     ->count();
             }
 
@@ -109,7 +109,7 @@ class TutorController extends Controller
                 $documentCount = DB::table('document')
                     ->join('post', 'document.post_id', '=', 'post.id')
                     ->where('post.post_create_by', $studentId)
-                    ->whereBetween('document.updated_at', [$startOfMonth, $today]) 
+                    ->whereBetween('document.updated_at', [$startOfMonth, $today])
                     ->count();
             }
 
@@ -118,7 +118,7 @@ class TutorController extends Controller
                     ->where('student_id', $studentId)
                     ->where('tutor_id', $tutorId)
                     ->where('meeting_status', 'completed')
-                    ->whereBetween('updated_at', [$startOfMonth, $today]) 
+                    ->whereBetween('updated_at', [$startOfMonth, $today])
                     ->count();
             }
 
@@ -231,7 +231,7 @@ class TutorController extends Controller
 
 
 =======
-    
+
 >>>>>>> a6d6ce5 (student dashboard backend)
 
 
