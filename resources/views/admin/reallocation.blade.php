@@ -30,7 +30,7 @@
             <li><a href="/admin/studentlists" class="text-decoration-none px-3 py-2 d-block">
                     <img src="/icon images/student.png" style="width:20px; margin-right: 10px;"> Student
                 </a></li>
-            <li><a href="#" class="text-decoration-none px-3 py-2 d-block">
+            <li><a href="/admin/report" class="text-decoration-none px-3 py-2 d-block">
                     <img src="/icon images/reports.png" style="width:20px; margin-right: 10px;"> Reports
                 </a></li>
         </ul>
@@ -47,10 +47,14 @@
 
         <div class="dashboard-content px-2 pt-2">
 
-
-
+                    <div class="mt-4 mb-2">
+                    <span onclick="history.back()" style="cursor: pointer;" class="header-text ms-3">
+                    <i class="fa-solid fa-chevron-left"></i> Back
+                    </span>
+                    </div>
 
             <section class="p-3">
+
                 <h2 class="fs-2 fw-bold mb-4"> Reallocation</h2>
                 <form action="{{ route('admin.reallocate') }}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -68,7 +72,7 @@
                     </div>
 
                     <div class="table-responsive" id="no-more-tables">
-                        <table id="reallocationTable" class="table bg-white " style="height:400px;">
+                        <table id="reallocationTable" class="table bg-white ">
                             <thead>
                                 <tr class="custom-bg text-light">
                                     <th class="text-center small-col" style="color: white;">No.</th>

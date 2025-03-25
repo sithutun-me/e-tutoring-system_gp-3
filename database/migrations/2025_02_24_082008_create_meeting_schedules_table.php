@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('meeting_schedule', function (Blueprint $table) {
             $table->id();
-            $table->text('meeting_title',50);
-            $table->string('meeting_description',255)->nullable();
+            $table->text('meeting_title',255);
+            $table->string('meeting_description',500)->nullable();
             $table->string('meeting_type',20);
             $table->string('meeting_platform',255)->nullable();
             $table->string('meeting_link',255)->nullable();

@@ -30,7 +30,7 @@
             <li><a href="/admin/studentlists" class="text-decoration-none px-3 py-2 d-block">
                     <img src="/icon images/student.png" style="width:20px; margin-right: 10px;"> Student
                 </a></li>
-            <li><a href="#" class="text-decoration-none px-3 py-2 d-block">
+            <li><a href="/admin/report" class="text-decoration-none px-3 py-2 d-block">
                     <img src="/icon images/reports.png" style="width:20px; margin-right: 10px;"> Reports
                 </a></li>
         </ul>
@@ -62,7 +62,7 @@
                 </div>
             </form>
                 <div class="table-responsive" id="no-more-tables">
-                    <table id="studentTable" class="table bg-white ">
+                    <table id="studentTable" class="table bg-white">
                         <thead>
                             <tr class="custom-bg text-light">
                                 <th class="text-center small-col" style="color: white; ">No.</th>
@@ -83,7 +83,7 @@
                                 <td data-title="Name" >{{ $student->first_name }} {{ $student->last_name }}</td>
                                 <td data-title="Email"  >{{ $student->email }}</td>
                                 <td data-title="Assigned Tutor" >{{ $student->tutor_name }}</td>
-                                <td class="stu-button" style="text-align: center;"><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;">
+                                <td class="stu-button" style="text-align: center; overflow-x:auto;"><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;">
                                         <a href="student/dashboard" class="text-decoration-none " style="color: white; ">View Dashboard >></a></button>
                                 </td>
                             </tr>

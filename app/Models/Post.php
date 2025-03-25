@@ -8,8 +8,8 @@ class Post extends Model
 {
     //
   //  use HasFactory;
-    protected $table = 'post'; 
-   
+    protected $table = 'post';
+
     protected $fillable = [
         'post_title',
         'post_description',
@@ -18,14 +18,21 @@ class Post extends Model
         'post_received_by',
     ];
 
-    public function user()
+    public function creator()
     {
-        return $this->belongsTo(User::class); // Assuming a post belongs to a user
+        return $this->belongsTo(User::class, 'post_create_by', 'id'); // Assuming a post belongs to a user
+    }
+    public function receiver()
+    {
+        return $this->belongsTo(User::class, 'post_received_by', 'id'); // Assuming a post belongs to a user
     }
     public function documents()
     {
         return $this->hasMany(Document::class, 'post_id');
     }
-    
-    
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'post_id', 'id');
+    }
+
 }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('post_status');
             $table->foreignId('post_create_by')->constrained('users', 'id')->onDelete('NO ACTION')->onUpdate('CASCADE');
             $table->foreignId('post_received_by')->constrained('users', 'id')->onDelete('NO ACTION')->onUpdate('CASCADE');
+            $table->boolean('is_meeting')->default(0);
             $table->timestamps();
         });
     }

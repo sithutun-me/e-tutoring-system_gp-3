@@ -207,7 +207,7 @@ h6 {
     position: fixed;
     top: 0;
     left: 0;
-    height: 100vh;
+    height: 150vh;
     overflow-y: auto; /* Enables scrolling if content overflows */
   }
 
@@ -239,11 +239,21 @@ h6 {
     color: #fff;
   }
 
+  /* active sidebar page  */
+
+  .sidebar li a.active {
+    background-color: #7895CB !important; 
+    color: #fff !important; 
+    border-radius: 5px !important;
+}
+
+  
+
    @media(max-width: 767px){
     #side_nav{
       margin-left: -250px;
       position: absolute;
-      min-height: 100vh;
+      min-height: 150vh;
       z-index: 1;
 
     }
@@ -263,7 +273,7 @@ h6 {
     color: #FFFFFF;
   }
 
-  /* Allocation-table */
+  /* Allocation to student lists -table responsive */
   @media only screen and (max-width: 1200px){
     #no-more-tables {
       overflow-y: auto; 
@@ -304,19 +314,41 @@ h6 {
       border-bottom: 1px solid #ccc ;
     }
 
-   .assign-btn{
-    margin-left: 10px;
-   }
+  
 
-   .stu-button{
-    margin-left: 167px;
-   }
 
 
   }
 
 
+  @media only screen and (max-width: 900px){
+    .stu-button{
+      margin-left: 305px;
+     }
 
+  }
+
+  @media only screen and (max-width: 450px){
+    .stu-button{
+      margin-left: 167px;
+     }
+
+  }
+
+  @media only screen and (max-width: 420px){
+    .stu-button{
+      margin-left: 150px;
+     }
+
+  }
+
+  
+  @media only screen and (max-width: 400px){
+    .stu-button{
+      margin-left: 120px;
+     }
+
+  }
   
 
   
@@ -335,19 +367,13 @@ h6 {
 }
 
 
-.bulkre-btn{
-  margin-left: 339px;
-  margin-bottom: 15px;
-}
-
-
 .assigned-button button {
   flex-shrink: 1; /* Allows buttons to shrink within the container */
 }
 
 
 
-  /* admin table */
+  /* admin allocation to student list table */
 
   .custom-bg{
     background-color: #004AAD;
@@ -378,8 +404,6 @@ h6 {
   margin-top: 3px;
   margin-right: 2px;
 }
-
-
 
 
 
@@ -471,6 +495,8 @@ h6 {
   display: block;
   height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
   overflow-y: auto; /* Enable scrolling inside tbody */
+  font-family: "Poppins";
+  font-size: 0.875rem;
 }
 
 #allocationTable thead,
@@ -484,6 +510,13 @@ h6 {
   padding: 8px;
   line-height: 1.8;
   white-space: nowrap; /* Prevents breaking text */
+}
+
+/* Remove extra border under checkbox */
+#allocationTable thead th:first-child,
+#allocationTable tbody td:first-child {
+  border-bottom: none !important; /* Remove bottom border */
+
 }
 
 
@@ -552,6 +585,8 @@ h6 {
   display: block;
   height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
   overflow-y: auto; /* Enable scrolling inside for the tbody */
+  font-family: "Poppins";
+  font-size: 0.875rem;
 }
 
 #assignedTable thead,
@@ -570,6 +605,20 @@ h6 {
   white-space: nowrap; /* Prevents breaking text */
 
 }
+
+/* Remove extra border under checkbox and button */
+#assignedTable thead th:first-child,
+#assignedTable tbody td:first-child {
+  border-bottom: none !important; /* Remove bottom border */
+ 
+}
+
+#assignedTable thead th:last-child,
+#assignedTable tbody td:last-child {
+  border-bottom: none !important; /* Remove bottom border */
+}
+
+
 
 @media only screen and (min-width: 1200px){
   #assignedTable .small-col {
@@ -737,6 +786,8 @@ h6 {
   display: block;
   height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
   overflow-y: auto; /* Enable scrolling inside tbody */
+  font-family: "Poppins";
+  font-size: 0.875rem;
 }
 
 #reallocationTable thead,
@@ -862,6 +913,8 @@ h6 {
   display: block;
   height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
   overflow-y: auto; /* Enable scrolling inside tbody */
+  font-family: "Poppins";
+  font-size: 0.875rem;
 }
 
 #tutorTable thead,
@@ -877,10 +930,13 @@ h6 {
   white-space: nowrap; /* Prevents breaking text */
 }
 
-
-
 .tutor-row button{
   font-size: 0.875rem;
+}
+
+#tutorTable thead th:last-child,
+#tutorTable tbody td:last-child {
+  border-bottom: none !important; /* Remove bottom border */
 }
 
 
@@ -991,6 +1047,8 @@ h6 {
   display: block;
   height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
   overflow-y: auto; /* Enable scrolling inside tbody */
+  font-family: "Poppins";
+  font-size: 0.875rem;
 }
 
 #studentTable thead,
@@ -1008,6 +1066,11 @@ h6 {
 
 .student-row button {
   font-size: 0.875rem;
+}
+
+#studentTable thead th:last-child,
+#studentTable tbody td:last-child {
+  border-bottom: none !important; /* Remove bottom border */
 }
 
 
@@ -1041,35 +1104,51 @@ h6 {
   }
 
   
-  #no-more-tables .allocation-row, .assigned-row, .tutor-row, .student-row, .reallocation-row{
+  #no-more-tables .allocation-row, .assigned-row, .tutor-row, .student-row, .reallocation-row, .adminreport-row{
     text-align: right;
 
   }
 
-  .bulkre-btn{
-    margin-left: 10px;
+
+}
+
+/* Tutor report form-group respsonive */
+
+@media (max-width: 1024px) {
+  .form-group {
+      flex-direction: column; /* Stack the elements vertically */
+      align-items: stretch; /* Ensure elements stretch to fit the container */
   }
 
+  .form-group select {
+      width: 100%; /* Allow form elements to take full width */
+  }
 
- 
- 
+  .form-group label {
+      width: 100%; /* Make sure labels take full width */
+      text-align: left; /* Align labels to the left for better readability */
+  }
 }
 
 
 /* Tutor Blogging */
 
-
 .post-container {
   background: white;
-  width: 1250px; /* Full width */
+  /* width: 1250px;  */
   padding: 20px;
   margin-bottom: 45px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   margin-top: 10px;
+  margin-right: 10px;
 }
 
 .post-container span{
   font-size: 0.875rem;
+}
+
+.post-container-header{
+  font-family: "Poppins";
 }
 
 .edit-btn {
@@ -1083,6 +1162,10 @@ h6 {
 }
 
 
+.delete-btn{
+  margin-left: 10px;
+}
+
 .file-attachment {
   display: flex;
   align-items: center;
@@ -1092,14 +1175,58 @@ h6 {
   width: 300px;
   margin-top: 40px;
   margin-bottom: 20px;
+ 
+}
+
+.post-container .file-attachment {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f1f1f1;
+  padding: 10px;
+  width: 400px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+}
+
+.file-attachment a {
+  margin-left: 20px;
+  word-wrap: break-word;
+  text-wrap: auto;
+ 
+}
+
+.post-title-desc{
+  font-family: "Poppins";
+}
+
+.post-title-desc .post-title{
+  font-size: 1.375rem;
+  font-weight: 600;
+}
+
+.post-title-desc .post-desc{
+  font-size: 0.875rem;
+}
+
+.comments-body{
+  word-wrap: break-word;
+  text-wrap: auto;
+  font-size: 0.875rem;
+  margin-bottom: 20px;
+ 
 }
 
 .comments {
   margin-top: 8px;
   padding: 10px;
   border-radius: 5px;
+  font-family: "Poppins";
 }
-
+.edit-comment{
+  width: 60px;
+}
 .post-btn {
   height: 40px;
   background-color: #004AAD;
@@ -1107,9 +1234,6 @@ h6 {
 
  
 }
-
-
-
 
  .post a {
   font-family: "Poppins";
@@ -1131,8 +1255,14 @@ h6 {
   padding: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
+  margin-left: 13px;
 
 }
+
+/* .parent-container {
+  display: flex;
+  width: 1280px;
+} */
 
 .edit-container {
   width: 700px;
@@ -1140,8 +1270,17 @@ h6 {
   padding: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
+  margin-left: 13px;
+  margin-bottom: 15px;
 
 }
+
+.edit-container .btn-outline-dark:hover {
+  background-color: transparent !important;
+  color: inherit !important;
+  border-color: inherit !important;
+}
+
 
 .profile-img {
   font-size: 30px;
@@ -1194,6 +1333,12 @@ h6 {
   width: 250px;
 }
 
+.edit-container .file-attachment a{
+  font-family: "Poppins";
+  font-size: 0.875rem;
+
+}
+
 .edit-container  .file-attachment button{
   width: 30px;
 }
@@ -1203,8 +1348,9 @@ h6 {
   font-size: 0.875rem;
 }
 
-textarea::placeholder {
+#description  {
   font-size: 0.875rem; /* Adjust the size as needed */
+  font-family: "Poppins";
 
 }
 
@@ -1220,12 +1366,40 @@ textarea::placeholder {
     padding: 15px;
   }
 
+  .post-container .file-attachment {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f1f1f1;
+    padding: 10px;
+    width: 350px;
+   
+  }
+
   .create-container{
     width: 100%;
+    background: white;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-left: 5px;
+    margin-bottom: 10px;
+    
   }
+
+  /* .parent-container {
+    display: flex;
+    width: 100%;
+  } */
+  
   .edit-container{
     width: 100%;
+    background: white;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-left: 5px;
+    margin-bottom: 40px;
   }
+ 
   .file-list {
     list-style: none;
     padding: 0;
@@ -1239,25 +1413,86 @@ textarea::placeholder {
     margin-top: 10px;
   }
 
- 
+  .delete-btn{
+    margin-left: 0px;
+    margin-top: -4px;
+  }
+
 
   .post-btn{
     width: 150px;
   }
 
-  .edit-container  .file-attachment {
+  .edit-container .file-attachment {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center elements */
+    gap: 5px;
+    background: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    width: 270px;
+    text-align: center; /* Ensure text stays centered */
+  }
+
+  .edit-container .file-attachment img {
+      width: 30px; /* Adjust icon size */
+  }
+
+  .edit-container .file-attachment a {
+      width: 100%;
+      word-wrap: break-word;
+      text-wrap: auto;
+      text-decoration: none;
+      color: black;
+  }
+
+  .edit-container .file-attachment button {
+      width: 30px;
+      margin-top: 3px; /* Add spacing between text and button */
+  }
+  .options-menu .delete-comment{
+    margin-top: 10px;
+  }
+  .options-menu .edit-comment{
+    margin-top: 10px;
+  }
+  .edit-comment{
+    width: 100%;
+  }
+
+  
+}
+
+@media only screen and (max-width: 420px) {
+  .create-container {
+    width: 100%;
+    background: white;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-left: 10px;
+  
+  }
+
+  .edit-container {
+    width: 100%;
+    background: white;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-left: 5px;
+  
+  }
+
+  .post-container .file-attachment {
     display: flex;
     align-items: center;
     gap: 10px;
     background: #f1f1f1;
     padding: 10px;
-    border-radius: 5px;
-    width: 270px;
+    width: 300px;
+   
   }
-  
-  .edit-container  .file-attachment button{
-    width: 30px;
-  }
+
 }
 
 /* .modal {
@@ -1275,5 +1510,434 @@ textarea::placeholder {
 } */
 
 
+/* Student and Tutor Report Page */
+
+.tabs {
+  display: flex;
+  margin: 10px 0;
+  margin-top: 20px;
+
+}
+.tabs button {
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  border: 1px solid #004AAD;
+  background-color: #FDFAF6;
+  width: 200px;
+  height: 50px;
+  font-family: "Poppins";
+
+}
+/* Left-most button (rounds left side) */
+.tabs button:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+/* Right-most button (rounds right side) */
+.tabs button:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.tabs .active {
+  background: #004AAD;
+  color: #fff;
+ 
+  
+}
+.content-area {
+  display: none;
+}
+.content-area.active {
+  display: block;
+}
+
+#selectmonth {
+  font-size: 0.875rem; /* Set dropdown font size */
+  font-family: "Poppins";
+}
+
+#selectmonth option {
+  font-size: 0.875rem; /* Set font size for dropdown options */
+  font-family: "Poppins";
+}
+
+
+.studentreport {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  
+}
+.studentreport thead {
+  background: #004AAD;
+  color: white;
+  
+}
+/* .studentreport th, .studentreport td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  border-collapse: collapse;
+  border: 1px solid #D3D3D3;
+} */
+
+/* .studentreport-container {
+  height: 400px; 
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+} */
+
+.studentreport {
+  width: 100%;
+  table-layout: fixed; /* Prevents layout shift */
+  border-collapse: collapse;
+  height: 100%;
+}
+
+.studentreport tbody {
+  display: block;
+  overflow-y: auto;
+  height: 400px; /* Adjust based on your needs */
+  font-family: "Poppins";
+  font-size: 0.875rem;
+}
+
+.studentreport thead,
+.studentreport tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+
+.studentreport {
+width: 100%;
+border-collapse: collapse;
+}
+
+.studentreport th, 
+.studentreport td {
+padding: 10px;
+text-align: center;
+border-top: 1px solid #D3D3D3;  /* Keeps horizontal lines */
+border-bottom: 1px solid #D3D3D3; /* Keeps horizontal lines */
+border-left: none;  /* Remove vertical borders */
+border-right: none; /* Remove vertical borders */
+}
+
+/* Keep the first column's left border */
+.studentreport th:first-child, 
+.studentreport td:first-child {
+border-left: 1px solid #D3D3D3;
+}
+
+/* Keep the last column's right border */
+.studentreport th:last-child, 
+.studentreport td:last-child {
+border-right: 1px solid #D3D3D3;
+}
+
+
+
+@media only screen and (min-width: 1200px){
+  #studentreportTable .small-col {
+    width: 50px !important;
+  }
+
+}
+
+/* @media only screen and (min-width: 1200px){
+
+
+  #studentreportTabletu .small-col {
+    width: 50px !important;
+  }
+
+  #studentreportTabletu thead .small-col {
+    width: 50px !important;
+}
+
+
+
+} */
+
+/* Pagination */
+
+#studentreportTable_wrapper .dataTables_wrapper {
+  min-height: 450px; /* Ensures consistent height */
+}
+
+#studentreportTable_wrapper .dataTables_paginate {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+}
+
+#studentreportTable_wrapper .dataTables_paginate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 10px;
+  position: relative;
+}
+
+/* Pagination buttons styling */
+#studentreportTable_wrapper .dataTables_paginate .paginate_button {
+  display: inline-block;
+  background-color: #FFFFFF !important;
+  color: #92969c !important;
+  border: 1px solid #D3D3D3 !important;
+  border-radius: 5px;
+  margin: 3px;
+  padding: 6px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Active page button */
+#studentreportTable_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: #007bff !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  font-weight: bold;
+}
+
+/* Disabled button */
+#studentreportTable_wrapper .dataTables_paginate .paginate_button.disabled {
+  background-color: #fff !important;
+  color: #bfc1c4 !important;
+  cursor: not-allowed !important;
+  border-color: #bfc1c4 !important;
+  pointer-events: none;
+}
+
+/* Hover effect */
+#studentreportTable_wrapper .dataTables_paginate .paginate_button:hover {
+  background-color: #007bff !important;
+  color: #FFFFFF !important;
+}
+
+.tutor-container {
+  font-family: "Poppins";
+  font-size: 1rem;
+}
+
+.tutorreport {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+.tutorreport thead {
+  background: #004AAD;
+  color: white;
+}
+/* .tutorreport th, .tutorreport td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  border-collapse: collapse;
+  border: 1px solid #D3D3D3;
+} */
+
+.tutorreport-container {
+  height: 400px; /* Adjust as needed */
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.tutorreport {
+  width: 100%;
+  table-layout: fixed; /* Prevents layout shift */
+  border-collapse: collapse;
+  height: 100%;
+}
+
+.tutorreport tbody {
+  display: block;
+  overflow-y: auto;
+  /* height: 400px;  */
+  font-family: "Poppins";
+  font-size: 0.875rem;
+
+}
+
+.tutorreport thead,
+.tutorreport tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+
+.tutorreport {
+width: 100%;
+border-collapse: collapse;
+}
+
+.tutorreport th, 
+.tutorreport td {
+padding: 10px;
+text-align: center;
+border-top: 1px solid #D3D3D3;  /* Keeps horizontal lines */
+border-bottom: 1px solid #D3D3D3; /* Keeps horizontal lines */
+border-left: none;  /* Remove vertical borders */
+border-right: none; /* Remove vertical borders */
+}
+
+/* Keep the first column's left border */
+.tutorreport th:first-child, 
+.tutorreport td:first-child {
+border-left: 1px solid #D3D3D3;
+}
+
+/* Keep the last column's right border */
+.tutorreport th:last-child, 
+.tutorreport td:last-child {
+border-right: 1px solid #D3D3D3;
+}
+
+@media only screen and (min-width: 1200px){
+  #tutorreportTable .small-col {
+    width: 50px !important;
+  }
+
+ 
+
+}
+
+/* Default sorting arrow color */
+/* table.dataTable thead .sorting::after,
+table.dataTable thead .sorting::before,
+table.dataTable thead .sorting_asc::after,
+table.dataTable thead .sorting_desc::after {
+    color: red !important; 
+    opacity: 1; 
+} */
+
+/* When sorting is active (ascending) /* Change color for ascending sort */
+/* table.dataTable thead .sorting_asc::after {
+    color: green !important; 
+} */
+
+/* When sorting is active (descending) /* Change color for descending sort */
+/* table.dataTable thead .sorting_desc::after {
+    color: blue !important; 
+} */
+
+
+/* Pagination */
+
+#tutorreportTable_wrapper .dataTables_wrapper {
+  min-height: 450px; /* Ensures consistent height */
+}
+
+#tutorreportTable_wrapper .dataTables_paginate {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#tutorreportTable_wrapper .dataTables_paginate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 10px;
+  position: relative;
+}
+
+/* Pagination buttons styling */
+#tutorreportTable_wrapper .dataTables_paginate .paginate_button {
+  display: inline-block;
+  background-color: #FFFFFF !important;
+  color: #92969c !important;
+  border: 1px solid #D3D3D3 !important;
+  border-radius: 5px;
+  margin: 3px;
+  padding: 6px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Active page button */
+#tutorreportTable_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: #007bff !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  font-weight: bold;
+}
+
+/* Disabled button */
+#tutorreportTable_wrapper .dataTables_paginate .paginate_button.disabled {
+  background-color: #fff !important;
+  color: #bfc1c4 !important;
+  cursor: not-allowed !important;
+  border-color: #bfc1c4 !important;
+  pointer-events: none;
+}
+
+/* Hover effect */
+#tutorreportTable_wrapper .dataTables_paginate .paginate_button:hover {
+  background-color: #007bff !important;
+  color: #FFFFFF !important;
+}
+
+
+@media (max-width: 768px) {
+  .tabs {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  }
+
+
+  .studentreport{
+    margin-top: 10px;
+  }
+
+  .tutorreport{
+    margin-top: 10px;
+  }
+
+  .tutorreport tbody {
+    display: block;
+    overflow-y: auto;
+    height: 400px; 
+    font-family: "Poppins";
+    font-size: 0.875rem;
+  
+  }
+
+
+}
+
+@media (max-width: 1200px) {
+ 
+  .tutorreport tbody {
+    display: block;
+    overflow-y: auto;
+    height: 400px; 
+    font-family: "Poppins";
+    font-size: 0.875rem;
+  
+  }
+
+
+}
 
 

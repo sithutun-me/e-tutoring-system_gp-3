@@ -30,7 +30,7 @@
             <li><a href="/admin/studentlists" class="text-decoration-none px-3 py-2 d-block">
                     <img src="/icon images/student.png" style="width:20px; margin-right: 10px;"> Student
                 </a></li>
-            <li><a href="#" class="text-decoration-none px-3 py-2 d-block">
+            <li><a href="/admin/report" class="text-decoration-none px-3 py-2 d-block">
                     <img src="/icon images/reports.png" style="width:20px; margin-right: 10px;"> Reports
                 </a></li>
         </ul>
@@ -50,15 +50,16 @@
                 <h2 class="fs-2 fw-bold mb-4"> Allocation</h2>
 
                 <form action="{{ route('admin.students.filter') }}" method="get">
-                    @csrf
+
                     <div class=" form-group mb-4">
                         <input id="allocationSearch" name="search_student" class="form-control" type="search" placeholder="Search here" aria-label="Search" style="width: 320px;" value="{{ old('search_student', $searchKeyword ?? '') }}">
                         <button type="submit" name="submit" class="btn btn-primary shadow-none">Search</button>
                     </div>
                 </form>
 
-                <form action="{{ route('admin.allocate') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.allocate') }}" method="POST" enctype="multipart/form-data" id="allocationForm">
                     @csrf
+                    <div id="selectedStudentsContainer"></div>
                     <div class="form-group mb-4">
                         <select class="form-select form--control" name="tutor_id" id="floatingSelect" aria-label="Floating label select example" style="width: 320px;">
                             <option value="" {{ old('tutor_id') ? '' : 'selected' }}>Choose Tutor</option>
@@ -96,13 +97,14 @@
                                             <input type="checkbox"
                                                 id="student_{{ $student->id }}"
                                                 name="selected_students[]"
+                                                class="student-checkbox"
                                                 value="{{ $student->id }}"
                                                 {{ in_array($student->id, old('selected_students', [])) ? 'checked' : '' }}>
                                             <label for="student_{{ $student->id }}"></label>
                                         </span>
                                     </td>
                                     <td class="small-col" data-title="No.">{{$count++;}}</td>
-                                    <td class="medium-col"   data-title="User Code">{{__($student->user_code)}}</td>
+                                    <td class="medium-col" data-title="User Code">{{__($student->user_code)}}</td>
                                     <td data-title="Student Name">{{ $student->first_name }} {{ $student->last_name }}</td>
                                     <td data-title="Email" style="  overflow-x: auto; ">{{__(@$student->email)}}</td>
                                 </tr>
@@ -186,13 +188,74 @@
             }
         });
 
-        var table = $('#allocationTable').DataTable();
-        $('#select_all_students').on('change', function() {
-            var checked = $(this).prop('checked');
+        // var table = $('#allocationTable').DataTable();
+        // $('#select_all_students').on('change', function() {
+        //     var checked = $(this).prop('checked');
 
-            table.rows({ page: 'current' }).every(function() {
-                var row = this.node();
-                $(row).find('input[type="checkbox"][name="selected_students[]"]').prop('checked', checked);
+        //     table.rows({
+        //         page: 'current'
+        //     }).every(function() {
+        //         var row = this.node();
+        //         $(row).find('input[type="checkbox"][name="selected_students[]"]').prop('checked', checked);
+        //     });
+        // });
+    });
+
+
+    let selectedStudents = new Set();
+
+    $(document).ready(function() {
+        let table = $('#allocationTable').DataTable(); // Initialize DataTable
+
+        // Handle checkbox change
+        $('#allocationTable tbody').on('change', '.student-checkbox', function() {
+            let studentId = $(this).val();
+
+            if ($(this).prop('checked')) {
+                selectedStudents.add(studentId);
+            } else {
+                selectedStudents.delete(studentId);
+            }
+        });
+
+        // Preserve checked state when paginating
+        table.on('draw', function() {
+            $('.student-checkbox').each(function() {
+                let studentId = $(this).val();
+                $(this).prop('checked', selectedStudents.has(studentId));
+            });
+            $('#select_all_students').prop('checked', $('.student-checkbox').length > 0 && $('.student-checkbox:checked').length === $('.student-checkbox').length);
+
+        });
+
+        // "Select All" checkbox functionality
+        $('#select_all_students').on('change', function() {
+            let isChecked = $(this).prop('checked');
+
+            $('.student-checkbox').each(function() {
+                let studentId = $(this).val();
+
+                if (isChecked) {
+                    selectedStudents.add(studentId);
+                } else {
+                    selectedStudents.delete(studentId);
+                }
+
+                $(this).prop('checked', isChecked);
+            });
+        });
+
+        // Before form submission, add selected checkboxes to hidden inputs
+        $('#allocationForm').on('submit', function() {
+            $('#selectedStudentsContainer').empty(); // Clear existing inputs
+            selectedStudents.forEach(studentId => {
+                $('#selectedStudentsContainer').append(
+                    $('<input>').attr({
+                        type: 'hidden',
+                        name: 'selected_students[]',
+                        value: studentId
+                    })
+                );
             });
         });
     });

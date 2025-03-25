@@ -45,6 +45,10 @@ class AdminController extends Controller
         return view('admin.studentlists',compact('students'));
     }
 
+    public function report() {
+        return view('admin.report');
+    }
+
 
     protected $adminDashboardService;
 

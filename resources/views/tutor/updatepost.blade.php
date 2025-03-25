@@ -34,7 +34,7 @@
                     </a>
                 </li>
 
-                <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">
+                <li class=""><a href="tutor/report" class="text-decoration-none px-3 py-2 d-block">
                         <img src="/icon images/reports.png" style="width:20px; margin-right: 10px;"> Reports
                     </a>
                 </li>
@@ -59,25 +59,27 @@
                 </div>
             </nav>
 
-            <div class="dashboard-content px-2 pt-4">
-           
+            <div class="dashboard-content px-3 pt-4">
 
-                    <span onclick="history.back()" style="cursor: pointer;" class="header-text ms-3">
+
+                <span onclick="history.back()" style="cursor: pointer;" class="header-text ms-3">
                     <i class="fa-solid fa-chevron-left"></i> <u>Back</u>
-                    </span>
+                </span>
 
-                    <div class="create-container" style="margin-left: 20px;">
-   
 
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="profile-img"><i class="fa-solid fa-circle-user"></i></div>
-                            
-                            <strong class="ms-2">Name</strong>
-                        </div>
+                <div class="edit-container">
 
-                        <form action="" method="" enctype="multipart/form-data">
 
-                        <div class="mb-3">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="profile-img"><i class="fa-solid fa-circle-user"></i></div>
+
+                        <input type="hidden" name="create_by" value="{{ $tutor->id }}">
+                        <strong class="ms-2">{{ $tutor->first_name }} {{ $tutor->last_name }}</strong>
+                    </div>
+
+                    <form action="{{ route('tutor.updatepost',$post->id) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <!-- <div class="student-select mb-3">
                             <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
                                 <option  selected disabled>Choose Student</option>
                                     <option value="1">Student1</option>
@@ -91,32 +93,46 @@
                                     <option value="9">Student9</option>
                                     <option value="10">Student10</option>
                                 </select>
-                            </div>
+                            </div> -->
 
-                            <div class="mb-3">
-                                <input type="text" id="add-title" class="form-control" placeholder="Add title">
-                            </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="update_title" placeholder="Add title *" value="{{ $post->post_title }}">
+                        </div>
 
-                          
 
-                            <div class="mb-3">
-                                <textarea class="form-control" rows="4" id="description" placeholder="Add Description"></textarea>
-                            </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" rows="4" id="description" name="update_desc" placeholder="Add Description">{{ $post->post_description }}</textarea>
+                        </div>
 
-                        
-                            <div class="mb-3 mt-4">
-                                <input type="file" id="file-input" class="form-control mb-3" multiple>
-                                <small id="file-count" >No file chosen</small>
-                            </div>
+                        @foreach ($post->documents as $document)
 
-                            <!--Selected/Chosen File List Display -->
-                            <ul id="file-list" class="file-list"></ul>
+                        <div class="file-attachment w-100 position-relative" id="file-attachment-{{ $document->id }}">
+                            <img src="/icon images/document.png" width="30" alt="File">
+                            <a href="" style="text-decoration: none; color:black;" target="_blank">{{ $document->doc_name }}</a>
 
-                            <button type="button" class="btn btn-primary w-100 mt-2" style="background-color: #004AAD;">Post</button>
-                        </form>
-                    </div>
+                            <!-- Note:: this is for the file remove used with javascript for now -->
+                            <button class="remove-file btn btn-danger btn-sm ms-3 float-right position-absolute end-0 me-2" onclick="removeAttachment({{ $document->id }}, this)"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        @endforeach
+                        <!-- Hidden input field to store removed documents -->
+                        <input type="hidden" name="removed_documents" id="removed-documents" value="[]">
 
-               
+                        <div class="mb-3 mt-4">
+                            <input type="file" id="file-input" name="post_files_upload[]" class="form-control mb-3" multiple>
+                            <small id="file-count">No file chosen</small>
+                        </div>
+
+                        <!--Selected/Chosen File List Display -->
+                        <ul id="file-list" class="file-list"></ul>
+
+                        <button type="submit" class="btn btn-primary w-100 mt-2" style="background-color: #004AAD;">Update</button>
+
+
+
+                    </form>
+                </div>
+
+
             </div>
 
 
@@ -124,6 +140,33 @@
         </div>
     </div>
 
+</div>
+
+<div id="errorModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="font-weight: 500;">Validation Errors!</h5>
+                <button type="button" class="confirm-btn close btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" name="id">
+                <div class="modal-body">
+                    @foreach ($errors->all() as $error)
+                    <li style="font-family: 'Poppins'; font-size:1rem;margin-bottom:10px;">
+                        {{ $error }}
+                    </li>
+                    @endforeach
+                </div>
+            </div>
+            <div class="modal-footer ">
+                <button onclick="closeModal()" type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                    aria-label="Close" style=" width: 90px;">Close</i></button>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
 @push('scripts')
@@ -136,8 +179,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
 <script>
-    
-
     // $(document).ready(function(){
     //     console.log("Data table is loading..");
     //     $('#table-meeting').DataTable({
@@ -170,9 +211,9 @@
 
     });
 
-        // Selected File List Display and Remove
-        
-        document.getElementById("file-input").addEventListener("change", function(event) {
+    // Selected File List Display and Remove
+
+    document.getElementById("file-input").addEventListener("change", function(event) {
         const fileList = document.getElementById("file-list");
         const fileCount = document.getElementById("file-count");
         fileList.innerHTML = ""; // Clear previous file list
@@ -216,6 +257,48 @@
         fileInput.dispatchEvent(new Event("change"));
     }
 
-  
+
+    // Attached File  Display and Remove
+
+    function removeAttachment(docId, element) {
+        //console.log("Doc id" + docId);
+        let removedDocsInput = document.getElementById("removed-documents");
+        let removedDocs = removedDocsInput.value ? JSON.parse(removedDocsInput.value) : [];
+
+        removedDocs.push(docId);  // Add the document ID to the list
+        removedDocsInput.value = JSON.stringify(removedDocs);
+
+        //console.log("removed" + removedDocsInput.value);
+        element.closest(".file-attachment").remove();
+        // const attachmentDiv = document.getElementById("file-attachment");
+        // if (attachmentDiv) {
+        //     attachmentDiv.remove(); // Removes the file attachment div
+        // }
+    }
+    let removedDocuments = new Set();
+    $(document).ready(function() {
+
+        let documentId = button.getAttribute("data-id");
+
+    $('#allocationForm').on('submit', function() {
+            $('#selectedStudentsContainer').empty(); // Clear existing inputs
+            selectedStudents.forEach(studentId => {
+                $('#selectedStudentsContainer').append(
+                    $('<input>').attr({
+                        type: 'hidden',
+                        name: 'selected_students[]',
+                        value: studentId
+                    })
+                );
+            });
+        });
+    });
 </script>
+@if ($errors->any())
+<script>
+    // window.errors = @json($errors->all());
+    var myModal = new bootstrap.Modal(document.getElementById('errorModal'));
+    myModal.show();
+</script>
+@endif
 @endpush
