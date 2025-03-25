@@ -24,57 +24,58 @@ class TutorController extends Controller
         //getting upcoming meeting list within one week.
         $oneWeek = Carbon::now()->subDays(7);
         $meetings = DB::table('meeting_schedule')
-                    ->leftjoin('users as students', 'meeting_schedule.student_id', '=', 'students.id')
-                    ->where('meeting_schedule.tutor_id', $tutorId)
-                    ->where('meeting_schedule.meeting_status', 'new')
-                    ->where('meeting_schedule.meeting_date', '<=', Carbon::now()->addDays(7))
-                    ->orderBy('meeting_schedule.meeting_date','asc')
-                    ->select(
-                        'meeting_schedule.id',
-                        'meeting_schedule.meeting_title',
-                        'meeting_schedule.meeting_type',
-                        'meeting_schedule.meeting_date',
-                        'meeting_schedule.meeting_start_time',
-                        'meeting_schedule.meeting_end_time',
-                        'meeting_schedule.updated_at',
-                        'students.first_name',
-                        'students.last_name'
-                    )
-                    ->get();
+            ->leftjoin('users as students', 'meeting_schedule.student_id', '=', 'students.id')
+            ->where('meeting_schedule.tutor_id', $tutorId)
+            ->where('meeting_schedule.meeting_status', 'new')
+            ->where('meeting_schedule.meeting_date', '<=', Carbon::now()->addDays(7))
+            ->orderBy('meeting_schedule.meeting_date', 'asc')
+            ->select(
+                'meeting_schedule.id',
+                'meeting_schedule.meeting_title',
+                'meeting_schedule.meeting_type',
+                'meeting_schedule.meeting_date',
+                'meeting_schedule.meeting_start_time',
+                'meeting_schedule.meeting_end_time',
+                'meeting_schedule.updated_at',
+                'students.first_name',
+                'students.last_name'
+            )
+            ->get();
 
-        return view('tutor.dashboard',compact('meetings'));
+        return view('tutor.dashboard', compact('meetings'));
         $tutorId = Auth::id();
 
         //getting upcoming meeting list within one week.
         $oneWeek = Carbon::now()->subDays(7);
         $meetings = DB::table('meeting_schedule')
-                    ->leftjoin('users as students', 'meeting_schedule.student_id', '=', 'students.id')
-                    ->where('meeting_schedule.tutor_id', $tutorId)
-                    ->where('meeting_schedule.meeting_status', 'new')
-                    ->where('meeting_schedule.meeting_date', '<=', Carbon::now()->addDays(7))
-                    ->orderBy('meeting_schedule.meeting_date','asc')
-                    ->select(
-                        'meeting_schedule.id',
-                        'meeting_schedule.meeting_title',
-                        'meeting_schedule.meeting_type',
-                        'meeting_schedule.meeting_date',
-                        'meeting_schedule.meeting_start_time',
-                        'meeting_schedule.meeting_end_time',
-                        'meeting_schedule.updated_at',
-                        'students.first_name',
-                        'students.last_name'
-                    )
-                    ->get();
+            ->leftjoin('users as students', 'meeting_schedule.student_id', '=', 'students.id')
+            ->where('meeting_schedule.tutor_id', $tutorId)
+            ->where('meeting_schedule.meeting_status', 'new')
+            ->where('meeting_schedule.meeting_date', '<=', Carbon::now()->addDays(7))
+            ->orderBy('meeting_schedule.meeting_date', 'asc')
+            ->select(
+                'meeting_schedule.id',
+                'meeting_schedule.meeting_title',
+                'meeting_schedule.meeting_type',
+                'meeting_schedule.meeting_date',
+                'meeting_schedule.meeting_start_time',
+                'meeting_schedule.meeting_end_time',
+                'meeting_schedule.updated_at',
+                'students.first_name',
+                'students.last_name'
+            )
+            ->get();
 
-        return view('tutor.dashboard',compact('meetings'));
+        return view('tutor.dashboard', compact('meetings'));
     }
 
-    public function interactionCounts(Request $request) {
+    public function interactionCounts(Request $request)
+    {
         $tutorId = Auth::id(); // Get logged-in tutor ID
         $startOfMonth = Carbon::now()->startOfMonth(); // First day of the current month
         $today = Carbon::now(); // Current day
         $filter = $request->query('interaction_type', 'All');
-       // $filter = 'Posts';
+        // $filter = 'Posts';
         // Get students assigned to the tutor (max 15)
         $students = Allocation::where('tutor_id', $tutorId)
             ->where('active', 1)
@@ -93,7 +94,7 @@ class TutorController extends Controller
             if ($filter === 'All' || $filter === 'Posts') {
                 $postCount = DB::table('post')
                     ->where('post_create_by', $studentId)
-                    ->where('is_meeting',0)
+                    ->where('is_meeting', 0)
                     ->whereBetween('updated_at', [$startOfMonth, $today])
                     ->count();
             }
@@ -299,9 +300,28 @@ class TutorController extends Controller
         $tutorId = $tutor->id; // Get the logged-in tutor’s ID
         $query = Post::with(['documents', 'creator', 'receiver', 'comments']);
         // dd($tutorId);
+
+        $searchKeyword = $request->input('search_post');
         // Filter by post by if selected to MyPosts
         if ($request->filled('post_by') && $request->post_by == 'MyPosts') {
             $query->where('post_create_by', $tutorId);
+
+            // Filter by specific student if 'student_filter' is provided
+            if ($request->filled('student_filter')) {
+                $studentId = $request->student_filter;
+
+                $query->where(function ($q) use ($studentId) {
+                    $q->where('post_create_by', $studentId)
+                    ->orWhere('post_received_by', $studentId);
+                });
+            }
+
+            // Filter by post by if Post Title
+            if ($searchKeyword) {
+                $query->where(function ($q) use ($searchKeyword) {
+                    $q->where('post_title', 'LIKE', '%' . $searchKeyword . '%');
+                });
+            }
         }
         // Filter by post_by if selected as 'StudentPosts'
         if ($request->filled('post_by') && $request->post_by == 'StudentPosts') {
@@ -319,29 +339,44 @@ class TutorController extends Controller
                 $studentId = $request->student_filter;
 
                 $query->where(function ($q) use ($studentId) {
+                    $q->where('post_create_by', $studentId);
+                });
+            }
+
+            // Filter by post by if Post Title
+            if ($searchKeyword) {
+                $query->where(function ($q) use ($searchKeyword) {
+                    $q->where('post_title', 'LIKE', '%' . $searchKeyword . '%');
+                });
+            }
+        }
+
+        // Filter by post by if selected to MyPosts
+        if ($request->filled('post_by') && $request->post_by == 'All') {
+            // Filter by specific student if 'student_filter' is provided
+            if ($request->filled('student_filter')) {
+                $studentId = $request->student_filter;
+dd($request->input('student_filter'));
+                $query->where(function ($q) use ($studentId) {
                     $q->where('post_create_by', $studentId)
                         ->orWhere('post_received_by', $studentId);
                 });
             }
+
+            // Filter by post by if Post Title
+            if ($searchKeyword) {
+                $query->where(function ($q) use ($searchKeyword) {
+                    $q->where('post_title', 'LIKE', '%' . $searchKeyword . '%');
+                });
+            }
         }
-        // Filter by specific student if 'student_filter' is provided
-        if ($request->filled('student_filter')) {
-            $studentId = $request->student_filter;
-
-            $query->where(function ($q) use ($studentId) {
-                $q->where('post_create_by', $studentId)
-                    ->orWhere('post_received_by', $studentId);
-            });
-        }
-
-
 
         $posts = $query->orderBy('updated_at', 'desc')->get();
         $students = $query = User::whereHas('studentAllocations', function ($query) use ($tutorId) {
             $query->where('tutor_id', $tutorId)->where('active', 1);
         })->where('role_id', 1)->get();
 
-        \Log::info('back to blogging: ' ); // Log success
+        \Log::info('back to blogging: '); // Log success
         return view('tutor.blogging', compact(['pageTitle', 'posts', 'students', 'tutor']));
     }
 
@@ -431,17 +466,17 @@ class TutorController extends Controller
             if (is_array($removedDocumentIds)) {
                 foreach ($removedDocumentIds as $docId) {
                     $document = Document::find($docId);
-            if ($document) {
-                $filePath = $document->doc_file_path; // Get full file path
+                    if ($document) {
+                        $filePath = $document->doc_file_path; // Get full file path
 
-                // Delete the file from the storage directory
-                if (file_exists($filePath)) {
-                    unlink($filePath); // Delete file
-                    \Log::info("Deleted file: " . $filePath);
-                } else {
-                    \Log::warning("File not found: " . $filePath);
-                }
-            }
+                        // Delete the file from the storage directory
+                        if (file_exists($filePath)) {
+                            unlink($filePath); // Delete file
+                            \Log::info("Deleted file: " . $filePath);
+                        } else {
+                            \Log::warning("File not found: " . $filePath);
+                        }
+                    }
                     Document::where('id', $docId)->delete();
                     //\Log::info('doc delete ' . $docId); // Log the post ID
 
@@ -474,7 +509,8 @@ class TutorController extends Controller
         return to_route('tutor.blogging')->with('success', 'Post is successfully updated.');
     }
 
-    public function postcomment(Request $request,$id){
+    public function postcomment(Request $request, $id)
+    {
         $request->validate([
             'comment' => 'required',
         ]);

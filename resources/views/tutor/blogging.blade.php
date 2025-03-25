@@ -46,15 +46,15 @@
                 <div class="text-center fit mb-2">
                     <a href="{{ route('tutor.createpost') }}" class="post-btn btn btn-primary shadow-none mb-3" style="background-color: #004AAD;">+ Start a post</a>
                 </div>
-                
-                    
-                    <div class="form-group mb-4 row">
-                        <form action="{{ route('tutor.blogging') }}" method="GET" enctype="multipart/form-data">
+
+
+                <div class="form-group mb-4 row">
+                    <form action="{{ route('tutor.blogging') }}" method="GET" enctype="multipart/form-data">
                         <div class="row">
-                            
+
                             <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
                                 <select class="form-select" id="postBy" name="post_by" aria-label="Floating label select example">
-                                    <option value="" {{ request('post_by') == '' ? 'selected' : '' }}>All</option>
+                                    <option value="All" {{ request('post_by') == '' ? 'selected' : '' }}>All</option>
                                     <option value="MyPosts" {{ request('post_by') == 'MyPosts' ? 'selected' : '' }}>My Posts</option>
                                     <option value="StudentPosts" {{ request('post_by') == 'StudentPosts' ? 'selected' : '' }}>Student Posts</option>
                                 </select>
@@ -69,21 +69,38 @@
                                     @endforeach
                                 </select>
                             </div>
+<<<<<<< HEAD
 
                             <div class="postSearch col-md-3 mb-2 d-flex justify-content-center align-items-center">
 
                                     <input id="postSearch" name="search_post" class="form-control" type="search" placeholder="Search here" aria-label="Search" value="">
                             </div>
                             
+=======
+                            <div class="postSearch col-md-3 mb-2 d-flex justify-content-center align-items-center">
+                                <input id="postSearch" name="search_post" class="form-control" type="search" placeholder="Search here" aria-label="Search" value="{{ request()->input('search_post') }}">
+                            </div>
+>>>>>>> 4e3da97849e9999a8339f3fe66fb888f30cfbb30
                             <div class="col-md-3 mb-2 d-flex flex-column align-items-start">
                                 <div class=" text-center">
                                     <button type="submit" class=" btn btn-primary shadow-none " >Search</button>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </form>
+                </div>
+                @forelse ($posts as $post)
+                <div class="post-container">
+                    <!-- post header -->
+                    @php
+                    $user = auth()->user();
+                    @endphp
+                    @if($post->creator->id == $user->id)
+                    <div class="edit-btn text-center fit">
+                        <a href="{{  route('tutor.editpost',$post->id) }}" class="edit-btn btn btn-primary shadow-none" style=" width: 100px; background-color: #004AAD;">Edit</a>
                     </div>
+<<<<<<< HEAD
                     @forelse ($posts as $post)
                     <div class="post-container">
                         <!-- post header -->
@@ -103,11 +120,53 @@
                             <span class="status me-0" style="vertical-align: middle;">
                                 @if ($post->created_at != $post->updated_at)
                                 Updated
+=======
+                    @endif
+                    <p>
+                        <i class="fa-solid fa-circle-user me-3" style="font-size: 35px; color:#808080; vertical-align: middle;"></i>
+                        <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">{{ $post->creator?->first_name }} {{ $post->creator?->last_name }}</strong>
+                        <span class="date me-1" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($post->updated_at)->format('d M Y') }}</span>
+                        <span class="time me-4" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($post->updated_at)->format('h:m A') }}</span>
+                        <span class="status me-0" style="vertical-align: middle;">
+                            @if ($post->created_at != $post->updated_at)
+                            Updated
+                            @else
+                            {{ $post->post_status }}
+                            @endif
+                        </span>
+                    </p>
+                    <!-- Post body -->
+                    <div class="post-title-desc mt-2">
+                        <h5 class="mb-3 mt-2">{{ $post->post_title }}</h5>
+                        <p>{{ $post->post_description }}</p>
+                    </div>
+                    @foreach ($post->documents as $document)
+                    <div class="file-attachment d-flex row w-100 sm-w-100 mx-2" id="docFile">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <img src="https://cdn-icons-png.flaticon.com/512/732/732220.png" width="30" alt="File">
+                            <a href="{{ asset($document->doc_file_path) }}" style="text-decoration: none; color: black;" target="_blank">
+                                @if(strlen(__(@$document->doc_name)) > 30)
+                                {{substr(__(@$document->doc_name), 0,30).'...' }}
+>>>>>>> 4e3da97849e9999a8339f3fe66fb888f30cfbb30
                                 @else
-                                {{ $post->post_status }}
+                                {{__(@$document->doc_name) }}
                                 @endif
-                            </span>
+                            </a>
+                        </div>
+                    </div>
+                    @endforeach
+                    <!-- Note:: this comment section has javascript interaction added for now, when reply button is clicked this will appear -->
+                    @foreach ($post->comments as $comment)
+                    <div class="comments pb-0" id="commentsSection">
+                        <hr>
+                        <p class="mb-3" style="font-size: 0.875rem; color:	#004AAD;">Comments</p>
+                        <p>
+                            <i class="fa-solid fa-circle-user me-2" style="font-size: 20px; color:#808080; vertical-align: middle;"></i>
+                            <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">{{ $comment->user->first_name }} {{ $comment->user->last_name }}</strong>
+                            <span class="date me-1" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($comment->updated_at)->format('d M Y') }}</span>
+                            <span class="time me-4" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($comment->updated_at)->format('h:m A') }}</span>
                         </p>
+<<<<<<< HEAD
                         <!-- Post body -->
                         <div class="post-title-desc mt-2 mb-4">
                             <h5 class="post-title mb-3 mt-2">{{ $post->post_title }}</h5>
@@ -161,20 +220,31 @@
                                 <button type="submit" class="btn btn-primary ms-3" style="width: 110px;" onclick="checkReply({{ $post->id }})">Send</button>
                             </div>
                         </form>
+=======
+                        <p>{{ $comment->text }}</p>
+>>>>>>> 4e3da97849e9999a8339f3fe66fb888f30cfbb30
                     </div>
-                    @empty
-                    <div class="post-container">
-                        <div class="d-flex justify-content-center items-align-center">
-                            Post not found!
+                    @endforeach
+                    <form action="{{ route('tutor.postcomment', $post->id) }}" method="POST" enctype="multipart/form-data" id="commentForm_{{ $post->id }}" class="comment-form">
+                        @csrf
+                        <div class="d-flex align-items-center gap-2 mt-4">
+                            <input type="text" id="replyInput" name="comment" class="form-control" placeholder="Reply" style="max-width: 1100px;">
+                            <button type="submit" class="btn btn-primary ms-3" style="width: 110px;" onclick="checkReply('{{ $post->id }}')">Send</button>
                         </div>
+                    </form>
+                </div>
+                @empty
+                <div class="post-container">
+                    <div class="d-flex justify-content-center items-align-center">
+                        Post not found!
                     </div>
-                    @endforelse
-                
+                </div>
+                @endforelse
+
             </div>
         </div>
     </div>
 </div>
-
 <!-- </div> -->
 @endsection
 @push('scripts')
@@ -240,20 +310,21 @@
     // Comment section reply script for now
 
     function checkReply(postId) {
-       // event.preventDefault(); // Prevent the default form submission  
+        // event.preventDefault(); // Prevent the default form submission
         const replyInput = document.getElementById('replyInput').value.trim();
         const commentsSection = document.getElementById('commentsSection');
 
-        
-         if (replyInput !== "") {
+
+        if (replyInput !== "") {
             commentsSection.style.display = 'block'; // Show comments section if reply is entered
         } else {
             commentsSection.style.display = 'none'; // Hide comments section if no reply is entered
         }
         console.log("Post id : " + postId);
-        
-       
+
+
     }
+<<<<<<< HEAD
 
     // For see more and see less comment section
 
@@ -351,5 +422,7 @@ function toggleMenu(dotIcon) {
 
 
     
+=======
+>>>>>>> 4e3da97849e9999a8339f3fe66fb888f30cfbb30
 </script>
 @endpush
