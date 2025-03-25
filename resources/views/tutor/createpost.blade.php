@@ -102,7 +102,7 @@
                         </div>
                         <div class="mb-3">
                             <select class="form-select" name="selected_student" id="floatingSelect" aria-label="Floating label select example">
-                                <option value="" {{ request('selected_student') == '' ? 'selected' : '' }} >Choose Student</option>
+                                <option value="" {{ request('selected_student') == '' ? 'selected' : '' }}>Choose Student</option>
                                 @foreach ($students as $student)
 <<<<<<< HEAD
                                 <option value="{{ $student->id }}" @if(@request()->student_filter == $student->id) selected @endif>{{ $student->first_name }} {{ $student->last_name }}</option>
