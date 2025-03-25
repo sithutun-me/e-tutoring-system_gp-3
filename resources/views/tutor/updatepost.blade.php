@@ -127,8 +127,7 @@
 
                         <button type="submit" class="btn btn-primary w-100 mt-2" style="background-color: #004AAD;">Update</button>
 
-                        
-                        <button name="delete-post" type="button" class="btn btn-outline-dark no-hover w-100 mt-2">Delete</button>
+                    
 
                     </form>
                 </div>

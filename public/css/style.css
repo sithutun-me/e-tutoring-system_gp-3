@@ -1162,6 +1162,10 @@ h6 {
 }
 
 
+.delete-btn{
+  margin-left: 10px;
+}
+
 .file-attachment {
   display: flex;
   align-items: center;
@@ -1332,6 +1336,7 @@ h6 {
 .edit-container .file-attachment a{
   font-family: "Poppins";
   font-size: 0.875rem;
+
 }
 
 .edit-container  .file-attachment button{
@@ -1406,6 +1411,11 @@ h6 {
   }
   .remove-file{
     margin-top: 10px;
+  }
+
+  .delete-btn{
+    margin-left: 0px;
+    margin-top: -4px;
   }
 
 
