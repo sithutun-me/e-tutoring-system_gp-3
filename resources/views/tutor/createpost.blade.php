@@ -87,24 +87,29 @@
                                 <option value="{{ $student->id }}" {{ old('selected_student') == $student->id ? 'selected' : '' }}>{{ $student->first_name }} {{ $student->last_name }}</option>
 =======
 
-                <div class="create-container" style="margin-left: 20px;">
+                <form id="postForm"
+                    action="{{ route('tutor.savepost') }}"
+                    method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="create_by" value="{{ $tutor->id }}">
+                    <div class="create-container" style="margin-left: 20px;">
 
 
-                    <div class="d-flex align-items-center mb-3">
-                        <div class="profile-img"><i class="fa-solid fa-circle-user"></i></div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="profile-img"><i class="fa-solid fa-circle-user"></i></div>
 
-                        <strong class="ms-2">{{ $tutor->first_name }} {{ $tutor->last_name }}</strong>
-                    </div>
-
-                    <form action="{{ route('tutor.saveposts') }}" method="POST" enctype="multipart/form-data">
-
-                        <input type="hidden" name="tutor_id">
+                            <strong class="ms-2">{{ $tutor->first_name }} {{ $tutor->last_name }}</strong>
+                        </div>
                         <div class="mb-3">
                             <select class="form-select" name="selected_student" id="floatingSelect" aria-label="Floating label select example">
-                                <option selected disabled>Choose Student</option>
+                                <option value="" {{ request('selected_student') == '' ? 'selected' : '' }} >Choose Student</option>
                                 @foreach ($students as $student)
+<<<<<<< HEAD
                                 <option value="{{ $student->id }}" @if(@request()->student_filter == $student->id) selected @endif>{{ $student->first_name }} {{ $student->last_name }}</option>
 >>>>>>> 0d52ebe (blogging functions):resources/views/tutor/createposts.blade.php
+=======
+                                <option value="{{ $student->id }}" {{ old('selected_student') == $student->id ? 'selected' : '' }}>{{ $student->first_name }} {{ $student->last_name }}</option>
+>>>>>>> f174df9 (blogging functions)
                                 @endforeach
                             </select>
                         </div>
@@ -116,20 +121,28 @@
 
 
                         <div class="mb-3">
+<<<<<<< HEAD
 <<<<<<< HEAD:resources/views/tutor/createpost.blade.php
                             <textarea class="form-control" rows="4" id="description" placeholder="Add Description" name="post_desc">{{ old('post_desc') }}</textarea>
 =======
                             <textarea class="form-control" rows="4" id="description" placeholder="Add Description" name="post_desc" value="{{ old('post_desc') }}"></textarea>
 >>>>>>> 0d52ebe (blogging functions):resources/views/tutor/createposts.blade.php
+=======
+                            <textarea class="form-control" rows="4" id="description" placeholder="Add Description" name="post_desc">{{ old('post_desc') }}</textarea>
+>>>>>>> f174df9 (blogging functions)
                         </div>
 
 
                         <div class="mb-3 mt-4">
+<<<<<<< HEAD
 <<<<<<< HEAD:resources/views/tutor/createpost.blade.php
                             <input type="file" id="file-input" name="post_files[]" class="form-control mb-3" multiple>
 =======
                             <input type="file" id="file-input" name="post_files" class="form-control mb-3" multiple>
 >>>>>>> 0d52ebe (blogging functions):resources/views/tutor/createposts.blade.php
+=======
+                            <input type="file" id="file-input" name="post_files[]" class="form-control mb-3" multiple>
+>>>>>>> f174df9 (blogging functions)
                             <small id="file-count">No file chosen</small>
                         </div>
 
@@ -137,6 +150,7 @@
                         <ul id="file-list" class="file-list" name="doc_files"></ul>
 
                         <button type="submit" class="btn btn-primary w-100 mt-2" style="background-color: #004AAD;">Post</button>
+<<<<<<< HEAD
 <<<<<<< HEAD:resources/views/tutor/createpost.blade.php
                     </div>
                 </form>
@@ -144,6 +158,10 @@
                     </form>
                 </div>
 >>>>>>> 0d52ebe (blogging functions):resources/views/tutor/createposts.blade.php
+=======
+                    </div>
+                </form>
+>>>>>>> f174df9 (blogging functions)
 
 
             </div>
