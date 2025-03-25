@@ -576,7 +576,11 @@ class TutorController extends Controller
         $comment->post_id = $id;
         // dd($id);
         $comment->user_id = Auth::user()->id;
+<<<<<<< HEAD
 
+=======
+       
+>>>>>>> c69ec17 (blogging functions)
         $comment->save();
 
         return redirect()->route('tutor.blogging')->with('success', 'Comment upload success!');
