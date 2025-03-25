@@ -25,118 +25,8 @@ h6 {
 /*--------------------------------------------------------------
 # Override some default Bootstrap stylings
 --------------------------------------------------------------*/
-/* Dropdown menus */
-.dropdown-menu {
-    border-radius: 4px;
-    padding: 10px 0;
-    animation-name: dropdown-animate;
-    animation-duration: 0.2s;
-    animation-fill-mode: both;
-    border: 0;
-    box-shadow: 0 5px 30px 0 rgba(82, 63, 105, 0.2);
-  }
 
-  .dropdown-menu .dropdown-header,
-  .dropdown-menu .dropdown-footer {
-    text-align: center;
-    font-size: 15px;
-    padding: 10px 25px;
-  }
-
-  .dropdown-menu .dropdown-footer a {
-    color: #444444;
-    text-decoration: underline;
-  }
-
-  .dropdown-menu .dropdown-footer a:hover {
-    text-decoration: none;
-  }
-
-  .dropdown-menu .dropdown-divider {
-    color: #a5c5fe;
-    margin: 0;
-  }
-
-  .dropdown-menu .dropdown-item {
-    font-size: 14px;
-    padding: 10px 15px;
-    transition: 0.3s;
-  }
-
-  .dropdown-menu .dropdown-item i {
-    margin-right: 10px;
-    font-size: 18px;
-    line-height: 0;
-  }
-
-  .dropdown-menu .dropdown-item:hover {
-    background-color: #f6f9ff;
-  }
-
-  @media (min-width: 768px) {
-    .dropdown-menu-arrow::before {
-      content: "";
-      width: 13px;
-      height: 13px;
-      background: #fff;
-      position: absolute;
-      top: -7px;
-      right: 20px;
-      transform: rotate(45deg);
-      border-top: 1px solid #eaedf1;
-      border-left: 1px solid #eaedf1;
-    }
-  }
-
-  @keyframes dropdown-animate {
-    0% {
-      opacity: 0;
-    }
-
-    100% {
-      opacity: 1;
-    }
-
-    0% {
-      opacity: 0;
-    }
-  }
-
-  /* Light Backgrounds */
-  .bg-primary-light {
-    background-color: #cfe2ff;
-    border-color: #cfe2ff;
-  }
-
-  .bg-secondary-light {
-    background-color: #e2e3e5;
-    border-color: #e2e3e5;
-  }
-
-  .bg-success-light {
-    background-color: #d1e7dd;
-    border-color: #d1e7dd;
-  }
-
-  .bg-danger-light {
-    background-color: #f8d7da;
-    border-color: #f8d7da;
-  }
-
-  .bg-warning-light {
-    background-color: #fff3cd;
-    border-color: #fff3cd;
-  }
-
-  .bg-info-light {
-    background-color: #cff4fc;
-    border-color: #cff4fc;
-  }
-
-  .bg-dark-light {
-    background-color: #d3d3d4;
-    border-color: #d3d3d4;
-  }
+/* Login Page */
 
   .col-12 button{
     background-color:  #004AAD ;
@@ -154,9 +44,9 @@ h6 {
     background-color: #F2F8FF  ;
   }
 
-  .login-title{
+  .login-h5 h5{
     font-family: "Poppins";
-    font-size: 26px;
+    font-size: 2rem;
     font-weight: bold;
     text-align: center;
     text-decoration: none;
@@ -165,11 +55,12 @@ h6 {
 
 
   /* Card */
-  .card {
+ .card {
     margin-bottom: 30px;
     border: none;
     border-radius: 5px;
     box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+  
   }
 
   .card-header,
@@ -182,7 +73,7 @@ h6 {
 
   .card-title {
     padding: 20px 0 15px 0;
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 700;
     color: #333333;
     font-family: "Poppins", sans-serif;
@@ -190,7 +81,7 @@ h6 {
 
   .card-title span {
     color: #899bbd;
-    font-size: 14px;
+    font-size: 0.8125rem;
     font-weight: 400;
   }
 
@@ -207,7 +98,7 @@ h6 {
   .alert-heading {
     font-weight: 500;
     font-family: "Poppins", sans-serif;
-    font-size: 20px;
+    font-size: 1.25rem;
   }
 
   /* Close Button */
@@ -249,13 +140,13 @@ h6 {
   .accordion-flush .accordion-body {
     padding: 0 0 15px 0;
     color: #3e4f6f;
-    font-size: 15px;
+    font-size: 0.875rem;
   }
 
   /* Breadcrumbs */
   .breadcrumb {
-    font-size: 14px;
-    font-family: "Nunito", sans-serif;
+    font-size: 0.875rem;
+    font-family: "Poppins", sans-serif;
     color: #899bbd;
     font-weight: 600;
   }
@@ -304,48 +195,1749 @@ h6 {
 
 /* Dashboard-nav */
 
-   #side_nav{
-    background:  #004AAD;
-    min-width: 250px;
-    max-width: 250px;
+
+  #side_nav{
+   
+    background: #004AAD;
+    min-width: 200px;
+    max-width: 200px;
     transition: all 0.3s;
-   }
-   .content{
-      min-height: 100vh;
-      width: 100%;
-   }
-   hr.h-color{
-     background: #eee;
-   }
+    
+    /* Sticky Positioning */
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 150vh;
+    overflow-y: auto; /* Enables scrolling if content overflows */
+  }
 
 
+  .content {
+    min-height: 100vh;
+    width: calc(100% - 200px); /* Adjust width to leave space for the sidebar */
+    margin-left: 200px; /* Shift content to the right */
+    transition: all 0.3s;
+  }
+  
+  hr.h-color{
+    background: #eee;
+  }
 
-   .sidebar li a:hover {
+  .sidebar li a:hover {
+  color: #fff;
+  }
+
+  .sidebar li a{
+  color: #fff;
+  font-family: "Poppins";
+  font-size: 1rem;
+  margin-bottom: 8px;
+  }
+
+ 
+  #side_nav.active li a {
     color: #fff;
-   }
-   .sidebar li a{
-    color: #fff;
-    font-family: "Poppins";
-    font-size: 16px;
-   }
+  }
+
+  /* active sidebar page  */
+
+  .sidebar li a.active {
+    background-color: #7895CB !important; 
+    color: #fff !important; 
+    border-radius: 5px !important;
+}
+
+  
 
    @media(max-width: 767px){
     #side_nav{
       margin-left: -250px;
       position: absolute;
-      min-height: 100vh;
+      min-height: 150vh;
       z-index: 1;
 
     }
     #side_nav.active{
       margin-left: 0;
      }
-   }
+     .content {
+      width: 100%;
+      margin-left: 0; /* Reset margin when sidebar is collapsed */
+    }
 
+  
+   }
 
    .col-12 button{
     background-color:  #004AAD ;
-    color: white;
+    color: #FFFFFF;
   }
+
+  /* Allocation to student lists -table responsive */
+  @media only screen and (max-width: 1200px){
+    #no-more-tables {
+      overflow-y: auto; 
+      overflow-x: scroll;
+      display: block; 
+    }
+
+    
+    #no-more-tables tbody,
+    #no-more-tables tr,
+    #no-more-tables td{
+      display: block;
+      
+    }
+    
+   
+    #no-more-tables thead tr{
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
+
+    #no-more-tables td{
+      position: relative;
+      padding-left: 40%;
+      border: none;
+      border-bottom: 1px solid #eee;
+    }
+
+    #no-more-tables td:before{
+      content: attr(data-title);
+      position: absolute;
+      left:6px ;
+      font-weight: bold;
+    }
+
+    #no-more-tables tr{
+      border-bottom: 1px solid #ccc ;
+    }
+
+  
+
+
+
+  }
+
+
+  @media only screen and (max-width: 900px){
+    .stu-button{
+      margin-left: 305px;
+     }
+
+  }
+
+  @media only screen and (max-width: 450px){
+    .stu-button{
+      margin-left: 167px;
+     }
+
+  }
+
+  @media only screen and (max-width: 420px){
+    .stu-button{
+      margin-left: 150px;
+     }
+
+  }
+
+  
+  @media only screen and (max-width: 400px){
+    .stu-button{
+      margin-left: 120px;
+     }
+
+  }
+  
+
+  
+
+  #no-more-tables .allocation-row, .assigned-row, .tutor-row, .student-row, .reallocation-row{
+    text-align: center;
+  }
+
+  .assigned-button {
+    display: flex;
+    gap: 5px; /* Adjust spacing between buttons */
+    flex-wrap: wrap; /* Allow wrapping if necessary */
+    justify-content: center; /* Center buttons */
+    align-items: center; /* Align items */
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+
+.assigned-button button {
+  flex-shrink: 1; /* Allows buttons to shrink within the container */
+}
+
+
+
+  /* admin allocation to student list table */
+
+  .custom-bg{
+    background-color: #004AAD;
+
+  }
+
+  .form-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.form-group button{
+  height: 40px;
+  color: #FFFFFF;
+  font-family: 'Poppins';
+  font-size: 0.875rem;
+  background-color: #004AAD;
+  width: 100px;
+}
+
+.form-group-table button{
+  height: 35px;
+  font-family: 'Poppins';
+  font-size: 1rem;
+  width: 100px;
+  margin-top: 3px;
+  margin-right: 2px;
+}
+
+
+
+/* Allocation Page Pagination container */
+#allocationTable_wrapper .dataTables_paginate {
+  margin-top: 15px;
+  text-align: center;
+ 
+}
+
+/* Allocation page pagination button styling */
+#allocationTable_wrapper .dataTables_paginate .paginate_button {
+  display: inline-block;
+  background-color: #FFFFFF !important;
+  color:  #92969c !important; 
+  border: 1px solid #D3D3D3 !important;
+  border-radius: 5px;
+  margin: 3px; /* Add spacing between buttons */
+  padding: 6px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Style the active page button */
+#allocationTable_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: #007bff !important; /* Blue background */
+  color: #FFFFFF !important; /* White text */
+  border: none !important;
+  font-weight: bold;
+}
+
+#allocationTable_wrapper .dataTables_paginate .paginate_button.disabled {
+  background-color: #fff !important;
+  color: #bfc1c4 !important;
+  cursor: not-allowed !important;
+  border-color: #bfc1c4 !important;
+  pointer-events: none;
+}
+
+/* Table Fixed height */
+
+
+#allocationTable {
+  width: 100%;
+  border-collapse: collapse; /* Ensures borders are merged */
+  table-layout: fixed; /* Prevents shifting */
+  height: 500px; /* Fixed height */
+  overflow-y: auto; /* Enable scrolling */
+}
+
+#allocationTable  tr, td{
+  border: 1px solid #D3D3D3;
+  border-collapse: collapse;
+}
+
+/* Header Styling */
+#allocationTable thead {
+  position: sticky;
+  top: 0;
+  background-color: #004AAD;
+  color: white;
+  z-index: 2;
+}
+
+/* Cell Borders - Ensures uniformity */
+#allocationTable th,
+#allocationTable td {
+  text-wrap: auto;
+  word-wrap: break-word;
+  padding: 10px; /* Consistent padding */
+}
+
+
+
+/* Fix Row Display */
+#allocationTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+#allocationTable {
+  height: 100%; /* Ensure the table fills the container */
+  table-layout: fixed; /* Prevent column width issues */
+}
+
+#allocationTable tbody {
+  display: block;
+  height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
+  overflow-y: auto; /* Enable scrolling inside tbody */
+  font-family: "Poppins";
+  font-size: 0.875rem;
+}
+
+#allocationTable thead,
+#allocationTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed; /* Ensures alignment */
+}
+
+.allocation-row td {
+  padding: 8px;
+  line-height: 1.8;
+  white-space: nowrap; /* Prevents breaking text */
+}
+
+/* Remove extra border under checkbox */
+#allocationTable thead th:first-child,
+#allocationTable tbody td:first-child {
+  border-bottom: none !important; /* Remove bottom border */
+
+}
+
+
+@media only screen and (min-width: 1200px){
+  #allocationTable .small-col {
+    width: 50px !important;
+  }
+  #allocationTable .medium-col {
+    width: 170px !important;
+  }
+
+}
+.assigned-row button {
+  font-size: 0.875rem;
+}
+
+/* Table Fixed height */
+
+
+#assignedTable {
+  width: 100%;
+  border-collapse: collapse; /* Ensures borders are merged */
+  table-layout: fixed; /* Prevents shifting */
+  height: 500px; /* Fixed height */
+  overflow-y: auto; /* Enable scrolling */
+}
+
+#assignedTable  tr, td{
+  border: 1px solid #D3D3D3;
+  border-collapse: collapse;
+}
+
+/* Header Styling */
+#assignedTable thead {
+  position: sticky;
+  top: 0;
+  background-color: #004AAD;
+  color: white;
+  z-index: 2;
+}
+
+/* Cell Borders - Ensures uniformity */
+#assignedTable th,
+#assignedTable td {
+
+  text-wrap: auto;
+  word-wrap: break-word;
+  padding: 10px; /* Consistent padding */
+}
+
+
+
+/* Fix Row Display */
+#assignedTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+#assignedTable {
+  height: 100%; /* Ensure the table fills the container */
+  table-layout: fixed; /* Prevent column width issues */
+}
+
+#assignedTable tbody {
+  display: block;
+  height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
+  overflow-y: auto; /* Enable scrolling inside for the tbody */
+  font-family: "Poppins";
+  font-size: 0.875rem;
+}
+
+#assignedTable thead,
+#assignedTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed; /* Ensures alignment */
+}
+
+
+
+
+.assigned-row td {
+  padding: 8px;
+  line-height: 1.8;
+  white-space: nowrap; /* Prevents breaking text */
+
+}
+
+/* Remove extra border under checkbox and button */
+#assignedTable thead th:first-child,
+#assignedTable tbody td:first-child {
+  border-bottom: none !important; /* Remove bottom border */
+ 
+}
+
+#assignedTable thead th:last-child,
+#assignedTable tbody td:last-child {
+  border-bottom: none !important; /* Remove bottom border */
+}
+
+
+
+@media only screen and (min-width: 1200px){
+  #assignedTable .small-col {
+    width: 50px !important;
+  }
+  #assignedTable .medium-col {
+    width: 150px !important;
+  }
+  #assignedTable .large-col {
+    width: 200px !important;
+  }
+
+}
+
+#assignedTable_wrapper .dataTables_paginate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 10px;
+  position: relative;
+}
+
+/* Pagination buttons styling */
+#assignedTable_wrapper .dataTables_paginate .paginate_button {
+  display: inline-block;
+  background-color: #FFFFFF !important;
+  color: #92969c !important;
+  border: 1px solid #D3D3D3 !important;
+  border-radius: 5px;
+  margin: 3px;
+  padding: 6px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Active page button */
+#assignedTable_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: #007bff !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  font-weight: bold;
+}
+
+/* Disabled button */
+#assignedTable_wrapper .dataTables_paginate .paginate_button.disabled {
+  background-color: #fff !important;
+  color: #bfc1c4 !important;
+  cursor: not-allowed !important;
+  border-color: #bfc1c4 !important;
+  pointer-events: none;
+}
+
+/* Hover effect */
+#assignedTable_wrapper .dataTables_paginate .paginate_button:hover {
+  background-color: #007bff !important;
+  color: #FFFFFF !important;
+}
+
+/* Responsive Design */
+@media only screen and (max-width: 800px) {
+  #assignedTable-container {
+    max-height: none;
+  }
+}
+
+
+/* Reallocation Page Pagination container */
+#reallocationTable_wrapper .dataTables_paginate {
+  margin-top: 15px;
+  text-align: center;
+  display: block !important;
+  text-align: center;
+ 
+}
+
+/* Assigned List Page pagination button styling */
+#reallocationTable_wrapper .dataTables_paginate .paginate_button {
+  display: inline-block;
+  background-color: #FFFFFF !important;
+  color:  #92969c !important; 
+  border: 1px solid #D3D3D3 !important;
+  border-radius: 5px;
+  margin: 3px; /* Add spacing between buttons */
+  padding: 6px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Style the active page button */
+#reallocationTable_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: #007bff !important; /* Blue background */
+  color: #FFFFFF !important; /* White text */
+  border: none !important;
+  font-weight: bold;
+}
+
+#reallocationTable_wrapper .dataTables_paginate .paginate_button.disabled {
+  background-color: #fff !important;
+  color: #bfc1c4 !important;
+  cursor: not-allowed !important;
+  border-color: #bfc1c4 !important;
+  pointer-events: none;
+}
+ 
+
+#reallocationTable {
+  width: 100%;
+  border-collapse: collapse; /* Ensures borders are merged */
+  table-layout: fixed; /* Prevents shifting */
+  height: 500px; /* Fixed height */
+  overflow-y: auto; /* Enable scrolling */
+}
+
+#reallocationTable tr, td{
+  border: 1px solid #D3D3D3;
+  border-collapse: collapse;
+}
+
+/* Header Styling */
+#reallocationTable thead {
+  position: sticky;
+  top: 0;
+  background-color: #004AAD;
+  color: white;
+  z-index: 2;
+}
+
+/* Cell Borders - Ensures uniformity */
+#reallocationTable th,
+#reallocationTable td {
+
+  text-wrap: auto;
+  word-wrap: break-word;
+  padding: 10px; /* Consistent padding */
+}
+
+
+@media only screen and (min-width: 1200px){
+  #reallocationTable .small-col {
+    width: 50px !important;
+  }
+  #reallocationTable .medium-col {
+    width: 170px !important;
+  }
+
+}
+
+/* Fix Row Display */
+#reallocationTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+#reallocationTable {
+  height: 100%; /* Ensure the table fills the container */
+  table-layout: fixed; /* Prevent column width issues */
+}
+
+#reallocationTable tbody {
+  display: block;
+  height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
+  overflow-y: auto; /* Enable scrolling inside tbody */
+  font-family: "Poppins";
+  font-size: 0.875rem;
+}
+
+#reallocationTable thead,
+#reallocationTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed; /* Ensures alignment */
+}
+
+
+.reallocation-row td {
+  padding: 8px;
+  line-height: 1.8;
+  white-space: nowrap; /* Prevents breaking text */
+}
+
+
+
+
+/* Hover effect */
+#reallocationTable_wrapper .dataTables_paginate .paginate_button:hover {
+  background-color: #007bff !important; /* Darker blue */
+  color: #FFFFFF !important;
+}
+
+
+/* Tutor Page Pagination container */
+#tutorTable_wrapper .dataTables_paginate {
+  margin-top: 15px;
+  text-align: center;
+ 
+}
+
+/* Assigned List Page pagination button styling */
+#tutorTable_wrapper .dataTables_paginate .paginate_button {
+  display: inline-block;
+  background-color: #FFFFFF !important;
+  color:  #92969c !important; /* Blue text */
+  border: 1px solid #D3D3D3 !important;
+  border-radius: 5px;
+  margin: 3px; /* Add spacing between buttons */
+  padding: 6px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Style the active page button */
+#tutorTable_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: #007bff !important; /* Blue background */
+  color: #FFFFFF !important; /* White text */
+  border: none !important;
+  font-weight: bold;
+}
+
+#tutorTable_wrapper .dataTables_paginate .paginate_button.disabled {
+  background-color: #fff !important;
+  color: #bfc1c4 !important;
+  cursor: not-allowed !important;
+  border-color: #bfc1c4 !important;
+  pointer-events: none;
+}
+
+
+
+/* Table Fixed height */
+
+
+#tutorTable {
+  width: 100%;
+  border-collapse: collapse; /* Ensures borders are merged */
+  table-layout: fixed; /* Prevents shifting */
+  height: 500px; /* Fixed height */
+  overflow-y: auto; /* Enable scrolling */
+}
+
+#tutorTable tr, td{
+  border: 1px solid #D3D3D3;
+  border-collapse: collapse;
+}
+
+/* Header Styling */
+#tutorTable thead {
+  position: sticky;
+  top: 0;
+  background-color: #004AAD;
+  color: white;
+  z-index: 2;
+}
+
+/* Cell Borders - Ensures uniformity */
+#tutorTable th,
+#tutorTable td {
+  text-wrap: auto;
+  word-wrap: break-word;
+  padding: 10px; /* Consistent padding */
+}
+
+@media only screen and (min-width: 1200px){
+  #tutorTable .small-col {
+    width: 50px !important;
+  }
+  #tutorTable .medium-col {
+    width: 170px !important;
+  }
+
+}
+
+
+/* Fix Row Display */
+#tutorTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+#tutorTable {
+  height: 100%; /* Ensure the table fills the container */
+  table-layout: fixed; /* Prevent column width issues */
+}
+
+#tutorTable tbody {
+  display: block;
+  height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
+  overflow-y: auto; /* Enable scrolling inside tbody */
+  font-family: "Poppins";
+  font-size: 0.875rem;
+}
+
+#tutorTable thead,
+#tutorTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed; /* Ensures alignment */
+}
+
+.tutor-row td {
+  padding: 8px;
+  line-height: 1.8;
+  white-space: nowrap; /* Prevents breaking text */
+}
+
+.tutor-row button{
+  font-size: 0.875rem;
+}
+
+#tutorTable thead th:last-child,
+#tutorTable tbody td:last-child {
+  border-bottom: none !important; /* Remove bottom border */
+}
+
+
+
+/* Hover effect */
+#tutorTable_wrapper .dataTables_paginate .paginate_button:hover {
+  background-color: #007bff !important; /* Darker blue */
+  color: #FFFFFF !important;
+}
+
+
+/*Student table Pagination*/
+#studentTable_wrapper .dataTables_paginate {
+  margin-top: 15px;
+  text-align: center;
+ 
+}
+
+/* General pagination button styling */
+#studentTable_wrapper .dataTables_paginate .paginate_button {
+  display: inline-block;
+  background-color: #FFFFFF !important;
+  color:  #92969c !important; /* Blue text */
+  border: 1px solid #D3D3D3 !important;
+  border-radius: 5px;
+  margin: 3px; /* Add spacing between buttons */
+  padding: 6px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Style the active page button */
+#studentTable_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: #007bff !important; /* Blue background */
+  color: #FFFFFF !important; /* White text */
+  border: none !important;
+  font-weight: bold;
+}
+
+#studentTable_wrapper .dataTables_paginate .paginate_button.disabled {
+  background-color: #fff !important;
+  color: #bfc1c4 !important;
+  border-color: #bfc1c4 !important;
+  pointer-events: none;
+}
+
+
+@media only screen and (min-width: 1200px){
+  #studentTable .small-col {
+    width: 50px !important;
+  }
+  #studentTable .medium-col {
+    width: 170px !important;
+  }
+
+}
+
+/* Table Fixed height */
+
+
+#studentTable {
+  width: 100%;
+  border-collapse: collapse; /* Ensures borders are merged */
+  table-layout: fixed; /* Prevents shifting */
+  height: 500px; /* Fixed height */
+  overflow-y: auto; /* Enable scrolling */
+}
+
+#studentTable tr, td{
+  border: 1px solid #D3D3D3;
+  border-collapse: collapse;
+}
+
+/* Header Styling */
+#studentTable thead {
+  position: sticky;
+  top: 0;
+  background-color: #004AAD;
+  color: white;
+  z-index: 2;
+}
+
+/* Cell Borders - Ensures uniformity */
+#studentTable th,
+#studentTable td {
+
+  text-wrap: auto;
+  word-wrap: break-word;
+  padding: 10px; /* Consistent padding */
+}
+
+
+
+/* Fix Row Display */
+#studentTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+#studentTable {
+  height: 100%; /* Ensure the table fills the container */
+  table-layout: fixed; /* Prevent column width issues */
+}
+
+#studentTable tbody {
+  display: block;
+  height: calc(500px - 40px); /* Adjust height to fit within the fixed container */
+  overflow-y: auto; /* Enable scrolling inside tbody */
+  font-family: "Poppins";
+  font-size: 0.875rem;
+}
+
+#studentTable thead,
+#studentTable tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed; /* Ensures alignment */
+}
+
+.student-row td {
+  padding: 8px;
+  line-height: 1.8;
+  white-space: nowrap; /* Prevents breaking text */
+}
+
+.student-row button {
+  font-size: 0.875rem;
+}
+
+#studentTable thead th:last-child,
+#studentTable tbody td:last-child {
+  border-bottom: none !important; /* Remove bottom border */
+}
+
+
+/* Hover effect */
+ .dataTables_paginate .paginate_button:hover {
+  background-color: #007bff !important; /* Darker blue */
+  color: #FFFFFF !important;
+}
+
+/* Responsive - Stack elements vertically on small screens */
+@media (max-width: 900px) {
+    .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+ 
+    }
+
+    .form-select {
+        width: 100%; /* Make the select box full-width */
+    }
+  
+
+    .form-select, .btn {
+      width: 100%; /* Make select box & button full-width */
+      margin-right: 20px;
+  }
+
+  #no-more-tables button{
+    margin-bottom: 20px;
+
+  }
+
+  
+  #no-more-tables .allocation-row, .assigned-row, .tutor-row, .student-row, .reallocation-row, .adminreport-row{
+    text-align: right;
+
+  }
+
+
+}
+
+/* Tutor report form-group respsonive */
+
+@media (max-width: 1024px) {
+  .form-group {
+      flex-direction: column; /* Stack the elements vertically */
+      align-items: stretch; /* Ensure elements stretch to fit the container */
+  }
+
+  .form-group select {
+      width: 100%; /* Allow form elements to take full width */
+  }
+
+  .form-group label {
+      width: 100%; /* Make sure labels take full width */
+      text-align: left; /* Align labels to the left for better readability */
+  }
+}
+
+
+/* Tutor Blogging */
+
+.post-container {
+  background: white;
+  /* width: 1250px;  */
+  padding: 20px;
+  margin-bottom: 45px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.post-container span{
+  font-size: 0.875rem;
+}
+
+.post-container-header{
+  font-family: "Poppins";
+}
+
+.edit-btn {
+  float: right;
+  height: 40px;
+  width: 100px; /* Ensuring consistent width */
+  display: flex;
+  align-items: center; /* Centers text vertically */
+  justify-content: center; /* Centers text horizontally */
+  text-align: center;
+}
+
+
+.delete-btn{
+  margin-left: 10px;
+}
+
+.file-attachment {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f1f1f1;
+  padding: 10px;
+  width: 300px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+ 
+}
+
+.post-container .file-attachment {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f1f1f1;
+  padding: 10px;
+  width: 400px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+}
+
+.file-attachment a {
+  margin-left: 20px;
+  word-wrap: break-word;
+  text-wrap: auto;
+ 
+}
+
+.post-title-desc{
+  font-family: "Poppins";
+}
+
+.post-title-desc .post-title{
+  font-size: 1.375rem;
+  font-weight: 600;
+}
+
+.post-title-desc .post-desc{
+  font-size: 0.875rem;
+}
+
+.comments-body{
+  word-wrap: break-word;
+  text-wrap: auto;
+  font-size: 0.875rem;
+  margin-bottom: 20px;
+ 
+}
+
+.comments {
+  margin-top: 8px;
+  padding: 10px;
+  border-radius: 5px;
+  font-family: "Poppins";
+}
+.edit-comment{
+  width: 60px;
+}
+.post-btn {
+  height: 40px;
+  background-color: #004AAD;
+  display: flex;
+
+ 
+}
+
+ .post a {
+  font-family: "Poppins";
+  font-size: 0.813rem;
+}
+
+.post button{
+  background-color: #004AAD;
+  font-family: "Poppins";
+  font-size: 0.813rem;
+  height: 40px;
+}
+
+
+
+.create-container {
+  width: 700px;
+  background: white;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  margin-left: 13px;
+
+}
+
+/* .parent-container {
+  display: flex;
+  width: 1280px;
+} */
+
+.edit-container {
+  width: 700px;
+  background: white;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  margin-left: 13px;
+  margin-bottom: 15px;
+
+}
+
+.edit-container .btn-outline-dark:hover {
+  background-color: transparent !important;
+  color: inherit !important;
+  border-color: inherit !important;
+}
+
+
+.profile-img {
+  font-size: 30px;
+  color: #808080;
+
+}
+
+.file-list {
+  list-style: none;
+  padding: 0;
+  width: 100%; /* Ensures it takes full width of the container */
+}
+
+.file-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8f9fa;
+  padding: 8px;
+  border-radius: 5px;
+  margin-top: 5px;
+  flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+  word-break: break-word; /* Prevents overflow by breaking long filenames */
+}
+
+/* Ensure the file name and remove button are responsive */
+.file-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.remove-file {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+  padding-left: 10px;
+}
+
+.edit-container  .file-attachment {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f1f1f1;
+  padding: 10px;
+  border-radius: 5px;
+  width: 250px;
+}
+
+.edit-container .file-attachment a{
+  font-family: "Poppins";
+  font-size: 0.875rem;
+
+}
+
+.edit-container  .file-attachment button{
+  width: 30px;
+}
+
+#floatingSelect , #add-title, #file-input{
+  font-family: "Poppins";
+  font-size: 0.875rem;
+}
+
+#description  {
+  font-size: 0.875rem; /* Adjust the size as needed */
+  font-family: "Poppins";
+
+}
+
+
+@media only screen and (max-width: 1100px) {
+  .edit-btn {
+    float: none;
+    margin-bottom: 10px;
+  }
+
+  .post-container {
+    width: 100%; /* Ensure responsiveness */
+    padding: 15px;
+  }
+
+  .post-container .file-attachment {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f1f1f1;
+    padding: 10px;
+    width: 350px;
+   
+  }
+
+  .create-container{
+    width: 100%;
+    background: white;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-left: 5px;
+    margin-bottom: 10px;
+    
+  }
+
+  /* .parent-container {
+    display: flex;
+    width: 100%;
+  } */
+  
+  .edit-container{
+    width: 100%;
+    background: white;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-left: 5px;
+    margin-bottom: 40px;
+  }
+ 
+  .file-list {
+    list-style: none;
+    padding: 0;
+    width: 320px; /* Ensures it takes full width of the container */
+  }
+  .file-list li {
+    flex-direction: column; /* Stack file name and remove button on smaller screens */
+ 
+  }
+  .remove-file{
+    margin-top: 10px;
+  }
+
+  .delete-btn{
+    margin-left: 0px;
+    margin-top: -4px;
+  }
+
+
+  .post-btn{
+    width: 150px;
+  }
+
+  .edit-container .file-attachment {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center elements */
+    gap: 5px;
+    background: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    width: 270px;
+    text-align: center; /* Ensure text stays centered */
+  }
+
+  .edit-container .file-attachment img {
+      width: 30px; /* Adjust icon size */
+  }
+
+  .edit-container .file-attachment a {
+      width: 100%;
+      word-wrap: break-word;
+      text-wrap: auto;
+      text-decoration: none;
+      color: black;
+  }
+
+  .edit-container .file-attachment button {
+      width: 30px;
+      margin-top: 3px; /* Add spacing between text and button */
+  }
+  .options-menu .delete-comment{
+    margin-top: 10px;
+  }
+  .options-menu .edit-comment{
+    margin-top: 10px;
+  }
+  .edit-comment{
+    width: 100%;
+  }
+
+  
+}
+
+@media only screen and (max-width: 420px) {
+  .create-container {
+    width: 100%;
+    background: white;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-left: 10px;
+  
+  }
+
+  .edit-container {
+    width: 100%;
+    background: white;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-left: 5px;
+  
+  }
+
+  .post-container .file-attachment {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f1f1f1;
+    padding: 10px;
+    width: 300px;
+   
+  }
+
+}
+
+/* .modal {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #ffdddd;
+  padding: 20px;
+  border: 1px solid #ff0000;
+  border-radius: 10px;
+}
+.modal-content h4 {
+  color: #000;
+} */
+
+
+/* Student and Tutor Report Page */
+
+.tabs {
+  display: flex;
+  margin: 10px 0;
+  margin-top: 20px;
+
+}
+.tabs button {
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  border: 1px solid #004AAD;
+  background-color: #FDFAF6;
+  width: 200px;
+  height: 50px;
+  font-family: "Poppins";
+
+}
+/* Left-most button (rounds left side) */
+.tabs button:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+/* Right-most button (rounds right side) */
+.tabs button:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.tabs .active {
+  background: #004AAD;
+  color: #fff;
+ 
+  
+}
+.content-area {
+  display: none;
+}
+.content-area.active {
+  display: block;
+}
+
+#selectmonth {
+  font-size: 0.875rem; /* Set dropdown font size */
+  font-family: "Poppins";
+}
+
+#selectmonth option {
+  font-size: 0.875rem; /* Set font size for dropdown options */
+  font-family: "Poppins";
+}
+
+
+.studentreport {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  
+}
+.studentreport thead {
+  background: #004AAD;
+  color: white;
+  
+}
+/* .studentreport th, .studentreport td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  border-collapse: collapse;
+  border: 1px solid #D3D3D3;
+} */
+
+/* .studentreport-container {
+  height: 400px; 
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+} */
+
+.studentreport {
+  width: 100%;
+  table-layout: fixed; /* Prevents layout shift */
+  border-collapse: collapse;
+  height: 100%;
+}
+
+.studentreport tbody {
+  display: block;
+  overflow-y: auto;
+  height: 400px; /* Adjust based on your needs */
+  font-family: "Poppins";
+  font-size: 0.875rem;
+}
+
+.studentreport thead,
+.studentreport tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+
+.studentreport {
+width: 100%;
+border-collapse: collapse;
+}
+
+.studentreport th, 
+.studentreport td {
+padding: 10px;
+text-align: center;
+border-top: 1px solid #D3D3D3;  /* Keeps horizontal lines */
+border-bottom: 1px solid #D3D3D3; /* Keeps horizontal lines */
+border-left: none;  /* Remove vertical borders */
+border-right: none; /* Remove vertical borders */
+}
+
+/* Keep the first column's left border */
+.studentreport th:first-child, 
+.studentreport td:first-child {
+border-left: 1px solid #D3D3D3;
+}
+
+/* Keep the last column's right border */
+.studentreport th:last-child, 
+.studentreport td:last-child {
+border-right: 1px solid #D3D3D3;
+}
+
+
+
+@media only screen and (min-width: 1200px){
+  #studentreportTable .small-col {
+    width: 50px !important;
+  }
+
+}
+
+/* @media only screen and (min-width: 1200px){
+
+
+  #studentreportTabletu .small-col {
+    width: 50px !important;
+  }
+
+  #studentreportTabletu thead .small-col {
+    width: 50px !important;
+}
+
+
+
+} */
+
+/* Pagination */
+
+#studentreportTable_wrapper .dataTables_wrapper {
+  min-height: 450px; /* Ensures consistent height */
+}
+
+#studentreportTable_wrapper .dataTables_paginate {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+}
+
+#studentreportTable_wrapper .dataTables_paginate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 10px;
+  position: relative;
+}
+
+/* Pagination buttons styling */
+#studentreportTable_wrapper .dataTables_paginate .paginate_button {
+  display: inline-block;
+  background-color: #FFFFFF !important;
+  color: #92969c !important;
+  border: 1px solid #D3D3D3 !important;
+  border-radius: 5px;
+  margin: 3px;
+  padding: 6px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Active page button */
+#studentreportTable_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: #007bff !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  font-weight: bold;
+}
+
+/* Disabled button */
+#studentreportTable_wrapper .dataTables_paginate .paginate_button.disabled {
+  background-color: #fff !important;
+  color: #bfc1c4 !important;
+  cursor: not-allowed !important;
+  border-color: #bfc1c4 !important;
+  pointer-events: none;
+}
+
+/* Hover effect */
+#studentreportTable_wrapper .dataTables_paginate .paginate_button:hover {
+  background-color: #007bff !important;
+  color: #FFFFFF !important;
+}
+
+.tutor-container {
+  font-family: "Poppins";
+  font-size: 1rem;
+}
+
+.tutorreport {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+.tutorreport thead {
+  background: #004AAD;
+  color: white;
+}
+/* .tutorreport th, .tutorreport td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  border-collapse: collapse;
+  border: 1px solid #D3D3D3;
+} */
+
+.tutorreport-container {
+  height: 400px; /* Adjust as needed */
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.tutorreport {
+  width: 100%;
+  table-layout: fixed; /* Prevents layout shift */
+  border-collapse: collapse;
+  height: 100%;
+}
+
+.tutorreport tbody {
+  display: block;
+  overflow-y: auto;
+  /* height: 400px;  */
+  font-family: "Poppins";
+  font-size: 0.875rem;
+
+}
+
+.tutorreport thead,
+.tutorreport tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+
+.tutorreport {
+width: 100%;
+border-collapse: collapse;
+}
+
+.tutorreport th, 
+.tutorreport td {
+padding: 10px;
+text-align: center;
+border-top: 1px solid #D3D3D3;  /* Keeps horizontal lines */
+border-bottom: 1px solid #D3D3D3; /* Keeps horizontal lines */
+border-left: none;  /* Remove vertical borders */
+border-right: none; /* Remove vertical borders */
+}
+
+/* Keep the first column's left border */
+.tutorreport th:first-child, 
+.tutorreport td:first-child {
+border-left: 1px solid #D3D3D3;
+}
+
+/* Keep the last column's right border */
+.tutorreport th:last-child, 
+.tutorreport td:last-child {
+border-right: 1px solid #D3D3D3;
+}
+
+@media only screen and (min-width: 1200px){
+  #tutorreportTable .small-col {
+    width: 50px !important;
+  }
+
+ 
+
+}
+
+/* Default sorting arrow color */
+/* table.dataTable thead .sorting::after,
+table.dataTable thead .sorting::before,
+table.dataTable thead .sorting_asc::after,
+table.dataTable thead .sorting_desc::after {
+    color: red !important; 
+    opacity: 1; 
+} */
+
+/* When sorting is active (ascending) /* Change color for ascending sort */
+/* table.dataTable thead .sorting_asc::after {
+    color: green !important; 
+} */
+
+/* When sorting is active (descending) /* Change color for descending sort */
+/* table.dataTable thead .sorting_desc::after {
+    color: blue !important; 
+} */
+
+
+/* Pagination */
+
+#tutorreportTable_wrapper .dataTables_wrapper {
+  min-height: 450px; /* Ensures consistent height */
+}
+
+#tutorreportTable_wrapper .dataTables_paginate {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#tutorreportTable_wrapper .dataTables_paginate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 10px;
+  position: relative;
+}
+
+/* Pagination buttons styling */
+#tutorreportTable_wrapper .dataTables_paginate .paginate_button {
+  display: inline-block;
+  background-color: #FFFFFF !important;
+  color: #92969c !important;
+  border: 1px solid #D3D3D3 !important;
+  border-radius: 5px;
+  margin: 3px;
+  padding: 6px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Active page button */
+#tutorreportTable_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: #007bff !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  font-weight: bold;
+}
+
+/* Disabled button */
+#tutorreportTable_wrapper .dataTables_paginate .paginate_button.disabled {
+  background-color: #fff !important;
+  color: #bfc1c4 !important;
+  cursor: not-allowed !important;
+  border-color: #bfc1c4 !important;
+  pointer-events: none;
+}
+
+/* Hover effect */
+#tutorreportTable_wrapper .dataTables_paginate .paginate_button:hover {
+  background-color: #007bff !important;
+  color: #FFFFFF !important;
+}
+
+
+@media (max-width: 768px) {
+  .tabs {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  }
+
+
+  .studentreport{
+    margin-top: 10px;
+  }
+
+  .tutorreport{
+    margin-top: 10px;
+  }
+
+  .tutorreport tbody {
+    display: block;
+    overflow-y: auto;
+    height: 400px; 
+    font-family: "Poppins";
+    font-size: 0.875rem;
+  
+  }
+
+
+}
+
+@media (max-width: 1200px) {
+ 
+  .tutorreport tbody {
+    display: block;
+    overflow-y: auto;
+    height: 400px; 
+    font-family: "Poppins";
+    font-size: 0.875rem;
+  
+  }
+
+
+}
 
 
