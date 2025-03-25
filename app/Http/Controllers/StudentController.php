@@ -17,12 +17,15 @@ class StudentController extends Controller
         $tutorId = DB::table('allocation')
                 ->where('student_id', $studentId)
                 ->value('tutor_id'); 
+<<<<<<< HEAD
 
         $tutorName = DB::table('users')
         ->where('id', $tutorId)
         ->selectRaw('CONCAT(first_name, " ", last_name) as full_name')
         ->value('full_name');
             
+=======
+>>>>>>> a6d6ce5 (student dashboard backend)
         
         $postCount = DB::table('post')
             ->where('post_create_by', $tutorId)
@@ -50,7 +53,11 @@ class StudentController extends Controller
                         'students.last_name'
                     )
                     ->get();
+<<<<<<< HEAD
         return view('student.dashboard',compact('postCount','meetings','tutorName'));
+=======
+        return view('student.dashboard',compact('postCount','meetings'));
+>>>>>>> a6d6ce5 (student dashboard backend)
     }
     //for dashboard
     public function getMeetingPieData(){

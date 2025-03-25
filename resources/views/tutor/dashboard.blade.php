@@ -151,7 +151,11 @@
                                                         </td>
                                                     </tr>
                                                 @endforeach
+<<<<<<< HEAD
 
+=======
+                                              
+>>>>>>> a6d6ce5 (student dashboard backend)
                                             </tbody>
 
                                         </table>
