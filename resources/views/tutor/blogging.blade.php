@@ -60,10 +60,6 @@
                                 </select>
                             </div>
 
-                            <div class="postSearch col-md-3 mb-2 d-flex justify-content-center align-items-center">
-
-                                    <input id="postSearch" name="search_post" class="form-control" type="search" placeholder="Search here" aria-label="Search" value="">
-                            </div>
 
                             <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
                                 <select class="form-select form--control" name="student_filter" id="studentFilter" aria-label="Floating label select example">
@@ -73,6 +69,12 @@
                                     @endforeach
                                 </select>
                             </div>
+
+                            <div class="postSearch col-md-3 mb-2 d-flex justify-content-center align-items-center">
+
+                                    <input id="postSearch" name="search_post" class="form-control" type="search" placeholder="Search here" aria-label="Search" value="">
+                            </div>
+                            
                             <div class="col-md-3 mb-2 d-flex flex-column align-items-start">
                                 <div class=" text-center">
                                     <button type="submit" class=" btn btn-primary shadow-none " >Search</button>
@@ -138,16 +140,7 @@
                                 <span class="date me-1" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($post->updated_at)->format('d M Y') }}</span>
                                 <span class="time me-4" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($post->updated_at)->format('h:m A') }}</span>
 
-                                    <!-- Three-dot Menu next to Time -->
-                                    <span class="three-dots" onclick="toggleMenu(this)" style="cursor: pointer; vertical-align: middle;">
-                                        <i class="fa-solid fa-ellipsis-vertical" ></i>
-                                    </span>
-                                    
-                                    <!-- Hidden Edit & Delete Options -->
-                                    <span class="ms-2 options-menu" style="display: none;">
-                                        <button class="edit-comment btn btn-primary">Edit</button>
-                                        <button class="delete-comment btn btn-danger" style="background-color: #d9534f;" >Delete</button>
-                                    </span>
+                                   
 
                             </p>
                             <p class="comments-body" style="margin-left: 30px;">{{ $comment->text }}</p>
@@ -155,9 +148,10 @@
                         </div>
                        
                         @endforeach
-                        <!-- Show More Button -->
-                            <button id="showMoreBtn" class="btn btn-primary mt-2" style="display: none;">See More</button>
-                            <button id="showLessBtn" class="btn btn-primary mt-2" style="display: none;">See Less</button>
+                            <!-- See More & See less Button -->
+                            <!-- Unique Show More & Show Less Buttons for each post -->
+                            <button class="btn btn-primary show-more-btn mt-2" data-post-id="{{ $post->id }}" style="display: none;">See More</button>
+                            <button class="btn btn-primary show-less-btn mt-2" data-post-id="{{ $post->id }}" style="display: none;">See Less</button>
                         </div>
 
                         <form action="{{ route('tutor.postcomment', $post->id) }}" method="POST" enctype="multipart/form-data" id="commentForm_{{ $post->id }}" class="comment-form">
@@ -263,41 +257,84 @@
 
     // For see more and see less comment section
 
-    document.addEventListener("DOMContentLoaded", function () {
-    let comments = document.querySelectorAll('#commentsSection .comment-item');
-    let showMoreBtn = document.getElementById('showMoreBtn');
-    let showLessBtn = document.getElementById('showLessBtn');
+//     document.addEventListener("DOMContentLoaded", function () {
+//     let comments = document.querySelectorAll('#commentsSection .comment-item');
+//     let showMoreBtn = document.getElementById('showMoreBtn');
+//     let showLessBtn = document.getElementById('showLessBtn');
 
-    // Hide comments beyond the first 3
-    if (comments.length > 3) {
-        comments.forEach((comment, index) => {
-            if (index >= 3) {
-                comment.style.display = "none";
-            }
-        });
+//     // Hide comments beyond the first 3
+//     if (comments.length > 3) {
+//         comments.forEach((comment, index) => {
+//             if (index >= 3) {
+//                 comment.style.display = "none";
+//             }
+//         });
 
-        // Show "Show More" button if more than 3 comments exist
-        showMoreBtn.style.display = "block";
+//         // Show "Show More" button if more than 3 comments exist
+//         showMoreBtn.style.display = "block";
 
-        // "Show More" Button Click Event
-        showMoreBtn.addEventListener("click", function () {
-            comments.forEach(comment => comment.style.display = "block");
-            showMoreBtn.style.display = "none"; // Hide Show More button
-            showLessBtn.style.display = "block"; // Show Show Less button
-        });
+//         // "Show More" Button Click Event
+//         showMoreBtn.addEventListener("click", function () {
+//             comments.forEach(comment => comment.style.display = "block");
+//             showMoreBtn.style.display = "none"; // Hide Show More button
+//             showLessBtn.style.display = "block"; // Show Show Less button
+//         });
 
-        // "Show Less" Button Click Event
-        showLessBtn.addEventListener("click", function () {
+//         // "Show Less" Button Click Event
+//         showLessBtn.addEventListener("click", function () {
+//             comments.forEach((comment, index) => {
+//                 if (index >= 3) {
+//                     comment.style.display = "none"; // Hide comments beyond the first 3
+//                 }
+//             });
+//             showMoreBtn.style.display = "block"; // Show Show More button
+//             showLessBtn.style.display = "none"; // Hide Show Less button
+//         });
+//     }
+// });
+
+
+   // For see more and see less comment section
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll('.comments').forEach(commentsSection => {
+        let comments = commentsSection.querySelectorAll('.comment-item');
+        let showMoreBtn = commentsSection.querySelector('.show-more-btn');
+        let showLessBtn = commentsSection.querySelector('.show-less-btn');
+
+        // Ensure at least 3 comments exist before hiding
+        if (comments.length > 3) {
             comments.forEach((comment, index) => {
                 if (index >= 3) {
-                    comment.style.display = "none"; // Hide comments beyond the first 3
+                    comment.style.display = "none"; // Hide extra comments
                 }
             });
-            showMoreBtn.style.display = "block"; // Show Show More button
-            showLessBtn.style.display = "none"; // Hide Show Less button
-        });
-    }
+
+            // Show "See More" button
+            showMoreBtn.style.display = "block";
+
+            // Show More Click Event (Scoped to Current Post)
+            showMoreBtn.addEventListener("click", function () {
+                comments.forEach(comment => comment.style.display = "block"); // Show all comments
+                showMoreBtn.style.display = "none";  // Hide "See More" button
+                showLessBtn.style.display = "block"; // Show "See Less" button
+            });
+
+            // Show Less Click Event (Scoped to Current Post)
+            showLessBtn.addEventListener("click", function () {
+                comments.forEach((comment, index) => {
+                    if (index >= 3) {
+                        comment.style.display = "none"; // Hide comments beyond the first 3
+                    }
+                });
+                showMoreBtn.style.display = "block";  // Show "See More" button
+                showLessBtn.style.display = "none";   // Hide "See Less" button
+            });
+        }
+    });
 });
+
+
 
 // Three dot menu for edit and delete btn
 
