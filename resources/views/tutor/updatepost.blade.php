@@ -101,13 +101,13 @@
 
 
                         <div class="mb-3">
-                            <textarea class="form-control" rows="4" name="update_desc" placeholder="Add Description">{{ $post->post_description }}</textarea>
+                            <textarea class="form-control" rows="4" id="description" name="update_desc" placeholder="Add Description">{{ $post->post_description }}</textarea>
                         </div>
 
                         @foreach ($post->documents as $document)
 
                         <div class="file-attachment w-100 position-relative" id="file-attachment-{{ $document->id }}">
-                            <img src="/icon images/word.png" width="30" alt="File">
+                            <img src="/icon images/document.png" width="30" alt="File">
                             <a href="" style="text-decoration: none; color:black;" target="_blank">{{ $document->doc_name }}</a>
 
                             <!-- Note:: this is for the file remove used with javascript for now -->
