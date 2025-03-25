@@ -273,7 +273,7 @@ h6 {
     color: #FFFFFF;
   }
 
-  /* Allocation-table */
+  /* Allocation to student lists -table responsive */
   @media only screen and (max-width: 1200px){
     #no-more-tables {
       overflow-y: auto; 
@@ -314,9 +314,7 @@ h6 {
       border-bottom: 1px solid #ccc ;
     }
 
-   .assign-btn{
-    margin-left: 10px;
-   }
+  
 
 
 
@@ -375,7 +373,7 @@ h6 {
 
 
 
-  /* admin table */
+  /* admin allocation to student list table */
 
   .custom-bg{
     background-color: #004AAD;
@@ -406,8 +404,6 @@ h6 {
   margin-top: 3px;
   margin-right: 2px;
 }
-
-
 
 
 
@@ -1113,13 +1109,25 @@ h6 {
 
   }
 
-  .bulkre-btn{
-    margin-left: 10px;
+
+}
+
+/* Tutor report form-group respsonive */
+
+@media (max-width: 1024px) {
+  .form-group {
+      flex-direction: column; /* Stack the elements vertically */
+      align-items: stretch; /* Ensure elements stretch to fit the container */
   }
 
+  .form-group select {
+      width: 100%; /* Allow form elements to take full width */
+  }
 
- 
- 
+  .form-group label {
+      width: 100%; /* Make sure labels take full width */
+      text-align: left; /* Align labels to the left for better readability */
+  }
 }
 
 
@@ -1274,8 +1282,9 @@ h6 {
   font-size: 0.875rem;
 }
 
-textarea::placeholder {
+#description  {
   font-size: 0.875rem; /* Adjust the size as needed */
+  font-family: "Poppins";
 
 }
 
@@ -1336,9 +1345,10 @@ textarea::placeholder {
   .edit-container  .file-attachment button{
     width: 30px;
   }
+  
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 420px) {
   .create-container {
     width: 100%;
     background: white;
@@ -1674,6 +1684,7 @@ border-right: 1px solid #D3D3D3;
   #tutorreportTable .small-col {
     width: 50px !important;
   }
+
  
 
 }
@@ -1710,6 +1721,7 @@ table.dataTable thead .sorting_desc::after {
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
+  margin-bottom: 10px;
 }
 
 #tutorreportTable_wrapper .dataTables_paginate {
@@ -1776,6 +1788,30 @@ table.dataTable thead .sorting_desc::after {
     margin-top: 10px;
   }
 
+  .tutorreport tbody {
+    display: block;
+    overflow-y: auto;
+    height: 400px; 
+    font-family: "Poppins";
+    font-size: 0.875rem;
+  
+  }
+
 
 }
+
+@media (max-width: 1200px) {
+ 
+  .tutorreport tbody {
+    display: block;
+    overflow-y: auto;
+    height: 400px; 
+    font-family: "Poppins";
+    font-size: 0.875rem;
+  
+  }
+
+
+}
+
 

@@ -100,6 +100,12 @@
                         </div>
 
 
+<<<<<<< HEAD:resources/views/tutor/updatepost.blade.php
+=======
+                            <div class="mb-3">
+                                <textarea class="form-control" rows="4" id="description" placeholder="Add Description" ></textarea>
+                            </div>
+>>>>>>> 61b59a0 (tutor report and student report filter fix):resources/views/tutor/updateposts.blade.php
 
                         <div class="mb-3">
                             <textarea class="form-control" rows="4" name="update_desc" placeholder="Add Description">{{ $post->post_description }}</textarea>

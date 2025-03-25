@@ -62,7 +62,7 @@
                         </div>
                         <div id="students" class="content-area active">
                             <div class="form-group mt-5 mb-3">
-                                <label for="selectmonth" class="sort-label" style="font-family: 'Poppins'; font-size:0.875rem; ">Sort by Months</label>
+                                <label for="selectmonth" class="sort-label" style="font-family: 'Poppins'; font-size:0.875rem; ">Search by Month</label>
                                 <select class="form-select" id="selectmonth" aria-label="Floating label select example" style="width: 320px;">
                                     <option selected>All</option>
                                     <option value="January">January</option>
@@ -71,115 +71,116 @@
                                 </select>
                                 <!-- <button type="submit" name="submit" class="btn btn-primary shadow-none">Search</button> -->
                             </div>
-                        <div class="table-responsive" id="no-more-tables">
-                            <table  class="studentreport" id="studentreportTable">
-                                <thead>
-                                    <tr>
-                                        <th class="small-col">No.</th>
-                                        <th class="text-center">Month</th>
-                                        <th class="text-center">Posts</th>
-                                        <th class="text-center">Comments</th>
-                                        <th class="text-center">Documents</th>
-                                        <th class="text-center">Meetings</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="studentreport-row">
-                                    <tr>
-                                        <td class="small-col" data-title="No.">1.</td>
-                                        <td data-title="Month">January</td>
-                                        <td data-title="Posts">8</td>
-                                        <td data-title="Comments">15</td>
-                                        <td data-title="Documents">5</td>
-                                        <td data-title="Meetings">5</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">1.</td>
-                                        <td data-title="Month">February</td>
-                                        <td data-title="Posts">8</td>
-                                        <td data-title="Comments">15</td>
-                                        <td data-title="Documents">5</td>
-                                        <td data-title="Meetings">5</td>
-                                    </tr> 
-                                    <tr>
-                                        <td class="small-col" data-title="No.">1.</td>
-                                        <td data-title="Month">March</td>
-                                        <td data-title="Posts">8</td>
-                                        <td data-title="Comments">15</td>
-                                        <td data-title="Documents">5</td>
-                                        <td data-title="Meetings">5</td>
-                                    </tr> 
-                                    <tr>
-                                        <td class="small-col" data-title="No.">1.</td>
-                                        <td data-title="Month">March</td>
-                                        <td data-title="Posts">8</td>
-                                        <td data-title="Comments">15</td>
-                                        <td data-title="Documents">5</td>
-                                        <td data-title="Meetings">5</td>
-                                    </tr>
+
+                            <div class="table-responsive" id="no-more-tables">
+                                <table  class="studentreport" id="studentreportTable">
+                                    <thead>
+                                        <tr>
+                                            <th class="small-col">No.</th>
+                                            <th class="text-center">Month</th>
+                                            <th class="text-center">Posts</th>
+                                            <th class="text-center">Comments</th>
+                                            <th class="text-center">Documents</th>
+                                            <th class="text-center">Meetings</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="studentreport-row">
+                                        <tr>
+                                            <td class="small-col" data-title="No.">1.</td>
+                                            <td data-title="Month">January</td>
+                                            <td data-title="Posts">8</td>
+                                            <td data-title="Comments">15</td>
+                                            <td data-title="Documents">5</td>
+                                            <td data-title="Meetings">5</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="small-col" data-title="No.">1.</td>
+                                            <td data-title="Month">February</td>
+                                            <td data-title="Posts">8</td>
+                                            <td data-title="Comments">15</td>
+                                            <td data-title="Documents">5</td>
+                                            <td data-title="Meetings">5</td>
+                                        </tr> 
+                                        <tr>
+                                            <td class="small-col" data-title="No.">1.</td>
+                                            <td data-title="Month">March</td>
+                                            <td data-title="Posts">8</td>
+                                            <td data-title="Comments">15</td>
+                                            <td data-title="Documents">5</td>
+                                            <td data-title="Meetings">5</td>
+                                        </tr> 
+                                        <tr>
+                                            <td class="small-col" data-title="No.">1.</td>
+                                            <td data-title="Month">March</td>
+                                            <td data-title="Posts">8</td>
+                                            <td data-title="Comments">15</td>
+                                            <td data-title="Documents">5</td>
+                                            <td data-title="Meetings">5</td>
+                                        </tr>
+                                        
                                     
-                                  
-                                </tbody>
-                            </table>
-                        </div>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         <div id="tutors" class="content-area">
                             <div class="tutor-container mt-4">
                                 <p class="tutor-text">Current Tutor - <span class="tutor-name">Margrat Qualley</span></p>
                             </div>
                             
-                        <div class="table-responsive" id="no-more-tables">
-                            <table class="studentreport" id="studentreportTable">
-                            <thead>
-                                    <tr>
-                                        <th class="small-col">No.</th>
-                                        <th class="text-center">Month</th>
-                                        <th class="text-center">Posts</th>
-                                        <th class="text-center">Comments</th>
-                                        <th class="text-center">Documents</th>
-                                        <th class="text-center">Meetings</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="studentreport-row">
-                                    <tr>
-                                        <td class="small-col" data-title="No.">1.</td>
-                                        <td data-title="Month">January</td>
-                                        <td data-title="Posts">8</td>
-                                        <td data-title="Comments">15</td>
-                                        <td data-title="Documents">5</td>
-                                        <td data-title="Meetings">5</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">1.</td>
-                                        <td data-title="Month">February</td>
-                                        <td data-title="Posts">8</td>
-                                        <td data-title="Comments">15</td>
-                                        <td data-title="Documents">5</td>
-                                        <td data-title="Meetings">5</td>
-                                    </tr> 
-                                    <tr>
-                                        <td class="small-col" data-title="No.">1.</td>
-                                        <td data-title="Month">March</td>
-                                        <td data-title="Posts">8</td>
-                                        <td data-title="Comments">15</td>
-                                        <td data-title="Documents">5</td>
-                                        <td data-title="Meetings">5</td>
-                                    </tr> 
-                                    <tr>
-                                        <td class="small-col" data-title="No.">1.</td>
-                                        <td data-title="Month">March</td>
-                                        <td data-title="Posts">8</td>
-                                        <td data-title="Comments">15</td>
-                                        <td data-title="Documents">5</td>
-                                        <td data-title="Meetings">5</td>
-                                    </tr>
-                                    
-                                </tbody>
-                            </table>
-                        </div>
+                            <div class="table-responsive" id="no-more-tables">
+                                <table class="studentreport" id="studentreportTable">
+                                <thead>
+                                        <tr>
+                                            <th class="small-col">No.</th>
+                                            <th class="text-center">Month</th>
+                                            <th class="text-center">Posts</th>
+                                            <th class="text-center">Comments</th>
+                                            <th class="text-center">Documents</th>
+                                            <th class="text-center">Meetings</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="studentreport-row">
+                                        <tr>
+                                            <td class="small-col" data-title="No.">1.</td>
+                                            <td data-title="Month">January</td>
+                                            <td data-title="Posts">8</td>
+                                            <td data-title="Comments">15</td>
+                                            <td data-title="Documents">5</td>
+                                            <td data-title="Meetings">5</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="small-col" data-title="No.">1.</td>
+                                            <td data-title="Month">February</td>
+                                            <td data-title="Posts">8</td>
+                                            <td data-title="Comments">15</td>
+                                            <td data-title="Documents">5</td>
+                                            <td data-title="Meetings">5</td>
+                                        </tr> 
+                                        <tr>
+                                            <td class="small-col" data-title="No.">1.</td>
+                                            <td data-title="Month">March</td>
+                                            <td data-title="Posts">8</td>
+                                            <td data-title="Comments">15</td>
+                                            <td data-title="Documents">5</td>
+                                            <td data-title="Meetings">5</td>
+                                        </tr> 
+                                        <tr>
+                                            <td class="small-col" data-title="No.">1.</td>
+                                            <td data-title="Month">March</td>
+                                            <td data-title="Posts">8</td>
+                                            <td data-title="Comments">15</td>
+                                            <td data-title="Documents">5</td>
+                                            <td data-title="Meetings">5</td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
 
 
-                    </div>
+                </div>
 
 
                    
@@ -192,7 +193,7 @@
         </div>
     </div>
 
-    </div>
+</div>
 @endsection
 @push('scripts')
     <!-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>

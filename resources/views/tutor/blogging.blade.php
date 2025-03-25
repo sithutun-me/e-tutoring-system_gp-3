@@ -38,6 +38,177 @@
                 <div class="d-flex justify-content-between d-md-none d-block">
                     <button class="btn px-1 py-0 open-btn me-2"><i class="fa-solid fa-bars"></i></button>
                 </div>
+<<<<<<< HEAD
+=======
+            </nav>
+
+            <div class="dashboard-content px-3 pt-4">
+            <h2 class="fs-2 fw-bold">Posts</h2>
+
+                <div class="post mt-4" >
+                       
+                       <div class="text-center fit mb-2">
+                        <a href="/tutor/createposts" class="post-btn btn btn-primary shadow-none mb-3" style="background-color: #004AAD;">+ Start a post</a>
+                       </div>
+
+                       <div class="form-group mb-4 row">
+                            <div class="row">
+                            
+                                <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
+                                    <select class="form-select" id="selectDateMeeting" aria-label="Floating label select example">
+                                        <option selected>All</option>
+                                        <option value="Real">My Posts</option>
+                                        <option value="Virtual">Student Posts</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
+
+                                    <select class="form-select form--control" name="student_id" id="selectStudentMeeting" aria-label="Floating label select example">
+                                        <option value="" selected disabled>-- Choose Student --</option>
+                                        <option value="1">Student One</option>
+                                        <option value="2">Student Two</option>
+                                    </select>
+                                </div>
+
+                                <div class="postSearch col-md-3 mb-2 d-flex justify-content-center align-items-center">
+
+                                    <input id="postSearch" name="search_post" class="form-control" type="search" placeholder="Search here" aria-label="Search" value="">
+                                </div>
+
+                                <div class="col-md-3 mb-2 d-flex flex-column align-items-start">
+
+                                    <div class=" text-center">
+                                        <button type="button"  class=" btn btn-primary shadow-none " style="width: 130px;">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="post-container">
+
+                           <!-- post header -->
+
+                            <div class="edit-btn text-center fit">
+                          
+                            <a href="/tutor/updateposts" class="edit-btn btn btn-primary shadow-none" style=" width: 100px; background-color: #004AAD;">Edit</a>
+                            </div>
+
+                            <p>
+                                <i class="fa-solid fa-circle-user me-3" style="font-size: 35px; color:#808080; vertical-align: middle;"></i>
+                                <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">Name</strong>
+                                <span class="date me-1" style="vertical-align: middle;">4 March 2025</span> 
+                                <span class="time me-4" style="vertical-align: middle;">9:00 PM</span> 
+                                <span class="status me-0" style="vertical-align: middle;">Updated</span>
+                            </p>
+
+                            <!-- Post body -->
+
+                            <div class="post-title-desc mt-2">
+
+                            <h5 class="mb-3 mt-2">Project sample file</h5>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.</p>
+                            
+                            </div>
+
+
+                            <div class="file-attachment">
+                                <img src="https://cdn-icons-png.flaticon.com/512/732/732220.png" width="30" alt="File">
+                                <a href="" style="text-decoration: none; color: black;" target="_blank">project_sample.docx</a>
+                            
+                            
+                            
+                                
+                            </div>
+
+                            <!-- Note:: this comment section has javascript interaction added for now, when reply button is clicked this will appear -->
+
+                            <div class="comments" id="commentsSection" style="display:none;">
+                                <hr>
+                                <p class="mb-3" style="font-size: 0.875rem; color:	#004AAD;">Comments</p>
+                                <p>
+                                    <i class="fa-solid fa-circle-user me-2" style="font-size: 20px; color:#808080; vertical-align: middle;"></i>
+                                    <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">Name</strong>
+                                    <span class="date me-1" style="vertical-align: middle;">4 March 2025</span> 
+                                    <span class="time me-4" style="vertical-align: middle;">9:00 PM</span> 
+                                    
+                                </p>
+                                <p class="comment-body ms-4">Yes sir, well noted.<br>We will be missing you during the holidays sir.</p>
+                            </div>
+
+                            
+
+
+                            <form action="" method="" enctype="multipart/form-data">
+                                <div class="d-flex align-items-center gap-2 mt-4">
+                                    <input type="text" id="replyInput" class="form-control" placeholder="Reply" style="max-width: 1100px;">
+                                    <button type="button" class="btn btn-primary ms-3" style="width: 110px;" onclick="checkReply()">Send</button>
+                                </div>
+                            </form>
+
+                        </div>
+                        
+                        <div class="post-container">
+                            
+                            <div class="edit-btn text-center fit">
+
+                            <!-- post header -->
+                          
+                            <a href="/tutor/updateposts" class="edit-btn btn btn-primary shadow-none" style=" width: 100px; background-color: #004AAD;">Edit</a>
+                            </div>
+
+                            <p>
+                                <i class="fa-solid fa-circle-user me-3" style="font-size: 35px; color:#808080; vertical-align: middle;"></i>
+                                <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">Name</strong>
+                                <span class="date me-1" style="vertical-align: middle;">4 March 2025</span> 
+                                <span class="time me-4" style="vertical-align: middle;">9:00 PM</span> 
+                                <span class="status me-0" style="vertical-align: middle;"></span>
+                            </p>
+
+                            <!-- post body -->
+
+                           
+                            <div class="post-title-desc mt-2">
+
+                                <h5 class="mb-3 mt-2">Thingyan Holidays Announcement</h5>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.</p>
+                            
+                            </div>
+
+                            <!-- <div class="file-attachment">
+                                <img src="https://cdn-icons-png.flaticon.com/512/732/732220.png" width="30" alt="File">
+                                <a href="" style="text-decoration: none; color: black;" target="_blank">project_sample.docx</a>
+                            
+                            
+                            
+                                
+                            </div> -->
+
+                            <div class="comments">
+                                <hr>
+                                <p class="mb-3" style="font-size: 0.875rem; color:	#004AAD;">Comments</p>
+                                <p>
+                                    <i class="fa-solid fa-circle-user me-2" style="font-size: 20px; color:#808080; vertical-align: middle;"></i>
+                                    <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">Name</strong>
+                                    <span class="date me-1" style="vertical-align: middle;">4 March 2025</span> 
+                                    <span class="time me-4" style="vertical-align: middle;">9:00 PM</span> 
+                                    
+                                </p>
+                                <p class="comment-body ms-4">Yes sir, well noted.<br>We will be missing you during the holidays sir.</p>
+                            </div>
+
+                            <form action="" method="" enctype="multipart/form-data">
+                            <div class="d-flex align-items-center gap-2 mt-3">
+                                <input type="text" class="form-control" placeholder="Reply" style="max-width: 1100px;">
+                                <button  type="button" class="btn btn-primary ms-3" style="width: 110px;">Send</button>
+                            </div>
+                            </form>
+                            
+                        </div>
+
+                    </div>
+>>>>>>> 61b59a0 (tutor report and student report filter fix)
             </div>
         </nav>
         <div class="dashboard-content px-3 pt-4">
