@@ -192,7 +192,7 @@ class TutorController extends Controller
 
         // Get results and group by date
         $meeting_schedules = $query
-            ->orderBy('meeting_schedules.meeting_date')
+            ->orderBy('meeting_schedules.meeting_date','desc')
             ->orderBy('meeting_schedules.meeting_start_time')
             ->get()
             ->groupBy('meeting_date');
