@@ -516,4 +516,20 @@ class StudentController extends Controller
     
     }
 
+    public function blogging()
+    {
+        return view('student.blogging');
+    }
+
+    
+    public function createpost()
+    {
+        return view('student.createpost');
+    }
+
+    public function updatepost()
+    {
+        return view('student.updatepost');
+    }
+
 }

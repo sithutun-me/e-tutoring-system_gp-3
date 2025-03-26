@@ -1416,8 +1416,8 @@ h6 {
   }
 
   .delete-btn{
-    margin-left: 0px;
-    margin-top: -4px;
+    margin-left: 10px;
+    margin-top: -5px;
   }
 
 
@@ -1794,6 +1794,8 @@ border-top: 1px solid #D3D3D3;  /* Keeps horizontal lines */
 border-bottom: 1px solid #D3D3D3; /* Keeps horizontal lines */
 border-left: none;  /* Remove vertical borders */
 border-right: none; /* Remove vertical borders */
+text-wrap: auto;
+word-wrap: break-word;
 }
 
 /* Keep the first column's left border */

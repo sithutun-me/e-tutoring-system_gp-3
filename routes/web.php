@@ -109,6 +109,12 @@ Route::middleware(['auth', 'protect_auth'])->group(function () {
 
         Route::post('/student/meetingdetail/cancel', [StudentController::class, 'cancelMeeting'])->name('student.meetingdetail.cancelmeeting');
 
+        Route::get('/student/blogging', [StudentController::class, 'blogging'])->name('student.blogging');
+
+        Route::get('/student/createpost', [StudentController::class, 'createpost'])->name('student.createpost');
+
+        Route::get('/student/updatepost', [StudentController::class, 'updatepost'])->name('student.updatepost');
+
         Route::get('/student/report', [StudentController::class, 'report'])->name('student.report');
     });
 
