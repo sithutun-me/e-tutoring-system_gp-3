@@ -1199,6 +1199,7 @@ h6 {
 
 .post-title-desc{
   font-family: "Poppins";
+  
 }
 
 .post-title-desc .post-title{
@@ -1207,7 +1208,8 @@ h6 {
 }
 
 .post-title-desc .post-desc{
-  font-size: 0.875rem;
+  font-size: 1rem;
+  margin-bottom: 27px;
 }
 
 .comments-body{
@@ -1291,7 +1293,7 @@ h6 {
 .file-list {
   list-style: none;
   padding: 0;
-  width: 100%; /* Ensures it takes full width of the container */
+  width: 400px; /* Ensures it takes full width of the container */
 }
 
 .file-list li {
