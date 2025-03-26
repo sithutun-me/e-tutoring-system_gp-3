@@ -398,9 +398,122 @@ class StudentController extends Controller
         return redirect()->route('student.meetinglists')->with('success', 'Meeting is cancelled!');
     }
 
-    public function report()
+    public function report(Request $request)
     {
-        return view('student.report');
+        $studentId = auth()->id();
+        $tutorId = DB::table('allocation')
+            ->where('student_id', $studentId)
+            ->value('tutor_id');
+    
+        $tutorName = DB::table('users')
+            ->where('id', $tutorId)
+            ->selectRaw('CONCAT(first_name, " ", last_name) as full_name')
+            ->value('full_name');
+    
+        $currentYear = Carbon::now()->year;
+        $currentMonth = Carbon::now()->month; // Get the current month (1 = Jan, 2 = Feb, etc.)
+    
+        // Fetch activities grouped by month
+        $studentActivities = DB::table('post')
+            ->selectRaw("MONTH(created_at) as month, COUNT(*) as posts")
+            ->where('post_create_by', $studentId)
+            ->where('is_meeting', 0)
+            ->whereYear('created_at', $currentYear)
+            ->groupBy('month')
+            ->pluck('posts', 'month');
+    
+        $commentCounts = DB::table('comment')
+            ->selectRaw("MONTH(created_at) as month, COUNT(*) as comments")
+            ->where('user_id', $studentId)
+            ->whereYear('created_at', $currentYear)
+            ->groupBy('month')
+            ->pluck('comments', 'month');
+    
+        $documentCounts = DB::table('document')
+            ->join('post', 'document.post_id', '=', 'post.id')
+            ->selectRaw("MONTH(document.created_at) as month, COUNT(*) as documents")
+            ->where('post.post_create_by', $studentId)
+            ->whereYear('document.created_at', $currentYear)
+            ->groupBy('month')
+            ->pluck('documents', 'month');
+    
+        $meetingCounts = DB::table('meeting_schedule')
+            ->selectRaw("MONTH(meeting_date) as month, COUNT(*) as meetings")
+            ->where('student_id', $studentId)
+            ->whereYear('updated_at', $currentYear)
+            ->groupBy('month')
+            ->pluck('meetings', 'month');
+    
+        // Fetch tutor data
+        $tutorActivities = DB::table('post')
+            ->selectRaw("MONTH(created_at) as month, COUNT(*) as posts")
+            ->where('post_create_by', $tutorId)
+            ->where('post_received_by', $studentId)
+            ->where('is_meeting', 0)
+            ->whereYear('created_at', $currentYear)
+            ->groupBy('month')
+            ->pluck('posts', 'month');
+    
+        $tutorCommentCounts = DB::table('comment')
+            ->join('post', 'comment.post_id', '=', 'post.id')
+            ->selectRaw("MONTH(comment.created_at) as month, COUNT(*) as comments")
+            ->where('comment.user_id', $tutorId)
+            ->where('post.post_create_by', $tutorId)
+            ->where('post.post_received_by', $studentId)
+            ->whereYear('comment.created_at', $currentYear)
+            ->groupBy('month')
+            ->pluck('comments', 'month');
+    
+        $tutorDocumentCounts = DB::table('document')
+            ->join('post', 'document.post_id', '=', 'post.id')
+            ->selectRaw("MONTH(document.created_at) as month, COUNT(*) as documents")
+            ->where('post.post_create_by', $tutorId)
+            ->where('post.post_received_by', $studentId)
+            ->whereYear('document.created_at', $currentYear)
+            ->groupBy('month')
+            ->pluck('documents', 'month');
+    
+        $tutorMeetingCounts = DB::table('meeting_schedule')
+            ->selectRaw("MONTH(meeting_date) as month, COUNT(*) as meetings")
+            ->where('student_id', $studentId)
+            ->whereYear('updated_at', $currentYear)
+            ->groupBy('month')
+            ->pluck('meetings', 'month');
+    
+        // Prepare months and monthly data
+        $months = [
+            1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April',
+            5 => 'May', 6 => 'June', 7 => 'July', 8 => 'August',
+            9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December'
+        ];
+    
+        $studentMonthlyData = [];
+        $tutorMonthlyData = [];
+    
+        foreach ($months as $monthNum => $monthName) {
+            if ($monthNum > $currentMonth) {
+                break; // Stop adding months if they exceed the current month
+            }
+    
+            $studentMonthlyData[] = [
+                'month' => $monthName,
+                'posts' => $studentActivities[$monthNum] ?? 0,
+                'comments' => $commentCounts[$monthNum] ?? 0,
+                'documents' => $documentCounts[$monthNum] ?? 0,
+                'meetings' => $meetingCounts[$monthNum] ?? 0
+            ];
+    
+            $tutorMonthlyData[] = [
+                'month' => $monthName,
+                'posts' => $tutorActivities[$monthNum] ?? 0,
+                'comments' => $tutorCommentCounts[$monthNum] ?? 0,
+                'documents' => $tutorDocumentCounts[$monthNum] ?? 0,
+                'meetings' => $tutorMeetingCounts[$monthNum] ?? 0
+            ];
+        }
+    
+        return view('student.report', compact('studentMonthlyData', 'tutorMonthlyData', 'tutorName'));
+    
     }
 
 }

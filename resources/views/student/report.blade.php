@@ -61,17 +61,15 @@
                             <button id="tutorsTab" onclick="showContent('tutors')">Tutor Activites</button>
                         </div>
                         <div id="students" class="content-area active">
+                            {{-- <form method="GET" action="{{ route('student.report') }}">
                             <div class="form-group mt-5 mb-3">
                                 <label for="selectmonth" class="sort-label" style="font-family: 'Poppins'; font-size:0.875rem; ">Search by Month</label>
-                                <select class="form-select" id="selectmonth" aria-label="Floating label select example" style="width: 320px;">
+                                <select class="form-select" id="selectmonth" name="month" aria-label="Floating label select example" style="width: 320px;">
                                     <option selected>All</option>
-                                    <option value="January">January</option>
-                                    <option value="February">February</option>
-                                    <option value="March">March</option>
                                 </select>
-                                <!-- <button type="submit" name="submit" class="btn btn-primary shadow-none">Search</button> -->
+                                <button id="searchBtn" type="button" name="submit" class="btn btn-primary shadow-none">Search</button> 
                             </div>
-
+                            </form> --}}
                             <div class="table-responsive" id="no-more-tables">
                                 <table  class="studentreport" id="studentreportTable">
                                     <thead>
@@ -84,48 +82,24 @@
                                             <th class="text-center">Meetings</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="studentreport-row">
+                                    <tbody class="studentreport-row" id="student_report_row">
+                                        @foreach ($studentMonthlyData as $index => $data)
                                         <tr>
-                                            <td class="small-col" data-title="No.">1.</td>
-                                            <td data-title="Month">January</td>
-                                            <td data-title="Posts">8</td>
-                                            <td data-title="Comments">15</td>
-                                            <td data-title="Documents">5</td>
-                                            <td data-title="Meetings">5</td>
+                                            <td class="small-col" data-title="No.">{{ $index + 1 }}.</td>
+                                            <td data-title="Month">{{ $data['month'] }}</td>
+                                            <td data-title="Posts">{{ $data['posts'] }}</td>
+                                            <td data-title="Comments">{{ $data['comments'] }}</td>
+                                            <td data-title="Documents">{{ $data['documents'] }}</td>
+                                            <td data-title="Meetings">{{ $data['meetings'] }}</td>
                                         </tr>
-                                        <tr>
-                                            <td class="small-col" data-title="No.">1.</td>
-                                            <td data-title="Month">February</td>
-                                            <td data-title="Posts">8</td>
-                                            <td data-title="Comments">15</td>
-                                            <td data-title="Documents">5</td>
-                                            <td data-title="Meetings">5</td>
-                                        </tr> 
-                                        <tr>
-                                            <td class="small-col" data-title="No.">1.</td>
-                                            <td data-title="Month">March</td>
-                                            <td data-title="Posts">8</td>
-                                            <td data-title="Comments">15</td>
-                                            <td data-title="Documents">5</td>
-                                            <td data-title="Meetings">5</td>
-                                        </tr> 
-                                        <tr>
-                                            <td class="small-col" data-title="No.">1.</td>
-                                            <td data-title="Month">March</td>
-                                            <td data-title="Posts">8</td>
-                                            <td data-title="Comments">15</td>
-                                            <td data-title="Documents">5</td>
-                                            <td data-title="Meetings">5</td>
-                                        </tr>
-                                        
-                                    
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                         <div id="tutors" class="content-area">
                             <div class="tutor-container mt-4">
-                                <p class="tutor-text">Current Tutor - <span class="tutor-name">Margrat Qualley</span></p>
+                                <p class="tutor-text">Current Tutor - <span class="tutor-name">{{$tutorName}}</span></p>
                             </div>
                             
                             <div class="table-responsive" id="no-more-tables">
@@ -141,39 +115,16 @@
                                         </tr>
                                     </thead>
                                     <tbody class="studentreport-row">
+                                        @foreach ($tutorMonthlyData as $index => $data)
                                         <tr>
-                                            <td class="small-col" data-title="No.">1.</td>
-                                            <td data-title="Month">January</td>
-                                            <td data-title="Posts">8</td>
-                                            <td data-title="Comments">15</td>
-                                            <td data-title="Documents">5</td>
-                                            <td data-title="Meetings">5</td>
+                                            <td class="small-col" data-title="No.">{{ $index + 1 }}.</td>
+                                            <td data-title="Month">{{ $data['month'] }}</td>
+                                            <td data-title="Posts">{{ $data['posts'] }}</td>
+                                            <td data-title="Comments">{{ $data['comments'] }}</td>
+                                            <td data-title="Documents">{{ $data['documents'] }}</td>
+                                            <td data-title="Meetings">{{ $data['meetings'] }}</td>
                                         </tr>
-                                        <tr>
-                                            <td class="small-col" data-title="No.">1.</td>
-                                            <td data-title="Month">February</td>
-                                            <td data-title="Posts">8</td>
-                                            <td data-title="Comments">15</td>
-                                            <td data-title="Documents">5</td>
-                                            <td data-title="Meetings">5</td>
-                                        </tr> 
-                                        <tr>
-                                            <td class="small-col" data-title="No.">1.</td>
-                                            <td data-title="Month">March</td>
-                                            <td data-title="Posts">8</td>
-                                            <td data-title="Comments">15</td>
-                                            <td data-title="Documents">5</td>
-                                            <td data-title="Meetings">5</td>
-                                        </tr> 
-                                        <tr>
-                                            <td class="small-col" data-title="No.">1.</td>
-                                            <td data-title="Month">March</td>
-                                            <td data-title="Posts">8</td>
-                                            <td data-title="Comments">15</td>
-                                            <td data-title="Documents">5</td>
-                                            <td data-title="Meetings">5</td>
-                                        </tr>
-                                        
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -256,6 +207,10 @@
             document.getElementById(tab).classList.add('active');
             document.getElementById(tab + 'Tab').classList.add('active');
         }
+
+        
+
+
 
     </script>
 @endpush
