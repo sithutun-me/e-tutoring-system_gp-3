@@ -26,6 +26,7 @@ class StudentController extends Controller
 
         $postCount = DB::table('post')
             ->where('post_create_by', $tutorId)
+            ->where('post_received_by',$studentId)
             ->where('is_meeting',0)
             ->where('post_status','new') //case sensitive
             ->count();
@@ -55,28 +56,28 @@ class StudentController extends Controller
     //for dashboard
     public function getMeetingPieData(){
         $studentId = auth()->id();
-
+        $currentMonth = Carbon::now()->month;; 
+        $today = Carbon::now();
         $meetingCounts = DB::table('meeting_schedule')
         ->where('student_id', $studentId)
+        ->whereMonth('meeting_date',$currentMonth)
         ->select(
             DB::raw("COUNT(CASE WHEN meeting_status = 'completed' THEN 1 END) as completed"),
             DB::raw("COUNT(CASE WHEN meeting_status = 'new' THEN 1 END) as new"),
-            DB::raw("COUNT(CASE WHEN meeting_status = 'cancelled' THEN 1 END) as cancelled")
+            DB::raw("COUNT(CASE WHEN meeting_status = 'cancelled' THEN 1 END) as cancelled"),
+            DB::raw("COUNT(CASE WHEN meeting_status = 'overdue' THEN 1 END) as overdue")
         )
         ->first();
 
         // Format data for Pie Chart
         $chartData = [
-            'labels' => ['Completed', 'New', 'Cancelled'],
-            'data' => [$meetingCounts->completed, $meetingCounts->new, $meetingCounts->cancelled]
+            'labels' => ['Completed', 'New', 'Cancelled','Overdue'],
+            'data' => [$meetingCounts->completed, $meetingCounts->new, $meetingCounts->cancelled,$meetingCounts->overdue]
         ];
 
         return response()->json($chartData);
     }
-    public function getNewPostData(){
-
-
-    }
+    
     public function myActivities(){
         $studentId = auth()->id();
         $postCount = DB::table('post')
@@ -106,16 +107,21 @@ class StudentController extends Controller
 
         $postCount = DB::table('post')
             ->where('post_create_by', $tutorId)
+            ->where('post_received_by',$studentId)
             ->where('is_meeting',0)
             ->count();
 
         $commentCount = DB::table('comment')
-            ->where('user_id', $tutorId)
+            ->join('post', 'comment.post_id', '=', 'post.id')
+            ->where('comment.user_id', $tutorId)
+            ->where('post.post_create_by',$tutorId)
+            ->where('post.post_received_by',$studentId)
             ->count();
 
         $documentCount = DB::table('document')
                 ->join('post', 'document.post_id', '=', 'post.id')
                 ->where('post.post_create_by', $tutorId)
+                ->where('post.post_received_by',$studentId)
                 ->count();
         $interactionCounts = [
             'labels' =>['Posts', 'Comments', 'Documents'],
@@ -239,9 +245,8 @@ class StudentController extends Controller
 
 
         $meeting_schedules = $id ? MeetingSchedule::find($id) : null;
-        $currentStudent = $id? User::find($meeting_schedules->tutor_id):null;
-
-
+        
+        $currentTutor = $id?User::find($meeting_schedules->tutor_id):null;
        // $readOnly = request()->routeIs('tutor.meetingdetail.update') ? false : true;
 
         if($id) {
@@ -251,10 +256,10 @@ class StudentController extends Controller
             ->where('tutor_id', $meeting_schedules->tutor_id)
             ->where('active', 1)
             ->exists();
-            return view('student.meetingdetail', compact('id','assignedTutor','meeting_schedules','readOnly','isTutorAllocated'));
+            return view('student.meetingdetail', compact('id','assignedTutor','meeting_schedules','readOnly','currentTutor'));
         }
         // For create (no ID), just pass null or empty data
-        return view('student.meetingdetail', ['id' => null,'assignedTutor' => $assignedTutor,'meeting_schedules'=>$meeting_schedules,'readOnly'=>false,'currentStudent'=>null,'isTutorAllocated'=>false]);
+        return view('student.meetingdetail', ['id' => null,'assignedTutor' => $assignedTutor,'meeting_schedules'=>$meeting_schedules,'readOnly'=>false,'currentTutor'=>null,'isTutorAllocated'=>false]);
 
     }
 
@@ -270,19 +275,19 @@ class StudentController extends Controller
             // $resource = Resource::findOrFail($id);
             $meeting_schedules = MeetingSchedule::findOrFail($id);
            // $currentStudent = User::find($meeting_schedules->student_id);
-
+            $currentTutor = $id?User::find($meeting_schedules->tutor_id):null;
             $isTutorAllocated = Allocation::where('student_id', $meeting_schedules->student_id)
             ->where('tutor_id', $meeting_schedules->tutor_id)
             ->where('active', 1)
             ->exists();
 
             $readOnly = true;
-            return view('student.meetingdetail', compact('id','meeting_schedules','readOnly','assignedTutor','isTutorAllocated'));
+            return view('student.meetingdetail', compact('id','meeting_schedules','readOnly','assignedTutor','currentTutor','isTutorAllocated'));
         }
         $meeting_schedules=null;
 
         // For create (no ID), just pass null or empty data
-        return view('student.meetingdetail', ['id' => null,'meeting_schedules' =>$meeting_schedules,'assignedTutor'=>$assignedTutor,'isTutorAllocated'=>false]);
+        return view('student.meetingdetail', ['id' => null,'meeting_schedules' =>$meeting_schedules,'assignedTutor'=>$assignedTutor,'currentTutor'=>null,'isTutorAllocated'=>false]);
     }
 
     public function save(Request $request,$id=null)
