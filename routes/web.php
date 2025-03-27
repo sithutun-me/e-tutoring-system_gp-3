@@ -66,10 +66,13 @@ Route::middleware(['auth', 'protect_auth'])->group(function () {
         Route::post('/tutor/savepost', [TutorController::class, 'savepost'])->name('tutor.savepost');
         Route::get('/tutor/editpost/{id}', [TutorController::class, 'editpost'])->name('tutor.editpost');
         Route::post('/tutor/updatepost/{id}', [TutorController::class, 'updatepost'])->name('tutor.updatepost');
+        Route::post('/tutor/deletepost/{id}', [TutorController::class, 'deletepost'])->name('tutor.deletepost');
         //view posts
         Route::get('/tutor/blogging', [TutorController::class, 'blogging'])->name('tutor.blogging');
         //comment
         Route::post('/tutor/postcomment/{id}', [TutorController::class, 'postcomment'])->name('tutor.postcomment');
+        Route::post('/tutor/deletecomment/{id}', [TutorController::class, 'deletecomment'])->name('tutor.deletecomment');
+        Route::post('/tutor/editcomment', [TutorController::class, 'editcomment'])->name('tutor.editcomment');
 
         //create meeting
         Route::post('/tutor/meetingdetail', [TutorController::class, 'save'])->name('tutor.save');

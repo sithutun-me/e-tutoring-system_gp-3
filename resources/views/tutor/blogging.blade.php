@@ -90,7 +90,7 @@
                     @if($post->creator->id == $user->id)
                     <div class="edit-btn text-center fit">
                         <a href="{{  route('tutor.editpost',$post->id) }}" class="edit-btn btn btn-primary shadow-none" style=" width: 100px; background-color: #004AAD;">Edit</a>
-                        <a href="{{  route('tutor.editpost',$post->id) }}" class="delete-btn btn  shadow-none" style=" width:50px; background-color:#d9534f "><i class="fa-solid fa-trash"></i></a>
+                        <a href="#" class="delete-btn btn  shadow-none" data-id="{{ $post->id }}" style=" width:50px; background-color:#d9534f "><i class="fa-solid fa-trash"></i></a>
 
                     </div>
                     @endif
@@ -135,6 +135,7 @@
                                 <span class="date me-1" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($comment->updated_at)->format('d M Y') }}</span>
                                 <span class="time me-4" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($comment->updated_at)->format('h:m A') }}</span>
 
+                                @if($comment->user_id == $user->id)
                                 <!-- Three-dot Menu for comment edit and delete next to Time -->
                                 <span class="three-dots" onclick="toggleMenu(this)" style="cursor: pointer; vertical-align: middle;">
                                     <i class="fa-solid fa-ellipsis-vertical"></i>
@@ -142,9 +143,10 @@
 
                                 <!-- Hidden Edit & Delete Options -->
                                 <span class="ms-2 options-menu" style="display: none;">
-                                    <button class="edit-comment btn btn-primary">Edit</button>
-                                    <button class="delete-comment btn btn-danger" style="background-color: #d9534f;">Delete</button>
+                                    <button data-id="{{ $comment->id }}" data-text="{{ $comment->text }}" class="edit-comment btn btn-primary">Edit</button>
+                                    <button data-id="{{ $comment->id }}" class="delete-comment btn btn-danger" style="background-color: #d9534f;">Delete</button>
                                 </span>
+                                @endif
 
 
                             </p>
@@ -180,7 +182,7 @@
         </div>
     </div>
 </div>
-<div id="deleteModal" class="modal fade" tabindex="-1" role="dialog">
+<div id="deleteConfirmModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -189,20 +191,19 @@
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
-            <form action="{{ route('tutor.meetingdetail.cancelmeeting') }}" method="POST">
+            <form id="deleteForm" method="POST" action="">
                 @csrf
                 <div class="modal-body">
-                    <input type="hidden" name="id">
                     <div class="modal-body">
                         <div class="form-group">
-                            <p style="font-family: 'Poppins'; font-size:1rem;">Are you sure you want to cancel this
-                                meeting?</p>
+                            <p style="font-family: 'Poppins'; font-size:1rem;">Are you sure you want to delete this
+                                post?</p>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer ">
                     <button type="submit" class="btn btn-primary"
-                        style="background-color: #004AAD; width: 90px;">Confirm</button>
+                        style="background-color: #004AAD; width: 90px;" id="deleteConfirm">Confirm</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close"
                         style=" width: 90px;">Close</i></button>
                 </div>
@@ -210,6 +211,54 @@
         </div>
     </div>
 </div>
+
+<!-- Edit Comment Modal -->
+
+<div class="modal fade" id="editCommentModal" tabindex="-1" aria-labelledby="editCommentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editCommentModalLabel">Edit Comment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editCommentForm" method="POST" action="{{ route('tutor.editcomment') }}">
+                    @csrf
+                    <input type="hidden" id="editCommentId" name="id">
+                    <div class="mb-3">
+                        <label for="commentContent" class="form-label">Comment</label>
+                        <input class="form-control" id="commentContent" name="comment_update"> </input>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Delete Comment Confirmation Modal -->
+<div class="modal fade" id="deleteCommentModal" tabindex="-1" aria-labelledby="deleteCommentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteCommentModalLabel">Confirm Comment Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this comment? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+                <!-- Delete Form -->
+                <form id="deleteCommentForm" method="POST" action="{{ route('tutor.deletecomment', ':id') }}">
+                    @csrf
+                    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- </div> -->
 @endsection
 @push('scripts')
@@ -383,5 +432,62 @@
         // Toggle the display of the menu
         menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "inline-block" : "none";
     }
+
+    //Delete post
+    document.addEventListener("DOMContentLoaded", function() {
+        let deleteForm = document.getElementById("deleteForm");
+
+        // Attach event listener to all delete buttons
+        document.querySelectorAll(".delete-btn").forEach(button => {
+            button.addEventListener("click", function(event) {
+                event.preventDefault();
+
+                let postId = this.dataset.id;
+                let deleteUrl = `{{ route('tutor.deletepost', ':id') }}`.replace(':id', postId);
+                deleteForm.action = deleteUrl; // Update form action
+
+                let modal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
+                modal.show();
+            });
+        });
+    });
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Edit Comment Modal
+        document.querySelectorAll('.edit-comment').forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                let commentId = this.dataset.id;
+                let commentContent = this.dataset.text;
+
+                // Set the values in the modal
+                document.getElementById('editCommentId').value = commentId;
+                document.getElementById('commentContent').value = commentContent;
+
+                // Show the modal
+                let modal = new bootstrap.Modal(document.getElementById('editCommentModal'));
+                modal.show();
+            });
+        });
+
+        // Delete Comment Modal
+        document.querySelectorAll('.delete-comment').forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                let commentId = this.dataset.id;
+                let deleteUrl = `{{ route('tutor.deletecomment', ':id') }}`.replace(':id', commentId);
+
+                // Update the delete form action URL dynamically
+                document.getElementById('deleteCommentForm').action = deleteUrl;
+
+                // Show the modal
+                let modal = new bootstrap.Modal(document.getElementById('deleteCommentModal'));
+                modal.show();
+            });
+        });
+    });
 </script>
 @endpush
