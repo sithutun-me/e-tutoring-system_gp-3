@@ -144,8 +144,8 @@
                                         &#x22EE; <!-- Three dots -->
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" data-id="{{ $comment->id }}" data-text="{{ $comment->text }}" onclick="commentAction('Edit')">Edit</a></li>
-                                        <li><a class="dropdown-item text-danger" data-id="{{ $comment->id }}" onclick="commentAction('Delete')">Delete</a></li>
+                                        <li><a class="edit-comment dropdown-item" data-id="{{ $comment->id }}" data-text="{{ $comment->text }}" onclick="commentAction('Edit')">Edit</a></li>
+                                        <li><a class="delete-comment dropdown-item text-danger" data-id="{{ $comment->id }}" onclick="commentAction('Delete')">Delete</a></li>
                                     </ul>
                                 </div>
                                 @endif
