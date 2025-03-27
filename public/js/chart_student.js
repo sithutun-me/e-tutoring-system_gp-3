@@ -81,12 +81,12 @@ window.demo = {
     };
     async function getStudentActivities() {
       try {
-          const response = await fetch('/myActivities'); 
-          const chartData = await response.json();
-          const labels = chartData.labels;
-          const counts = chartData.data;
-          return { labels, counts };
-      }catch(error){
+        const response = await fetch('/myActivities');
+        const chartData = await response.json();
+        const labels = chartData.labels;
+        const counts = chartData.data;
+        return { labels, counts };
+      } catch (error) {
         return {
           labels: [],
           counts: []
@@ -213,12 +213,12 @@ window.demo = {
 
     async function getTutorActivities() {
       try {
-          const response = await fetch('/tutorActivities'); 
-          const chartData = await response.json();
-          const labels = chartData.labels;
-          const counts = chartData.data;
-          return { labels, counts };
-      }catch(error){
+        const response = await fetch('/tutorActivities');
+        const chartData = await response.json();
+        const labels = chartData.labels;
+        const counts = chartData.data;
+        return { labels, counts };
+      } catch (error) {
         return {
           labels: [],
           counts: []
@@ -288,13 +288,20 @@ window.demo = {
         legend: {
           position: 'right',
           labels: {
-            usePointStyle: true, 
-            pointStyle: 'circle', 
+            usePointStyle: true,
+            pointStyle: 'circle',
             color: '#333333',
             font: {
               size: 13,
               family: 'Poppins'
-            }
+            },
+            generateLabels: function (chart) {
+              return labels.map((label, index) => ({
+                  text: label, // Show all labels in legend
+                  fillStyle: labelColors[index % labelColors.length], // Use correct colors for all labels
+                  hidden: false
+              }));
+          }
           }
         }
       }
@@ -302,19 +309,31 @@ window.demo = {
 
     async function getMeetingStatusCounts() {
       try {
-          const response = await fetch('/meeting_counts'); 
-          const chartData = await response.json();
-          const labels = chartData.labels;
-          const statusCounts = chartData.data;
-          return { labels, statusCounts };
-      }catch(error){
+        const response = await fetch('/meeting_counts');
+        const chartMeetingData = await response.json();
+        const labels = chartMeetingData.labels;
+        const statusCounts = chartMeetingData.data;
+
+        const filteredData = labels.map((label, index) => ({
+          label,
+          count: statusCounts[index]
+        })).filter(item => item.count > 0);
+
+        // Extract the filtered labels and counts
+        const filteredCounts = filteredData.map(item => item.count);
+        console.log(filteredData);
+        console.log('count '+filteredCounts);
+
+        return { labels, filteredCounts };
+      } catch (error) {
         return {
           labels: [],
           statusCounts: []
         };
       }
     }
-    const { labels, statusCounts } = await getMeetingStatusCounts();
+    const { labels, filteredCounts } = await getMeetingStatusCounts();
+    const labelColors = ["#00B312", "#004AAD", "#D73030"];
     var ctx = document.getElementById("MeetingCountChart").getContext("2d");
 
     var myChart = new Chart(document.getElementById("MeetingCountChart"), {
@@ -322,8 +341,8 @@ window.demo = {
       data: {
         labels: labels,
         datasets: [{
-          backgroundColor: ["#00B312", "#004AAD", "#D73030"],
-          data: statusCounts  
+          backgroundColor: labelColors,
+          data: filteredCounts
         }]
       },
       options: pieChartConfiguration

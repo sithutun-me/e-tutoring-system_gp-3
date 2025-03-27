@@ -298,7 +298,9 @@ class TutorController extends Controller
         $pageTitle = 'Posts';
         $tutor = Auth::user();
         $tutorId = $tutor->id; // Get the logged-in tutor’s ID
-        $query = Post::with(['documents', 'creator', 'receiver', 'comments']);
+        $query = Post::with(['documents', 'creator', 'receiver', 'comments'])
+            ->where('post_status', 'new')
+            ->orWhere('post_status', 'updated');
         // dd($tutorId);
 
         $searchKeyword = $request->input('search_post');
@@ -540,6 +542,24 @@ class TutorController extends Controller
         return to_route('tutor.blogging')->with('success', 'Post is successfully updated.');
     }
 
+    public function deletepost(Request $request, $id)
+    {
+        $post = Post::findOrFail($id);
+        if (!$post) {
+            return back()->withErrors('warning', 'Post not found.');
+        }
+        // dd(Auth::user()->id);
+        if (Auth::user()->id) {
+            $post->post_status = 'deleted';
+            $post->save();
+            return redirect()->route('tutor.blogging')->with('success', 'Your post is deleted!');
+        }
+        // $meeting->delete();
+        // return back()->withErrors('warning', 'Delete access denied.');
+        $notify[] = ['Delete access denied.'];
+        return back()->withErrors($notify);
+    }
+
     public function postcomment(Request $request, $id)
     {
         $request->validate([
@@ -557,6 +577,28 @@ class TutorController extends Controller
 
         return redirect()->route('tutor.blogging')->with('success', 'Comment upload success!');
     }
+    public function editcomment(Request $request)
+    {
+        $comment = Comment::find($request->id);
+
+        $request->validate([
+            'comment_update' => 'required',
+        ]);
+        $comment->text = $request->comment_update;
+        $comment->save();
+        return redirect()->route('tutor.blogging')->with('success', 'Comment update success!');
+    }
+    public function deleteComment($id)
+    {
+        $comment = Comment::findOrFail($id);
+
+        if (!$comment) {
+            return redirect()->back()->with('error', 'Comment not found.');
+        }
+        $comment->delete();
+        return redirect()->back()->with('success', 'Comment deleted successfully.');
+    }
+
 
     public function report(Request $request)
     {
