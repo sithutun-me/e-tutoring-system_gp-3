@@ -74,7 +74,7 @@
                             </div>
                             <div class="col-md-3 mb-2 d-flex flex-column align-items-start">
                                 <div class=" text-center">
-                                    <button type="submit" class=" btn btn-primary shadow-none " >Search</button>
+                                    <button type="submit" class=" btn btn-primary shadow-none ">Search</button>
                                 </div>
                             </div>
 
@@ -90,8 +90,8 @@
                     @if($post->creator->id == $user->id)
                     <div class="edit-btn text-center fit">
                         <a href="{{  route('tutor.editpost',$post->id) }}" class="edit-btn btn btn-primary shadow-none" style=" width: 100px; background-color: #004AAD;">Edit</a>
-                        <a href="{{  route('tutor.editpost',$post->id) }}" class="delete-btn btn  shadow-none" style=" width:50px; background-color:#d9534f "><i class="fa-solid fa-trash"></i></a>
-                      
+                        <a href="#" class="delete-btn btn  shadow-none" data-id="{{ $post->id }}" style=" width:50px; background-color:#d9534f "><i class="fa-solid fa-trash"></i></a>
+
                     </div>
                     @endif
                     <p>
@@ -100,11 +100,7 @@
                         <span class="date me-1" style="vertical-align: middle; font-family:'Poppins';">{{ \Carbon\Carbon::parse($post->updated_at)->format('d M Y') }}</span>
                         <span class="time me-4" style="vertical-align: middle; font-family:'Poppins';">{{ \Carbon\Carbon::parse($post->updated_at)->format('h:m A') }}</span>
                         <span class="status me-0" style="vertical-align: middle; font-family:'Poppins';">
-                            @if ($post->created_at != $post->updated_at)
-                            Updated
-                            @else
                             {{ $post->post_status }}
-                            @endif
                         </span>
                     </p>
                     <!-- Post body -->
@@ -128,8 +124,8 @@
                     @endforeach
                     <!-- Note:: this comment section has javascript interaction added for now, when reply button is clicked this will appear -->
                     <div class="comments pb-0" id="commentsSection">
-                            <hr>
-                            <p class="mb-3" style="font-size: 0.875rem; color:  #004AAD;">Comments</p>
+                        <hr>
+                        <p class="mb-3" style="font-size: 0.875rem; color:  #004AAD;">Comments</p>
                         @foreach ($post->comments as $comment)
                         <div class="comment-item">
                       
@@ -142,26 +138,28 @@
                                         
                                 </div>
                                 
+                                @if($comment->user_id == $user->id)
                                 <div class="dropdown col-md-1">
                                     <button class="btn btn-light border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         &#x22EE; <!-- Three dots -->
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" onclick="commentAction('Edit')">Edit</a></li>
-                                        <li><a class="dropdown-item text-danger" onclick="commentAction('Delete')">Delete</a></li>
+                                        <li><a class="dropdown-item" data-id="{{ $comment->id }}" data-text="{{ $comment->text }}" onclick="commentAction('Edit')">Edit</a></li>
+                                        <li><a class="dropdown-item text-danger" data-id="{{ $comment->id }}" onclick="commentAction('Delete')">Delete</a></li>
                                     </ul>
                                 </div>
+                                @endif
                             </div>
                             <p class="comments-body" style="margin-left: 30px;">{{ $comment->text }}</p>
 
                         </div>
-                       
+
                         @endforeach
-                            <!-- See More & See less Button -->
-                            <!-- Unique Show More & Show Less Buttons for each post -->
-                            <button class="btn btn-primary show-more-btn mt-2" data-post-id="{{ $post->id }}" style="display: none;">See More</button>
-                            <button class="btn btn-primary show-less-btn mt-2" data-post-id="{{ $post->id }}" style="display: none;">See Less</button>
-                        </div>
+                        <!-- See More & See less Button -->
+                        <!-- Unique Show More & Show Less Buttons for each post -->
+                        <button class="btn btn-primary show-more-btn mt-2" data-post-id="{{ $post->id }}" style="display: none;">See More</button>
+                        <button class="btn btn-primary show-less-btn mt-2" data-post-id="{{ $post->id }}" style="display: none;">See Less</button>
+                    </div>
 
 
                     <form action="{{ route('tutor.postcomment', $post->id) }}" method="POST" enctype="multipart/form-data" id="commentForm_{{ $post->id }}" class="comment-form">
@@ -184,6 +182,84 @@
         </div>
     </div>
 </div>
+<div id="deleteConfirmModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="font-weight: 500;">Cancel confirmation!</h5>
+                <button type="button" class="confirm-btn close btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <form id="deleteForm" method="POST" action="">
+                @csrf
+                <div class="modal-body">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <p style="font-family: 'Poppins'; font-size:1rem;">Are you sure you want to delete this
+                                post?</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <button type="submit" class="btn btn-primary"
+                        style="background-color: #004AAD; width: 90px;" id="deleteConfirm">Confirm</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close"
+                        style=" width: 90px;">Close</i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Comment Modal -->
+
+<div class="modal fade" id="editCommentModal" tabindex="-1" aria-labelledby="editCommentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editCommentModalLabel">Edit Comment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editCommentForm" method="POST" action="{{ route('tutor.editcomment') }}">
+                    @csrf
+                    <input type="hidden" id="editCommentId" name="id">
+                    <div class="mb-3">
+                        <label for="commentContent" class="form-label">Comment</label>
+                        <input class="form-control" id="commentContent" name="comment_update"> </input>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Delete Comment Confirmation Modal -->
+<div class="modal fade" id="deleteCommentModal" tabindex="-1" aria-labelledby="deleteCommentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteCommentModalLabel">Confirm Comment Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this comment? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+                <!-- Delete Form -->
+                <form id="deleteCommentForm" method="POST" action="{{ route('tutor.deletecomment', ':id') }}">
+                    @csrf
+                    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- </div> -->
 @endsection
 @push('scripts')
 <!-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
@@ -267,99 +343,153 @@
 
     // For see more and see less comment section
 
-//     document.addEventListener("DOMContentLoaded", function () {
-//     let comments = document.querySelectorAll('#commentsSection .comment-item');
-//     let showMoreBtn = document.getElementById('showMoreBtn');
-//     let showLessBtn = document.getElementById('showLessBtn');
+    //     document.addEventListener("DOMContentLoaded", function () {
+    //     let comments = document.querySelectorAll('#commentsSection .comment-item');
+    //     let showMoreBtn = document.getElementById('showMoreBtn');
+    //     let showLessBtn = document.getElementById('showLessBtn');
 
-//     // Hide comments beyond the first 3
-//     if (comments.length > 3) {
-//         comments.forEach((comment, index) => {
-//             if (index >= 3) {
-//                 comment.style.display = "none";
-//             }
-//         });
+    //     // Hide comments beyond the first 3
+    //     if (comments.length > 3) {
+    //         comments.forEach((comment, index) => {
+    //             if (index >= 3) {
+    //                 comment.style.display = "none";
+    //             }
+    //         });
 
-//         // Show "Show More" button if more than 3 comments exist
-//         showMoreBtn.style.display = "block";
+    //         // Show "Show More" button if more than 3 comments exist
+    //         showMoreBtn.style.display = "block";
 
-//         // "Show More" Button Click Event
-//         showMoreBtn.addEventListener("click", function () {
-//             comments.forEach(comment => comment.style.display = "block");
-//             showMoreBtn.style.display = "none"; // Hide Show More button
-//             showLessBtn.style.display = "block"; // Show Show Less button
-//         });
+    //         // "Show More" Button Click Event
+    //         showMoreBtn.addEventListener("click", function () {
+    //             comments.forEach(comment => comment.style.display = "block");
+    //             showMoreBtn.style.display = "none"; // Hide Show More button
+    //             showLessBtn.style.display = "block"; // Show Show Less button
+    //         });
 
-//         // "Show Less" Button Click Event
-//         showLessBtn.addEventListener("click", function () {
-//             comments.forEach((comment, index) => {
-//                 if (index >= 3) {
-//                     comment.style.display = "none"; // Hide comments beyond the first 3
-//                 }
-//             });
-//             showMoreBtn.style.display = "block"; // Show Show More button
-//             showLessBtn.style.display = "none"; // Hide Show Less button
-//         });
-//     }
-// });
+    //         // "Show Less" Button Click Event
+    //         showLessBtn.addEventListener("click", function () {
+    //             comments.forEach((comment, index) => {
+    //                 if (index >= 3) {
+    //                     comment.style.display = "none"; // Hide comments beyond the first 3
+    //                 }
+    //             });
+    //             showMoreBtn.style.display = "block"; // Show Show More button
+    //             showLessBtn.style.display = "none"; // Hide Show Less button
+    //         });
+    //     }
+    // });
 
 
-   // For see more and see less comment section
+    // For see more and see less comment section
 
-document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll('.comments').forEach(commentsSection => {
-        let comments = commentsSection.querySelectorAll('.comment-item');
-        let showMoreBtn = commentsSection.querySelector('.show-more-btn');
-        let showLessBtn = commentsSection.querySelector('.show-less-btn');
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('.comments').forEach(commentsSection => {
+            let comments = commentsSection.querySelectorAll('.comment-item');
+            let showMoreBtn = commentsSection.querySelector('.show-more-btn');
+            let showLessBtn = commentsSection.querySelector('.show-less-btn');
 
-        // Ensure at least 3 comments exist before hiding
-        if (comments.length > 3) {
-            comments.forEach((comment, index) => {
-                if (index >= 3) {
-                    comment.style.display = "none"; // Hide extra comments
-                }
-            });
-
-            // Show "See More" button
-            showMoreBtn.style.display = "block";
-
-            // Show More Click Event (Scoped to Current Post)
-            showMoreBtn.addEventListener("click", function () {
-                comments.forEach(comment => comment.style.display = "block"); // Show all comments
-                showMoreBtn.style.display = "none";  // Hide "See More" button
-                showLessBtn.style.display = "block"; // Show "See Less" button
-            });
-
-            // Show Less Click Event (Scoped to Current Post)
-            showLessBtn.addEventListener("click", function () {
+            // Ensure at least 3 comments exist before hiding
+            if (comments.length > 3) {
                 comments.forEach((comment, index) => {
                     if (index >= 3) {
-                        comment.style.display = "none"; // Hide comments beyond the first 3
+                        comment.style.display = "none"; // Hide extra comments
                     }
                 });
-                showMoreBtn.style.display = "block";  // Show "See More" button
-                showLessBtn.style.display = "none";   // Hide "See Less" button
-            });
-        }
+
+                // Show "See More" button
+                showMoreBtn.style.display = "block";
+
+                // Show More Click Event (Scoped to Current Post)
+                showMoreBtn.addEventListener("click", function() {
+                    comments.forEach(comment => comment.style.display = "block"); // Show all comments
+                    showMoreBtn.style.display = "none"; // Hide "See More" button
+                    showLessBtn.style.display = "block"; // Show "See Less" button
+                });
+
+                // Show Less Click Event (Scoped to Current Post)
+                showLessBtn.addEventListener("click", function() {
+                    comments.forEach((comment, index) => {
+                        if (index >= 3) {
+                            comment.style.display = "none"; // Hide comments beyond the first 3
+                        }
+                    });
+                    showMoreBtn.style.display = "block"; // Show "See More" button
+                    showLessBtn.style.display = "none"; // Hide "See Less" button
+                });
+            }
+        });
     });
-});
 
 
 
-// Three dot menu for edit and delete btn
+    // Three dot menu for edit and delete btn
 
-function toggleMenu(dotIcon) {
-    // Find the closest <p> tag
-    let parentP = dotIcon.closest('p');
-    
-    // Find the options menu within the same <p>
-    let menu = parentP.querySelector('.options-menu');
-    
-    // Toggle the display of the menu
-    menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "inline-block" : "none";
-}
+    function toggleMenu(dotIcon) {
+        // Find the closest <p> tag
+        let parentP = dotIcon.closest('p');
+
+        // Find the options menu within the same <p>
+        let menu = parentP.querySelector('.options-menu');
+
+        // Toggle the display of the menu
+        menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "inline-block" : "none";
+    }
+
+    //Delete post
+    document.addEventListener("DOMContentLoaded", function() {
+        let deleteForm = document.getElementById("deleteForm");
+
+        // Attach event listener to all delete buttons
+        document.querySelectorAll(".delete-btn").forEach(button => {
+            button.addEventListener("click", function(event) {
+                event.preventDefault();
+
+                let postId = this.dataset.id;
+                let deleteUrl = `{{ route('tutor.deletepost', ':id') }}`.replace(':id', postId);
+                deleteForm.action = deleteUrl; // Update form action
+
+                let modal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
+                modal.show();
+            });
+        });
+    });
 
 
-    
+    document.addEventListener("DOMContentLoaded", function () {
+        // Edit Comment Modal
+        document.querySelectorAll('.edit-comment').forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                let commentId = this.dataset.id;
+                let commentContent = this.dataset.text;
+
+                // Set the values in the modal
+                document.getElementById('editCommentId').value = commentId;
+                document.getElementById('commentContent').value = commentContent;
+
+                // Show the modal
+                let modal = new bootstrap.Modal(document.getElementById('editCommentModal'));
+                modal.show();
+            });
+        });
+
+        // Delete Comment Modal
+        document.querySelectorAll('.delete-comment').forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                let commentId = this.dataset.id;
+                let deleteUrl = `{{ route('tutor.deletecomment', ':id') }}`.replace(':id', commentId);
+
+                // Update the delete form action URL dynamically
+                document.getElementById('deleteCommentForm').action = deleteUrl;
+
+                // Show the modal
+                let modal = new bootstrap.Modal(document.getElementById('deleteCommentModal'));
+                modal.show();
+            });
+        });
+    });
 </script>
 @endpush

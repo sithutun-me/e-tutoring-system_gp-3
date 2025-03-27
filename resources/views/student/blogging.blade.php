@@ -68,17 +68,7 @@
                                 <select class="form-select" id="postBy" name="post_by" aria-label="Floating label select example">
                                     <option value="All" {{ request('post_by') == '' ? 'selected' : '' }}>All</option>
                                     <option value="MyPosts" {{ request('post_by') == 'MyPosts' ? 'selected' : '' }}>My Posts</option>
-                                    <option value="StudentPosts" {{ request('post_by') == 'StudentPosts' ? 'selected' : '' }}>Student Posts</option>
-                                </select>
-                            </div>
-
-
-                            <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
-                                <select class="form-select form--control" name="student_filter" id="studentFilter" aria-label="Floating label select example">
-                                    <option value="" {{ request('student_filter') == '' ? 'selected' : '' }}>-- Choose Student --</option>
-                                    @foreach ($students as $student)
-                                    <option value="{{ $student->id }}" {{ request('student_filter') == $student->id ? 'selected' : '' }}>{{ $student->first_name }} {{ $student->last_name }}</option>
-                                    @endforeach
+                                    <option value="StudentPosts" {{ request('post_by') == 'StudentPosts' ? 'selected' : '' }}>Tutor Posts</option>
                                 </select>
                             </div>
                             <div class="postSearch col-md-3 mb-2 d-flex justify-content-center align-items-center">
@@ -103,7 +93,7 @@
                     <div class="edit-btn text-center fit">
                         <a href="{{  route('student.editpost',$post->id) }}" class="edit-btn btn btn-primary shadow-none" style=" width: 100px; background-color: #004AAD;">Edit</a>
                         <a href="{{  route('student.editpost',$post->id) }}" class="delete-btn btn  shadow-none" style=" width:50px; background-color:#d9534f "><i class="fa-solid fa-trash"></i></a>
-                      
+
                     </div>
                     @endif
                     <p>
@@ -144,30 +134,30 @@
                             <p class="mb-3" style="font-size: 0.875rem; color:  #004AAD;">Comments</p>
                         @foreach ($post->comments as $comment)
                         <div class="comment-item">
-                      
+
                             <p>
                                 <i class="fa-solid fa-circle-user me-2" style="font-size: 20px; color:#808080; vertical-align: middle;"></i>
                                 <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">{{ $comment->user->first_name }} {{ $comment->user->last_name }}</strong>
                                 <span class="date me-1" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($post->updated_at)->format('d M Y') }}</span>
                                 <span class="time me-4" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($post->updated_at)->format('h:m A') }}</span>
-                                    
+
                                     <!-- Three-dot Menu for comment edit and delete next to Time -->
                                     <span class="three-dots" onclick="toggleMenu(this)" style="cursor: pointer; vertical-align: middle;">
                                         <i class="fa-solid fa-ellipsis-vertical"></i>
                                     </span>
-                                    
+
                                     <!-- Hidden Edit & Delete Options -->
                                     <span class="ms-2 options-menu" style="display: none;">
                                         <button class="edit-comment btn btn-primary">Edit</button>
                                         <button class="delete-comment btn btn-danger" style="background-color: #d9534f;" >Delete</button>
                                     </span>
-                                   
+
 
                             </p>
                             <p class="comments-body" style="margin-left: 30px;">{{ $comment->text }}</p>
 
                         </div>
-                       
+
                         @endforeach
                             <!-- See More & See less Button -->
                             <!-- Unique Show More & Show Less Buttons for each post -->
@@ -362,15 +352,15 @@ document.addEventListener("DOMContentLoaded", function () {
 function toggleMenu(dotIcon) {
     // Find the closest <p> tag
     let parentP = dotIcon.closest('p');
-    
+
     // Find the options menu within the same <p>
     let menu = parentP.querySelector('.options-menu');
-    
+
     // Toggle the display of the menu
     menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "inline-block" : "none";
 }
 
 
-    
+
 </script>
 @endpush
