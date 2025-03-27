@@ -16,6 +16,7 @@ class Post extends Model
         'post_status',
         'post_create_by',
         'post_received_by',
+        'is_meeting'
     ];
 
     public function creator()
