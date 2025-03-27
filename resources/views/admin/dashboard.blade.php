@@ -51,7 +51,7 @@
 
             <div class="dashboard-content px-2 pt-4">
                 <h2 class="fw-bold" style="padding-left: 15px;font-size:2rem;"> Admin Dashboard</h2>
-                <div class="row mt-5 mb-5">
+                <div class="row mt-5 mb-5" style="width:100%;">
                     <div class="col-md-6 d-flex justify-content-center align-items-center">
                         <div class="rounded-box">
                             <div style="width: 100%; padding-left:20px;padding-right:20px;" class="flex-step-box">
