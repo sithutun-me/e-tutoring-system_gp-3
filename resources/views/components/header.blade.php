@@ -12,7 +12,7 @@ $user = auth()->user();
 
         <div class="d-flex align-items-center">
             <!-- <div class="last-login me-3">
-                <p class="text-dark mb-0">Last login</p>
+                <p class="text-dark mb-0">Last logged in: <span class="text-dark"> 24 Mar 2025 9:55 PM</span></p>
             </div> -->
 
             <form action="{{ route('logout') }}" method="POST">

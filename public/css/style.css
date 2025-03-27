@@ -247,6 +247,10 @@ h6 {
     border-radius: 5px !important;
 }
 
+.last-login{
+  font-family: "Poppins";
+  font-size: 0.875rem;
+}
 
 
    @media(max-width: 767px){
