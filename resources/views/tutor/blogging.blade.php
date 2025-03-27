@@ -105,8 +105,8 @@
                     </p>
                     <!-- Post body -->
                     <div class="post-title-desc mt-2">
-                        <h5 class="mb-3 mt-2">{{ $post->post_title }}</h5>
-                        <p>{{ $post->post_description }}</p>
+                        <h5 class="post-title mb-3 mt-2">{{ $post->post_title }}</h5>
+                        <p class="post-desc">{{ $post->post_description }}</p>
                     </div>
                     @foreach ($post->documents as $document)
                     <div class="file-attachment d-flex row mx-1" id="docFile">

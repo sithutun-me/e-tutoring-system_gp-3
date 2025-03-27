@@ -1199,6 +1199,7 @@ h6 {
 
 .post-title-desc{
   font-family: "Poppins";
+  
 }
 
 .post-title-desc .post-title{
@@ -1207,7 +1208,8 @@ h6 {
 }
 
 .post-title-desc .post-desc{
-  font-size: 0.875rem;
+  font-size: 1rem;
+  margin-bottom: 27px;
 }
 
 .comments-body{
@@ -1291,7 +1293,7 @@ h6 {
 .file-list {
   list-style: none;
   padding: 0;
-  width: 100%; /* Ensures it takes full width of the container */
+  width: 400px; /* Ensures it takes full width of the container */
 }
 
 .file-list li {
@@ -1414,8 +1416,8 @@ h6 {
   }
 
   .delete-btn{
-    margin-left: 0px;
-    margin-top: -4px;
+    margin-left: 10px;
+    margin-top: -5px;
   }
 
 
@@ -1792,6 +1794,8 @@ border-top: 1px solid #D3D3D3;  /* Keeps horizontal lines */
 border-bottom: 1px solid #D3D3D3; /* Keeps horizontal lines */
 border-left: none;  /* Remove vertical borders */
 border-right: none; /* Remove vertical borders */
+text-wrap: auto;
+word-wrap: break-word;
 }
 
 /* Keep the first column's left border */
