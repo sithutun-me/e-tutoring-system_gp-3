@@ -298,7 +298,9 @@ class TutorController extends Controller
         $pageTitle = 'Posts';
         $tutor = Auth::user();
         $tutorId = $tutor->id; // Get the logged-in tutor’s ID
-        $query = Post::with(['documents', 'creator', 'receiver', 'comments']);
+        $query = Post::with(['documents', 'creator', 'receiver', 'comments'])
+        ->where('post_status','new')
+        ->orWhere('post_status','updated');
         // dd($tutorId);
 
         $searchKeyword = $request->input('search_post');
@@ -538,6 +540,16 @@ class TutorController extends Controller
             }
         }
         return to_route('tutor.blogging')->with('success', 'Post is successfully updated.');
+    }
+
+    public function deletePost(Request $request)
+    {
+        $meeting = Post::findOrFail($request->id);
+        $meeting->meeting_status = 'cancelled';
+        $meeting->save();
+        // $meeting->delete();
+
+        return redirect()->route('tutor.meetinglists')->with('success', 'Meeting is cancelled!');
     }
 
     public function postcomment(Request $request, $id)
