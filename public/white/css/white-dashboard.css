@@ -48,7 +48,9 @@
 
 }
 
-
+.dropdown button {
+  background-color: white;
+}
 
 .adminreport {
   width: 100%;

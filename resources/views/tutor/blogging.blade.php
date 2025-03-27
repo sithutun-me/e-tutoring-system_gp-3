@@ -133,25 +133,25 @@
                         @foreach ($post->comments as $comment)
                         <div class="comment-item">
                       
-                            <p>
-                                <i class="fa-solid fa-circle-user me-2" style="font-size: 20px; color:#808080; vertical-align: middle;"></i>
-                                <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">{{ $comment->user->first_name }} {{ $comment->user->last_name }}</strong>
-                                <span class="date me-1" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($post->updated_at)->format('d M Y') }}</span>
-                                <span class="time me-4" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($post->updated_at)->format('h:m A') }}</span>
-                                    
-                                    <!-- Three-dot Menu for comment edit and delete next to Time -->
-                                    <span class="three-dots" onclick="toggleMenu(this)" style="cursor: pointer; vertical-align: middle;">
-                                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                                    </span>
-                                    
-                                    <!-- Hidden Edit & Delete Options -->
-                                    <span class="ms-2 options-menu" style="display: none;">
-                                        <button class="edit-comment btn btn-primary">Edit</button>
-                                        <button class="delete-comment btn btn-danger" style="background-color: #d9534f;" >Delete</button>
-                                    </span>
-                                   
-
-                            </p>
+                            <div class="row">
+                                <div class="col-md-5 d-flex align-items-center">
+                                    <i class="fa-solid fa-circle-user me-2" style="font-size: 20px; color:#808080; vertical-align: middle;"></i>
+                                    <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">{{ $comment->user->first_name }} {{ $comment->user->last_name }}</strong>
+                                    <span class="date me-1" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($post->updated_at)->format('d M Y') }}</span>
+                                    <span class="time me-4" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($post->updated_at)->format('h:m A') }}</span>
+                                        
+                                </div>
+                                
+                                <div class="dropdown col-md-1">
+                                    <button class="btn btn-light border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        &#x22EE; <!-- Three dots -->
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" onclick="commentAction('Edit')">Edit</a></li>
+                                        <li><a class="dropdown-item text-danger" onclick="commentAction('Delete')">Delete</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                             <p class="comments-body" style="margin-left: 30px;">{{ $comment->text }}</p>
 
                         </div>
@@ -184,13 +184,11 @@
         </div>
     </div>
 </div>
-<!-- </div> -->
 @endsection
 @push('scripts')
 <!-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
@@ -212,6 +210,9 @@
         //     }
         // });
     });
+    function commentAction(action) {
+        console.log("clicked " + action);
+    }
 
     // $(document).ready(function(){
     //     console.log("Data table is loading..");
