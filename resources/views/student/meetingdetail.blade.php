@@ -164,17 +164,19 @@
                                                     </option> --}} 
 
                                                     {{-- Allocated Students --}}
+                                                    @if ($currentTutor && !in_array($currentTutor->id, $assignedTutor->pluck('tutor.id')->toArray()))
+                                                        <option value="{{ $currentTutor->id }}" selected>
+                                                            {{ $currentTutor->first_name }}
+                                                            {{ $currentTutor->last_name }} (Unassigned)
+                                                        </option>
+                                                    @endif
                                                     @foreach ($assignedTutor as $allocated)
                                                         <option value="{{ $allocated->tutor->id }}"
                                                             {{ request('tutor_id') == $allocated->tutor->id ? 'selected' : '' }}>
-                                                            @if(!$isTutorAllocated)
+                                                           
                                                             {{ $allocated->tutor->first_name }}
                                                             {{ $allocated->tutor->last_name }}
-                                                                (Unassigned)
-                                                            @else
-                                                            {{ $allocated->tutor->first_name }}
-                                                            {{ $allocated->tutor->last_name }}
-                                                            @endif
+                                                            
                                                         </option>
                                                     @endforeach
                                                 </select>

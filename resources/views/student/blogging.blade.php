@@ -1,55 +1,67 @@
 @extends('layouts.app')
 @section('content')
-<div class="main-container d-flex">
-    <div class="sidebar" id="side_nav">
-        <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between">
-            <h1 class=" header-title fs-2 mt-3">
-                <span class="text-white fw-bold" style="margin-left:10px;">TripleEDU</span>
-            </h1>
-            <button class="btn d-md-none d-block close-btn px-1 py-0 text-white">
-                <i class="fa-solid fa-square-xmark"></i></button>
-        </div>
-        <ul class="list-unstyled px-2">
-            <li class=""><a href="/tutor/dashboard" class="text-decoration-none px-3 py-2 d-block">
-                    <img src="/icon images/dashboard.png" style="width:20px; margin-right: 10px;"> Dashboard
-                </a>
-            </li>
-            <li class=""><a href="/tutor/meetinglists" class="text-decoration-none px-3 py-2 d-block">
-                    <img src="/icon images/meeting.png" style="width:20px; margin-right: 10px;"> Meetings
-                </a>
-            </li>
-            <li class=""><a href="/tutor/blogging" class="text-decoration-none px-3 py-2 d-block ">
-                    <img src="/icon images/blogging.png" style="width:20px; margin-right: 10px;"> Blogging
-                </a>
-            </li>
-            <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">
-                    <img src="/icon images/notification.png" style="width:20px; margin-right: 10px;"> Notifications
-                </a>
-            </li>
-            <li class=""><a href="/tutor/report" class="text-decoration-none px-3 py-2 d-block">
-                    <img src="/icon images/reports.png" style="width:20px; margin-right: 10px;"> Reports
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div class="content">
-        <nav class="navbar navbar-expand-md navbar-light bg-light">
-            <div class="container-fluid">
-                <div class="d-flex justify-content-between d-md-none d-block">
-                    <button class="btn px-1 py-0 open-btn me-2"><i class="fa-solid fa-bars"></i></button>
-                </div>
+    <div class="main-container d-flex">
+        <div class="sidebar" id="side_nav">
+            <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between">
+                <h1 class=" header-title fs-2 mt-3">
+                    <span class="text-white fw-bold" style="margin-left:10px;">TripleEDU</span>
+                </h1>
+
+                <button class="btn d-md-none d-block close-btn px-1 py-0 text-white">
+                    <i class="fa-solid fa-square-xmark"></i></button>
             </div>
-        </nav>
-        <div class="dashboard-content px-3 pt-4">
+
+            <ul class="list-unstyled px-2">
+                <li class=""><a href="/student/dashboard" class="text-decoration-none px-3 py-2 d-block">
+                        <img src="/icon images/dashboard.png" style="width:20px; margin-right: 10px;"> Dashboard
+                    </a>
+                </li>
+                <li class=""><a href="/student/meetinglists" class="text-decoration-none px-3 py-2 d-block">
+                        <img src="/icon images/meeting.png" style="width:20px; margin-right: 10px;"> Meetings
+                    </a>
+                </li>
+                <li class=""><a href="/student/blogging" class="text-decoration-none px-3 py-2 d-block ">
+                        <img src="/icon images/blogging.png" style="width:20px; margin-right: 10px;"> Blogging
+
+                    </a>
+                </li>
+                <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">
+                        <img src="/icon images/notification.png" style="width:20px; margin-right: 10px;"> Notifications
+                    </a>
+                </li>
+
+                <li class=""><a href="/student/report" class="text-decoration-none px-3 py-2 d-block">
+                        <img src="/icon images/reports.png" style="width:20px; margin-right: 10px;"> Reports
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+
+        <div class="content">
+            <nav class="navbar navbar-expand-md navbar-light bg-light">
+                <div class="container-fluid">
+                    <div class="d-flex justify-content-between d-md-none d-block">
+                        <button class="btn px-1 py-0 open-btn me-2"><i class="fa-solid fa-bars"></i></button>
+
+
+                    </div>
+
+
+                </div>
+            </nav>
+
+            <div class="dashboard-content px-3 pt-4">
             <h2 class="fs-2 fw-bold">Posts</h2>
             <div class="post mt-4">
                 <div class="text-center fit mb-2">
-                    <a href="{{ route('tutor.createpost') }}" class="post-btn btn btn-primary shadow-none mb-3" style="background-color: #004AAD;">+ Start a post</a>
+                    <a href="{{ route('student.createpost') }}" class="post-btn btn btn-primary shadow-none mb-3" style="background-color: #004AAD;">+ Start a post</a>
                 </div>
 
 
                 <div class="form-group mb-4 row">
-                    <form action="{{ route('tutor.blogging') }}" method="GET" enctype="multipart/form-data">
+                    <form action="{{ route('student.blogging') }}" method="GET" enctype="multipart/form-data">
                         <div class="row">
 
                             <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
@@ -89,8 +101,8 @@
                     @endphp
                     @if($post->creator->id == $user->id)
                     <div class="edit-btn text-center fit">
-                        <a href="{{  route('tutor.editpost',$post->id) }}" class="edit-btn btn btn-primary shadow-none" style=" width: 100px; background-color: #004AAD;">Edit</a>
-                        <a href="{{  route('tutor.editpost',$post->id) }}" class="delete-btn btn  shadow-none" style=" width:50px; background-color:#d9534f "><i class="fa-solid fa-trash"></i></a>
+                        <a href="{{  route('student.editpost',$post->id) }}" class="edit-btn btn btn-primary shadow-none" style=" width: 100px; background-color: #004AAD;">Edit</a>
+                        <a href="{{  route('student.editpost',$post->id) }}" class="delete-btn btn  shadow-none" style=" width:50px; background-color:#d9534f "><i class="fa-solid fa-trash"></i></a>
                       
                     </div>
                     @endif
@@ -133,25 +145,25 @@
                         @foreach ($post->comments as $comment)
                         <div class="comment-item">
                       
-                            <div class="row">
-                                <div class="col-md-5 d-flex align-items-center">
-                                    <i class="fa-solid fa-circle-user me-2" style="font-size: 20px; color:#808080; vertical-align: middle;"></i>
-                                    <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">{{ $comment->user->first_name }} {{ $comment->user->last_name }}</strong>
-                                    <span class="date me-1" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($post->updated_at)->format('d M Y') }}</span>
-                                    <span class="time me-4" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($post->updated_at)->format('h:m A') }}</span>
-                                        
-                                </div>
-                                
-                                <div class="dropdown col-md-1">
-                                    <button class="btn btn-light border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        &#x22EE; <!-- Three dots -->
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" onclick="commentAction('Edit')">Edit</a></li>
-                                        <li><a class="dropdown-item text-danger" onclick="commentAction('Delete')">Delete</a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <p>
+                                <i class="fa-solid fa-circle-user me-2" style="font-size: 20px; color:#808080; vertical-align: middle;"></i>
+                                <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">{{ $comment->user->first_name }} {{ $comment->user->last_name }}</strong>
+                                <span class="date me-1" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($post->updated_at)->format('d M Y') }}</span>
+                                <span class="time me-4" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($post->updated_at)->format('h:m A') }}</span>
+                                    
+                                    <!-- Three-dot Menu for comment edit and delete next to Time -->
+                                    <span class="three-dots" onclick="toggleMenu(this)" style="cursor: pointer; vertical-align: middle;">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </span>
+                                    
+                                    <!-- Hidden Edit & Delete Options -->
+                                    <span class="ms-2 options-menu" style="display: none;">
+                                        <button class="edit-comment btn btn-primary">Edit</button>
+                                        <button class="delete-comment btn btn-danger" style="background-color: #d9534f;" >Delete</button>
+                                    </span>
+                                   
+
+                            </p>
                             <p class="comments-body" style="margin-left: 30px;">{{ $comment->text }}</p>
 
                         </div>
@@ -184,11 +196,13 @@
         </div>
     </div>
 </div>
+<!-- </div> -->
 @endsection
 @push('scripts')
 <!-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
@@ -210,9 +224,6 @@
         //     }
         // });
     });
-    function commentAction(action) {
-        console.log("clicked " + action);
-    }
 
     // $(document).ready(function(){
     //     console.log("Data table is loading..");
