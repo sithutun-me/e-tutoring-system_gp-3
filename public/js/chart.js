@@ -11,7 +11,10 @@ window.demo = {
       plugins: {
         legend: {
           display: false
-        }
+        },
+        datalabels: {
+          display: false
+        },
       },
       maintainAspectRatio: false,
       legend: {
@@ -136,17 +139,20 @@ window.demo = {
 
     gradientBarChartConfigurationTutor = {
 
-      barPercentage: 0.8,      
-      categoryPercentage: 0.6, 
+      barPercentage: 0.8,
+      categoryPercentage: 0.6,
       elements: {
         bar: {
-          maxBarThickness: 50 
+          maxBarThickness: 50
         }
       },
       plugins: {
         legend: {
           display: false
-        }
+        },
+        datalabels: {
+          display: false
+        },
       },
       maintainAspectRatio: false,
 
@@ -264,6 +270,89 @@ window.demo = {
         }]
       },
       options: gradientBarChartConfigurationTutor,
+    });
+  },
+  initUsedBrowsersChart: async function () {
+
+    pieChartConfiguration = {
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: {
+        padding: 45
+      },
+      plugins: {
+        datalabels: {
+          display: true,
+          color: '#fff',
+          font: {
+            size: 13,
+            family: 'Poppins'
+          },
+          formatter: (value) => value,
+          anchor: 'center',
+          align: 'center',
+        },
+        legend: {
+          position: 'right',
+          labels: {
+            usePointStyle: true,
+            pointStyle: 'circle',
+            color: '#333333',
+            font: {
+              size: 13,
+              family: 'Poppins'
+            },
+            // generateLabels: function (chart) {
+            //   return labels.map((label, index) => ({
+            //     text: label, // Show all labels in legend
+            //     fillStyle: labelColors[index % labelColors.length], // Use correct colors for all labels
+            //     hidden: false
+            //   }));
+            // }
+          }
+        }
+      }
+    };
+
+    // async function getMeetingStatusCounts() {
+    //   try {
+    //     const response = await fetch('/meeting_counts');
+    //     const chartMeetingData = await response.json();
+    //     const labels = chartMeetingData.labels;
+    //     const statusCounts = chartMeetingData.data;
+
+    //     const filteredData = labels.map((label, index) => ({
+    //       label,
+    //       count: statusCounts[index]
+    //     })).filter(item => item.count > 0);
+
+    //     // Extract the filtered labels and counts
+    //     const filteredCounts = filteredData.map(item => item.count);
+    //     console.log(filteredData);
+    //     console.log('count '+filteredCounts);
+
+    //     return { labels, filteredCounts };
+    //   } catch (error) {
+    //     return {
+    //       labels: [],
+    //       statusCounts: []
+    //     };
+    //   }
+    // }
+    // const { labels, filteredCounts } = await getMeetingStatusCounts();
+    const labelColors = ["#00B312", "#004AAD", "#D73030"];
+    var ctx = document.getElementById("UsedBrowsersChart").getContext("2d");
+
+    var myChart = new Chart(document.getElementById("UsedBrowsersChart"), {
+      type: 'pie',
+      data: {
+        labels: ['Chrome', 'Microsoft Edge', 'Firefox'],
+        datasets: [{
+          backgroundColor: labelColors,
+          data: [40, 30, 30]
+        }]
+      },
+      options: pieChartConfiguration
     });
   }
 }

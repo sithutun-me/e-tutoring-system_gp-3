@@ -48,7 +48,9 @@
 
 }
 
-
+.dropdown button {
+  background-color: white;
+}
 
 .adminreport {
   width: 100%;
@@ -518,6 +520,9 @@ border-right: 1px solid #D3D3D3;
 .large-font {
   font-size: 4.5rem !important;
 }
+.large-medium-font {
+  font-size: 2rem !important;
+}
 
 .top-row {
   display: flex;
@@ -792,8 +797,8 @@ input {
 }
 
 .chart-card-full {
-  max-width: 100% !important;
-  width: 100% !important;
+  max-width: 95% !important;
+  width: 95% !important;
 }
 
 

@@ -192,7 +192,7 @@ class TutorController extends Controller
 
         // Get results and group by date
         $meeting_schedules = $query
-            ->orderBy('meeting_schedules.meeting_date')
+            ->orderBy('meeting_schedules.meeting_date','desc')
             ->orderBy('meeting_schedules.meeting_start_time')
             ->get()
             ->groupBy('meeting_date');
@@ -762,14 +762,23 @@ class TutorController extends Controller
                 'meeting_start_time' => $start_time,
                 'meeting_end_time' => $end_time,
                 'meeting_description' => $request->meeting_description,
-                'meeting_status' => "New",
+                'meeting_status' => "new",
                 'student_id' => $request->student_id,
                 'tutor_id' => Auth::id(),
                 'meeting_location' => $request->meeting_type === 'real' ? $request->meeting_location : null,
                 'meeting_platform' => $request->meeting_type === 'virtual' ? $request->meeting_platform : null,
                 'meeting_link' => $request->meeting_type === 'virtual' ? $request->meeting_link : null,
             ]);
-
+            $post = Post::create([
+                'post_create_by' => Auth::id(), 
+                'post_received_by'=>$request->student_id,
+                'post_title' => $request->meeting_title,
+                'post_status'=>"new",
+                'post_description' => $request->meeting_description,
+                'is_meeting' =>  1, 
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
 
             return redirect()->route('tutor.meetinglists')->with('success', 'Meeting created!');
         }
