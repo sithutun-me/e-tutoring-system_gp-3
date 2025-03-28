@@ -112,13 +112,19 @@ Route::middleware(['auth', 'protect_auth'])->group(function () {
 
         Route::post('/student/meetingdetail/cancel', [StudentController::class, 'cancelMeeting'])->name('student.meetingdetail.cancelmeeting');
 
-        // Route::get('/student/blogging', [StudentController::class, 'blogging'])->name('student.blogging');
+        //view posts student
         Route::get('/student/blogging', [PostController::class, 'index'])->name('student.blogging');
+        //crud posts student
+        Route::get('/student/createpost', [PostController::class, 'createpost'])->name('student.createpost');
+        Route::post('/student/savepost', [PostController::class, 'savepost'])->name('student.savepost');
+        Route::get('/student/editpost/{id}', [PostController::class, 'editpost'])->name('student.editpost');
+        Route::post('/student/updatepost/{id}', [PostController::class, 'updatepost'])->name('student.updatepost');
+        Route::post('/student/deletepost/{id}', [PostController::class, 'deletepost'])->name('student.deletepost');
 
-
-        Route::get('/student/createpost', [StudentController::class, 'createpost'])->name('student.createpost');
-
-        Route::get('/student/updatepost', [StudentController::class, 'updatepost'])->name('student.updatepost');
+        //comment
+        Route::post('/student/postcomment/{id}', [PostController::class, 'postcomment'])->name('student.postcomment');
+        Route::post('/student/deletecomment/{id}', [PostController::class, 'deletecomment'])->name('student.deletecomment');
+        Route::post('/student/editcomment', [PostController::class, 'editcomment'])->name('student.editcomment');
 
         Route::get('/student/report', [StudentController::class, 'report'])->name('student.report');
     });

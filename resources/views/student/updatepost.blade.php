@@ -66,28 +66,12 @@
                 <div class="d-flex align-items-center mb-3">
                     <div class="profile-img"><i class="fa-solid fa-circle-user"></i></div>
 
-                    <input type="hidden" name="create_by" value="{{ $tutor->id }}">
-                    <strong class="ms-2">{{ $tutor->first_name }} {{ $tutor->last_name }}</strong>
+                    <input type="hidden" name="create_by" value="{{ $student->id }}">
+                    <strong class="ms-2">{{ $student->first_name }} {{ $student->last_name }}</strong>
                 </div>
 
-                <form action="{{ route('tutor.updatepost',$post->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('student.updatepost',$post->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <!-- <div class="student-select mb-3">
-                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                            <option  selected disabled>Choose Student</option>
-                                <option value="1">Student1</option>
-                                <option value="2">Student2</option>
-                                <option value="3">Student3</option>
-                                <option value="4">Student4</option>
-                                <option value="5">Student5</option>
-                                <option value="6">Student6</option>
-                                <option value="7">Student7</option>
-                                <option value="8">Student8</option>
-                                <option value="9">Student9</option>
-                                <option value="10">Student10</option>
-                            </select>
-                        </div> -->
-
                     <div class="mb-3">
                         <input type="text" class="form-control" name="update_title" placeholder="Add title *" value="{{ $post->post_title }}">
                     </div>

@@ -54,9 +54,9 @@
 
                             <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
                                 <select class="form-select" id="postBy" name="post_by" aria-label="Floating label select example">
-                                    <option value="All" {{ request('post_by') == '' ? 'selected' : '' }}>All</option>
-                                    <option value="MyPosts" {{ request('post_by') == 'MyPosts' ? 'selected' : '' }}>My Posts</option>
-                                    <option value="StudentPosts" {{ request('post_by') == 'StudentPosts' ? 'selected' : '' }}>Student Posts</option>
+                                    <option value="all" {{ request('post_by') == 'all' ? 'selected' : '' }}>All</option>
+                                    <option value="myPosts" {{ request('post_by') == 'myPosts' ? 'selected' : '' }}>My Posts</option>
+                                    <option value="studentPosts" {{ request('post_by') == 'studentPosts' ? 'selected' : '' }}>Student Posts</option>
                                 </select>
                             </div>
 
