@@ -101,8 +101,8 @@
                         </div>
                     </div>
                     <div class="row mt-4">
-                        <div class="chart-container">
-                            <div class="chart-card chart-card-full">
+                        {{-- <div class="chart-container"> --}}
+                            <div class="chart-card chart-card-full ms-3">
                                 <div class="chart-card-header">
                                     <h4 class="chart-card-title">Upcoming meetings within the next week</h4>
                                 </div>
@@ -158,7 +158,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        {{-- </div> --}}
                     </div>
 
                 </div>

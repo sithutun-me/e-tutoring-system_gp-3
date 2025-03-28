@@ -333,7 +333,7 @@ window.demo = {
       }
     }
     const { labels, filteredCounts } = await getMeetingStatusCounts();
-    const labelColors = ["#00B312", "#004AAD", "#D73030"];
+    const labelColors = ["#00B312", "#004AAD", "#D73030",'#B4B4B4'];
     var ctx = document.getElementById("MeetingCountChart").getContext("2d");
 
     var myChart = new Chart(document.getElementById("MeetingCountChart"), {

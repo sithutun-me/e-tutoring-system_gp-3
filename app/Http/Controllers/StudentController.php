@@ -374,6 +374,16 @@ class StudentController extends Controller
                 'meeting_link' => $request->meeting_type === 'virtual' ? $request->meeting_link : null,
             ]);
 
+            $post = Post::create([
+                'post_create_by' => Auth::id(), 
+                'post_received_by'=>$request->student_id,
+                'post_title' => $request->meeting_title,
+                'post_status'=>"new",
+                'post_description' => $request->meeting_description,
+                'is_meeting' => 1, 
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
 
             return redirect()->route('student.meetinglists')->with('success', 'Meeting created!');
         }

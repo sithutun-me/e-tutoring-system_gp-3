@@ -67,7 +67,7 @@
                        
                             <div class="form-group mt-4 mb-4">
                                 <label for="selectmonth" class="sort-label" style="font-family: 'Poppins'; font-size:0.875rem; ">Search by Name</label>
-                                <select class="form-select" id="selectmonth" aria-label="Floating label select example" style="width: 320px;">
+                                <select class="form-select" name="student_name" id="selectmonth" aria-label="Floating label select example" style="width: 320px;">
                                     <option selected>All</option>
                                     <option value="Jennie">Jennie</option>
                                     <option value="Jake">Jake</option>
@@ -104,142 +104,17 @@
                                     </tr>
                                 </thead>
                                 <tbody class="tutorreport-row">
+                                    @foreach ($studentReports as $index => $student)
                                     <tr>
-                                        <td class="small-col" data-title="No.">1.</td>
-                                        <td data-title="Student Code">std0001</td>
-                                        <td data-title="Student Name">Jennie</td>
-                                        <td data-title="Posts">8</td>
-                                        <td data-title="Comments">15</td>
-                                        <td data-title="Documents">5</td>
-                                        <td data-title="Meetings">5</td>
+                                        <td class="small-col" data-title="No.">{{ $index + 1 }}</td>
+                                        <td data-title="Student Code">{{ $student->user_code }}</td>
+                                        <td data-title="Student Name">{{ $student->student_name }}</td>
+                                        <td data-title="Posts">{{ $student->posts }}</td>
+                                        <td data-title="Comments">{{ $student->comments }}</td>
+                                        <td data-title="Documents">{{ $student->documents }}</td>
+                                        <td data-title="Meetings">{{ $student->meetings }}</td>
                                     </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">2.</td>
-                                        <td data-title="Student Code">std0001</td>
-                                        <td data-title="Student Name">Jake</td>
-                                        <td data-title="Posts">8</td>
-                                        <td data-title="Comments">15</td>
-                                        <td data-title="Documents">5</td>
-                                        <td data-title="Meetings">5</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">3.</td>
-                                        <td data-title="Student Code">std0001</td>
-                                        <td data-title="Student Name">Joshua</td>
-                                        <td data-title="Posts">8</td>
-                                        <td data-title="Comments">15</td>
-                                        <td data-title="Documents">5</td>
-                                        <td data-title="Meetings">5</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">4.</td>
-                                        <td data-title="Student Code">std0001</td>
-                                        <td data-title="Student Name">Jay</td>
-                                        <td data-title="Posts">8</td>
-                                        <td data-title="Comments">15</td>
-                                        <td data-title="Documents">5</td>
-                                        <td data-title="Meetings">5</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">5.</td>
-                                        <td data-title="Student Code">std0001</td>
-                                        <td data-title="Student Name">Jenniefer</td>
-                                        <td data-title="Posts">8</td>
-                                        <td data-title="Comments">15</td>
-                                        <td data-title="Documents">5</td>
-                                        <td data-title="Meetings">5</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">1.</td>
-                                        <td data-title="Student Code">std0001</td>
-                                        <td data-title="Student Name">Jennie</td>
-                                        <td data-title="Posts">8</td>
-                                        <td data-title="Comments">15</td>
-                                        <td data-title="Documents">5</td>
-                                        <td data-title="Meetings">5</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">1.</td>
-                                        <td data-title="Student Code">std0001</td>
-                                        <td data-title="Student Name">Jennie</td>
-                                        <td data-title="Posts">8</td>
-                                        <td data-title="Comments">15</td>
-                                        <td data-title="Documents">5</td>
-                                        <td data-title="Meetings">5</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">1.</td>
-                                        <td data-title="Student Code">std0001</td>
-                                        <td data-title="Student Name">Jennie</td>
-                                        <td data-title="Posts">8</td>
-                                        <td data-title="Comments">15</td>
-                                        <td data-title="Documents">5</td>
-                                        <td data-title="Meetings">5</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">1.</td>
-                                        <td data-title="Student Code">std0001</td>
-                                        <td data-title="Student Name">Jennie</td>
-                                        <td data-title="Posts">8</td>
-                                        <td data-title="Comments">15</td>
-                                        <td data-title="Documents">5</td>
-                                        <td data-title="Meetings">5</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">1.</td>
-                                        <td data-title="Student Code">std0001</td>
-                                        <td data-title="Student Name">Jennie</td>
-                                        <td data-title="Posts">8</td>
-                                        <td data-title="Comments">15</td>
-                                        <td data-title="Documents">5</td>
-                                        <td data-title="Meetings">5</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">1.</td>
-                                        <td data-title="Student Code">std0001</td>
-                                        <td data-title="Student Name">Jennie</td>
-                                        <td data-title="Posts">8</td>
-                                        <td data-title="Comments">15</td>
-                                        <td data-title="Documents">5</td>
-                                        <td data-title="Meetings">5</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">1.</td>
-                                        <td data-title="Student Code">std0001</td>
-                                        <td data-title="Student Name">Jennie</td>
-                                        <td data-title="Posts">8</td>
-                                        <td data-title="Comments">15</td>
-                                        <td data-title="Documents">5</td>
-                                        <td data-title="Meetings">5</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="small-col" data-title="No.">1.</td>
-                                        <td data-title="Student Code">std0001</td>
-                                        <td data-title="Student Name">Jennie</td>
-                                        <td data-title="Posts">8</td>
-                                        <td data-title="Comments">15</td>
-                                        <td data-title="Documents">5</td>
-                                        <td data-title="Meetings">5</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">1.</td>
-                                        <td data-title="Student Code">std0001</td>
-                                        <td data-title="Student Name">Jennie</td>
-                                        <td data-title="Posts">8</td>
-                                        <td data-title="Comments">15</td>
-                                        <td data-title="Documents">5</td>
-                                        <td data-title="Meetings">5</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">1.</td>
-                                        <td data-title="Student Code">std0001</td>
-                                        <td data-title="Student Name">Jennie</td>
-                                        <td data-title="Posts">8</td>
-                                        <td data-title="Comments">15</td>
-                                        <td data-title="Documents">5</td>
-                                        <td data-title="Meetings">5</td>
-                                    </tr>
+                                    @endforeach
                                   
                                 </tbody>
                             </table>
