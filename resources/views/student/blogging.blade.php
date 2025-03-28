@@ -1,58 +1,58 @@
 @extends('layouts.app')
 @section('content')
-    <div class="main-container d-flex">
-        <div class="sidebar" id="side_nav">
-            <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between">
-                <h1 class=" header-title fs-2 mt-3">
-                    <span class="text-white fw-bold" style="margin-left:10px;">TripleEDU</span>
-                </h1>
+<div class="main-container d-flex">
+    <div class="sidebar" id="side_nav">
+        <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between">
+            <h1 class=" header-title fs-2 mt-3">
+                <span class="text-white fw-bold" style="margin-left:10px;">TripleEDU</span>
+            </h1>
 
-                <button class="btn d-md-none d-block close-btn px-1 py-0 text-white">
-                    <i class="fa-solid fa-square-xmark"></i></button>
-            </div>
-
-            <ul class="list-unstyled px-2">
-                <li class=""><a href="/student/dashboard" class="text-decoration-none px-3 py-2 d-block">
-                        <img src="/icon images/dashboard.png" style="width:20px; margin-right: 10px;"> Dashboard
-                    </a>
-                </li>
-                <li class=""><a href="/student/meetinglists" class="text-decoration-none px-3 py-2 d-block">
-                        <img src="/icon images/meeting.png" style="width:20px; margin-right: 10px;"> Meetings
-                    </a>
-                </li>
-                <li class=""><a href="/student/blogging" class="text-decoration-none px-3 py-2 d-block ">
-                        <img src="/icon images/blogging.png" style="width:20px; margin-right: 10px;"> Blogging
-
-                    </a>
-                </li>
-                <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">
-                        <img src="/icon images/notification.png" style="width:20px; margin-right: 10px;"> Notifications
-                    </a>
-                </li>
-
-                <li class=""><a href="/student/report" class="text-decoration-none px-3 py-2 d-block">
-                        <img src="/icon images/reports.png" style="width:20px; margin-right: 10px;"> Reports
-                    </a>
-                </li>
-
-            </ul>
+            <button class="btn d-md-none d-block close-btn px-1 py-0 text-white">
+                <i class="fa-solid fa-square-xmark"></i></button>
         </div>
 
+        <ul class="list-unstyled px-2">
+            <li class=""><a href="/student/dashboard" class="text-decoration-none px-3 py-2 d-block">
+                    <img src="/icon images/dashboard.png" style="width:20px; margin-right: 10px;"> Dashboard
+                </a>
+            </li>
+            <li class=""><a href="/student/meetinglists" class="text-decoration-none px-3 py-2 d-block">
+                    <img src="/icon images/meeting.png" style="width:20px; margin-right: 10px;"> Meetings
+                </a>
+            </li>
+            <li class=""><a href="/student/blogging" class="text-decoration-none px-3 py-2 d-block ">
+                    <img src="/icon images/blogging.png" style="width:20px; margin-right: 10px;"> Blogging
 
-        <div class="content">
-            <nav class="navbar navbar-expand-md navbar-light bg-light">
-                <div class="container-fluid">
-                    <div class="d-flex justify-content-between d-md-none d-block">
-                        <button class="btn px-1 py-0 open-btn me-2"><i class="fa-solid fa-bars"></i></button>
+                </a>
+            </li>
+            <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">
+                    <img src="/icon images/notification.png" style="width:20px; margin-right: 10px;"> Notifications
+                </a>
+            </li>
+
+            <li class=""><a href="/student/report" class="text-decoration-none px-3 py-2 d-block">
+                    <img src="/icon images/reports.png" style="width:20px; margin-right: 10px;"> Reports
+                </a>
+            </li>
+
+        </ul>
+    </div>
 
 
-                    </div>
+    <div class="content">
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+            <div class="container-fluid">
+                <div class="d-flex justify-content-between d-md-none d-block">
+                    <button class="btn px-1 py-0 open-btn me-2"><i class="fa-solid fa-bars"></i></button>
 
 
                 </div>
-            </nav>
 
-            <div class="dashboard-content px-3 pt-4">
+
+            </div>
+        </nav>
+
+        <div class="dashboard-content px-3 pt-4">
             <h2 class="fs-2 fw-bold">Posts</h2>
             <div class="post mt-4">
                 <div class="text-center fit mb-2">
@@ -66,9 +66,9 @@
 
                             <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
                                 <select class="form-select" id="postBy" name="post_by" aria-label="Floating label select example">
-                                    <option value="All" {{ request('post_by') == '' ? 'selected' : '' }}>All</option>
-                                    <option value="MyPosts" {{ request('post_by') == 'MyPosts' ? 'selected' : '' }}>My Posts</option>
-                                    <option value="StudentPosts" {{ request('post_by') == 'StudentPosts' ? 'selected' : '' }}>Tutor Posts</option>
+                                    <option value="all" {{ request('post_by') == 'all' ? 'selected' : '' }}>All</option>
+                                    <option value="myPosts" {{ request('post_by') == 'myPosts' ? 'selected' : '' }}>My Posts</option>
+                                    <option value="tutorPosts" {{ request('post_by') == 'tutorPosts' ? 'selected' : '' }}>Tutor Posts</option>
                                 </select>
                             </div>
                             <div class="postSearch col-md-3 mb-2 d-flex justify-content-center align-items-center">
@@ -76,7 +76,7 @@
                             </div>
                             <div class="col-md-3 mb-2 d-flex flex-column align-items-start">
                                 <div class=" text-center">
-                                    <button type="submit" class=" btn btn-primary shadow-none " >Search</button>
+                                    <button type="submit" class=" btn btn-primary shadow-none ">Search</button>
                                 </div>
                             </div>
 
@@ -102,11 +102,7 @@
                         <span class="date me-1" style="vertical-align: middle; font-family:'Poppins';">{{ \Carbon\Carbon::parse($post->updated_at)->format('d M Y') }}</span>
                         <span class="time me-4" style="vertical-align: middle; font-family:'Poppins';">{{ \Carbon\Carbon::parse($post->updated_at)->format('h:m A') }}</span>
                         <span class="status me-0" style="vertical-align: middle; font-family:'Poppins';">
-                            @if ($post->created_at != $post->updated_at)
-                            Updated
-                            @else
                             {{ $post->post_status }}
-                            @endif
                         </span>
                     </p>
                     <!-- Post body -->
@@ -130,27 +126,29 @@
                     @endforeach
                     <!-- Note:: this comment section has javascript interaction added for now, when reply button is clicked this will appear -->
                     <div class="comments pb-0" id="commentsSection">
-                            <hr>
-                            <p class="mb-3" style="font-size: 0.875rem; color:  #004AAD;">Comments</p>
+                        <hr>
+                        <p class="mb-3" style="font-size: 0.875rem; color:  #004AAD;">Comments</p>
                         @foreach ($post->comments as $comment)
                         <div class="comment-item">
 
                             <p>
                                 <i class="fa-solid fa-circle-user me-2" style="font-size: 20px; color:#808080; vertical-align: middle;"></i>
                                 <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">{{ $comment->user->first_name }} {{ $comment->user->last_name }}</strong>
-                                <span class="date me-1" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($post->updated_at)->format('d M Y') }}</span>
-                                <span class="time me-4" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($post->updated_at)->format('h:m A') }}</span>
+                                <span class="date me-1" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($comment->updated_at)->format('d M Y') }}</span>
+                                <span class="time me-4" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($comment->updated_at)->format('h:m A') }}</span>
 
-                                    <!-- Three-dot Menu for comment edit and delete next to Time -->
-                                    <span class="three-dots" onclick="toggleMenu(this)" style="cursor: pointer; vertical-align: middle;">
-                                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                                    </span>
+                                @if($comment->user_id == $user->id)
+                                <!-- Three-dot Menu for comment edit and delete next to Time -->
+                                <span class="three-dots" onclick="toggleMenu(this)" style="cursor: pointer; vertical-align: middle;">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </span>
 
-                                    <!-- Hidden Edit & Delete Options -->
-                                    <span class="ms-2 options-menu" style="display: none;">
-                                        <button class="edit-comment btn btn-primary">Edit</button>
-                                        <button class="delete-comment btn btn-danger" style="background-color: #d9534f;" >Delete</button>
-                                    </span>
+                                <!-- Hidden Edit & Delete Options -->
+                                <span class="ms-2 options-menu" style="display: none;">
+                                    <button data-id="{{ $comment->id }}" data-text="{{ $comment->text }}" class="edit-comment btn btn-primary">Edit</button>
+                                    <button data-id="{{ $comment->id }}" class="delete-comment btn btn-danger" class="delete-comment btn btn-danger" style="background-color: #d9534f;">Delete</button>
+                                </span>
+                                @endif
 
 
                             </p>
@@ -159,14 +157,14 @@
                         </div>
 
                         @endforeach
-                            <!-- See More & See less Button -->
-                            <!-- Unique Show More & Show Less Buttons for each post -->
-                            <button class="btn btn-primary show-more-btn mt-2" data-post-id="{{ $post->id }}" style="display: none;">See More</button>
-                            <button class="btn btn-primary show-less-btn mt-2" data-post-id="{{ $post->id }}" style="display: none;">See Less</button>
-                        </div>
+                        <!-- See More & See less Button -->
+                        <!-- Unique Show More & Show Less Buttons for each post -->
+                        <button class="btn btn-primary show-more-btn mt-2" data-post-id="{{ $post->id }}" style="display: none;">See More</button>
+                        <button class="btn btn-primary show-less-btn mt-2" data-post-id="{{ $post->id }}" style="display: none;">See Less</button>
+                    </div>
 
 
-                    <form action="{{ route('tutor.postcomment', $post->id) }}" method="POST" enctype="multipart/form-data" id="commentForm_{{ $post->id }}" class="comment-form">
+                    <form action="{{ route('student.postcomment', $post->id) }}" method="POST" enctype="multipart/form-data" id="commentForm_{{ $post->id }}" class="comment-form">
                         @csrf
                         <div class="d-flex align-items-center gap-2 mt-4">
                             <input type="text" id="replyInput" name="comment" class="form-control" placeholder="Reply" style="max-width: 1100px;">
@@ -186,6 +184,84 @@
         </div>
     </div>
 </div>
+
+<div id="studentDeleteConfirmModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="font-weight: 500;">Cancel confirmation!</h5>
+                <button type="button" class="confirm-btn close btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <form id="studentPostDeleteForm" method="POST" action="">
+                @csrf
+                <div class="modal-body">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <p style="font-family: 'Poppins'; font-size:1rem;">Are you sure you want to delete this
+                                post?</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <button type="submit" class="btn btn-primary"
+                        style="background-color: #004AAD; width: 90px;" id="deleteConfirm">Confirm</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close"
+                        style=" width: 90px;">Close</i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Comment Modal -->
+
+<div class="modal fade" id="studentEditCommentModal" tabindex="-1" aria-labelledby="studentEditCommentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="studentEditCommentModalLabel">Edit Comment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editCommentForm" method="POST" action="{{ route('student.editcomment') }}">
+                    @csrf
+                    <input type="hidden" id="editCommentId" name="id">
+                    <div class="mb-3">
+                        <label for="commentContent" class="form-label">Comment</label>
+                        <input class="form-control" id="commentContent" name="comment_update"> </input>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Delete Comment Confirmation Modal -->
+<div class="modal fade" id="studentDeleteCommentModal" tabindex="-1" aria-labelledby="studentDeleteCommentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="studentDeleteCommentModalLabel">Confirm Comment Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this comment? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+                <!-- Delete Form -->
+                <form id="deleteCommentForm" method="POST" action="{{ route('student.deletecomment', ':id') }}">
+                    @csrf
+                    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- </div> -->
 @endsection
 @push('scripts')
@@ -268,99 +344,207 @@
 
     // For see more and see less comment section
 
-//     document.addEventListener("DOMContentLoaded", function () {
-//     let comments = document.querySelectorAll('#commentsSection .comment-item');
-//     let showMoreBtn = document.getElementById('showMoreBtn');
-//     let showLessBtn = document.getElementById('showLessBtn');
+    //     document.addEventListener("DOMContentLoaded", function () {
+    //     let comments = document.querySelectorAll('#commentsSection .comment-item');
+    //     let showMoreBtn = document.getElementById('showMoreBtn');
+    //     let showLessBtn = document.getElementById('showLessBtn');
 
-//     // Hide comments beyond the first 3
-//     if (comments.length > 3) {
-//         comments.forEach((comment, index) => {
-//             if (index >= 3) {
-//                 comment.style.display = "none";
-//             }
-//         });
+    //     // Hide comments beyond the first 3
+    //     if (comments.length > 3) {
+    //         comments.forEach((comment, index) => {
+    //             if (index >= 3) {
+    //                 comment.style.display = "none";
+    //             }
+    //         });
 
-//         // Show "Show More" button if more than 3 comments exist
-//         showMoreBtn.style.display = "block";
+    //         // Show "Show More" button if more than 3 comments exist
+    //         showMoreBtn.style.display = "block";
 
-//         // "Show More" Button Click Event
-//         showMoreBtn.addEventListener("click", function () {
-//             comments.forEach(comment => comment.style.display = "block");
-//             showMoreBtn.style.display = "none"; // Hide Show More button
-//             showLessBtn.style.display = "block"; // Show Show Less button
-//         });
+    //         // "Show More" Button Click Event
+    //         showMoreBtn.addEventListener("click", function () {
+    //             comments.forEach(comment => comment.style.display = "block");
+    //             showMoreBtn.style.display = "none"; // Hide Show More button
+    //             showLessBtn.style.display = "block"; // Show Show Less button
+    //         });
 
-//         // "Show Less" Button Click Event
-//         showLessBtn.addEventListener("click", function () {
-//             comments.forEach((comment, index) => {
-//                 if (index >= 3) {
-//                     comment.style.display = "none"; // Hide comments beyond the first 3
-//                 }
-//             });
-//             showMoreBtn.style.display = "block"; // Show Show More button
-//             showLessBtn.style.display = "none"; // Hide Show Less button
-//         });
-//     }
-// });
+    //         // "Show Less" Button Click Event
+    //         showLessBtn.addEventListener("click", function () {
+    //             comments.forEach((comment, index) => {
+    //                 if (index >= 3) {
+    //                     comment.style.display = "none"; // Hide comments beyond the first 3
+    //                 }
+    //             });
+    //             showMoreBtn.style.display = "block"; // Show Show More button
+    //             showLessBtn.style.display = "none"; // Hide Show Less button
+    //         });
+    //     }
+    // });
 
 
-   // For see more and see less comment section
+    // For see more and see less comment section
 
-document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll('.comments').forEach(commentsSection => {
-        let comments = commentsSection.querySelectorAll('.comment-item');
-        let showMoreBtn = commentsSection.querySelector('.show-more-btn');
-        let showLessBtn = commentsSection.querySelector('.show-less-btn');
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('.comments').forEach(commentsSection => {
+            let comments = commentsSection.querySelectorAll('.comment-item');
+            let showMoreBtn = commentsSection.querySelector('.show-more-btn');
+            let showLessBtn = commentsSection.querySelector('.show-less-btn');
 
-        // Ensure at least 3 comments exist before hiding
-        if (comments.length > 3) {
-            comments.forEach((comment, index) => {
-                if (index >= 3) {
-                    comment.style.display = "none"; // Hide extra comments
-                }
-            });
-
-            // Show "See More" button
-            showMoreBtn.style.display = "block";
-
-            // Show More Click Event (Scoped to Current Post)
-            showMoreBtn.addEventListener("click", function () {
-                comments.forEach(comment => comment.style.display = "block"); // Show all comments
-                showMoreBtn.style.display = "none";  // Hide "See More" button
-                showLessBtn.style.display = "block"; // Show "See Less" button
-            });
-
-            // Show Less Click Event (Scoped to Current Post)
-            showLessBtn.addEventListener("click", function () {
+            // Ensure at least 3 comments exist before hiding
+            if (comments.length > 3) {
                 comments.forEach((comment, index) => {
                     if (index >= 3) {
-                        comment.style.display = "none"; // Hide comments beyond the first 3
+                        comment.style.display = "none"; // Hide extra comments
                     }
                 });
-                showMoreBtn.style.display = "block";  // Show "See More" button
-                showLessBtn.style.display = "none";   // Hide "See Less" button
-            });
-        }
+
+                // Show "See More" button
+                showMoreBtn.style.display = "block";
+
+                // Show More Click Event (Scoped to Current Post)
+                showMoreBtn.addEventListener("click", function() {
+                    comments.forEach(comment => comment.style.display = "block"); // Show all comments
+                    showMoreBtn.style.display = "none"; // Hide "See More" button
+                    showLessBtn.style.display = "block"; // Show "See Less" button
+                });
+
+                // Show Less Click Event (Scoped to Current Post)
+                showLessBtn.addEventListener("click", function() {
+                    comments.forEach((comment, index) => {
+                        if (index >= 3) {
+                            comment.style.display = "none"; // Hide comments beyond the first 3
+                        }
+                    });
+                    showMoreBtn.style.display = "block"; // Show "See More" button
+                    showLessBtn.style.display = "none"; // Hide "See Less" button
+                });
+            }
+        });
     });
-});
 
 
 
-// Three dot menu for edit and delete btn
+    // Three dot menu for edit and delete btn
 
-function toggleMenu(dotIcon) {
-    // Find the closest <p> tag
-    let parentP = dotIcon.closest('p');
+    function toggleMenu(dotIcon) {
+        // Find the closest <p> tag
+        let parentP = dotIcon.closest('p');
 
-    // Find the options menu within the same <p>
-    let menu = parentP.querySelector('.options-menu');
+        // Find the options menu within the same <p>
+        let menu = parentP.querySelector('.options-menu');
 
-    // Toggle the display of the menu
-    menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "inline-block" : "none";
-}
+        // Toggle the display of the menu
+        menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "inline-block" : "none";
+    }
+
+
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('.comments').forEach(commentsSection => {
+            let comments = commentsSection.querySelectorAll('.comment-item');
+            let showMoreBtn = commentsSection.querySelector('.show-more-btn');
+            let showLessBtn = commentsSection.querySelector('.show-less-btn');
+
+            // Ensure at least 3 comments exist before hiding
+            if (comments.length > 3) {
+                comments.forEach((comment, index) => {
+                    if (index >= 3) {
+                        comment.style.display = "none"; // Hide extra comments
+                    }
+                });
+
+                // Show "See More" button
+                showMoreBtn.style.display = "block";
+
+                // Show More Click Event (Scoped to Current Post)
+                showMoreBtn.addEventListener("click", function() {
+                    comments.forEach(comment => comment.style.display = "block"); // Show all comments
+                    showMoreBtn.style.display = "none"; // Hide "See More" button
+                    showLessBtn.style.display = "block"; // Show "See Less" button
+                });
+
+                // Show Less Click Event (Scoped to Current Post)
+                showLessBtn.addEventListener("click", function() {
+                    comments.forEach((comment, index) => {
+                        if (index >= 3) {
+                            comment.style.display = "none"; // Hide comments beyond the first 3
+                        }
+                    });
+                    showMoreBtn.style.display = "block"; // Show "See More" button
+                    showLessBtn.style.display = "none"; // Hide "See Less" button
+                });
+            }
+        });
+    });
 
 
 
+    // Three dot menu for edit and delete btn
+
+    function toggleMenu(dotIcon) {
+        // Find the closest <p> tag
+        let parentP = dotIcon.closest('p');
+
+        // Find the options menu within the same <p>
+        let menu = parentP.querySelector('.options-menu');
+
+        // Toggle the display of the menu
+        menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "inline-block" : "none";
+    }
+
+    //Delete post
+    document.addEventListener("DOMContentLoaded", function() {
+        let studentPostDeleteForm = document.getElementById("studentPostDeleteForm");
+
+        // Attach event listener to all delete buttons
+        document.querySelectorAll(".delete-btn").forEach(button => {
+            button.addEventListener("click", function(event) {
+                event.preventDefault();
+
+                let postId = this.dataset.id;
+                let deleteUrl = `{{ route('student.deletepost', ':id') }}`.replace(':id', postId);
+                studentPostDeleteForm.action = deleteUrl; // Update form action
+
+                let modal = new bootstrap.Modal(document.getElementById('studentDeleteConfirmModal'));
+                modal.show();
+            });
+        });
+    });
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Edit Comment Modal
+        document.querySelectorAll('.edit-comment').forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                let commentId = this.dataset.id;
+                let commentContent = this.dataset.text;
+
+                // Set the values in the modal
+                document.getElementById('editCommentId').value = commentId;
+                document.getElementById('commentContent').value = commentContent;
+
+                // Show the modal
+                let modal = new bootstrap.Modal(document.getElementById('studentEditCommentModal'));
+                modal.show();
+            });
+        });
+
+        // Delete Comment Modal
+        document.querySelectorAll('.delete-comment').forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                let commentId = this.dataset.id;
+                let deleteUrl = `{{ route('student.deletecomment', ':id') }}`.replace(':id', commentId);
+
+                // Update the delete form action URL dynamically
+                document.getElementById('deleteCommentForm').action = deleteUrl;
+
+                // Show the modal
+                let modal = new bootstrap.Modal(document.getElementById('studentDeleteCommentModal'));
+                modal.show();
+            });
+        });
+    });
 </script>
 @endpush

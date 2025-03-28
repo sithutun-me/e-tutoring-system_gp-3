@@ -296,91 +296,148 @@ class TutorController extends Controller
     public function blogging(Request $request)
     {
         $pageTitle = 'Posts';
+
         $tutor = Auth::user();
-        $tutorId = $tutor->id; // Get the logged-in tutor’s ID
-        $query = Post::with(['documents', 'creator', 'receiver', 'comments'])
-            ->where('post_status', 'new')
-            ->orWhere('post_status', 'updated');
-        // dd($tutorId);
+        $tutorId = $tutor->id;
+        $query = Post::with(['creator', 'receiver', 'documents', 'comments']);
+        // Filter by post type
+        $studentId = $request->input('student_filter');
+        switch ($request->input('post_by')) {
+            case 'myPosts':
+                $query->where('post_create_by', $tutorId);
 
-        $searchKeyword = $request->input('search_post');
-        // Filter by post by if selected to MyPosts
-        if ($request->filled('post_by') && $request->post_by == 'MyPosts') {
-            $query->where('post_create_by', $tutorId);
+                // ->where(function ($q) use ($tutorId) {
+                //     $q->whereHas('comments', function ($subQuery) use ($tutorId) {
+                //         $subQuery->where('user_id', $tutorId);
+                //     });
+                // })
+                if ($studentId) {
+                    $query->where('post_received_by', $studentId);
+                }
+                break;
 
-            // Filter by specific student if 'student_filter' is provided
-            if ($request->filled('student_filter')) {
-                $studentId = $request->student_filter;
+            case 'studentPosts':
 
-                $query->where(function ($q) use ($studentId) {
-                    $q->where('post_create_by', $studentId)
-                        ->orWhere('post_received_by', $studentId);
-                });
-            }
+                if ($studentId && Post::where('post_create_by', $studentId)) {
+                    $query->where('post_create_by', $studentId);
+                } else {
+                    $query->where(function ($q) {
+                        $q->whereHas('creator', function ($subQuery) {
+                            $subQuery->where('role_id', 1);
+                        });
+                    }); // Show all students posts
+                }
+                break;
 
-            // Filter by post by if Post Title
-            if ($searchKeyword) {
-                $query->where(function ($q) use ($searchKeyword) {
-                    $q->where('post_title', 'LIKE', '%' . $searchKeyword . '%');
-                });
-            }
+            default:
+                // All posts (no filtering)
+                break;
         }
-        // Filter by post_by if selected as 'StudentPosts'
-        if ($request->filled('post_by') && $request->post_by == 'StudentPosts') {
-            $query->where(function ($q) {
-                $q->whereHas('creator', function ($subQuery) {
-                    $subQuery->where('role_id', 1);
-                })
-                    ->orWhereHas('receiver', function ($subQuery) {
-                        $subQuery->where('role_id', 1);
-                    });
+        // Apply search filter
+        $searchPost = $request->input('search_post');
+        if ($searchPost) {
+            $query->where(function ($q) use ($searchPost) {
+                $q->where('post_title', 'like', '%' . $searchPost . '%');
             });
-
-            // Filter by specific student if 'student_filter' is provided
-            if ($request->filled('student_filter')) {
-                $studentId = $request->student_filter;
-
-                $query->where(function ($q) use ($studentId) {
-                    $q->where('post_create_by', $studentId);
-                });
-            }
-
-            // Filter by post by if Post Title
-            if ($searchKeyword) {
-                $query->where(function ($q) use ($searchKeyword) {
-                    $q->where('post_title', 'LIKE', '%' . $searchKeyword . '%');
-                });
-            }
         }
 
-        // Filter by post by if selected to MyPosts
-        if ($request->filled('post_by') && $request->post_by == 'All') {
-            // Filter by specific student if 'student_filter' is provided
-            if ($request->filled('student_filter')) {
-                $studentId = $request->student_filter;
-                dd($request->input('student_filter'));
-                $query->where(function ($q) use ($studentId) {
-                    $q->where('post_create_by', $studentId)
-                        ->orWhere('post_received_by', $studentId);
-                });
-            }
 
-            // Filter by post by if Post Title
-            if ($searchKeyword) {
-                $query->where(function ($q) use ($searchKeyword) {
-                    $q->where('post_title', 'LIKE', '%' . $searchKeyword . '%');
-                });
-            }
-        }
+        $posts = $query->where('post_status', '!=', 'deleted')->orderBy('updated_at','desc')->get();
 
-        $posts = $query->orderBy('updated_at', 'desc')->get();
         $students = $query = User::whereHas('studentAllocations', function ($query) use ($tutorId) {
             $query->where('tutor_id', $tutorId)->where('active', 1);
         })->where('role_id', 1)->get();
 
-        \Log::info('back to blogging: '); // Log success
+
         return view('tutor.blogging', compact(['pageTitle', 'posts', 'students', 'tutor']));
     }
+    // public function bloggingIndex(Request $request)
+    // {
+    //     $pageTitle = 'Posts';
+    //     $tutor = Auth::user();
+    //     $tutorId = $tutor->id; // Get the logged-in tutor’s ID
+    //     $query = Post::with(['documents', 'creator', 'receiver', 'comments']);
+    //     // dd($tutorId);
+
+    //     $searchKeyword = $request->input('search_post');
+    //     // Filter by post by if selected to MyPosts
+    //     if ($request->filled('post_by') && $request->post_by == 'MyPosts') {
+    //         $query->where('post_create_by', $tutorId);
+
+    //         // Filter by specific student if 'student_filter' is provided
+    //         if ($request->filled('student_filter')) {
+    //             $studentId = $request->student_filter;
+
+    //             $query->where(function ($q) use ($studentId) {
+    //                 $q->where('post_create_by', $studentId)
+    //                     ->orWhere('post_received_by', $studentId);
+    //             });
+    //         }
+
+    //         // Filter by post by if Post Title
+    //         if ($searchKeyword) {
+    //             $query->where(function ($q) use ($searchKeyword) {
+    //                 $q->where('post_title', 'LIKE', '%' . $searchKeyword . '%');
+    //             });
+    //         }
+    //     }
+    //     // Filter by post_by if selected as 'StudentPosts'
+    //     if ($request->filled('post_by') && $request->post_by == 'StudentPosts') {
+    //             $query->where(function ($q) {
+    //                 $q->whereHas('creator', function ($subQuery) {
+    //                     $subQuery->where('role_id', 1);
+    //                 })
+    //                     ->orWhereHas('receiver', function ($subQuery) {
+    //                         $subQuery->where('role_id', 1);
+    //                     });
+    //             });
+
+    //         // Filter by specific student if 'student_filter' is provided
+    //         if ($request->filled('student_filter')) {
+    //             $studentId = $request->student_filter;
+
+    //             $query->where(function ($q) use ($studentId) {
+    //                 $q->where('post_create_by', $studentId);
+    //             });
+    //         }
+
+    //         // Filter by post by if Post Title
+    //         if ($searchKeyword) {
+    //             $query->where(function ($q) use ($searchKeyword) {
+    //                 $q->where('post_title', 'LIKE', '%' . $searchKeyword . '%');
+    //             });
+    //         }
+    //     }
+
+    //     // Filter by post by if selected to MyPosts
+    //     if ($request->filled('post_by') && $request->post_by == 'All') {
+    //         // Filter by specific student if 'student_filter' is provided
+    //         if ($request->filled('student_filter')) {
+    //             $studentId = $request->student_filter;
+    //             $query->where(function ($q) use ($studentId) {
+    //                 $q->where('post_create_by', $studentId)
+    //                     ->orWhere('post_received_by', $studentId);
+    //             });
+    //         }
+
+    //         // Filter by post by if Post Title
+    //         if ($searchKeyword) {
+    //             $query->where(function ($q) use ($searchKeyword) {
+    //                 $q->where('post_title', 'LIKE', '%' . $searchKeyword . '%');
+    //             });
+    //         }
+    //     }
+
+    //     $posts = $query
+    //         ->where('post_status', 'new')
+    //         ->orWhere('post_status', 'updated')->orderBy('updated_at', 'desc')->get();
+    //     $students = $query = User::whereHas('studentAllocations', function ($query) use ($tutorId) {
+    //         $query->where('tutor_id', $tutorId)->where('active', 1);
+    //     })->where('role_id', 1)->get();
+
+    //     \Log::info('back to blogging: '); // Log success
+    //     return view('tutor.blogging', compact(['pageTitle', 'posts', 'students', 'tutor']));
+    // }
 
     public function createpost(Request $request)
     {
@@ -427,7 +484,7 @@ class TutorController extends Controller
             try {
                 foreach ($request->file('post_files') as $file) {
                     $document = new Document();
-                    $path = 'private/var/folders/jy/';
+                    $path = 'private/student_files/';
                     if (!$path) {
                         mkdir($path);
                     }
@@ -518,7 +575,7 @@ class TutorController extends Controller
             try {
                 foreach ($request->file('post_files_upload') as $file) {
                     $document = new Document();
-                    $path = 'private/var/folders/jy/';
+                    $path = 'private/student_files/';
                     if (!$path) {
                         mkdir($path);
                     }
