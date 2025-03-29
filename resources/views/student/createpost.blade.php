@@ -60,45 +60,37 @@
             </span>
 
             <form id="postForm"
-                action="{{ route('tutor.savepost') }}"
+                action="{{ route('student.savepost') }}"
                 method="POST" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="create_by" value="{{ $tutor->id }}">
+                <input type="hidden" name="create_by" value="{{ $student->id }}">
+                <input type="hidden" name="received_by" value="{{ $tutor->id }}">
                 <div class="create-container" style="margin-left: 20px;">
 
 
                     <div class="d-flex align-items-center mb-3">
                         <div class="profile-img"><i class="fa-solid fa-circle-user"></i></div>
-
-                        <strong class="ms-2">{{ $tutor->first_name }} {{ $tutor->last_name }}</strong>
-                    </div>
-                    <div class="mb-3">
-                        <select class="form-select" name="selected_student" id="floatingSelect" aria-label="Floating label select example">
-                            <option value="" {{ request('selected_student') == '' ? 'selected' : '' }}>Choose Student *</option>
-                            @foreach ($students as $student)
-                            <option value="{{ $student->id }}" {{ old('selected_student') == $student->id ? 'selected' : '' }}>{{ $student->first_name }} {{ $student->last_name }}</option>
-                            @endforeach
-                        </select>
+                        <strong class="ms-2">{{ $student->first_name }} {{ $student->last_name }}</strong>
                     </div>
 
                     <div class="mb-3">
-                        <input type="text" id="add-title" class="form-control" name="post_title" value="{{ old('post_title') }}" placeholder="Add title *">
+                        <input type="text" id="studentAddTitle" class="form-control" name="post_title" value="{{ old('post_title') }}" placeholder="Add title *">
                     </div>
 
 
 
                     <div class="mb-3">
-                        <textarea class="form-control" rows="4" id="description" placeholder="Add Description" name="post_desc">{{ old('post_desc') }}</textarea>
+                        <textarea class="form-control" rows="4" id="studentDescription" placeholder="Add Description" name="post_desc">{{ old('post_desc') }}</textarea>
                     </div>
 
 
                     <div class="mb-3 mt-4">
-                        <input type="file" id="file-input" name="post_files[]" class="form-control mb-3" multiple>
-                        <small id="file-count">No file chosen</small>
+                        <input type="file" id="studentFileInput" name="post_files[]" class="form-control mb-3" multiple>
+                        <small id="studentFileCount">No file chosen</small>
                     </div>
 
                     <!--Selected/Chosen File List Display -->
-                    <ul id="file-list" class="file-list" name="doc_files"></ul>
+                    <ul id="fileList" class="file-list" name="doc_files"></ul>
 
                     <button type="submit" class="btn btn-primary w-100 mt-2" style="background-color: #004AAD;">Post</button>
                 </div>
@@ -115,7 +107,7 @@
 </div>
 
 
-<div id="errorModal" class="modal fade" tabindex="-1" role="dialog">
+<div id="studentErrorModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -186,9 +178,9 @@
 
     // Selected File List Display and Remove
 
-    document.getElementById("file-input").addEventListener("change", function(event) {
-        const fileList = document.getElementById("file-list");
-        const fileCount = document.getElementById("file-count");
+    document.getElementById("studentFileInput").addEventListener("change", function(event) {
+        const fileList = document.getElementById("fileList");
+        const fileCount = document.getElementById("studentFileCount");
         fileList.innerHTML = ""; // Clear previous file list
 
         const files = Array.from(event.target.files);
@@ -216,7 +208,7 @@
     });
 
     function removeFile(index) {
-        const fileInput = document.getElementById("file-input");
+        const fileInput = document.getElementById("studentFileInput");
         let files = Array.from(fileInput.files);
 
         files.splice(index, 1);
@@ -233,7 +225,7 @@
 @if ($errors->any())
 <script>
     // window.errors = @json($errors->all());
-    var myModal = new bootstrap.Modal(document.getElementById('errorModal'));
+    var myModal = new bootstrap.Modal(document.getElementById('studentErrorModal'));
     myModal.show();
 </script>
 @endif
