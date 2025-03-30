@@ -4,7 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AllocationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StudentController;
-use App\Http\Controllers\Tutor\PostController;
+use App\Http\Controllers\Student\PostController;
 use App\Http\Controllers\TutorController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -66,10 +66,13 @@ Route::middleware(['auth', 'protect_auth'])->group(function () {
         Route::post('/tutor/savepost', [TutorController::class, 'savepost'])->name('tutor.savepost');
         Route::get('/tutor/editpost/{id}', [TutorController::class, 'editpost'])->name('tutor.editpost');
         Route::post('/tutor/updatepost/{id}', [TutorController::class, 'updatepost'])->name('tutor.updatepost');
+        Route::post('/tutor/deletepost/{id}', [TutorController::class, 'deletepost'])->name('tutor.deletepost');
         //view posts
         Route::get('/tutor/blogging', [TutorController::class, 'blogging'])->name('tutor.blogging');
         //comment
         Route::post('/tutor/postcomment/{id}', [TutorController::class, 'postcomment'])->name('tutor.postcomment');
+        Route::post('/tutor/deletecomment/{id}', [TutorController::class, 'deletecomment'])->name('tutor.deletecomment');
+        Route::post('/tutor/editcomment', [TutorController::class, 'editcomment'])->name('tutor.editcomment');
 
         //create meeting
         Route::post('/tutor/meetingdetail', [TutorController::class, 'save'])->name('tutor.save');
@@ -108,6 +111,20 @@ Route::middleware(['auth', 'protect_auth'])->group(function () {
             ->name('student.meetingdetail.toggleStatus');
 
         Route::post('/student/meetingdetail/cancel', [StudentController::class, 'cancelMeeting'])->name('student.meetingdetail.cancelmeeting');
+
+        //view posts student
+        Route::get('/student/blogging', [PostController::class, 'index'])->name('student.blogging');
+        //crud posts student
+        Route::get('/student/createpost', [PostController::class, 'createpost'])->name('student.createpost');
+        Route::post('/student/savepost', [PostController::class, 'savepost'])->name('student.savepost');
+        Route::get('/student/editpost/{id}', [PostController::class, 'editpost'])->name('student.editpost');
+        Route::post('/student/updatepost/{id}', [PostController::class, 'updatepost'])->name('student.updatepost');
+        Route::post('/student/deletepost/{id}', [PostController::class, 'deletepost'])->name('student.deletepost');
+
+        //comment
+        Route::post('/student/postcomment/{id}', [PostController::class, 'postcomment'])->name('student.postcomment');
+        Route::post('/student/deletecomment/{id}', [PostController::class, 'deletecomment'])->name('student.deletecomment');
+        Route::post('/student/editcomment', [PostController::class, 'editcomment'])->name('student.editcomment');
 
         Route::get('/student/report', [StudentController::class, 'report'])->name('student.report');
     });

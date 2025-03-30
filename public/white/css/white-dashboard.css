@@ -2,7 +2,7 @@
   .admin-tabs {
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
+    gap: 10px; 
   }
 
   .fixed-row {
@@ -48,7 +48,9 @@
 
 }
 
-
+.dropdown button {
+  background-color: white;
+}
 
 .adminreport {
   width: 100%;
@@ -97,6 +99,8 @@ border-top: 1px solid #D3D3D3;  /* Keeps horizontal lines */
 border-bottom: 1px solid #D3D3D3; /* Keeps horizontal lines */
 border-left: none;  /* Remove vertical borders */
 border-right: none; /* Remove vertical borders */
+text-wrap: auto;
+word-wrap: break-word;
 }
 
 /* Keep the first column's left border */
@@ -111,6 +115,118 @@ border-left: 1px solid #D3D3D3;
 border-right: 1px solid #D3D3D3;
 }
 
+/* for most viewed page in admin report */
+.adminreportmostviewed {
+  border-collapse: collapse;
+  margin-top: 10px;
+  
+}
+.adminreportmostviewed thead {
+  background: #004AAD;
+  color: white;
+  
+}
+.adminreportmostviewed {
+  table-layout: fixed; /* Prevents layout shift */
+  border-collapse: collapse;
+  height: 100%;
+}
+
+.adminreportmostviewed tbody {
+  display: block;
+  overflow-y: auto;
+  font-family: "Poppins";
+  font-size: 0.875rem;
+}
+
+.adminreportmostviewed thead,
+.adminreportmostviewed tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+
+.adminreportmostviewed {
+width: 100%;
+border-collapse: collapse;
+}
+
+.adminreportmostviewed th, 
+.adminreportmostviewed td {
+padding: 10px;
+text-align: center;
+border-top: 1px solid #D3D3D3;  /* Keeps horizontal lines */
+border-bottom: 1px solid #D3D3D3; /* Keeps horizontal lines */
+border-left: none;  /* Remove vertical borders */
+border-right: none; /* Remove vertical borders */
+text-wrap: auto;
+word-wrap: break-word;
+
+}
+
+/* Keep the first column's left border */
+.adminreportmostviewed th:first-child, 
+.adminreportmostviewed td:first-child {
+border-left: 1px solid #D3D3D3;
+}
+
+/* Keep the last column's right border */
+.adminreportmostviewed th:last-child, 
+.adminreportmostviewed td:last-child {
+border-right: 1px solid #D3D3D3;
+}
+
+/* for admin report most viwed table responsive view */
+
+@media (max-width: 820px) {
+ 
+  .adminreportmostviewed tbody {
+    display: block;
+    overflow-y: auto;
+    height: 400px; 
+    font-family: "Poppins";
+    font-size: 0.875rem;
+  
+  }
+  .admin-tabs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px; 
+}
+
+.admin-tabs button {
+    padding: 10px 15px;
+    min-width: 100px; /* Ensures uniform width */
+    height: auto; 
+    white-space: normal; /* Allows text to wrap */
+    word-wrap: break-word; /* Ensures long words wrap correctly */
+    text-align: center;
+    font-size: 0.875rem; 
+    background-color: #FDFAF6;
+    cursor: pointer;
+    line-height: 1.2; /* Improves spacing between lines */
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    text-align: center;
+}
+
+}
+
+@media (max-width: 1200px) {
+ 
+  .adminreportmostviewed tbody {
+    display: block;
+    overflow-y: auto;
+    height: 400px; 
+    font-family: "Poppins";
+    font-size: 0.875rem;
+  
+  }
+
+}
 
 #adminreportTableMessage_wrapper .dataTables_wrapper {
   min-height: 450px; /* Ensures consistent height */
@@ -231,6 +347,125 @@ border-right: 1px solid #D3D3D3;
 }
 
 
+#adminreportTableViewedpages_wrapper .dataTables_wrapper {
+  min-height: 450px; /* Ensures consistent height */
+}
+
+#adminreportTableViewedpages_wrapper .dataTables_paginate {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+}
+
+#adminreportTableViewedpages_wrapper .dataTables_paginate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 10px;
+  position: relative;
+}
+
+/* Pagination buttons styling */
+#adminreportTableViewedpages_wrapper .dataTables_paginate .paginate_button {
+  display: inline-block;
+  background-color: #FFFFFF !important;
+  color: #92969c !important;
+  border: 1px solid #D3D3D3 !important;
+  border-radius: 5px;
+  margin: 3px;
+  padding: 6px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Active page button */
+#adminreportTableViewedpages_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: #007bff !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  font-weight: bold;
+}
+
+/* Disabled button */
+#adminreportTableViewedpages_wrapper .dataTables_paginate .paginate_button.disabled {
+  background-color: #fff !important;
+  color: #bfc1c4 !important;
+  cursor: not-allowed !important;
+  border-color: #bfc1c4 !important;
+  pointer-events: none;
+}
+
+/* Hover effect */
+#adminreportTableViewedpages_wrapper .dataTables_paginate .paginate_button:hover {
+  background-color: #007bff !important;
+  color: #FFFFFF !important;
+}
+
+
+#adminreportTableActiveusers_wrapper .dataTables_wrapper {
+  min-height: 450px; /* Ensures consistent height */
+}
+
+#adminreportTableActiveusers_wrapper .dataTables_paginate {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+}
+
+#adminreportTableActiveusers_wrapper .dataTables_paginate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 10px;
+  position: relative;
+}
+
+/* Pagination buttons styling */
+#adminreportTableActiveusers_wrapper .dataTables_paginate .paginate_button {
+  display: inline-block;
+  background-color: #FFFFFF !important;
+  color: #92969c !important;
+  border: 1px solid #D3D3D3 !important;
+  border-radius: 5px;
+  margin: 3px;
+  padding: 6px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Active page button */
+#adminreportTableActiveusers_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: #007bff !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  font-weight: bold;
+}
+
+/* Disabled button */
+#adminreportTableActiveusers_wrapper .dataTables_paginate .paginate_button.disabled {
+  background-color: #fff !important;
+  color: #bfc1c4 !important;
+  cursor: not-allowed !important;
+  border-color: #bfc1c4 !important;
+  pointer-events: none;
+}
+
+/* Hover effect */
+#adminreportTableActiveusers_wrapper .dataTables_paginate .paginate_button:hover {
+  background-color: #007bff !important;
+  color: #FFFFFF !important;
+}
+
 
 .admin-tabs {
   display: flex;
@@ -284,6 +519,9 @@ border-right: 1px solid #D3D3D3;
 
 .large-font {
   font-size: 4.5rem !important;
+}
+.large-medium-font {
+  font-size: 2rem !important;
 }
 
 .top-row {
@@ -559,8 +797,8 @@ input {
 }
 
 .chart-card-full {
-  max-width: 100% !important;
-  width: 100% !important;
+  max-width: 95% !important;
+  width: 95% !important;
 }
 
 
@@ -620,6 +858,18 @@ input {
   }
   #adminreportTableInteraction .small-col {
     width: 50px !important;
+  }
+  #adminreportTableViewedpages .small-col {
+    width: 50px !important;
+  }
+  #adminreportTableActiveusers .small-col {
+    width: 50px !important;
+  }
+  .adminreportmostviewed {
+    width: 800px; /* for custom width for most view page table in admin report */
+    border-collapse: collapse;
+    margin-top: 10px;
+    
   }
   .chart-container {
     min-width: 1140px;

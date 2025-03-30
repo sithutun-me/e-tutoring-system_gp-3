@@ -52,9 +52,11 @@
 
                 <div class="report-container mb-4">
                     <div class="admin-tabs">
-                        <button id="studentsTab" class="active" onclick="showContent('students')">Students with no
-                            interactions</button>
+                        <button id="studentsTab" onclick="showContent('students')">Students with no interactions</button>
                         <button id="tutorsTab" onclick="showContent('tutors')">Average messages for each tutor</button>
+                        <button id="mostviewedpagesTab" onclick="showContent('mostviewedpages')">Most viewed Pages</button>
+                        <button id="mostactiveusersTab" onclick="showContent('mostactiveusers')">Most active users</button>
+
                     </div>
                     <div id="students" class="content-area active">
                         <div class="form-group mt-5 mb-3">
@@ -245,6 +247,160 @@
                         </div>
                     </div>
 
+                    <div id="mostviewedpages" class="content-area mt-4">
+
+                        <div class="table-responsive" id="no-more-tables">
+                            <table class="adminreportmostviewed" id="adminreportTableViewedpages">
+                                <thead>
+                                    <tr>
+                                        <th class="small-col">No.</th>
+                                        <th class="text-center">Pages</th>
+                                        <th class="text-center">View Count</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="adminreport-row">
+                                    <tr>
+                                        <td class="small-col" data-title="No.">1.</td>
+                                        <td data-title="Pages">Tutor Meetings</td>
+                                        <td data-title="View Count">50</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="small-col" data-title="No.">2.</td>
+                                        <td data-title="Pages">Student Meetings</td>
+                                        <td data-title="View Count">48</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="small-col" data-title="No.">3.</td>
+                                        <td data-title="Pages">Tutor Blogging</td>
+                                        <td data-title="View Count">45</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="small-col" data-title="No.">4.</td>
+                                        <td data-title="Pages">Student Blogging</td>
+                                        <td data-title="View Count">30</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="small-col" data-title="No.">5.</td>
+                                        <td data-title="Pages">Admin Reports</td>
+                                        <td data-title="View Count">30</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="small-col" data-title="No.">6.</td>
+                                        <td data-title="Pages">Admin Dashboard</td>
+                                        <td data-title="View Count">29</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="small-col" data-title="No.">7.</td>
+                                        <td data-title="Pages">Tutor Dashboard</td>
+                                        <td data-title="View Count">28</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="small-col" data-title="No.">8.</td>
+                                        <td data-title="Pages">Student Dashboard</td>
+                                        <td data-title="View Count">27</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="small-col" data-title="No.">9.</td>
+                                        <td data-title="Pages">Allocation</td>
+                                        <td data-title="View Count">20</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="small-col" data-title="No.">10.</td>
+                                        <td data-title="Pages">Reschedule</td>
+                                        <td data-title="View Count">19</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="small-col" data-title="No.">11.</td>
+                                        <td data-title="Pages">Meeting Detail</td>
+                                        <td data-title="View Count">17</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="small-col" data-title="No.">12.</td>
+                                        <td data-title="Pages">Assigned list</td>
+                                        <td data-title="View Count">16</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="small-col" data-title="No.">13.</td>
+                                        <td data-title="Pages">Tutor List</td>
+                                        <td data-title="View Count">15</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="small-col" data-title="No.">14.</td>
+                                        <td data-title="Pages">Student List</td>
+                                        <td data-title="View Count">15</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="small-col" data-title="No.">15.</td>
+                                        <td data-title="Pages">Tutor Reports</td>
+                                        <td data-title="View Count">13</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="small-col" data-title="No.">16.</td>
+                                        <td data-title="Pages">Student Reports</td>
+                                        <td data-title="View Count">13</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="small-col" data-title="No.">17.</td>
+                                        <td data-title="Pages">Reallocation</td>
+                                        <td data-title="View Count">20</td>
+                                    </tr>
+                                    
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="mostactiveusers" class="content-area mt-4">
+
+                        <div class="table-responsive" id="no-more-tables">
+                            <table class="adminreport" id="adminreportTableActiveusers">
+                                <thead>
+                                    <tr>
+                                        <th class="small-col">No.</th>
+                                        <th class="text-center">Student Code</th>
+                                        <th class="text-center">Student Name</th>
+                                        <th class="text-center">Login count or interaction count</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="adminreport-row">
+                                    <tr>
+                                        <td class="small-col" data-title="No.">1.</td>
+                                        <td data-title="Student Code">std0001</td>
+                                        <td data-title="Student Name">Jennie</td>
+                                        <td data-title="Login count or interaction count">10</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="small-col" data-title="No.">2.</td>
+                                        <td data-title="Student Code">std0002</td>
+                                        <td data-title="Student Name">Jake</td>
+                                        <td data-title="Login count or interaction count">10</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="small-col" data-title="No.">3.</td>
+                                        <td data-title="Student Code">std0003</td>
+                                        <td data-title="Student Name">Joshua</td>
+                                        <td data-title="Login count or interaction count">10</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="small-col" data-title="No.">4.</td>
+                                        <td data-title="Student Code">std0004</td>
+                                        <td data-title="Student Name">Jay</td>
+                                        <td data-title="Login count or interaction count">10</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="small-col" data-title="No.">5.</td>
+                                        <td data-title="Student Code">std0005</td>
+                                        <td data-title="Student Name">Jeonghan</td>
+                                        <td data-title="Login count or interaction count">10</td>
+                                    </tr>
+                                    
+
+                                </tbody>
+                            </table>
+                        </div>
+                        </div>
+
 
                 </div>
             </div>
@@ -293,9 +449,35 @@
         });
 
         // $(document).ready(function() {
-        //     $('#studentreportTable').DataTable({
+        //     $('#adminreportTableInteraction').DataTable({
         //         paging: true,
-        //         pageLength: 10,
+        //         pageLength: 15,
+        //         lengthChange: false,
+        //         searching: false,
+        //         ordering: false,
+        //         "language": {
+        //             "info": "Total Records: _TOTAL_",
+        //         }
+        //     });
+        // });
+
+             // $(document).ready(function() {
+        //     $('#adminreportTableMessage').DataTable({
+        //         paging: true,
+        //         pageLength: 15,
+        //         lengthChange: false,
+        //         searching: false,
+        //         ordering: false,
+        //         "language": {
+        //             "info": "Total Records: _TOTAL_",
+        //         }
+        //     });
+        // });
+
+             // $(document).ready(function() {
+        //     $('#adminreportTableActiveusers').DataTable({
+        //         paging: true,
+        //         pageLength: 15,
         //         lengthChange: false,
         //         searching: false,
         //         ordering: false,

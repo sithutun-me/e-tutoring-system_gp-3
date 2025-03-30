@@ -24,7 +24,7 @@
                             <img src="/icon images/meeting.png" style="width:20px; margin-right: 10px;"> Meetings
                         </a>
                     </li>
-                    <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block ">
+                    <li class=""><a href="/student/blogging" class="text-decoration-none px-3 py-2 d-block ">
                             <img src="/icon images/blogging.png" style="width:20px; margin-right: 10px;"> Blogging
 
                         </a>
@@ -66,7 +66,7 @@
                                 <h2 class="fs-2 fw-bold"> Student Dashboard</h2>
                             </div>
                             <div class="col-md-6 header-text text-end">
-                                Tutor - {{$tutorName}}
+                                Tutor - {{ $tutorName }}
                             </div>
                         </div>
                         <div class="row mt-4">
@@ -93,12 +93,18 @@
                                     <div class="rounded-box col-md-6">
                                         <div style="width: 100%;" class="flex-step-box">
                                             <div class="top-row">
-                                                <div class="center-text large-font">
-                                                    {{ $postCount }}
-                                                </div>
-                                                <div class="center-text">
-                                                    new posts by tutor
-                                                </div>
+                                                @if ($postCount !== 0)
+                                                    <div class="center-text large-font">
+                                                        {{ $postCount }}
+                                                    </div>
+                                                    <div class="center-text">
+                                                        new posts by tutor
+                                                    </div>
+                                                @else
+                                                    <div class="center-text">
+                                                        No new post by tutor
+                                                    </div>
+                                                @endif
                                             </div>
                                             <div class="box-align-bottom center-text">
                                                 <a href="#"> View posts>></a>
@@ -170,25 +176,36 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($meetings as $meeting)
-                                                        <tr>
-                                                            <td class="normal-text">{{ $meeting->meeting_title }}</td>
-                                                            <td class="normal-text">
-                                                                {{ \Carbon\Carbon::parse($meeting->meeting_date)->format('d M Y') }}
-                                                            </td>
-                                                            <td class="normal-text">
-                                                                {{ \Carbon\Carbon::parse($meeting->meeting_start_time)->format('h:i A') }}
-                                                                -
-                                                                {{ \Carbon\Carbon::parse($meeting->meeting_end_time)->format('h:i A') }}
-                                                            </td>
-                                                            <td class="normal-text">{{ $meeting->meeting_type }}</td>
 
-                                                            <td class="text-center">
-                                                                <a href="{{ route('student.meetingdetail.view', $meeting->id) }}"
-                                                                    class="btn btn-primary shadow-none">Detail</a>
+                                                    @if ($meetings->isEmpty())
+                                                        <tr>
+                                                            <td colspan="5" class="text-muted py-4">
+                                                                <i class="fas fa-calendar-times"></i> No Meetings Available
                                                             </td>
                                                         </tr>
-                                                    @endforeach
+                                                    @else
+                                                        @foreach ($meetings as $meeting)
+                                                            <tr>
+                                                                <td class="normal-text">{{ $meeting->meeting_title }}</td>
+                                                                <td class="normal-text">
+                                                                    {{ \Carbon\Carbon::parse($meeting->meeting_date)->format('d M Y') }}
+                                                                </td>
+                                                                <td class="normal-text">
+                                                                    {{ \Carbon\Carbon::parse($meeting->meeting_start_time)->format('h:i A') }}
+                                                                    -
+                                                                    {{ \Carbon\Carbon::parse($meeting->meeting_end_time)->format('h:i A') }}
+                                                                </td>
+                                                                <td class="normal-text">{{ $meeting->meeting_type }}</td>
+
+                                                                <td class="text-center">
+                                                                    <a href="{{ route('student.meetingdetail.view', $meeting->id) }}"
+                                                                        class="btn btn-primary shadow-none">Detail</a>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @endif
+
+
                                                 </tbody>
 
                                             </table>
