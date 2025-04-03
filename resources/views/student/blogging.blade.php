@@ -89,12 +89,15 @@
                     @php
                     $user = auth()->user();
                     @endphp
+                    @if($post->is_meeting != 1)
                     @if($post->creator->id == $user->id)
                     <div class="edit-btn text-center fit">
+
                         <a href="{{  route('student.editpost',$post->id) }}" class="edit-btn btn btn-primary shadow-none" style=" width: 100px; background-color: #004AAD;">Edit</a>
                         <a href="#" class="delete-btn btn  shadow-none" data-id="{{ $post->id }}" style=" width:50px; background-color:#d9534f "><i class="fa-solid fa-trash"></i></a>
 
                     </div>
+                    @endif
                     @endif
                     <p>
                         <i class="fa-solid fa-circle-user me-3" style="font-size: 35px; color:#808080; vertical-align: middle;"></i>
