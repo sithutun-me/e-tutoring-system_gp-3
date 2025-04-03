@@ -92,7 +92,7 @@
                     @if($post->creator->id == $user->id)
                     <div class="edit-btn text-center fit">
                         <a href="{{  route('student.editpost',$post->id) }}" class="edit-btn btn btn-primary shadow-none" style=" width: 100px; background-color: #004AAD;">Edit</a>
-                        <a href="{{  route('student.editpost',$post->id) }}" class="delete-btn btn  shadow-none" style=" width:50px; background-color:#d9534f "><i class="fa-solid fa-trash"></i></a>
+                        <a href="#" class="delete-btn btn  shadow-none" data-id="{{ $post->id }}" style=" width:50px; background-color:#d9534f "><i class="fa-solid fa-trash"></i></a>
 
                     </div>
                     @endif
@@ -100,7 +100,7 @@
                         <i class="fa-solid fa-circle-user me-3" style="font-size: 35px; color:#808080; vertical-align: middle;"></i>
                         <strong class="name me-4" style="vertical-align: middle; font-size: 1rem; font-family:'Poppins';">{{ $post->creator?->first_name }} {{ $post->creator?->last_name }}</strong>
                         <span class="date me-1" style="vertical-align: middle; font-family:'Poppins';">{{ \Carbon\Carbon::parse($post->updated_at)->format('d M Y') }}</span>
-                        <span class="time me-4" style="vertical-align: middle; font-family:'Poppins';">{{ \Carbon\Carbon::parse($post->updated_at)->format('h:m A') }}</span>
+                        <span class="time me-4" style="vertical-align: middle; font-family:'Poppins';">{{ \Carbon\Carbon::parse($post->updated_at)->format('h:i A') }}</span>
                         <span class="status me-0" style="vertical-align: middle; font-family:'Poppins';">
                             {{ $post->post_status }}
                         </span>
@@ -135,7 +135,7 @@
                                 <i class="fa-solid fa-circle-user me-2" style="font-size: 20px; color:#808080; vertical-align: middle;"></i>
                                 <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">{{ $comment->user->first_name }} {{ $comment->user->last_name }}</strong>
                                 <span class="date me-1" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($comment->updated_at)->format('d M Y') }}</span>
-                                <span class="time me-4" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($comment->updated_at)->format('h:m A') }}</span>
+                                <span class="time me-4" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($comment->updated_at)->format('h:i A') }}</span>
 
                                 @if($comment->user_id == $user->id)
                                 <!-- Three-dot Menu for comment edit and delete next to Time -->
