@@ -671,15 +671,20 @@ class TutorController extends Controller
         // Get student name filter if provided
         $studentName = $request->input('student_name');
 
+        $studentsDropDown = Allocation::where('tutor_id', $tutorId)
+            ->where('active', 1)
+            ->with('student') // Assuming you have a relationship
+            ->get();
         // Retrieve students assigned to the tutor
         $students = DB::table('allocation')
             ->join('users', 'allocation.student_id', '=', 'users.id')
             ->where('allocation.tutor_id', $tutorId)
+            ->where('allocation.active',1)
             ->where('users.role_id', 1);
 
-        // Apply student name filter if provided
-        if (!empty($studentName)) {
-            $students->where('users.first_name', 'LIKE', "%{$studentName}%");
+        // Apply student name filter
+        if (!empty($request->student_id)) {
+            $students->where('users.id', $request->student_id);
         }
 
         // Fetch student activity counts
@@ -702,17 +707,18 @@ class TutorController extends Controller
             ->select(
                 'users.id as student_id',
                 'users.user_code',
-                'users.first_name as student_name',
+                'users.first_name',
+                'users.last_name',
                 DB::raw('COUNT(DISTINCT posts.id) as posts'),
                 DB::raw('COUNT(DISTINCT comments.id) as comments'),
                 DB::raw('COUNT(DISTINCT documents.id) as documents'),
                 DB::raw('COUNT(DISTINCT meeting_schedules.id) as meetings')
             )
-            ->groupBy('users.id', 'users.user_code', 'users.first_name')
+            ->groupBy('users.id', 'users.user_code', 'users.first_name','users.last_name')
             ->get();
 
 
-        return view('tutor.report', compact('studentReports', 'currentMonth', 'studentName'));
+        return view('tutor.report', compact('studentReports', 'currentMonth', 'studentName','studentsDropDown'));
     }
     protected function getStudentActivities($studentId, $year)
     {
