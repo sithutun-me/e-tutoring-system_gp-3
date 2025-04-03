@@ -54,7 +54,7 @@
                     <div class="admin-tabs">
                         <button id="studentsTab" onclick="showContent('students')">Students with no interactions</button>
                         <button id="tutorsTab" onclick="showContent('tutors')">Average messages for each tutor</button>
-                        <button id="mostviewedpagesTab" onclick="showContent('mostviewedpages')">Most viewed Pages</button>
+                        <button id="mostviewedpagesTab" onclick="showContent('mostviewedpages')">Most viewed pages</button>
                         <button id="mostactiveusersTab" onclick="showContent('mostactiveusers')">Most active users</button>
 
                     </div>
@@ -358,41 +358,47 @@
                                 <thead>
                                     <tr>
                                         <th class="small-col">No.</th>
-                                        <th class="text-center">Student Code</th>
-                                        <th class="text-center">Student Name</th>
-                                        <th class="text-center">Login count or interaction count</th>
+                                        <th class="text-center">User Code</th>
+                                        <th class="text-center">User Name</th>
+                                        <th class="text-center">Interaction Count</th>
+                                        <th class="text-center">Last Login</th>
                                     </tr>
                                 </thead>
                                 <tbody class="adminreport-row">
                                     <tr>
                                         <td class="small-col" data-title="No.">1.</td>
-                                        <td data-title="Student Code">std0001</td>
-                                        <td data-title="Student Name">Jennie</td>
-                                        <td data-title="Login count or interaction count">10</td>
+                                        <td data-title="User Code">std0001</td>
+                                        <td data-title="User Name">Jennie</td>
+                                        <td data-title="Interaction Count">10</td>
+                                        <td data-title="Last Login">2025-04-04 01:11:28</td>
                                     </tr>
                                     <tr>
                                         <td class="small-col" data-title="No.">2.</td>
-                                        <td data-title="Student Code">std0002</td>
-                                        <td data-title="Student Name">Jake</td>
-                                        <td data-title="Login count or interaction count">10</td>
+                                        <td data-title="User Code">std0002</td>
+                                        <td data-title="User Name">Jake</td>
+                                        <td data-title="Interaction Count">10</td>
+                                        <td data-title="Last Login">2025-04-04 01:11:28</td>
                                     </tr>
                                     <tr>
                                         <td class="small-col" data-title="No.">3.</td>
-                                        <td data-title="Student Code">std0003</td>
-                                        <td data-title="Student Name">Joshua</td>
-                                        <td data-title="Login count or interaction count">10</td>
+                                        <td data-title="User Code">std0003</td>
+                                        <td data-title="User Name">Joshua</td>
+                                        <td data-title="Interaction Count">10</td>
+                                        <td data-title="Last Login">2025-04-04 01:11:28</td>
                                     </tr>
                                     <tr>
                                         <td class="small-col" data-title="No.">4.</td>
-                                        <td data-title="Student Code">std0004</td>
-                                        <td data-title="Student Name">Jay</td>
-                                        <td data-title="Login count or interaction count">10</td>
+                                        <td data-title="User Code">std0004</td>
+                                        <td data-title="User Name">Jay</td>
+                                        <td data-title="Interaction Count">10</td>
+                                        <td data-title="Last Login">2025-04-04 01:11:28</td>
                                     </tr>
                                     <tr>
                                         <td class="small-col" data-title="No.">5.</td>
-                                        <td data-title="Student Code">std0005</td>
-                                        <td data-title="Student Name">Jeonghan</td>
-                                        <td data-title="Login count or interaction count">10</td>
+                                        <td data-title="User Code">std0005</td>
+                                        <td data-title="User Name">Jeonghan</td>
+                                        <td data-title="Interaction Count">10</td>
+                                        <td data-title="Last Login">2025-04-04 01:11:28</td>
                                     </tr>
                                     
 
@@ -474,7 +480,7 @@
         //     });
         // });
 
-             // $(document).ready(function() {
+        //      $(document).ready(function() {
         //     $('#adminreportTableActiveusers').DataTable({
         //         paging: true,
         //         pageLength: 15,
