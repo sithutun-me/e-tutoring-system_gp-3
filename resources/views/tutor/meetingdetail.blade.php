@@ -92,7 +92,7 @@
                                                 <h4 class="chart-card-title" style="font-size:1rem;">Meeting Detail</h4>
                                             </div>
                                             @if (isset($meeting_schedules))
-                                            <div class="col-md-2 mt-4 d-flex align-items-start flex-column ">
+                                            <div class="col-md-3 mt-4 d-flex align-items-start flex-column ">
                                                 <div class="text-center">
                                                     <button type="submit" onclick="setAction('toggle_status')"
                                                         class="btn btn-primary shadow-none" style="width: auto;" 
