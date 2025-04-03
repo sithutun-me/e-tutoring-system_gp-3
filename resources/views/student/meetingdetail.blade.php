@@ -91,7 +91,7 @@
                                                 <h4 class="chart-card-title" style="font-size:1rem;">Meeting Detail</h4>
                                             </div>
                                             @if (isset($meeting_schedules))
-                                                <div class="col-md-2 mt-4 d-flex align-items-start flex-column ">
+                                                <div class="col-md-3 mt-4 d-flex align-items-start flex-column ">
                                                     <div class="text-center">
                                                         <button type="submit" onclick="setAction('toggle_status')"
                                                             class="btn btn-primary shadow-none" style="width: auto;"
@@ -144,11 +144,10 @@
                                         <div class="row">
                                             <div class="col-md-6 mb-2">
                                                 @php $disabled = $readOnly ? 'disabled' : '' @endphp
-                                                <select class="form-select" id="selectTutorMeetingDetail"
-                                                    disabled name="tutor_id" 
-                                                    aria-label="Floating label select example">
-                                                    
-                                                    
+                                                <select class="form-select" id="selectTutorMeetingDetail" disabled
+                                                    name="tutor_id" aria-label="Floating label select example">
+
+
                                                     {{-- Show the currently assigned student (even if not allocated) --}}
                                                     {{-- @if ($currentStudent && !in_array($currentStudent->id, $students->pluck('student.id')->toArray()))
                                                         <option value="{{ $currentStudent->id }}" selected>
@@ -161,7 +160,7 @@
                                                     {{-- <option value="" disabled
                                                         {{ empty($meeting_schedules->student_id) ? 'selected' : '' }}>
                                                         -- Choose Student --
-                                                    </option> --}} 
+                                                    </option> --}}
 
                                                     {{-- Allocated Students --}}
                                                     @if ($currentTutor && !in_array($currentTutor->id, $assignedTutor->pluck('tutor.id')->toArray()))
@@ -173,10 +172,10 @@
                                                     @foreach ($assignedTutor as $allocated)
                                                         <option value="{{ $allocated->tutor->id }}"
                                                             {{ request('tutor_id') == $allocated->tutor->id ? 'selected' : '' }}>
-                                                           
+
                                                             {{ $allocated->tutor->first_name }}
                                                             {{ $allocated->tutor->last_name }}
-                                                            
+
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -362,7 +361,7 @@
                                                         @if (
                                                             $meeting_schedules->meeting_status === 'completed' ||
                                                                 $meeting_schedules->meeting_status === 'cancelled' ||
-                                                                $meeting_schedules-> meeting_status === 'overdue' ||
+                                                                $meeting_schedules->meeting_status === 'overdue' ||
                                                                 !$isTutorAllocated) disabled @endif><a
                                                             href="{{ route('student.meetingdetail.update', $meeting_schedules->id ?? '') }}"
                                                             class="text-decoration-none"
