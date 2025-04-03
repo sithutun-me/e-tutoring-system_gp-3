@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('post', function (Blueprint $table) {
             $table->id();
-            $table->string('post_title');
-            $table->text('post_description');
-            $table->string('post_status');
+            $table->string('post_title',255);
+            $table->text('post_description',500)->nullable();
+            $table->string('post_status',20);
             $table->foreignId('post_create_by')->constrained('users', 'id')->onDelete('NO ACTION')->onUpdate('CASCADE');
             $table->foreignId('post_received_by')->constrained('users', 'id')->onDelete('NO ACTION')->onUpdate('CASCADE');
             $table->boolean('is_meeting')->default(0);

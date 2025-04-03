@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\MeetingSchedule;
 use App\Models\Allocation;
 use App\Models\User;
+use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -256,7 +257,7 @@ class StudentController extends Controller
             ->where('tutor_id', $meeting_schedules->tutor_id)
             ->where('active', 1)
             ->exists();
-            return view('student.meetingdetail', compact('id','assignedTutor','meeting_schedules','readOnly','currentTutor'));
+            return view('student.meetingdetail', compact('id','assignedTutor','meeting_schedules','readOnly','currentTutor','isTutorAllocated'));
         }
         // For create (no ID), just pass null or empty data
         return view('student.meetingdetail', ['id' => null,'assignedTutor' => $assignedTutor,'meeting_schedules'=>$meeting_schedules,'readOnly'=>false,'currentTutor'=>null,'isTutorAllocated'=>false]);
@@ -376,7 +377,7 @@ class StudentController extends Controller
 
             $post = Post::create([
                 'post_create_by' => Auth::id(), 
-                'post_received_by'=>$request->student_id,
+                'post_received_by'=> $assignedTutor->tutor_id,
                 'post_title' => $request->meeting_title,
                 'post_status'=>"new",
                 'post_description' => $request->meeting_description,

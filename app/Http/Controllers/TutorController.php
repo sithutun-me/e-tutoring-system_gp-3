@@ -192,7 +192,7 @@ class TutorController extends Controller
 
         // Get results and group by date
         $meeting_schedules = $query
-            ->orderBy('meeting_schedules.meeting_date','desc')
+            ->orderBy('meeting_schedules.meeting_date', 'desc')
             ->orderBy('meeting_schedules.meeting_start_time')
             ->get()
             ->groupBy('meeting_date');
@@ -333,6 +333,10 @@ class TutorController extends Controller
                 // All posts (no filtering)
                 break;
         }
+
+        if ($studentId && Post::where('post_create_by', $studentId)) {
+            $query->where('post_create_by', $studentId);
+        }
         // Apply search filter
         $searchPost = $request->input('search_post');
         if ($searchPost) {
@@ -342,7 +346,7 @@ class TutorController extends Controller
         }
 
 
-        $posts = $query->where('post_status', '!=', 'deleted')->orderBy('updated_at','desc')->get();
+        $posts = $query->where('post_status', '!=', 'deleted')->orderBy('updated_at', 'desc')->get();
 
         $students = $query = User::whereHas('studentAllocations', function ($query) use ($tutorId) {
             $query->where('tutor_id', $tutorId)->where('active', 1);
@@ -659,25 +663,30 @@ class TutorController extends Controller
 
     public function report(Request $request)
     {
-        $tutorId = auth()->id(); 
+        $tutorId = auth()->id();
 
         // Get current month if not provided
         $currentMonth = $request->input('month', Carbon::now()->month);
-    
+
         // Get student name filter if provided
         $studentName = $request->input('student_name');
-    
+
+        $studentsDropDown = Allocation::where('tutor_id', $tutorId)
+            ->where('active', 1)
+            ->with('student') // Assuming you have a relationship
+            ->get();
         // Retrieve students assigned to the tutor
         $students = DB::table('allocation')
             ->join('users', 'allocation.student_id', '=', 'users.id')
             ->where('allocation.tutor_id', $tutorId)
+            ->where('allocation.active',1)
             ->where('users.role_id', 1);
-    
-        // Apply student name filter if provided
-        if (!empty($studentName)) {
-            $students->where('users.first_name', 'LIKE', "%{$studentName}%");
+
+        // Apply student name filter
+        if (!empty($request->student_id)) {
+            $students->where('users.id', $request->student_id);
         }
-    
+
         // Fetch student activity counts
         $studentReports = $students
             ->leftJoin('post as posts', function ($join) use ($currentMonth) {
@@ -698,52 +707,53 @@ class TutorController extends Controller
             ->select(
                 'users.id as student_id',
                 'users.user_code',
-                'users.first_name as student_name',
+                'users.first_name',
+                'users.last_name',
                 DB::raw('COUNT(DISTINCT posts.id) as posts'),
                 DB::raw('COUNT(DISTINCT comments.id) as comments'),
                 DB::raw('COUNT(DISTINCT documents.id) as documents'),
                 DB::raw('COUNT(DISTINCT meeting_schedules.id) as meetings')
             )
-            ->groupBy('users.id', 'users.user_code', 'users.first_name')
+            ->groupBy('users.id', 'users.user_code', 'users.first_name','users.last_name')
             ->get();
-    
 
-        return view('tutor.report',compact('studentReports', 'currentMonth', 'studentName'));
+
+        return view('tutor.report', compact('studentReports', 'currentMonth', 'studentName','studentsDropDown'));
     }
     protected function getStudentActivities($studentId, $year)
-{
-    return [
-        'posts' => DB::table('post')
-            ->selectRaw("MONTH(created_at) as month, COUNT(*) as count")
-            ->where('post_create_by', $studentId)
-            ->where('is_meeting', 0)
-            ->whereYear('created_at', $year)
-            ->groupBy('month')
-            ->pluck('count', 'month'),
-            
-        'comments' => DB::table('comment')
-            ->selectRaw("MONTH(created_at) as month, COUNT(*) as count")
-            ->where('user_id', $studentId)
-            ->whereYear('created_at', $year)
-            ->groupBy('month')
-            ->pluck('count', 'month'),
-            
-        'documents' => DB::table('document')
-            ->join('post', 'document.post_id', '=', 'post.id')
-            ->selectRaw("MONTH(document.created_at) as month, COUNT(*) as count")
-            ->where('post.post_create_by', $studentId)
-            ->whereYear('document.created_at', $year)
-            ->groupBy('month')
-            ->pluck('count', 'month'),
-            
-        'meetings' => DB::table('meeting_schedule')
-            ->selectRaw("MONTH(meeting_date) as month, COUNT(*) as count")
-            ->where('student_id', $studentId)
-            ->whereYear('updated_at', $year)
-            ->groupBy('month')
-            ->pluck('count', 'month')
-    ];
-}
+    {
+        return [
+            'posts' => DB::table('post')
+                ->selectRaw("MONTH(created_at) as month, COUNT(*) as count")
+                ->where('post_create_by', $studentId)
+                ->where('is_meeting', 0)
+                ->whereYear('created_at', $year)
+                ->groupBy('month')
+                ->pluck('count', 'month'),
+
+            'comments' => DB::table('comment')
+                ->selectRaw("MONTH(created_at) as month, COUNT(*) as count")
+                ->where('user_id', $studentId)
+                ->whereYear('created_at', $year)
+                ->groupBy('month')
+                ->pluck('count', 'month'),
+
+            'documents' => DB::table('document')
+                ->join('post', 'document.post_id', '=', 'post.id')
+                ->selectRaw("MONTH(document.created_at) as month, COUNT(*) as count")
+                ->where('post.post_create_by', $studentId)
+                ->whereYear('document.created_at', $year)
+                ->groupBy('month')
+                ->pluck('count', 'month'),
+
+            'meetings' => DB::table('meeting_schedule')
+                ->selectRaw("MONTH(meeting_date) as month, COUNT(*) as count")
+                ->where('student_id', $studentId)
+                ->whereYear('updated_at', $year)
+                ->groupBy('month')
+                ->pluck('count', 'month')
+        ];
+    }
 
 
     //update or create function
@@ -827,12 +837,12 @@ class TutorController extends Controller
                 'meeting_link' => $request->meeting_type === 'virtual' ? $request->meeting_link : null,
             ]);
             $post = Post::create([
-                'post_create_by' => Auth::id(), 
-                'post_received_by'=>$request->student_id,
+                'post_create_by' => Auth::id(),
+                'post_received_by' => $request->student_id,
                 'post_title' => $request->meeting_title,
-                'post_status'=>"new",
+                'post_status' => "new",
                 'post_description' => $request->meeting_description,
-                'is_meeting' =>  1, 
+                'is_meeting' =>  1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

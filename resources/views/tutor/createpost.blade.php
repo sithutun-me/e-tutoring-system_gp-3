@@ -103,14 +103,14 @@
 
 
                         <div class="mb-3 mt-4">
-                            <input type="file" id="file-input" name="post_files[]" class="form-control mb-3" multiple>
-                            <small id="file-count">No file chosen</small>
+                            <input type="file" id="tutorFileInput" name="post_files[]" class="form-control mb-3" multiple>
+                            <small id="tutorfileCount">No file chosen</small>
                         </div>
 
                         <!--Selected/Chosen File List Display -->
-                        <ul id="file-list" class="file-list" name="doc_files"></ul>
+                        <ul id="tutorfileList" class="file-list" name="doc_files"></ul>
 
-                        <button type="submit" class="btn btn-primary w-100 mt-2" style="background-color: #004AAD;">Post</button>
+                        <button type="submit" id="upload-btn" class="btn btn-primary w-100 mt-2" style="background-color: #004AAD;">Post</button>
                     </div>
                 </form>
 
@@ -196,19 +196,41 @@
 
     // Selected File List Display and Remove
 
-    document.getElementById("file-input").addEventListener("change", function(event) {
-        const fileList = document.getElementById("file-list");
-        const fileCount = document.getElementById("file-count");
-        fileList.innerHTML = ""; // Clear previous file list
+    let fileArray = [];
+
+    document.getElementById("tutorFileInput").addEventListener("change", function(event) {
+        const fileList = document.getElementById("tutorfileList");
+        const fileCount = document.getElementById("tutorfileCount");
 
         const files = Array.from(event.target.files);
         if (files.length === 0) {
             fileCount.textContent = "No file chosen";
-        } else {
-            fileCount.textContent = `${files.length} file(s) selected`;
+            return;
         }
 
-        files.forEach((file, index) => {
+        // Add new files while preventing duplicates
+        files.forEach(file => {
+            if (!fileArray.some(f => f.name === file.name && f.size === file.size)) {
+                fileArray.push(file);
+            }
+        });
+
+        updateFileList();
+    });
+
+    function updateFileList() {
+        const fileList = document.getElementById("tutorfileList");
+        const fileCount = document.getElementById("tutorfileCount");
+
+        fileList.innerHTML = ""; // Clear UI before updating
+
+        if (fileArray.length === 0) {
+            fileCount.textContent = "No file chosen";
+        } else {
+            fileCount.textContent = `${fileArray.length} file(s) selected`;
+        }
+
+        fileArray.forEach((file, index) => {
             const li = document.createElement("li");
             li.textContent = file.name;
 
@@ -223,10 +245,34 @@
             li.appendChild(removeBtn);
             fileList.appendChild(li);
         });
+
+        updateFileInput(); // Sync input with selected files
+    }
+
+    function updateFileInput() {
+        const fileInput = document.getElementById("tutorFileInput");
+        const dataTransfer = new DataTransfer();
+
+        fileArray.forEach(file => dataTransfer.items.add(file));
+        fileInput.files = dataTransfer.files;
+    }
+    document.getElementById("upload-btn").addEventListener("click", function() {
+        if (fileArray.length === 0) {
+            alert("No files to upload!");
+            return;
+        }
+
+        const formData = new FormData();
+        fileArray.forEach(file => {
+            formData.append("files[]", file);
+        });
+
+        // Example: send formData to the server
+        console.log("Uploading files...", formData);
     });
 
     function removeFile(index) {
-        const fileInput = document.getElementById("file-input");
+        const fileInput = document.getElementById("tutorFileInput");
         let files = Array.from(fileInput.files);
 
         files.splice(index, 1);
