@@ -48,6 +48,13 @@
 
 }
 
+
+.last-login {
+  font-family: "Poppins";
+  font-size: 1rem;
+  font-weight: bold;
+}
+
 .dropdown button {
   background-color: white;
 }

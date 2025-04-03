@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Carbon\Carbon;
 use PDO;
 
 class AuthController extends Controller
@@ -35,6 +36,10 @@ class AuthController extends Controller
     }
 
     public function logout(Request $request){
+        $user = Auth::user();
+        $user->last_login_at = Carbon::now();
+        $user->save();
+
         Auth::logout();
 
         $request->session()->invalidate();
