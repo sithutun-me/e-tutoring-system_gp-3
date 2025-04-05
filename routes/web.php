@@ -134,6 +134,8 @@ Route::middleware(['auth', 'protect_auth'])->group(function () {
 //admin dashboard chart
 Route::get('/student-inactivity', [AdminController::class, 'getInactiveStudentsData']);
 Route::get('/average_messages', [AdminController::class, 'getAverageMessage']);
+Route::get('/browser-chart', [AdminController::class, 'getBrowserPieData']);
+
 Route::get('/student_list_with_assigned_tutors', [AdminController::class, 'getStudentListWithAssignedTutors']);
 
 //tutor dashboard chart

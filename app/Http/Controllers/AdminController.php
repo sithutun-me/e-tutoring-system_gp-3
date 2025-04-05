@@ -6,16 +6,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\AdminService;
 use App\Model\User;
+use App\Models\BrowserUsage;
+
 
 class AdminController extends Controller
 {
     public function index()
     {
         $students = $this->adminDashboardService->studentsWithoutTutors();
+        
 
-
+        
         return view('admin.dashboard', compact('students'));
     }
+    
 
     public function allocation()
     {
@@ -78,6 +82,11 @@ class AdminController extends Controller
         $data = $this->adminDashboardService->getAverageMessagesPerTutor(1); // past 30 days (1 month)
 
         return response()->json($data);  // Return as JSON for API
+    }
+
+    public function getBrowserPieData(){
+        $data = $this->adminDashboardService->getBrowserPieData();
+        return response()->json($data);
     }
 
     // public function getStudentListWithAssignedTutors(){

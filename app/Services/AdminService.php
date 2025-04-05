@@ -18,6 +18,15 @@ class AdminService
      * @param int $days
      * @return int
      */
+    public function getBrowserPieData(){
+        $browserStats = DB::table('browser_logs')
+        ->select('browser', DB::raw('count(*) as count'))
+        ->groupBy('browser')
+        ->orderByDesc('count')
+        ->limit(3)
+        ->get();
+        return $browserStats;
+    }
     public function getInactiveStudentsCount(int $days)
     {
         $dateLimit = Carbon::now()->subDays($days);

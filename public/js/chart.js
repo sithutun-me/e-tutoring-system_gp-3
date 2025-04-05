@@ -314,42 +314,37 @@ window.demo = {
       }
     };
 
-    // async function getMeetingStatusCounts() {
-    //   try {
-    //     const response = await fetch('/meeting_counts');
-    //     const chartMeetingData = await response.json();
-    //     const labels = chartMeetingData.labels;
-    //     const statusCounts = chartMeetingData.data;
-
-    //     const filteredData = labels.map((label, index) => ({
-    //       label,
-    //       count: statusCounts[index]
-    //     })).filter(item => item.count > 0);
-
-    //     // Extract the filtered labels and counts
-    //     const filteredCounts = filteredData.map(item => item.count);
-    //     console.log(filteredData);
-    //     console.log('count '+filteredCounts);
-
-    //     return { labels, filteredCounts };
-    //   } catch (error) {
-    //     return {
-    //       labels: [],
-    //       statusCounts: []
-    //     };
-    //   }
-    // }
-    // const { labels, filteredCounts } = await getMeetingStatusCounts();
+    async function getBrowserPieData() {
+      try {
+        const response = await fetch('/browser-chart');
+        const chartData = await response.json(); // This is an array
+    
+        // Extract browser names and counts into separate arrays
+        const labels = chartData.map(item => item.browser);
+        const counts = chartData.map(item => item.count);
+    
+        console.log('Fetched browser data:', labels);
+        return { labels, counts };
+    
+      } catch (error) {
+        console.error('Error fetching browser pie data:', error);
+        return {
+          labels: [],
+          counts: []
+        };
+      }
+    }
+    const { labels, counts } = await getBrowserPieData();
     const labelColors = ["#00B312", "#004AAD", "#D73030"];
     var ctx = document.getElementById("UsedBrowsersChart").getContext("2d");
 
     var myChart = new Chart(document.getElementById("UsedBrowsersChart"), {
       type: 'pie',
       data: {
-        labels: ['Chrome', 'Microsoft Edge', 'Firefox'],
+        labels: labels,
         datasets: [{
           backgroundColor: labelColors,
-          data: [40, 30, 30]
+          data: counts
         }]
       },
       options: pieChartConfiguration
