@@ -8,7 +8,7 @@ use App\Models\Allocation;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-
+use App\Models\PageView;
 
 class AdminService
 {
@@ -26,6 +26,11 @@ class AdminService
         ->limit(3)
         ->get();
         return $browserStats;
+    }
+
+    public function getMostViewPage(){
+        $pageViews = PageView::orderBy('view_count', 'desc')->get()->first();
+        return $pageViews;
     }
     public function getInactiveStudentsCount(int $days)
     {

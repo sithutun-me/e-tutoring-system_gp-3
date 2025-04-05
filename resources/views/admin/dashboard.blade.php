@@ -64,7 +64,10 @@
                                     <div class="center-text">
                                         <img id="mostViewedIcon" src="/icon images/meeting.png"
                                             style="width:40px; margin-right: 10px;">
-                                        <div id="mostViewedText" class="large-medium-font">Meetings</div>
+                                            {{-- @foreach ( $pageViews as $p )
+                                            {{$p->page_name}}
+                                        @endforeach --}}
+                                        <div id="mostViewedText" class="large-medium-font">{{$friendlyName}}</div>
                                     </div>
                                 </div>
                                 <div class="box-align-bottom center-text">
@@ -167,6 +170,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        
                                         @foreach ($students as $student)
                                             <tr>
                                                 <td class="normal-text">{{ $student->user_code }}</td>

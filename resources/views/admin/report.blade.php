@@ -259,7 +259,15 @@
                                     </tr>
                                 </thead>
                                 <tbody class="adminreport-row">
+                                   
+                                    @foreach ($pageViews as $index => $pageView )
                                     <tr>
+                                        <td class="small-col" data-title="No.">{{ $index + 1 }}</td>
+                                        <td data-title="Pages">{{ $pageView['page_name'] }}</td>
+                                        <td data-title="View Count">{{ $pageView['view_count'] }}</td>
+                                    </tr>
+                                    @endforeach
+                                    {{-- <tr>
                                         <td class="small-col" data-title="No.">1.</td>
                                         <td data-title="Pages">Tutor Meetings</td>
                                         <td data-title="View Count">50</td>
@@ -343,7 +351,7 @@
                                         <td class="small-col" data-title="No.">17.</td>
                                         <td data-title="Pages">Reallocation</td>
                                         <td data-title="View Count">20</td>
-                                    </tr>
+                                    </tr> --}}
                                     
 
                                 </tbody>
