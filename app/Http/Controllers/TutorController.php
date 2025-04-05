@@ -299,44 +299,58 @@ class TutorController extends Controller
 
         $tutor = Auth::user();
         $tutorId = $tutor->id;
+
+        // Initialize the base query
         $query = Post::with(['creator', 'receiver', 'documents', 'comments']);
+
+        // Get the list of assigned students for the tutor
+        $assignedStudentIds = User::whereHas('studentAllocations', function ($query) use ($tutorId) {
+            $query->where('tutor_id', $tutorId)->where('active', 1);
+        })->where('role_id', 1)->pluck('id')->toArray();
+
         // Filter by post type
-        $studentId = $request->input('student_filter');
         switch ($request->input('post_by')) {
             case 'myPosts':
+                // Show only posts created by the tutor
                 $query->where('post_create_by', $tutorId);
 
-                // ->where(function ($q) use ($tutorId) {
-                //     $q->whereHas('comments', function ($subQuery) use ($tutorId) {
-                //         $subQuery->where('user_id', $tutorId);
-                //     });
-                // })
+                // Optionally filter by a specific student if provided
+                $studentId = $request->input('student_filter');
                 if ($studentId) {
                     $query->where('post_received_by', $studentId);
                 }
                 break;
 
             case 'studentPosts':
-
-                if ($studentId && Post::where('post_create_by', $studentId)) {
+                // Show posts created by the tutor's assigned students
+                $studentId = $request->input('student_filter');
+                if ($studentId && in_array($studentId, $assignedStudentIds)) {
+                    // If a specific student is selected, show only their posts
                     $query->where('post_create_by', $studentId);
                 } else {
-                    $query->where(function ($q) {
-                        $q->whereHas('creator', function ($subQuery) {
-                            $subQuery->where('role_id', 1);
-                        });
-                    }); // Show all students posts
+                    // Otherwise, show posts from all assigned students
+                    $query->whereIn('post_create_by', $assignedStudentIds);
                 }
                 break;
 
             default:
-                // All posts (no filtering)
+                // Default case: Show posts created by the tutor AND their assigned students
+                $query->where(function ($q) use ($tutorId, $assignedStudentIds) {
+                    $q->where('post_create_by', $tutorId)
+                        ->orWhereIn('post_create_by', $assignedStudentIds);
+                });
+
+                // Additional logic: If a specific student is selected, show posts received by or created by that student
+                $studentId = $request->input('student_filter');
+                if ($studentId && in_array($studentId, $assignedStudentIds)) {
+                    $query->where(function ($q) use ($studentId) {
+                        $q->where('post_received_by', $studentId)
+                            ->orWhere('post_create_by', $studentId);
+                    });
+                }
                 break;
         }
 
-        if ($studentId && Post::where('post_create_by', $studentId)) {
-            $query->where('post_create_by', $studentId);
-        }
         // Apply search filter
         $searchPost = $request->input('search_post');
         if ($searchPost) {
@@ -345,14 +359,17 @@ class TutorController extends Controller
             });
         }
 
+        // Exclude deleted posts and order by updated_at
+        $posts = $query->where('post_status', '!=', 'deleted')
+            ->orderBy('updated_at', 'desc')
+            ->get();
 
-        $posts = $query->where('post_status', '!=', 'deleted')->orderBy('updated_at', 'desc')->get();
-
-        $students = $query = User::whereHas('studentAllocations', function ($query) use ($tutorId) {
+        // Fetch the list of students assigned to the tutor
+        $students = User::whereHas('studentAllocations', function ($query) use ($tutorId) {
             $query->where('tutor_id', $tutorId)->where('active', 1);
         })->where('role_id', 1)->get();
 
-
+        // Return the view with the filtered posts and students
         return view('tutor.blogging', compact(['pageTitle', 'posts', 'students', 'tutor']));
     }
 
@@ -593,7 +610,7 @@ class TutorController extends Controller
         $students = DB::table('allocation')
             ->join('users', 'allocation.student_id', '=', 'users.id')
             ->where('allocation.tutor_id', $tutorId)
-            ->where('allocation.active',1)
+            ->where('allocation.active', 1)
             ->where('users.role_id', 1);
 
         // Apply student name filter
@@ -628,11 +645,11 @@ class TutorController extends Controller
                 DB::raw('COUNT(DISTINCT documents.id) as documents'),
                 DB::raw('COUNT(DISTINCT meeting_schedules.id) as meetings')
             )
-            ->groupBy('users.id', 'users.user_code', 'users.first_name','users.last_name')
+            ->groupBy('users.id', 'users.user_code', 'users.first_name', 'users.last_name')
             ->get();
 
 
-        return view('tutor.report', compact('studentReports', 'currentMonth', 'studentName','studentsDropDown'));
+        return view('tutor.report', compact('studentReports', 'currentMonth', 'studentName', 'studentsDropDown'));
     }
     protected function getStudentActivities($studentId, $year)
     {

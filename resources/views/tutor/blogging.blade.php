@@ -81,7 +81,7 @@
                                 </div>
                                 <div class="postSearch col-md-3 mb-2 d-flex justify-content-center align-items-center">
                                     <input id="postSearch" name="search_post" class="form-control" type="search"
-                                        placeholder="Search here" aria-label="Search"
+                                        placeholder="Search by post title" aria-label="Search"
                                         value="{{ request()->input('search_post') }}">
                                 </div>
                                 <div class="col-md-3 mb-2 d-flex flex-column align-items-start">
@@ -164,7 +164,7 @@
                                                 <span class="date me-1"
                                                     style="vertical-align: middle;">{{ \Carbon\Carbon::parse($comment->updated_at)->format('d M Y') }}</span>
                                                 <span class="time me-4"
-                                                    style="vertical-align: middle;">{{ \Carbon\Carbon::parse($comment->updated_at)->format('h:m A') }}</span>
+                                                    style="vertical-align: middle;">{{ \Carbon\Carbon::parse($comment->updated_at)->format('h:i A') }}</span>
 
                                             </div>
 
