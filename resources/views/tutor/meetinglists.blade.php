@@ -59,7 +59,7 @@
                     <a href="{{ route('tutor.meetingdetail.create') }}" class="btn btn-primary shadow-none">+ New
                         Meeting</a>
                 </div>
-                
+
                     <form action="{{ route('tutor.meetinglists') }}" method="GET">
 
                         <div class="form-group mb-4 row">
@@ -204,7 +204,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
     <script>
-        console.log("Script is loaded!");
         $(document).ready(function() {
             $('#datepicker').datepicker({
                 format: 'yyyy-mm-dd',

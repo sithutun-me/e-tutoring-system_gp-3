@@ -133,16 +133,16 @@
                         <p class="mb-3" style="font-size: 0.875rem; color:  #004AAD;">Comments</p>
                         @foreach ($post->comments as $comment)
                         <div class="comment-item">
-                      
+
                             <div class="row">
                                 <div class="col-md-5 d-flex align-items-center">
                                     <i class="fa-solid fa-circle-user me-2" style="font-size: 20px; color:#808080; vertical-align: middle;"></i>
                                     <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">{{ $comment->user->first_name }} {{ $comment->user->last_name }}</strong>
                                     <span class="date me-1" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($comment->updated_at)->format('d M Y') }}</span>
                                     <span class="time me-4" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($comment->updated_at)->format('h:m A') }}</span>
-                                        
+
                                 </div>
-                                
+
                                 @if($comment->user_id == $user->id)
                                 <div class="dropdown col-md-1">
                                     <button class="btn btn-light border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -276,7 +276,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
 <script>
-    console.log("Script is loaded!");
     $(document).ready(function() {
         $('#datepicker').datepicker({
             format: 'yyyy-mm-dd',
