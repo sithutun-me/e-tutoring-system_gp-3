@@ -107,7 +107,7 @@
                                                 @endif
                                             </div>
                                             <div class="box-align-bottom center-text">
-                                                <a href="#"> View posts>></a>
+                                                <a href="/student/blogging">View posts>></a>
                                             </div>
 
                                         </div>
@@ -127,7 +127,7 @@
                                         <div class="chart-area">
                                             <canvas id="StudentActivityChart" class="chart-canvas"></canvas>
                                             <div class="box-align-right">
-                                                <a href="#" class="small-text">View Report>>></a>
+                                                <a href="/student/report" class="small-text">View Report>>></a>
                                             </div>
                                         </div>
                                     </div>
@@ -141,7 +141,7 @@
                                         <div class="chart-area">
                                             <canvas id="TutorActivityChart" class="chart-canvas"></canvas>
                                             <div class="box-align-right">
-                                                <a href="#" class="small-text">View Report>>></a>
+                                                <a href="/student/report" class="small-text">View Report>>></a>
                                             </div>
                                         </div>
                                     </div>

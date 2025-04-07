@@ -93,7 +93,7 @@
                                     <div class="chart-area">
                                         <canvas id="StudentInteractionCountChart" class="chart-canvas"></canvas>
                                         <div class="box-align-right">
-                                            <a href="#" class="small-text">View Report>>></a>
+                                            <a href="/tutor/report" class="small-text">View Report>>></a>
                                         </div>
                                     </div>
                                 </div>

@@ -71,7 +71,7 @@
                                     </div>
                                 </div>
                                 <div class="box-align-bottom center-text">
-                                    <a href="#"> View all>></a>
+                                    <a href="/admin/report"> View all>></a>
                                 </div>
 
                             </div>
@@ -93,7 +93,7 @@
                                     </div>
                                 </div>
                                 <div class="box-align-bottom center-text">
-                                    <a href="#"> View all>></a>
+                                    <a href="/admin/report"> View all>></a>
                                 </div>
 
                             </div>
@@ -111,7 +111,7 @@
                             <div class="chart-area">
                                 <canvas id="StudentInteractionChart" class="chart-canvas"></canvas>
                                 <div class="box-align-right">
-                                    <a href="#" class="small-text">View Report>>></a>
+                                    <a href="/admin/report" class="small-text">View Report>>></a>
                                 </div>
                             </div>
                         </div>
@@ -141,7 +141,7 @@
                             <div class="chart-area">
                                 <canvas id="TutorMessagesChart" class="chart-canvas"></canvas>
                                 <div class="box-align-right">
-                                    <a href="#" class="small-text">View Report>>></a>
+                                    <a href="/admin/report" class="small-text">View Report>>></a>
                                 </div>
                             </div>
                         </div>
