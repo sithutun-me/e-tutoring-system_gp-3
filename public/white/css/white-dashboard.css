@@ -569,6 +569,21 @@ border-right: 1px solid #D3D3D3;
   font-size: 0.875rem;
 }
 
+.most-view-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  color: white;
+  font-family: 'Poppins';
+  font-size: 0.875rem;
+}
+
+#mostViewedText,
+#mostActiveText {
+  margin-left: 20px;
+}
+
 .scroll-table {
   max-height: 500px;
   overflow-y: auto;

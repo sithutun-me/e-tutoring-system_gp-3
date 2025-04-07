@@ -61,8 +61,8 @@
                                     </div>
                                 </div>
                                 <div class="top-row">
-                                    <div class="center-text">
-                                        <img id="mostViewedIcon" src="/icon images/meeting.png"
+                                    <div class="most-view-text">
+                                        <img id="mostViewedIcon" src="/icon images/page.png"
                                             style="width:40px; margin-right: 10px;">
                                             {{-- @foreach ( $pageViews as $p )
                                             {{$p->page_name}}
@@ -86,8 +86,8 @@
                                     </div>
                                 </div>
                                 <div class="top-row">
-                                    <div class="center-text">
-                                        <img id="mostActiveIcon" src="/icon images/student.png"
+                                    <div class="most-view-text">
+                                        <img id="mostActiveIcon" src="/icon images/person.png"
                                             style="width:40px; margin-right: 10px;">
                                         <div id="mostActiveText" class="large-medium-font">{{ $mostActiveUser->first_name}} {{ $mostActiveUser->last_name}}</div>
                                     </div>
