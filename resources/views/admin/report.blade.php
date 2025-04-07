@@ -321,7 +321,7 @@
                         <table class="adminreport" id="adminreportTableActiveusers">
                             <thead>
                                 <tr>
-                                    <th class="small-col">No.</th>
+                                    <th class="small-col text-center">No.</th>
                                     <th class="text-center">User Code</th>
                                     <th class="text-center">User Name</th>
                                     <th class="text-center">Interaction Count</th>
@@ -331,7 +331,7 @@
                             <tbody class="adminreport-row">
                                 @foreach ($activeUsers as $index => $user )
                                 <tr>
-                                    <td class="small-col" data-title="No.">{{ $index +1 }}</td>
+                                    <td class="small-col"  data-title="No.">{{ $index +1 }}</td>
                                     <td data-title="User Code">{{ $user ->user_code }}</td>
                                     <td data-title="User Name">{{ $user ->first_name}} {{ $user->last_name }}</td>
                                     <td data-title="Interaction Count">{{$user->total_activity}}</td>
@@ -394,18 +394,18 @@
 
     });
 
-    // $(document).ready(function() {
-    //     $('#adminreportTableInteraction').DataTable({
-    //         paging: true,
-    //         pageLength: 15,
-    //         lengthChange: false,
-    //         searching: false,
-    //         ordering: false,
-    //         "language": {
-    //             "info": "Total Records: _TOTAL_",
-    //         }
-    //     });
-    // });
+    $(document).ready(function() {
+        $('#adminreportTableInteraction').DataTable({
+            paging: true,
+            pageLength: 15,
+            lengthChange: false,
+            searching: false,
+            ordering: false,
+            "language": {
+                "info": "Total Records: _TOTAL_",
+            }
+        });
+    });
 
     // $(document).ready(function() {
     //     $('#adminreportTableMessage').DataTable({

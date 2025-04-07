@@ -357,7 +357,7 @@ h6 {
 
 
 
-  #no-more-tables .allocation-row, .assigned-row, .tutor-row, .student-row, .reallocation-row{
+  #no-more-tables .allocation-row, .assigned-row, .tutor-row, .student-row, .reallocation-row, .adminreportactive-row{
     text-align: center;
   }
 
@@ -1108,7 +1108,7 @@ h6 {
   }
 
 
-  #no-more-tables .allocation-row, .assigned-row, .tutor-row, .student-row, .reallocation-row, .adminreport-row{
+  #no-more-tables .allocation-row, .assigned-row, .tutor-row, .student-row, .reallocation-row, .adminreport-row, .adminreportactive-row{
     text-align: right;
 
   }
