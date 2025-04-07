@@ -233,6 +233,7 @@ class AdminService
             ->get();
         return $activeUsers;
     }
+
     public function getTutorMessages($msgOrder = 'desc', $nameOrder = 'asc', $month = 'all')
     {
         // Default start of the current month
@@ -241,8 +242,18 @@ class AdminService
         // Adjust start date based on the selected month
         if ($month !== 'all') {
             $months = [
-                'jan' => 1, 'feb' => 2, 'mar' => 3, 'apr' => 4, 'may' => 5, 'jun' => 6,
-                'jul' => 7, 'aug' => 8, 'sept' => 9, 'oct' => 10, 'nov' => 11, 'dec' => 12
+                'jan' => 1,
+                'feb' => 2,
+                'mar' => 3,
+                'apr' => 4,
+                'may' => 5,
+                'jun' => 6,
+                'jul' => 7,
+                'aug' => 8,
+                'sept' => 9,
+                'oct' => 10,
+                'nov' => 11,
+                'dec' => 12
             ];
             $monthNumber = $months[$month] ?? null;
             if ($monthNumber) {
@@ -293,5 +304,45 @@ class AdminService
 
         // Fetch and return the results
         return $tutorMessages->get();
+    }
+
+    public function getStudentsWithNoInteraction($noInteractionPeriod = 'all', $selectedDate = null)
+    {
+        // Calculate the cutoff date based on the selected period
+        $cutoffDate = now();
+        if ($noInteractionPeriod === '7days') {
+            $cutoffDate = now()->subDays(7);
+        } elseif ($noInteractionPeriod === '30days') {
+            $cutoffDate = now()->subDays(30);
+        } elseif ($noInteractionPeriod === '60days') {
+            $cutoffDate = now()->subDays(60);
+        }
+
+        // Query to fetch students with no interaction after the cutoff date
+        $students = DB::table('users AS students')
+            ->select(
+                'students.id',
+                'students.user_code',
+                'students.first_name',
+                'students.last_name',
+                'students.email',
+                DB::raw('MAX(comment.created_at) as last_active_date'),
+                DB::raw('DATEDIFF(NOW(), MAX(comment.created_at)) as no_interaction_days')
+            )
+            ->leftJoin('comment', function ($join) use ($cutoffDate, $selectedDate) {
+                $join->on('comment.user_id', '=', 'students.id')
+                    ->where('comment.created_at', '<=', $cutoffDate);
+
+                if ($selectedDate) {
+                    $join->whereDate('comment.created_at', '=', $selectedDate);
+                }
+            })
+            ->where('students.role_id', 1) // Only students
+            ->groupBy('students.id', 'students.user_code', 'students.first_name', 'students.last_name', 'students.email')
+            ->havingRaw('MAX(comment.created_at) IS NULL OR MAX(comment.created_at) <= ?', [$cutoffDate])
+            ->orderByDesc('no_interaction_days')
+            ->get();
+
+        return $students;
     }
 }
