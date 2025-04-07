@@ -9,12 +9,20 @@ use App\Models\User;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 use Carbon\Carbon;
 class StudentController extends Controller
 {
     public function index()
     {
         $studentId = auth()->id();
+        $routeName = Route::currentRouteName();
+        $isStudent = true;
+
+        if ($routeName === 'admin.student.dashboard') {
+            $isStudent = false;
+        }
+
         $tutorId = DB::table('allocation')
                 ->where('student_id', $studentId)
                 ->value('tutor_id');
@@ -52,7 +60,7 @@ class StudentController extends Controller
                         'students.last_name'
                     )
                     ->get();
-        return view('student.dashboard',compact('postCount','meetings','tutorName'));
+        return view('student.dashboard',compact('postCount','meetings','tutorName','isStudent'));
     }
     //for dashboard
     public function getMeetingPieData(){
