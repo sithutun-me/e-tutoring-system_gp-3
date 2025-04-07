@@ -89,7 +89,7 @@
                                     <div class="center-text">
                                         <img id="mostActiveIcon" src="/icon images/student.png"
                                             style="width:40px; margin-right: 10px;">
-                                        <div id="mostActiveText" class="large-medium-font">Joshua Hong</div>
+                                        <div id="mostActiveText" class="large-medium-font">{{ $mostActiveUser->first_name}} {{ $mostActiveUser->last_name}}</div>
                                     </div>
                                 </div>
                                 <div class="box-align-bottom center-text">
@@ -119,7 +119,7 @@
                     <div class="chart-card col-md-6">
                         <div class="chart-card-header">
                             <h5 class="chart-card-category"></h5>
-                            <h3 class="chart-card-title">Used browsers</h3>
+                            <h3 class="chart-card-title">Used browsers (%)</h3>
                         </div>
                         <div class="chart-card-body">
 

@@ -373,41 +373,17 @@
                                     </tr>
                                 </thead>
                                 <tbody class="adminreport-row">
+                                    @foreach ($activeUsers as $index => $user )
                                     <tr>
-                                        <td class="small-col" data-title="No.">1.</td>
-                                        <td data-title="User Code">std0001</td>
-                                        <td data-title="User Name">Jennie</td>
-                                        <td data-title="Interaction Count">10</td>
-                                        <td data-title="Last Login">2025-04-04 01:11:28</td>
+                                        <td class="small-col" data-title="No.">{{ $index +1 }}</td>
+                                        <td data-title="User Code">{{ $user ->user_code }}</td>
+                                        <td data-title="User Name">{{ $user ->first_name}} {{ $user->last_name }}</td>
+                                        <td data-title="Interaction Count">{{$user->total_activity}}</td>
+                                        <td data-title="Last Login">{{$user->last_login_at}}</td>
                                     </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">2.</td>
-                                        <td data-title="User Code">std0002</td>
-                                        <td data-title="User Name">Jake</td>
-                                        <td data-title="Interaction Count">10</td>
-                                        <td data-title="Last Login">2025-04-04 01:11:28</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">3.</td>
-                                        <td data-title="User Code">std0003</td>
-                                        <td data-title="User Name">Joshua</td>
-                                        <td data-title="Interaction Count">10</td>
-                                        <td data-title="Last Login">2025-04-04 01:11:28</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">4.</td>
-                                        <td data-title="User Code">std0004</td>
-                                        <td data-title="User Name">Jay</td>
-                                        <td data-title="Interaction Count">10</td>
-                                        <td data-title="Last Login">2025-04-04 01:11:28</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">5.</td>
-                                        <td data-title="User Code">std0005</td>
-                                        <td data-title="User Name">Jeonghan</td>
-                                        <td data-title="Interaction Count">10</td>
-                                        <td data-title="Last Login">2025-04-04 01:11:28</td>
-                                    </tr>
+                                    @endforeach
+                                    
+                                    
                                     
 
                                 </tbody>

@@ -43,30 +43,7 @@ class TutorController extends Controller
             ->get();
 
         return view('tutor.dashboard', compact('meetings'));
-        $tutorId = Auth::id();
-
-        //getting upcoming meeting list within one week.
-        $oneWeek = Carbon::now()->subDays(7);
-        $meetings = DB::table('meeting_schedule')
-            ->leftjoin('users as students', 'meeting_schedule.student_id', '=', 'students.id')
-            ->where('meeting_schedule.tutor_id', $tutorId)
-            ->where('meeting_schedule.meeting_status', 'new')
-            ->where('meeting_schedule.meeting_date', '<=', Carbon::now()->addDays(7))
-            ->orderBy('meeting_schedule.meeting_date', 'asc')
-            ->select(
-                'meeting_schedule.id',
-                'meeting_schedule.meeting_title',
-                'meeting_schedule.meeting_type',
-                'meeting_schedule.meeting_date',
-                'meeting_schedule.meeting_start_time',
-                'meeting_schedule.meeting_end_time',
-                'meeting_schedule.updated_at',
-                'students.first_name',
-                'students.last_name'
-            )
-            ->get();
-
-        return view('tutor.dashboard', compact('meetings'));
+        
     }
 
     public function interactionCounts(Request $request)

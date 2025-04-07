@@ -318,23 +318,27 @@ window.demo = {
       try {
         const response = await fetch('/browser-chart');
         const chartData = await response.json(); // This is an array
-    
+
+        const total = chartData.reduce((sum, item) => sum + item.count, 0);
+
         // Extract browser names and counts into separate arrays
         const labels = chartData.map(item => item.browser);
-        const counts = chartData.map(item => item.count);
-    
+        const percentages = chartData.map(item => {
+          return total > 0 ? Math.round((item.count / total) * 100) : 0;
+        });
+
         console.log('Fetched browser data:', labels);
-        return { labels, counts };
-    
+        return { labels, percentages };
+
       } catch (error) {
         console.error('Error fetching browser pie data:', error);
         return {
           labels: [],
-          counts: []
+          percentages: []
         };
       }
     }
-    const { labels, counts } = await getBrowserPieData();
+    const { labels, percentages } = await getBrowserPieData();
     const labelColors = ["#00B312", "#004AAD", "#D73030"];
     var ctx = document.getElementById("UsedBrowsersChart").getContext("2d");
 
@@ -344,7 +348,7 @@ window.demo = {
         labels: labels,
         datasets: [{
           backgroundColor: labelColors,
-          data: counts
+          data: percentages
         }]
       },
       options: pieChartConfiguration

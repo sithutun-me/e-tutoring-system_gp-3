@@ -11,6 +11,7 @@ use App\Models\PageView;
 use Illuminate\Support\Facades\DB;
 
 
+
 class AdminController extends Controller
 {
     
@@ -18,19 +19,33 @@ class AdminController extends Controller
     {
         $pageMap = [
         
-            'admin/report' => 'Admin Reports',
             'admin/dashboard' => 'Admin Dashboard',
-            
-            // ... add all you want to include
+            'admin/allocation' => 'Allocation',
+            'admin/assignedlists' => 'Assigned list',
+            'admin/tutorlists' => 'Tutor List',
+            'admin/studentlists' => 'Student List',   
+            'admin/report' => 'Admin Reports',
+            'admin/reallocation' => 'Reallocation',
+
+            'tutor/dashboard' => 'Tutor Dashboard',
+            'tutor/meetinglists' => 'Tutor Meetings',
+            'tutor/blogging' => 'Tutor Blogging',
+            'tutor/report' => 'Tutor Reports',
+
+            'student/dashboard' => 'Student Dashboard',
+            'student/meetinglists' => 'Student Meetings',
+            'student/blogging' => 'Student Blogging',
+            'student/report' => 'Student Reports',
         ];
         $students = $this->adminDashboardService->studentsWithoutTutors();
         
         $mostViewed = PageView::orderByDesc('view_count')->first();
         $friendlyName = $pageMap[$mostViewed->page_name] ?? $mostViewed->page_name;
 
-       
+        $activeUsers = $this->adminDashboardService->getMostActiveUsers(30);
+        $mostActiveUser = $activeUsers->first();
 
-        return view('admin.dashboard', compact('students','friendlyName'));
+        return view('admin.dashboard', compact('students','friendlyName','mostActiveUser'));
     }
     
 
@@ -63,7 +78,7 @@ class AdminController extends Controller
         return view('admin.studentlists',compact('students'));
     }
 
-    public function report() {
+    public function report(Request $request) {
     //     $pagesMap = [
     //         'tutor.meetings' => 'Tutor Meetings',
     //         'student.meetings' => 'Student Meetings',
@@ -93,10 +108,25 @@ class AdminController extends Controller
     //     ];
     // })
     // ->values(); // reset keys
+    //most viewed pages
     $pageMap = [
-        
-        'admin/report' => 'Admin Reports',
         'admin/dashboard' => 'Admin Dashboard',
+        'admin/allocation' => 'Allocation',
+        'admin/assignedlists' => 'Assigned list',
+        'admin/tutorlists' => 'Tutor List',
+        'admin/studentlists' => 'Student List',   
+        'admin/report' => 'Admin Reports',
+        'admin/reallocation' => 'Reallocation',
+
+        'tutor/dashboard' => 'Tutor Dashboard',
+        'tutor/meetinglists' => 'Tutor Meetings',
+        'tutor/blogging' => 'Tutor Blogging',
+        'tutor/report' => 'Tutor Reports',
+
+        'student/dashboard' => 'Student Dashboard',
+        'student/meetinglists' => 'Student Meetings',
+        'student/blogging' => 'Student Blogging',
+        'student/report' => 'Student Reports',
         
         // ... add all you want to include
     ];
@@ -124,9 +154,14 @@ class AdminController extends Controller
         ->sortByDesc('count')
         ->values();
 
+    // Get the time period filter (default: last 30 days)
+    $period = $request->input('period', 30);
+    $startDate = now()->subDays($period);
     
+    $activeUsers = $this->adminDashboardService->getMostActiveUsers($period);
+   
         //$pageViews = PageView::orderBy('view_count', 'desc')->get();
-        return view('admin.report',compact('pageViews'));
+        return view('admin.report',compact('pageViews','activeUsers'));
     }
 
 

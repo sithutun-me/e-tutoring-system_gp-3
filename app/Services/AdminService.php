@@ -32,21 +32,26 @@ class AdminService
         $pageViews = PageView::orderBy('view_count', 'desc')->get()->first();
         return $pageViews;
     }
-    public function getInactiveStudentsCount(int $days)
+    public function getInactiveStudentsCount(int $minDays, ?int $maxDays = null)
     {
-        $dateLimit = Carbon::now()->subDays($days);
+        $startDate = Carbon::now()->subDays($minDays);
+        $endDate = $maxDays ? Carbon::now()->subDays($maxDays) : null;
+        
 
-        // Get the students who have not created or updated posts in the last $days
         $inactiveStudents = User::where('role_id', 1)
-            ->whereDoesntHave('posts', function ($query) use ($dateLimit) {
-                $query->where('updated_at', '>=', $dateLimit); // Checking post update time
+            ->whereDoesntHave('posts', function ($query) use ($startDate,$endDate) {
+                $query->where('updated_at', '>=', $startDate);
+                if ($endDate) {
+                    $query->where('updated_at', '<', $endDate);
+                }
             })
-            ->whereDoesntHave('comments', function ($query) use ($dateLimit) {
-                $query->where('updated_at', '>=', $dateLimit);
+            ->whereDoesntHave('comments', function ($query) use ($startDate,$endDate) {
+                $query->where('updated_at', '>=', $startDate);
+                if ($endDate) {
+                    $query->where('updated_at', '<', $endDate);
+                }
             })
-            // ->whereDoesntHave('posts.documents', function ($query) use ($dateLimit) {
-            //     $query->where('updated_at', '>=', $dateLimit);
-            // })
+            
             ->count();
 
         return $inactiveStudents;
@@ -60,8 +65,8 @@ class AdminService
     public function getInactiveStudentsData()
     {
         return [
-            'inactive_7_days' => $this->getInactiveStudentsCount(7),
-            'inactive_30_days' => $this->getInactiveStudentsCount(30),
+            'inactive_7_days' => $this->getInactiveStudentsCount(7,30),
+            'inactive_30_days' => $this->getInactiveStudentsCount(30,60),
             'inactive_60_days' => $this->getInactiveStudentsCount(60),
         ];
     }
@@ -181,39 +186,53 @@ class AdminService
 
             });
         }
-        $tutors = $tutors->orderBy('tutors.user_code')->get();
+        $tutors = $tutors->orderBy('tutors.user_code')->get();      
 
-
+        return $tutors;
         
-        
+    }
 
-
-
-        // Filter by meeting type if selected
-    // if ($request->filled('meeting_type') && $request->meeting_type !== 'All') {
-    //     $query->where('meeting_schedules.meeting_type', $request->meeting_type);
-    // }
-
-    // // Filter by date if selected
-    // if ($request->filled('meeting_date')) {
-    //     $query->where('meeting_schedules.meeting_date', $request->meeting_date);
-    // }
-
-    // // Filter by student if selected
-    // if ($request->filled('student_id')) {
-    //     $query->where('meeting_schedules.student_id', $request->student_id);
-    // }
-
-    // // Get results and group by date
-    // $meeting_schedules = $query
-    //     ->orderBy('meeting_schedules.meeting_date')
-    //     ->orderBy('meeting_schedules.meeting_start_time')
-    //     ->get()
-    //     ->groupBy('meeting_date');
-            
-
-    return $tutors;
-        
+    public function getMostActiveUsers($periodDays = 30 ){
+        $startDate = Carbon::now()->subDays($periodDays);
+        $activeUsers = DB::table('users')
+        ->select(
+            'users.id',
+            'users.user_code',
+            'users.first_name',
+            'users.last_name',
+            'users.email',
+            'users.last_login_at',
+            DB::raw('COUNT(DISTINCT post.id) as post_count'),
+        DB::raw('COUNT(DISTINCT comment.id) as comment_count'),
+        DB::raw('COUNT(DISTINCT document.id) as document_count'),
+        DB::raw('COUNT(DISTINCT meeting_schedule.id) as meeting_count'),
+        DB::raw('(COUNT(DISTINCT post.id) + 
+                 COUNT(DISTINCT comment.id) + 
+                 COUNT(DISTINCT document.id) + 
+                 COUNT(DISTINCT meeting_schedule.id)) as total_activity')
+        )
+        ->leftJoin('post', function($join) use ($startDate) {
+            $join->on('post.post_create_by', '=', 'users.id')
+                ->where('post.is_meeting',0)
+                 ->where('post.updated_at', '>=', $startDate);
+        })
+        ->leftJoin('comment', function($join) use ($startDate) {
+            $join->on('comment.user_id', '=', 'users.id')
+                 ->where('comment.updated_at', '>=', $startDate);
+        })
+        ->leftJoin('document', function($join) use ($startDate) {
+            $join->on('document.post_id', '=', 'post.id')
+                 ->where('document.updated_at', '>=', $startDate);
+        })
+        ->leftJoin('meeting_schedule', function($join) use ($startDate) {
+            $join->on('meeting_schedule.student_id', '=', 'users.id')
+                ->where('meeting_schedule.meeting_status', 'completed')
+                 ->where('meeting_schedule.meeting_date', '>=', $startDate);
+        })
+        ->groupBy('users.id', 'users.user_code', 'users.first_name', 'users.last_name', 'users.email','users.last_login_at')
+        ->orderByDesc('total_activity')
+        ->get();
+        return $activeUsers;
     }
     
 
