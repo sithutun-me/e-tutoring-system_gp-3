@@ -168,8 +168,15 @@ class AdminController extends Controller
         // Fetch tutor messages using the service
         $tutorMessages = $this->adminDashboardService->getTutorMessages($msgOrder, $nameOrder, $month);
 
+        // Retrieve query parameters
+        $noInteractionPeriod = $request->input('no_interaction', 'all'); // Default to all
+        $selectedDate = $request->input('meeting_date'); // Optional date filter
+
+        // Fetch students with no interaction using the service
+        $students = $this->adminDashboardService->getStudentsWithNoInteraction($noInteractionPeriod, $selectedDate);
+
         //$pageViews = PageView::orderBy('view_count', 'desc')->get();
-        return view('admin.report', compact('pageViews', 'activeUsers','tutorMessages'));
+        return view('admin.report', compact('pageViews', 'activeUsers','tutorMessages','students'));
     }
 
 

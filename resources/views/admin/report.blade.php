@@ -65,11 +65,11 @@
                                 <label for="selectNoInteraction" class="sort-label"
                                     style="font-family: 'Poppins'; font-size:0.875rem; ">Search</label>
                                 <select class="form-select ms-2" id="selectNoInteraction"
-                                    aria-label="Floating label select example">
-                                    <option selected>All</option>
-                                    <option value="7days">More than 7 days</option>
-                                    <option value="30days">More than 30 days</option>
-                                    <option value="60days">More than 60 days</option>
+                                    aria-label="Floating label select example" onchange="updateTableStd()">
+                                    <option value="all" {{ request('no_interaction') == 'all' ? 'selected' : '' }}>All</option>
+                                    <option value="7days" {{ request('no_interaction') == '7days' ? 'selected' : '' }}>More than 7 days</option>
+                                    <option value="30days" {{ request('no_interaction') == '30days' ? 'selected' : '' }}>More than 30 days</option>
+                                    <option value="60days" {{ request('no_interaction') == '60days' ? 'selected' : '' }}>More than 60 days</option>
                                 </select>
                             </div>
                             <div class="col-md-5 mb-2 d-flex justify-content-center align-items-center">
@@ -83,7 +83,7 @@
                             </div>
                             <div class="col-md-2 mb-2 d-flex justify-content-center align-items-center">
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary shadow-none">Search</button>
+                                    <button type="submit" class="btn btn-primary shadow-none" onclick="updateTableStd()">Search</button>
                                 </div>
                             </div>
                         </div>
@@ -102,38 +102,16 @@
                                 </tr>
                             </thead>
                             <tbody class="adminreport-row">
+                                @foreach ($students as $index => $student)
                                 <tr>
-                                    <td class="small-col" data-title="No.">1.</td>
-                                    <td data-title="StudentCode">std0001</td>
-                                    <td data-title="StudentName">8</td>
-                                    <td data-title="Email">example@gmail.com</td>
-                                    <td data-title="LastActiveDate">12 Jan 2025</td>
-                                    <td data-title="NoInteractionDays">15 days</td>
+                                    <td class="small-col" data-title="No.">{{ $index + 1 }}</td>
+                                    <td data-title="StudentCode">{{ $student->user_code }}</td>
+                                    <td data-title="StudentName">{{ $student->first_name }} {{ $student->last_name }}</td>
+                                    <td data-title="Email">{{ $student->email }}</td>
+                                    <td data-title="LastActiveDate">{{ \Carbon\Carbon::parse($student->last_active_date)->format('d M Y') }}</td>
+                                    <td data-title="NoInteractionDays">{{ $student->no_interaction_days ?? 'N/A' }} days</td>
                                 </tr>
-                                <tr>
-                                    <td class="small-col" data-title="No.">1.</td>
-                                    <td data-title="StudentCode">std0001</td>
-                                    <td data-title="StudentName">8</td>
-                                    <td data-title="Email">example@gmail.com</td>
-                                    <td data-title="LastActiveDate">12 Jan 2025</td>
-                                    <td data-title="NoInteractionDays">15 days</td>
-                                </tr>
-                                <tr>
-                                    <td class="small-col" data-title="No.">1.</td>
-                                    <td data-title="StudentCode">std0001</td>
-                                    <td data-title="StudentName">Magaret Magaret Magaret</td>
-                                    <td data-title="Email">example@gmail.com</td>
-                                    <td data-title="LastActiveDate">12 Jan 2025</td>
-                                    <td data-title="NoInteractionDays">15 days</td>
-                                </tr>
-                                <tr>
-                                    <td class="small-col" data-title="No.">1.</td>
-                                    <td data-title="StudentCode">std0001</td>
-                                    <td data-title="StudentName">Thomas Brian</td>
-                                    <td data-title="Email">example@gmail.com</td>
-                                    <td data-title="LastActiveDate">12 Jan 2025</td>
-                                    <td data-title="NoInteractionDays">15 days</td>
-                                </tr>
+                                @endforeach
 
 
                             </tbody>
@@ -506,5 +484,29 @@
         // Redirect to the same page with updated query parameters
         window.location.href = `/admin/report?${queryParams}`;
     }
+    // Function to update the table and reload the page
+    function updateTableStd() {
+        // Get selected values from dropdown and datepicker
+        const noInteractionPeriod = document.getElementById("selectNoInteraction").value;
+        const selectedDate = document.getElementById("datepicker").value;
+
+        // Build query string
+        const queryParams = new URLSearchParams({
+            no_interaction: noInteractionPeriod !== "all" ? noInteractionPeriod : undefined,
+            meeting_date: selectedDate || undefined,
+        }).toString();
+
+        // Redirect to the same page with updated query parameters
+        window.location.href = `/admin/report?${queryParams}`;
+    }
+
+    // Initialize the datepicker
+    $(document).ready(function() {
+        $('#datepicker').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true,
+        });
+    });
 </script>
 @endpush
