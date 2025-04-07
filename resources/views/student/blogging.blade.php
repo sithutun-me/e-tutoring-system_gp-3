@@ -235,7 +235,7 @@
                         <label for="commentContent" class="form-label">Comment</label>
                         <input class="form-control" id="commentContent" name="comment_update"> </input>
                     </div>
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="submit" class="btn btn-primary"style="background-color: #004AAD;">Save Changes</button>
                 </form>
             </div>
         </div>

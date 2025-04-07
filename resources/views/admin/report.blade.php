@@ -50,7 +50,7 @@
         <div class="dashboard-content px-4 pt-4">
             <h2 class="fs-2 fw-bold mb-3">Reports</h2>
 
-            <div class="report-container mb-4">
+            <div class="report-container mb-5">
                 <div class="admin-tabs">
                     <button id="studentsTab" onclick="showContent('students')">Students with no interactions</button>
                     <button id="tutorsTab" onclick="showContent('tutors')">Average messages for each tutor</button>
@@ -318,7 +318,7 @@
                 <div id="mostactiveusers" class="content-area mt-4">
 
                     <div class="table-responsive" id="no-more-tables">
-                        <table class="adminreport" id="adminreportTableActiveusers">
+                        <table class="adminreportactive" id="adminreportTableActiveusers">
                             <thead>
                                 <tr>
                                     <th class="small-col text-center">No.</th>
@@ -331,7 +331,7 @@
                             <tbody class="adminreport-row">
                                 @foreach ($activeUsers as $index => $user )
                                 <tr>
-                                    <td class="small-col"  data-title="No.">{{ $index +1 }}</td>
+                                    <td class="small-col" data-title="No.">{{ $index +1 }}</td>
                                     <td data-title="User Code">{{ $user ->user_code }}</td>
                                     <td data-title="User Name">{{ $user ->first_name}} {{ $user->last_name }}</td>
                                     <td data-title="Interaction Count">{{$user->total_activity}}</td>
@@ -420,18 +420,18 @@
     //     });
     // });
 
-    //      $(document).ready(function() {
-    //     $('#adminreportTableActiveusers').DataTable({
-    //         paging: true,
-    //         pageLength: 15,
-    //         lengthChange: false,
-    //         searching: false,
-    //         ordering: false,
-    //         "language": {
-    //             "info": "Total Records: _TOTAL_",
-    //         }
-    //     });
-    // });
+         $(document).ready(function() {
+        $('#adminreportTableActiveusers').DataTable({
+            paging: true,
+            pageLength: 15,
+            lengthChange: false,
+            searching: false,
+            ordering: false,
+            "language": {
+                "info": "Total Records: _TOTAL_",
+            }
+        });
+    });
 
 
     // document.addEventListener("DOMContentLoaded", function() {
