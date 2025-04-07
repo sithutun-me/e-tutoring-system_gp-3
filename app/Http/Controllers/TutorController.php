@@ -12,6 +12,7 @@ use App\Models\Document;
 use App\Rules\FileTypeValidate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 
 use Carbon\Carbon;
 
@@ -20,6 +21,12 @@ class TutorController extends Controller
     public function index()
     {
         $tutorId = Auth::id();
+        $routeName = Route::currentRouteName();
+        $isTutor = true;
+
+        if ($routeName === 'admin.tutor.dashboard') {
+            $isTutor = false;
+        }
 
         //getting upcoming meeting list within one week.
         $oneWeek = Carbon::now()->subDays(7);
@@ -42,7 +49,7 @@ class TutorController extends Controller
             )
             ->get();
 
-        return view('tutor.dashboard', compact('meetings'));
+        return view('tutor.dashboard', compact('meetings','isTutor'));
         
     }
 

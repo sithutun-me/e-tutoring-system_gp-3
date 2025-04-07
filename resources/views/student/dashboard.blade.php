@@ -16,29 +16,26 @@
                 </div>
 
                 <ul class="list-unstyled px-2">
-                    <li class=""><a href="/student/dashboard" class="text-decoration-none px-3 py-2 d-block">
+                    <li class=""><a href="{{ $isStudent ? '/student/dashboard' : '/admin/student/dashboard' }}" class="text-decoration-none px-3 py-2 d-block">
                             <img src="/icon images/dashboard.png" style="width:20px; margin-right: 10px;"> Dashboard
                         </a>
                     </li>
-                    <li class=""><a href="/student/meetinglists" class="text-decoration-none px-3 py-2 d-block">
-                            <img src="/icon images/meeting.png" style="width:20px; margin-right: 10px;"> Meetings
-                        </a>
-                    </li>
-                    <li class=""><a href="/student/blogging" class="text-decoration-none px-3 py-2 d-block ">
-                            <img src="/icon images/blogging.png" style="width:20px; margin-right: 10px;"> Blogging
+                    @if ($isStudent)
+                        <li class=""><a href="/student/meetinglists" class="text-decoration-none px-3 py-2 d-block">
+                                <img src="/icon images/meeting.png" style="width:20px; margin-right: 10px;"> Meetings
+                            </a>
+                        </li>
+                        <li class=""><a href="/student/blogging" class="text-decoration-none px-3 py-2 d-block ">
+                                <img src="/icon images/blogging.png" style="width:20px; margin-right: 10px;"> Blogging
 
-                        </a>
-                    </li>
-                    <!-- <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">
-                            <img src="/icon images/notification.png" style="width:20px; margin-right: 10px;"> Notifications
-                        </a>
-                    </li> -->
+                            </a>
+                        </li>
 
-                    <li class=""><a href="/student/report" class="text-decoration-none px-3 py-2 d-block">
-                            <img src="/icon images/reports.png" style="width:20px; margin-right: 10px;"> Reports
-                        </a>
-                    </li>
-
+                        <li class=""><a href="/student/report" class="text-decoration-none px-3 py-2 d-block">
+                                <img src="/icon images/reports.png" style="width:20px; margin-right: 10px;"> Reports
+                            </a>
+                        </li>
+                    @endif
                 </ul>
 
 
@@ -107,7 +104,7 @@
                                                 @endif
                                             </div>
                                             <div class="box-align-bottom center-text">
-                                                <a href="#"> View posts>></a>
+                                                <a href="/student/blogging">View posts>></a>
                                             </div>
 
                                         </div>
@@ -127,7 +124,7 @@
                                         <div class="chart-area">
                                             <canvas id="StudentActivityChart" class="chart-canvas"></canvas>
                                             <div class="box-align-right">
-                                                <a href="#" class="small-text">View Report>>></a>
+                                                <a href="/student/report" class="small-text">View Report>>></a>
                                             </div>
                                         </div>
                                     </div>
@@ -141,7 +138,7 @@
                                         <div class="chart-area">
                                             <canvas id="TutorActivityChart" class="chart-canvas"></canvas>
                                             <div class="box-align-right">
-                                                <a href="#" class="small-text">View Report>>></a>
+                                                <a href="/student/report" class="small-text">View Report>>></a>
                                             </div>
                                         </div>
                                     </div>
