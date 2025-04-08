@@ -20,26 +20,43 @@ class PostController extends Controller
 
         $student = Auth::user();
         $studentId = $student->id;
+
+        // Get the assigned tutor for the student
         $tutor = User::whereHas('tutorAllocations', function ($query) use ($studentId) {
             $query->where('student_id', $studentId)->where('active', 1);
-        })->where('role_id', 2)->first();
+        })->where('role_id', 2)->first(); // Assuming tutors have role_id = 2
+
+        if (!$tutor) {
+            // If no tutor is assigned, we can handle this gracefully
+            return redirect()->back()->with('error', 'You do not have an active tutor assigned.');
+        }
+
         $tutorId = $tutor->id;
+
+        // Initialize the base query
         $query = Post::with(['creator', 'receiver', 'documents', 'comments']);
-        // dd($student->first_name);
+
         // Filter by post type
         switch ($request->input('post_by')) {
             case 'myPosts':
+                // Show only posts created by the student
                 $query->where('post_create_by', $studentId);
                 break;
 
             case 'tutorPosts':
-                $query->where('post_create_by', $tutorId); // Show my tutor posts
+                // Show only posts created by the assigned tutor
+                $query->where('post_create_by', $tutorId);
                 break;
 
             default:
-                // All posts (no filtering)
+                // Default case: Show posts created by the student AND their tutor
+                $query->where(function ($q) use ($studentId, $tutorId) {
+                    $q->where('post_create_by', $studentId)
+                        ->orWhere('post_create_by', $tutorId);
+                });
                 break;
         }
+
         // Apply search filter
         $searchPost = $request->input('search_post');
         if ($searchPost) {
@@ -47,9 +64,13 @@ class PostController extends Controller
                 $q->where('post_title', 'like', '%' . $searchPost . '%');
             });
         }
-        $posts = $query->where('post_status', '!=', 'deleted')->orderBy('updated_at', 'desc')->get();
 
+        // Exclude deleted posts and order by updated_at
+        $posts = $query->where('post_status', '!=', 'deleted')
+            ->orderBy('updated_at', 'desc')
+            ->get();
 
+        // Return the view with the filtered posts and student data
         return view('student.blogging', compact(['pageTitle', 'posts', 'student']));
     }
 

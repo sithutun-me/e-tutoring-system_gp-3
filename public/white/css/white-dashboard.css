@@ -48,6 +48,13 @@
 
 }
 
+
+.last-login {
+  font-family: "Poppins";
+  font-size: 1rem;
+  font-weight: bold;
+}
+
 .dropdown button {
   background-color: white;
 }
@@ -56,6 +63,7 @@
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
+  margin-bottom: 20px;
   
 }
 .adminreport thead {
@@ -64,9 +72,9 @@
   
 }
 .adminreport {
-  width: 100%;
+  /* width: 100%; */
   table-layout: fixed; /* Prevents layout shift */
-  border-collapse: collapse;
+  /* border-collapse: collapse; */
   height: 100%;
 }
 
@@ -86,10 +94,10 @@
 }
 
 
-.adminreport {
+/* .adminreport {
 width: 100%;
 border-collapse: collapse;
-}
+} */
 
 .adminreport th, 
 .adminreport td {
@@ -101,6 +109,7 @@ border-left: none;  /* Remove vertical borders */
 border-right: none; /* Remove vertical borders */
 text-wrap: auto;
 word-wrap: break-word;
+/* border: 1px solid red; */
 }
 
 /* Keep the first column's left border */
@@ -558,6 +567,21 @@ border-right: 1px solid #D3D3D3;
   color: white;
   font-family: 'Poppins';
   font-size: 0.875rem;
+}
+
+.most-view-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  color: white;
+  font-family: 'Poppins';
+  font-size: 0.875rem;
+}
+
+#mostViewedText,
+#mostActiveText {
+  margin-left: 20px;
 }
 
 .scroll-table {

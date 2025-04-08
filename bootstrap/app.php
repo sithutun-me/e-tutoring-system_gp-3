@@ -13,10 +13,14 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        $middleware->append(\App\Http\Middleware\TrackBrowserUsage::class);
+        $middleware->append(\App\Http\Middleware\TrackPageViews::class);
         $middleware->alias([
             'protect_auth' => App\Http\Middleware\ProtectAuth::class,
             'role' => App\Http\Middleware\RoleMiddleware::class,
-            'guest' => App\Http\Middleware\RedirectIfAuthenticated::class
+            'guest' => App\Http\Middleware\RedirectIfAuthenticated::class,
+            
+
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

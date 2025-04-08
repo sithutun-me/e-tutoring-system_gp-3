@@ -25,10 +25,10 @@
 
                 </a>
             </li>
-            <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">
+            <!-- <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">
                     <img src="/icon images/notification.png" style="width:20px; margin-right: 10px;"> Notifications
                 </a>
-            </li>
+            </li> -->
 
             <li class=""><a href="/student/report" class="text-decoration-none px-3 py-2 d-block">
                     <img src="/icon images/reports.png" style="width:20px; margin-right: 10px;"> Reports
@@ -92,7 +92,7 @@
                     <!--Selected/Chosen File List Display -->
                     <ul id="fileList" class="file-list" name="doc_files"></ul>
 
-                    <button type="submit" class="btn btn-primary w-100 mt-2" style="background-color: #004AAD;">Post</button>
+                    <button type="submit" id="upload-btn" class="btn btn-primary w-100 mt-2" style="background-color: #004AAD;">Post</button>
                 </div>
             </form>
 
@@ -178,19 +178,41 @@
 
     // Selected File List Display and Remove
 
+    let fileArray = [];
+
     document.getElementById("studentFileInput").addEventListener("change", function(event) {
         const fileList = document.getElementById("fileList");
         const fileCount = document.getElementById("studentFileCount");
-        fileList.innerHTML = ""; // Clear previous file list
 
         const files = Array.from(event.target.files);
         if (files.length === 0) {
             fileCount.textContent = "No file chosen";
-        } else {
-            fileCount.textContent = `${files.length} file(s) selected`;
+            return;
         }
 
-        files.forEach((file, index) => {
+        // Add new files while preventing duplicates
+        files.forEach(file => {
+            if (!fileArray.some(f => f.name === file.name && f.size === file.size)) {
+                fileArray.push(file);
+            }
+        });
+
+        updateFileList();
+    });
+
+    function updateFileList() {
+        const fileList = document.getElementById("fileList");
+        const fileCount = document.getElementById("studentFileCount");
+
+        fileList.innerHTML = ""; // Clear UI before updating
+
+        if (fileArray.length === 0) {
+            fileCount.textContent = "No file chosen";
+        } else {
+            fileCount.textContent = `${fileArray.length} file(s) selected`;
+        }
+
+        fileArray.forEach((file, index) => {
             const li = document.createElement("li");
             li.textContent = file.name;
 
@@ -205,7 +227,33 @@
             li.appendChild(removeBtn);
             fileList.appendChild(li);
         });
+
+        updateFileInput(); // Sync input with selected files
+    }
+
+    function updateFileInput() {
+        const fileInput = document.getElementById("studentFileInput");
+        const dataTransfer = new DataTransfer();
+
+        fileArray.forEach(file => dataTransfer.items.add(file));
+        fileInput.files = dataTransfer.files;
+    }
+    document.getElementById("upload-btn").addEventListener("click", function() {
+        if (fileArray.length === 0) {
+            alert("No files to upload!");
+            return;
+        }
+
+        const formData = new FormData();
+        fileArray.forEach(file => {
+            formData.append("files[]", file);
+        });
+
+        // Example: send formData to the server
+        console.log("Uploading files...", formData);
     });
+
+
 
     function removeFile(index) {
         const fileInput = document.getElementById("studentFileInput");

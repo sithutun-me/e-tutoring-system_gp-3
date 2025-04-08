@@ -12,6 +12,7 @@ use App\Models\Document;
 use App\Rules\FileTypeValidate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 
 use Carbon\Carbon;
 
@@ -20,6 +21,12 @@ class TutorController extends Controller
     public function index()
     {
         $tutorId = Auth::id();
+        $routeName = Route::currentRouteName();
+        $isTutor = true;
+
+        if ($routeName === 'admin.tutor.dashboard') {
+            $isTutor = false;
+        }
 
         //getting upcoming meeting list within one week.
         $oneWeek = Carbon::now()->subDays(7);
@@ -42,31 +49,8 @@ class TutorController extends Controller
             )
             ->get();
 
-        return view('tutor.dashboard', compact('meetings'));
-        $tutorId = Auth::id();
-
-        //getting upcoming meeting list within one week.
-        $oneWeek = Carbon::now()->subDays(7);
-        $meetings = DB::table('meeting_schedule')
-            ->leftjoin('users as students', 'meeting_schedule.student_id', '=', 'students.id')
-            ->where('meeting_schedule.tutor_id', $tutorId)
-            ->where('meeting_schedule.meeting_status', 'new')
-            ->where('meeting_schedule.meeting_date', '<=', Carbon::now()->addDays(7))
-            ->orderBy('meeting_schedule.meeting_date', 'asc')
-            ->select(
-                'meeting_schedule.id',
-                'meeting_schedule.meeting_title',
-                'meeting_schedule.meeting_type',
-                'meeting_schedule.meeting_date',
-                'meeting_schedule.meeting_start_time',
-                'meeting_schedule.meeting_end_time',
-                'meeting_schedule.updated_at',
-                'students.first_name',
-                'students.last_name'
-            )
-            ->get();
-
-        return view('tutor.dashboard', compact('meetings'));
+        return view('tutor.dashboard', compact('meetings','isTutor'));
+        
     }
 
     public function interactionCounts(Request $request)
@@ -192,7 +176,7 @@ class TutorController extends Controller
 
         // Get results and group by date
         $meeting_schedules = $query
-            ->orderBy('meeting_schedules.meeting_date','desc')
+            ->orderBy('meeting_schedules.meeting_date', 'desc')
             ->orderBy('meeting_schedules.meeting_start_time')
             ->get()
             ->groupBy('meeting_date');
@@ -299,40 +283,58 @@ class TutorController extends Controller
 
         $tutor = Auth::user();
         $tutorId = $tutor->id;
+
+        // Initialize the base query
         $query = Post::with(['creator', 'receiver', 'documents', 'comments']);
+
+        // Get the list of assigned students for the tutor
+        $assignedStudentIds = User::whereHas('studentAllocations', function ($query) use ($tutorId) {
+            $query->where('tutor_id', $tutorId)->where('active', 1);
+        })->where('role_id', 1)->pluck('id')->toArray();
+
         // Filter by post type
-        $studentId = $request->input('student_filter');
         switch ($request->input('post_by')) {
             case 'myPosts':
+                // Show only posts created by the tutor
                 $query->where('post_create_by', $tutorId);
 
-                // ->where(function ($q) use ($tutorId) {
-                //     $q->whereHas('comments', function ($subQuery) use ($tutorId) {
-                //         $subQuery->where('user_id', $tutorId);
-                //     });
-                // })
+                // Optionally filter by a specific student if provided
+                $studentId = $request->input('student_filter');
                 if ($studentId) {
                     $query->where('post_received_by', $studentId);
                 }
                 break;
 
             case 'studentPosts':
-
-                if ($studentId && Post::where('post_create_by', $studentId)) {
+                // Show posts created by the tutor's assigned students
+                $studentId = $request->input('student_filter');
+                if ($studentId && in_array($studentId, $assignedStudentIds)) {
+                    // If a specific student is selected, show only their posts
                     $query->where('post_create_by', $studentId);
                 } else {
-                    $query->where(function ($q) {
-                        $q->whereHas('creator', function ($subQuery) {
-                            $subQuery->where('role_id', 1);
-                        });
-                    }); // Show all students posts
+                    // Otherwise, show posts from all assigned students
+                    $query->whereIn('post_create_by', $assignedStudentIds);
                 }
                 break;
 
             default:
-                // All posts (no filtering)
+                // Default case: Show posts created by the tutor AND their assigned students
+                $query->where(function ($q) use ($tutorId, $assignedStudentIds) {
+                    $q->where('post_create_by', $tutorId)
+                        ->orWhereIn('post_create_by', $assignedStudentIds);
+                });
+
+                // Additional logic: If a specific student is selected, show posts received by or created by that student
+                $studentId = $request->input('student_filter');
+                if ($studentId && in_array($studentId, $assignedStudentIds)) {
+                    $query->where(function ($q) use ($studentId) {
+                        $q->where('post_received_by', $studentId)
+                            ->orWhere('post_create_by', $studentId);
+                    });
+                }
                 break;
         }
+
         // Apply search filter
         $searchPost = $request->input('search_post');
         if ($searchPost) {
@@ -341,103 +343,20 @@ class TutorController extends Controller
             });
         }
 
+        // Exclude deleted posts and order by updated_at
+        $posts = $query->where('post_status', '!=', 'deleted')
+            ->orderBy('updated_at', 'desc')
+            ->get();
 
-        $posts = $query->where('post_status', '!=', 'deleted')->orderBy('updated_at','desc')->get();
-
-        $students = $query = User::whereHas('studentAllocations', function ($query) use ($tutorId) {
+        // Fetch the list of students assigned to the tutor
+        $students = User::whereHas('studentAllocations', function ($query) use ($tutorId) {
             $query->where('tutor_id', $tutorId)->where('active', 1);
         })->where('role_id', 1)->get();
 
-
+        // Return the view with the filtered posts and students
         return view('tutor.blogging', compact(['pageTitle', 'posts', 'students', 'tutor']));
     }
-    // public function bloggingIndex(Request $request)
-    // {
-    //     $pageTitle = 'Posts';
-    //     $tutor = Auth::user();
-    //     $tutorId = $tutor->id; // Get the logged-in tutor’s ID
-    //     $query = Post::with(['documents', 'creator', 'receiver', 'comments']);
-    //     // dd($tutorId);
 
-    //     $searchKeyword = $request->input('search_post');
-    //     // Filter by post by if selected to MyPosts
-    //     if ($request->filled('post_by') && $request->post_by == 'MyPosts') {
-    //         $query->where('post_create_by', $tutorId);
-
-    //         // Filter by specific student if 'student_filter' is provided
-    //         if ($request->filled('student_filter')) {
-    //             $studentId = $request->student_filter;
-
-    //             $query->where(function ($q) use ($studentId) {
-    //                 $q->where('post_create_by', $studentId)
-    //                     ->orWhere('post_received_by', $studentId);
-    //             });
-    //         }
-
-    //         // Filter by post by if Post Title
-    //         if ($searchKeyword) {
-    //             $query->where(function ($q) use ($searchKeyword) {
-    //                 $q->where('post_title', 'LIKE', '%' . $searchKeyword . '%');
-    //             });
-    //         }
-    //     }
-    //     // Filter by post_by if selected as 'StudentPosts'
-    //     if ($request->filled('post_by') && $request->post_by == 'StudentPosts') {
-    //             $query->where(function ($q) {
-    //                 $q->whereHas('creator', function ($subQuery) {
-    //                     $subQuery->where('role_id', 1);
-    //                 })
-    //                     ->orWhereHas('receiver', function ($subQuery) {
-    //                         $subQuery->where('role_id', 1);
-    //                     });
-    //             });
-
-    //         // Filter by specific student if 'student_filter' is provided
-    //         if ($request->filled('student_filter')) {
-    //             $studentId = $request->student_filter;
-
-    //             $query->where(function ($q) use ($studentId) {
-    //                 $q->where('post_create_by', $studentId);
-    //             });
-    //         }
-
-    //         // Filter by post by if Post Title
-    //         if ($searchKeyword) {
-    //             $query->where(function ($q) use ($searchKeyword) {
-    //                 $q->where('post_title', 'LIKE', '%' . $searchKeyword . '%');
-    //             });
-    //         }
-    //     }
-
-    //     // Filter by post by if selected to MyPosts
-    //     if ($request->filled('post_by') && $request->post_by == 'All') {
-    //         // Filter by specific student if 'student_filter' is provided
-    //         if ($request->filled('student_filter')) {
-    //             $studentId = $request->student_filter;
-    //             $query->where(function ($q) use ($studentId) {
-    //                 $q->where('post_create_by', $studentId)
-    //                     ->orWhere('post_received_by', $studentId);
-    //             });
-    //         }
-
-    //         // Filter by post by if Post Title
-    //         if ($searchKeyword) {
-    //             $query->where(function ($q) use ($searchKeyword) {
-    //                 $q->where('post_title', 'LIKE', '%' . $searchKeyword . '%');
-    //             });
-    //         }
-    //     }
-
-    //     $posts = $query
-    //         ->where('post_status', 'new')
-    //         ->orWhere('post_status', 'updated')->orderBy('updated_at', 'desc')->get();
-    //     $students = $query = User::whereHas('studentAllocations', function ($query) use ($tutorId) {
-    //         $query->where('tutor_id', $tutorId)->where('active', 1);
-    //     })->where('role_id', 1)->get();
-
-    //     \Log::info('back to blogging: '); // Log success
-    //     return view('tutor.blogging', compact(['pageTitle', 'posts', 'students', 'tutor']));
-    // }
 
     public function createpost(Request $request)
     {
@@ -659,25 +578,30 @@ class TutorController extends Controller
 
     public function report(Request $request)
     {
-        $tutorId = auth()->id(); 
+        $tutorId = auth()->id();
 
         // Get current month if not provided
         $currentMonth = $request->input('month', Carbon::now()->month);
-    
+
         // Get student name filter if provided
         $studentName = $request->input('student_name');
-    
+
+        $studentsDropDown = Allocation::where('tutor_id', $tutorId)
+            ->where('active', 1)
+            ->with('student') // Assuming you have a relationship
+            ->get();
         // Retrieve students assigned to the tutor
         $students = DB::table('allocation')
             ->join('users', 'allocation.student_id', '=', 'users.id')
             ->where('allocation.tutor_id', $tutorId)
+            ->where('allocation.active', 1)
             ->where('users.role_id', 1);
-    
-        // Apply student name filter if provided
-        if (!empty($studentName)) {
-            $students->where('users.first_name', 'LIKE', "%{$studentName}%");
+
+        // Apply student name filter
+        if (!empty($request->student_id)) {
+            $students->where('users.id', $request->student_id);
         }
-    
+
         // Fetch student activity counts
         $studentReports = $students
             ->leftJoin('post as posts', function ($join) use ($currentMonth) {
@@ -698,52 +622,53 @@ class TutorController extends Controller
             ->select(
                 'users.id as student_id',
                 'users.user_code',
-                'users.first_name as student_name',
+                'users.first_name',
+                'users.last_name',
                 DB::raw('COUNT(DISTINCT posts.id) as posts'),
                 DB::raw('COUNT(DISTINCT comments.id) as comments'),
                 DB::raw('COUNT(DISTINCT documents.id) as documents'),
                 DB::raw('COUNT(DISTINCT meeting_schedules.id) as meetings')
             )
-            ->groupBy('users.id', 'users.user_code', 'users.first_name')
+            ->groupBy('users.id', 'users.user_code', 'users.first_name', 'users.last_name')
             ->get();
-    
 
-        return view('tutor.report',compact('studentReports', 'currentMonth', 'studentName'));
+
+        return view('tutor.report', compact('studentReports', 'currentMonth', 'studentName', 'studentsDropDown'));
     }
     protected function getStudentActivities($studentId, $year)
-{
-    return [
-        'posts' => DB::table('post')
-            ->selectRaw("MONTH(created_at) as month, COUNT(*) as count")
-            ->where('post_create_by', $studentId)
-            ->where('is_meeting', 0)
-            ->whereYear('created_at', $year)
-            ->groupBy('month')
-            ->pluck('count', 'month'),
-            
-        'comments' => DB::table('comment')
-            ->selectRaw("MONTH(created_at) as month, COUNT(*) as count")
-            ->where('user_id', $studentId)
-            ->whereYear('created_at', $year)
-            ->groupBy('month')
-            ->pluck('count', 'month'),
-            
-        'documents' => DB::table('document')
-            ->join('post', 'document.post_id', '=', 'post.id')
-            ->selectRaw("MONTH(document.created_at) as month, COUNT(*) as count")
-            ->where('post.post_create_by', $studentId)
-            ->whereYear('document.created_at', $year)
-            ->groupBy('month')
-            ->pluck('count', 'month'),
-            
-        'meetings' => DB::table('meeting_schedule')
-            ->selectRaw("MONTH(meeting_date) as month, COUNT(*) as count")
-            ->where('student_id', $studentId)
-            ->whereYear('updated_at', $year)
-            ->groupBy('month')
-            ->pluck('count', 'month')
-    ];
-}
+    {
+        return [
+            'posts' => DB::table('post')
+                ->selectRaw("MONTH(created_at) as month, COUNT(*) as count")
+                ->where('post_create_by', $studentId)
+                ->where('is_meeting', 0)
+                ->whereYear('created_at', $year)
+                ->groupBy('month')
+                ->pluck('count', 'month'),
+
+            'comments' => DB::table('comment')
+                ->selectRaw("MONTH(created_at) as month, COUNT(*) as count")
+                ->where('user_id', $studentId)
+                ->whereYear('created_at', $year)
+                ->groupBy('month')
+                ->pluck('count', 'month'),
+
+            'documents' => DB::table('document')
+                ->join('post', 'document.post_id', '=', 'post.id')
+                ->selectRaw("MONTH(document.created_at) as month, COUNT(*) as count")
+                ->where('post.post_create_by', $studentId)
+                ->whereYear('document.created_at', $year)
+                ->groupBy('month')
+                ->pluck('count', 'month'),
+
+            'meetings' => DB::table('meeting_schedule')
+                ->selectRaw("MONTH(meeting_date) as month, COUNT(*) as count")
+                ->where('student_id', $studentId)
+                ->whereYear('updated_at', $year)
+                ->groupBy('month')
+                ->pluck('count', 'month')
+        ];
+    }
 
 
     //update or create function
@@ -827,12 +752,12 @@ class TutorController extends Controller
                 'meeting_link' => $request->meeting_type === 'virtual' ? $request->meeting_link : null,
             ]);
             $post = Post::create([
-                'post_create_by' => Auth::id(), 
-                'post_received_by'=>$request->student_id,
+                'post_create_by' => Auth::id(),
+                'post_received_by' => $request->student_id,
                 'post_title' => $request->meeting_title,
-                'post_status'=>"new",
+                'post_status' => "new",
                 'post_description' => $request->meeting_description,
-                'is_meeting' =>  1, 
+                'is_meeting' =>  1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

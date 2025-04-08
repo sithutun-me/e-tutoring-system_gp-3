@@ -88,6 +88,46 @@ Route::middleware(['auth', 'protect_auth'])->group(function () {
         Route::post('/tutor/meetingdetail/cancel', [TutorController::class, 'cancelMeeting'])->name('tutor.meetingdetail.cancelmeeting');
 
         Route::get('/tutor/report', [TutorController::class, 'report'])->name('tutor.report');
+
+
+
+
+
+        Route::get('/student/dashboard', [StudentController::class, 'index'])->name('student.dashboard');
+
+
+        Route::get('/student/meetinglists', [StudentController::class, 'meetinglists'])->name('student.meetinglists');
+        //show create form
+        Route::get('/student/meetingdetail', [StudentController::class, 'meetingdetail'])->name('student.meetingdetail.create');
+        //show edit form
+        Route::get('/student/meetingdetail/{id}/edit', [StudentController::class, 'meetingdetail'])->name('student.meetingdetail.update');
+        //view meeting detail
+        Route::get('/student/meetingdetail/{id}', [StudentController::class, 'meetingview'])->name('student.meetingdetail.view');
+
+        Route::post('/student/meetingdetail', [StudentController::class, 'save'])->name('save');
+        Route::put('/student/meetingdetail/{id}', [StudentController::class, 'save'])->name('update');
+
+        //status toggle (completed/ new)
+        Route::put('/student/meetingdetail/{id}/toggle-status', [StudentController::class, 'toggleStatus'])
+            ->name('student.meetingdetail.toggleStatus');
+
+        Route::post('/student/meetingdetail/cancel', [StudentController::class, 'cancelMeeting'])->name('student.meetingdetail.cancelmeeting');
+
+        //view posts student
+        Route::get('/student/blogging', [PostController::class, 'index'])->name('student.blogging');
+        //crud posts student
+        Route::get('/student/createpost', [PostController::class, 'createpost'])->name('student.createpost');
+        Route::post('/student/savepost', [PostController::class, 'savepost'])->name('student.savepost');
+        Route::get('/student/editpost/{id}', [PostController::class, 'editpost'])->name('student.editpost');
+        Route::post('/student/updatepost/{id}', [PostController::class, 'updatepost'])->name('student.updatepost');
+        Route::post('/student/deletepost/{id}', [PostController::class, 'deletepost'])->name('student.deletepost');
+
+        //comment
+        Route::post('/student/postcomment/{id}', [PostController::class, 'postcomment'])->name('student.postcomment');
+        Route::post('/student/deletecomment/{id}', [PostController::class, 'deletecomment'])->name('student.deletecomment');
+        Route::post('/student/editcomment', [PostController::class, 'editcomment'])->name('student.editcomment');
+
+        Route::get('/student/report', [StudentController::class, 'report'])->name('student.report');
     });
 
     // Student Dashboard Route
@@ -134,6 +174,8 @@ Route::middleware(['auth', 'protect_auth'])->group(function () {
 //admin dashboard chart
 Route::get('/student-inactivity', [AdminController::class, 'getInactiveStudentsData']);
 Route::get('/average_messages', [AdminController::class, 'getAverageMessage']);
+Route::get('/browser-chart', [AdminController::class, 'getBrowserPieData']);
+
 Route::get('/student_list_with_assigned_tutors', [AdminController::class, 'getStudentListWithAssignedTutors']);
 
 //tutor dashboard chart

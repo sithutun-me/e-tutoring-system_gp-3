@@ -25,10 +25,10 @@
 
                 </a>
             </li>
-            <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">
+            <!-- <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">
                     <img src="/icon images/notification.png" style="width:20px; margin-right: 10px;"> Notifications
                 </a>
-            </li>
+            </li> -->
 
             <li class=""><a href="/student/report" class="text-decoration-none px-3 py-2 d-block">
                     <img src="/icon images/reports.png" style="width:20px; margin-right: 10px;"> Reports
@@ -72,7 +72,7 @@
                                 </select>
                             </div>
                             <div class="postSearch col-md-3 mb-2 d-flex justify-content-center align-items-center">
-                                <input id="postSearch" name="search_post" class="form-control" type="search" placeholder="Search here" aria-label="Search" value="{{ request()->input('search_post') }}">
+                                <input id="postSearch" name="search_post" class="form-control" type="search" placeholder="Search by post title" aria-label="Search" value="{{ request()->input('search_post') }}">
                             </div>
                             <div class="col-md-3 mb-2 d-flex flex-column align-items-start">
                                 <div class=" text-center">
@@ -89,18 +89,21 @@
                     @php
                     $user = auth()->user();
                     @endphp
+                    @if($post->is_meeting != 1)
                     @if($post->creator->id == $user->id)
                     <div class="edit-btn text-center fit">
+
                         <a href="{{  route('student.editpost',$post->id) }}" class="edit-btn btn btn-primary shadow-none" style=" width: 100px; background-color: #004AAD;">Edit</a>
-                        <a href="{{  route('student.editpost',$post->id) }}" class="delete-btn btn  shadow-none" style=" width:50px; background-color:#d9534f "><i class="fa-solid fa-trash"></i></a>
+                        <a href="#" class="delete-btn btn  shadow-none" data-id="{{ $post->id }}" style=" width:50px; background-color:#d9534f "><i class="fa-solid fa-trash"></i></a>
 
                     </div>
+                    @endif
                     @endif
                     <p>
                         <i class="fa-solid fa-circle-user me-3" style="font-size: 35px; color:#808080; vertical-align: middle;"></i>
                         <strong class="name me-4" style="vertical-align: middle; font-size: 1rem; font-family:'Poppins';">{{ $post->creator?->first_name }} {{ $post->creator?->last_name }}</strong>
                         <span class="date me-1" style="vertical-align: middle; font-family:'Poppins';">{{ \Carbon\Carbon::parse($post->updated_at)->format('d M Y') }}</span>
-                        <span class="time me-4" style="vertical-align: middle; font-family:'Poppins';">{{ \Carbon\Carbon::parse($post->updated_at)->format('h:m A') }}</span>
+                        <span class="time me-4" style="vertical-align: middle; font-family:'Poppins';">{{ \Carbon\Carbon::parse($post->updated_at)->format('h:i A') }}</span>
                         <span class="status me-0" style="vertical-align: middle; font-family:'Poppins';">
                             {{ $post->post_status }}
                         </span>
@@ -131,27 +134,27 @@
                         @foreach ($post->comments as $comment)
                         <div class="comment-item">
 
-                            <p>
-                                <i class="fa-solid fa-circle-user me-2" style="font-size: 20px; color:#808080; vertical-align: middle;"></i>
-                                <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">{{ $comment->user->first_name }} {{ $comment->user->last_name }}</strong>
-                                <span class="date me-1" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($comment->updated_at)->format('d M Y') }}</span>
-                                <span class="time me-4" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($comment->updated_at)->format('h:m A') }}</span>
+                            <div class="row">
+                                <div class="col-md-5 d-flex align-items-center">
+                                    <i class="fa-solid fa-circle-user me-2" style="font-size: 20px; color:#808080; vertical-align: middle;"></i>
+                                    <strong class="name me-4" style="vertical-align: middle; font-size: 1rem">{{ $comment->user->first_name }} {{ $comment->user->last_name }}</strong>
+                                    <span class="date me-1" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($comment->updated_at)->format('d M Y') }}</span>
+                                    <span class="time me-4" style="vertical-align: middle;">{{ \Carbon\Carbon::parse($comment->updated_at)->format('h:i A') }}</span>
+
+                                </div>
 
                                 @if($comment->user_id == $user->id)
-                                <!-- Three-dot Menu for comment edit and delete next to Time -->
-                                <span class="three-dots" onclick="toggleMenu(this)" style="cursor: pointer; vertical-align: middle;">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </span>
-
-                                <!-- Hidden Edit & Delete Options -->
-                                <span class="ms-2 options-menu" style="display: none;">
-                                    <button data-id="{{ $comment->id }}" data-text="{{ $comment->text }}" class="edit-comment btn btn-primary">Edit</button>
-                                    <button data-id="{{ $comment->id }}" class="delete-comment btn btn-danger" class="delete-comment btn btn-danger" style="background-color: #d9534f;">Delete</button>
-                                </span>
+                                <div class="dropdown col-md-1">
+                                    <button class="btn btn-light border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        &#x22EE; <!-- Three dots -->
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="edit-comment dropdown-item" data-id="{{ $comment->id }}" data-text="{{ $comment->text }}" onclick="commentAction('Edit')">Edit</a></li>
+                                        <li><a class="delete-comment dropdown-item text-danger" data-id="{{ $comment->id }}" onclick="commentAction('Delete')">Delete</a></li>
+                                    </ul>
+                                </div>
                                 @endif
-
-
-                            </p>
+                            </div>
                             <p class="comments-body" style="margin-left: 30px;">{{ $comment->text }}</p>
 
                         </div>
@@ -268,13 +271,11 @@
 <!-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
 <script>
-    console.log("Script is loaded!");
     $(document).ready(function() {
         $('#datepicker').datepicker({
             format: 'yyyy-mm-dd',

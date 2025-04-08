@@ -61,14 +61,17 @@
                                     </div>
                                 </div>
                                 <div class="top-row">
-                                    <div class="center-text">
-                                        <img id="mostViewedIcon" src="/icon images/meeting.png"
+                                    <div class="most-view-text">
+                                        <img id="mostViewedIcon" src="/icon images/page.png"
                                             style="width:40px; margin-right: 10px;">
-                                        <div id="mostViewedText" class="large-medium-font">Meetings</div>
+                                            {{-- @foreach ( $pageViews as $p )
+                                            {{$p->page_name}}
+                                        @endforeach --}}
+                                        <div id="mostViewedText" class="large-medium-font">{{$friendlyName}}</div>
                                     </div>
                                 </div>
                                 <div class="box-align-bottom center-text">
-                                    <a href="#"> View all>></a>
+                                    <a href="/admin/report"> View all>></a>
                                 </div>
 
                             </div>
@@ -83,14 +86,14 @@
                                     </div>
                                 </div>
                                 <div class="top-row">
-                                    <div class="center-text">
-                                        <img id="mostActiveIcon" src="/icon images/student.png"
+                                    <div class="most-view-text">
+                                        <img id="mostActiveIcon" src="/icon images/person.png"
                                             style="width:40px; margin-right: 10px;">
-                                        <div id="mostActiveText" class="large-medium-font">Joshua Hong</div>
+                                        <div id="mostActiveText" class="large-medium-font">{{ $mostActiveUser->first_name}} {{ $mostActiveUser->last_name}}</div>
                                     </div>
                                 </div>
                                 <div class="box-align-bottom center-text">
-                                    <a href="#"> View all>></a>
+                                    <a href="/admin/report"> View all>></a>
                                 </div>
 
                             </div>
@@ -108,7 +111,7 @@
                             <div class="chart-area">
                                 <canvas id="StudentInteractionChart" class="chart-canvas"></canvas>
                                 <div class="box-align-right">
-                                    <a href="#" class="small-text">View Report>>></a>
+                                    <a href="/admin/report" class="small-text">View Report>>></a>
                                 </div>
                             </div>
                         </div>
@@ -116,7 +119,7 @@
                     <div class="chart-card col-md-6">
                         <div class="chart-card-header">
                             <h5 class="chart-card-category"></h5>
-                            <h3 class="chart-card-title">Used browsers</h3>
+                            <h3 class="chart-card-title">Used browsers (%)</h3>
                         </div>
                         <div class="chart-card-body">
 
@@ -138,7 +141,7 @@
                             <div class="chart-area">
                                 <canvas id="TutorMessagesChart" class="chart-canvas"></canvas>
                                 <div class="box-align-right">
-                                    <a href="#" class="small-text">View Report>>></a>
+                                    <a href="/admin/report" class="small-text">View Report>>></a>
                                 </div>
                             </div>
                         </div>
@@ -167,6 +170,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        
                                         @foreach ($students as $student)
                                             <tr>
                                                 <td class="normal-text">{{ $student->user_code }}</td>

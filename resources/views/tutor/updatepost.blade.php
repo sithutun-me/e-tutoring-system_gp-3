@@ -29,10 +29,10 @@
 
                     </a>
                 </li>
-                <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">
+                <!-- <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">
                         <img src="/icon images/notification.png" style="width:20px; margin-right: 10px;"> Notifications
                     </a>
-                </li>
+                </li> -->
 
                 <li class=""><a href="tutor/report" class="text-decoration-none px-3 py-2 d-block">
                         <img src="/icon images/reports.png" style="width:20px; margin-right: 10px;"> Reports
@@ -79,21 +79,15 @@
 
                     <form action="{{ route('tutor.updatepost',$post->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <!-- <div class="student-select mb-3">
-                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                                <option  selected disabled>Choose Student</option>
-                                    <option value="1">Student1</option>
-                                    <option value="2">Student2</option>
-                                    <option value="3">Student3</option>
-                                    <option value="4">Student4</option>
-                                    <option value="5">Student5</option>
-                                    <option value="6">Student6</option>
-                                    <option value="7">Student7</option>
-                                    <option value="8">Student8</option>
-                                    <option value="9">Student9</option>
-                                    <option value="10">Student10</option>
-                                </select>
-                            </div> -->
+                        <div class="student-select mb-3">
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" disabled>
+                                <!-- <option value="{{ $post->receiver->first_name }}" disabled></option> -->
+                                <option value="{{ $post->receiver->id }}" selected>
+                                    {{ $post->receiver->first_name }}
+                                    {{ $post->receiver->last_name }}
+                                </option>
+                            </select>
+                        </div>
 
                         <div class="mb-3">
                             <input type="text" class="form-control" name="update_title" placeholder="Add title *" value="{{ $post->post_title }}">
@@ -125,7 +119,7 @@
                         <!--Selected/Chosen File List Display -->
                         <ul id="file-list" class="file-list"></ul>
 
-                        <button type="submit" class="btn btn-primary w-100 mt-2" style="background-color: #004AAD;">Update</button>
+                        <button type="submit" id="upload-btn" class="btn btn-primary w-100 mt-2" style="background-color: #004AAD;">Update</button>
 
 
 
@@ -212,20 +206,41 @@
     });
 
     // Selected File List Display and Remove
+    let fileArray = [];
 
     document.getElementById("file-input").addEventListener("change", function(event) {
         const fileList = document.getElementById("file-list");
         const fileCount = document.getElementById("file-count");
-        fileList.innerHTML = ""; // Clear previous file list
 
         const files = Array.from(event.target.files);
         if (files.length === 0) {
             fileCount.textContent = "No file chosen";
-        } else {
-            fileCount.textContent = `${files.length} file(s) selected`;
+            return;
         }
 
-        files.forEach((file, index) => {
+        // Add new files while preventing duplicates
+        files.forEach(file => {
+            if (!fileArray.some(f => f.name === file.name && f.size === file.size)) {
+                fileArray.push(file);
+            }
+        });
+
+        updateFileList();
+    });
+
+    function updateFileList() {
+        const fileList = document.getElementById("file-list");
+        const fileCount = document.getElementById("file-count");
+
+        fileList.innerHTML = ""; // Clear UI before updating
+
+        if (fileArray.length === 0) {
+            fileCount.textContent = "No file chosen";
+        } else {
+            fileCount.textContent = `${fileArray.length} file(s) selected`;
+        }
+
+        fileArray.forEach((file, index) => {
             const li = document.createElement("li");
             li.textContent = file.name;
 
@@ -240,7 +255,32 @@
             li.appendChild(removeBtn);
             fileList.appendChild(li);
         });
+
+        updateFileInput(); // Sync input with selected files
+    }
+
+    function updateFileInput() {
+        const fileInput = document.getElementById("file-input");
+        const dataTransfer = new DataTransfer();
+
+        fileArray.forEach(file => dataTransfer.items.add(file));
+        fileInput.files = dataTransfer.files;
+    }
+    document.getElementById("upload-btn").addEventListener("click", function() {
+        if (fileArray.length === 0) {
+            alert("No files to upload!");
+            return;
+        }
+
+        const formData = new FormData();
+        fileArray.forEach(file => {
+            formData.append("files[]", file);
+        });
+
+        // Example: send formData to the server
+        console.log("Uploading files...", formData);
     });
+
 
     function removeFile(index) {
         const fileInput = document.getElementById("file-input");
@@ -265,7 +305,7 @@
         let removedDocsInput = document.getElementById("removed-documents");
         let removedDocs = removedDocsInput.value ? JSON.parse(removedDocsInput.value) : [];
 
-        removedDocs.push(docId);  // Add the document ID to the list
+        removedDocs.push(docId); // Add the document ID to the list
         removedDocsInput.value = JSON.stringify(removedDocs);
 
         //console.log("removed" + removedDocsInput.value);
@@ -280,7 +320,7 @@
 
         let documentId = button.getAttribute("data-id");
 
-    $('#allocationForm').on('submit', function() {
+        $('#allocationForm').on('submit', function() {
             $('#selectedStudentsContainer').empty(); // Clear existing inputs
             selectedStudents.forEach(studentId => {
                 $('#selectedStudentsContainer').append(
