@@ -45,14 +45,16 @@ class PostController extends Controller
 
             case 'tutorPosts':
                 // Show only posts created by the assigned tutor
-                $query->where('post_create_by', $tutorId);
+                $query->where('post_create_by', $tutorId)
+                ->where('post_received_by', $studentId);
                 break;
 
             default:
                 // Default case: Show posts created by the student AND their tutor
                 $query->where(function ($q) use ($studentId, $tutorId) {
                     $q->where('post_create_by', $studentId)
-                        ->orWhere('post_create_by', $tutorId);
+                        ->orWhere('post_create_by', $tutorId)
+                        ->where('post_received_by', $studentId);;
                 });
                 break;
         }
