@@ -303,6 +303,7 @@ border-right: 1px solid #D3D3D3;
   border-bottom: 1px solid #D3D3D3;
   border-left: none;
   border-right: none;
+  text-wrap: auto;
   word-wrap: break-word;
 }
 

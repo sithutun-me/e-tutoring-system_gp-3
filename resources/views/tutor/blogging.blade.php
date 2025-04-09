@@ -55,7 +55,7 @@
 
                                 <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
                                     <select class="form-select" id="postBy" name="post_by"
-                                        aria-label="Floating label select example">
+                                        aria-label="Floating label select example" style="font-size: 0.875rem; font-family:'Poppins';">
                                         <option value="all" {{ request('post_by') == 'all' ? 'selected' : '' }}>All
                                         </option>
                                         <option value="myPosts" {{ request('post_by') == 'myPosts' ? 'selected' : '' }}>My
@@ -69,7 +69,7 @@
 
                                 <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
                                     <select class="form-select form--control" name="student_filter" id="studentFilter"
-                                        aria-label="Floating label select example">
+                                        aria-label="Floating label select example" style="font-size: 0.875rem; font-family:'Poppins';">
                                         <option value="" {{ request('student_filter') == '' ? 'selected' : '' }}>--
                                             Choose Student --</option>
                                         @foreach ($students as $student)
