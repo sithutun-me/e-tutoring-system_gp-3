@@ -74,8 +74,8 @@
                             </div>
                             <div class="col-md-5 mb-2 d-flex justify-content-center align-items-center">
                                 <div class="input-group" id="datetimepicker">
-                                    <input type="text" class="form-control" name="meeting_date" id="datepicker"
-                                        value="{{ request('meeting_date') }}" placeholder="Select a date" readonly />
+                                    <input type="text" class="form-control" name="interaction_date" id="datepicker"
+                                        value="{{ request('interaction_date') }}" placeholder="Select a date" readonly />
                                     <span class="input-group-text" id="datepicker-icon">
                                         <i class="fas fa-calendar-alt"></i>
                                     </span>
@@ -489,11 +489,11 @@
         // Get selected values from dropdown and datepicker
         const noInteractionPeriod = document.getElementById("selectNoInteraction").value;
         const selectedDate = document.getElementById("datepicker").value;
-
+console.log(noInteractionPeriod);
         // Build query string
         const queryParams = new URLSearchParams({
             no_interaction: noInteractionPeriod !== "all" ? noInteractionPeriod : undefined,
-            meeting_date: selectedDate || undefined,
+            interaction_date: selectedDate || undefined,
         }).toString();
 
         // Redirect to the same page with updated query parameters

@@ -326,20 +326,32 @@ class AdminService
                 'students.first_name',
                 'students.last_name',
                 'students.email',
-                DB::raw('MAX(comment.created_at) as last_active_date'),
-                DB::raw('DATEDIFF(NOW(), MAX(comment.created_at)) as no_interaction_days')
+                DB::raw('COALESCE(GREATEST(MAX(comment.updated_at), MAX(post.updated_at)), students.updated_at) as last_active_date'),
+                DB::raw('CASE
+                    WHEN COALESCE(GREATEST(MAX(comment.updated_at), MAX(post.updated_at)), students.updated_at) IS NOT NULL
+                    THEN DATEDIFF(NOW(), COALESCE(GREATEST(MAX(comment.updated_at), MAX(post.updated_at)), students.updated_at))
+                    ELSE NULL
+                 END as no_interaction_days')
             )
             ->leftJoin('comment', function ($join) use ($cutoffDate, $selectedDate) {
                 $join->on('comment.user_id', '=', 'students.id')
-                    ->where('comment.created_at', '<=', $cutoffDate);
+                    ->where('comment.updated_at', '<=', $cutoffDate);
 
                 if ($selectedDate) {
-                    $join->whereDate('comment.created_at', '=', $selectedDate);
+                    $join->whereDate('comment.updated_at', '=', $selectedDate);
+                }
+            })
+            ->leftJoin('post', function ($join) use ($cutoffDate, $selectedDate) {
+                $join->on('post.post_create_by', '=', 'students.id')
+                    ->where('post.updated_at', '<=', $cutoffDate);
+
+                if ($selectedDate) {
+                    $join->whereDate('post.updated_at', '=', $selectedDate);
                 }
             })
             ->where('students.role_id', 1) // Only students
             ->groupBy('students.id', 'students.user_code', 'students.first_name', 'students.last_name', 'students.email')
-            ->havingRaw('MAX(comment.created_at) IS NULL OR MAX(comment.created_at) <= ?', [$cutoffDate])
+            ->havingRaw('GREATEST(MAX(comment.updated_at), MAX(post.updated_at)) IS NULL OR GREATEST(MAX(comment.updated_at), MAX(post.updated_at)) <= ?', [$cutoffDate])
             ->orderByDesc('no_interaction_days')
             ->get();
 

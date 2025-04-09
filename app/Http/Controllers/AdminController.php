@@ -170,7 +170,7 @@ class AdminController extends Controller
 
         // Retrieve query parameters
         $noInteractionPeriod = $request->input('no_interaction', 'all'); // Default to all
-        $selectedDate = $request->input('meeting_date'); // Optional date filter
+        $selectedDate = $request->input('interaction_date'); // Optional date filter
 
         // Fetch students with no interaction using the service
         $students = $this->adminDashboardService->getStudentsWithNoInteraction($noInteractionPeriod, $selectedDate);
