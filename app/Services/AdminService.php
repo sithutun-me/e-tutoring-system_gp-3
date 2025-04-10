@@ -55,7 +55,7 @@ class AdminService
                 }
             })
 
-            ->count();
+            ->get();
 
         return $inactiveStudents;
     }
@@ -70,7 +70,7 @@ class AdminService
         return [
             'inactive_7_days' => $this->getInactiveStudentsCount(7, 30),
             'inactive_30_days' => $this->getInactiveStudentsCount(30, 60),
-            'inactive_60_days' => $this->getInactiveStudentsCount(60),
+            'inactive_60_days' => $this->getInactiveStudentsCount(28),
         ];
     }
 
@@ -350,7 +350,7 @@ class AdminService
                 }
             })
             ->where('students.role_id', 1) // Only students
-            ->groupBy('students.id', 'students.user_code', 'students.first_name', 'students.last_name', 'students.email')
+            ->groupBy('students.id', 'students.user_code', 'students.first_name', 'students.last_name', 'students.email','students.updated_at')
             ->havingRaw('GREATEST(MAX(comment.updated_at), MAX(post.updated_at)) IS NULL OR GREATEST(MAX(comment.updated_at), MAX(post.updated_at)) <= ?', [$cutoffDate])
             ->orderByDesc('no_interaction_days')
             ->get();
