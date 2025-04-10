@@ -16,7 +16,8 @@
                 </div>
 
                 <ul class="list-unstyled px-2">
-                    <li class=""><a href="{{ $isStudent ? '/student/dashboard' : '/admin/student/dashboard' }}" class="text-decoration-none px-3 py-2 d-block">
+                    <li class=""><a href="{{ $isStudent ? '/student/dashboard' : '/admin/student/dashboard' }}"
+                            class="text-decoration-none px-3 py-2 d-block">
                             <img src="/icon images/dashboard.png" style="width:20px; margin-right: 10px;"> Dashboard
                         </a>
                     </li>
@@ -103,10 +104,11 @@
                                                     </div>
                                                 @endif
                                             </div>
-                                            <div class="box-align-bottom center-text">
-                                                <a href="/student/blogging">View posts>></a>
-                                            </div>
-
+                                            @if ($isStudent)
+                                                <div class="box-align-bottom center-text">
+                                                    <a href="/student/blogging">View posts>></a>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -123,9 +125,11 @@
                                     <div class="chart-card-body">
                                         <div class="chart-area">
                                             <canvas id="StudentActivityChart" class="chart-canvas"></canvas>
-                                            <div class="box-align-right">
-                                                <a href="/student/report" class="small-text">View Report>>></a>
-                                            </div>
+                                            @if ($isStudent)
+                                                <div class="box-align-right">
+                                                    <a href="/student/report" class="small-text">View Report>>></a>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -137,9 +141,11 @@
                                     <div class="chart-card-body">
                                         <div class="chart-area">
                                             <canvas id="TutorActivityChart" class="chart-canvas"></canvas>
-                                            <div class="box-align-right">
-                                                <a href="/student/report" class="small-text">View Report>>></a>
-                                            </div>
+                                            @if ($isStudent)
+                                                <div class="box-align-right">
+                                                    <a href="/student/report" class="small-text">View Report>>></a>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

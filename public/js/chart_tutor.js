@@ -117,7 +117,7 @@ window.demo = {
         data: {
           labels: studentNames,
           datasets: [{
-            label: "Messages",
+            label: "Count",
             fill: true,
             backgroundColor: '#004AAD',
             hoverBackgroundColor: '#004AAD',

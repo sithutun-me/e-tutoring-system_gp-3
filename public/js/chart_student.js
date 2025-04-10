@@ -105,7 +105,7 @@ window.demo = {
       data: {
         labels: labels,
         datasets: [{
-          label: "Messages",
+          label: "Count",
           fill: true,
           barThickness: 50,
           maxBarThickness: 50,
@@ -237,7 +237,7 @@ window.demo = {
       data: {
         labels: labels,
         datasets: [{
-          label: "Messages",
+          label: "Count",
           fill: true,
           barThickness: 50,
           maxBarThickness: 50,

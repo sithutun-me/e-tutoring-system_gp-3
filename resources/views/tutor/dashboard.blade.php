@@ -15,21 +15,25 @@
             </div>
 
             <ul class="list-unstyled px-2">
-                <li class=""><a href="{{ $isTutor ? '/tutor/dashboard' : '/admin/tutor/dashboard' }}" class="text-decoration-none px-3 py-2 d-block">
+                <li class=""><a href="{{ $isTutor ? '/tutor/dashboard' : '/admin/tutor/dashboard' }}"
+                        class="text-decoration-none px-3 py-2 d-block">
                         <img src="/icon images/dashboard.png" style="width:20px; margin-right: 10px;"> Dashboard
                     </a>
                 </li>
                 @if ($isTutor)
-                    <li class=""><a href="/tutor/meetinglists" class="text-decoration-none px-3 py-2 d-block" data-link="/tutor/meetinglists">
+                    <li class=""><a href="/tutor/meetinglists" class="text-decoration-none px-3 py-2 d-block"
+                            data-link="/tutor/meetinglists">
                             <img src="/icon images/meeting.png" style="width:20px; margin-right: 10px;"> Meetings
                         </a>
                     </li>
-                    <li class=""><a href="/tutor/blogging" class="text-decoration-none px-3 py-2 d-block" data-link="/tutor/blogging">
+                    <li class=""><a href="/tutor/blogging" class="text-decoration-none px-3 py-2 d-block"
+                            data-link="/tutor/blogging">
                             <img src="/icon images/blogging.png" style="width:20px; margin-right: 10px;"> Blogging
 
                         </a>
                     </li>
-                    <li class=""><a href="/tutor/report" class="text-decoration-none px-3 py-2 d-block" data-link="/tutor/report">
+                    <li class=""><a href="/tutor/report" class="text-decoration-none px-3 py-2 d-block"
+                            data-link="/tutor/report">
                             <img src="/icon images/reports.png" style="width:20px; margin-right: 10px;"> Reports
                         </a>
                     </li>
@@ -89,9 +93,11 @@
                                 <div class="chart-card-body">
                                     <div class="chart-area">
                                         <canvas id="StudentInteractionCountChart" class="chart-canvas"></canvas>
-                                        <div class="box-align-right">
-                                            <a href="/tutor/report" class="small-text">View Report>>></a>
-                                        </div>
+                                        @if ($isTutor)
+                                            <div class="box-align-right">
+                                                <a href="/tutor/report" class="small-text">View Report>>></a>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -99,35 +105,42 @@
                     </div>
                     <div class="row mt-4">
                         {{-- <div class="chart-container"> --}}
-                            <div class="chart-card chart-card-full ms-3">
-                                <div class="chart-card-header">
-                                    <h4 class="chart-card-title">Upcoming meetings within the next week</h4>
-                                </div>
-                                <div class="chart-card-body">
-                                    <div class="table-responsive">
-                                        <table class="table tablesorter" id="tutor-upcoming-meetings">
-                                            <thead>
+                        <div class="chart-card chart-card-full ms-3">
+                            <div class="chart-card-header">
+                                <h4 class="chart-card-title">Upcoming meetings within the next week</h4>
+                            </div>
+                            <div class="chart-card-body">
+                                <div class="table-responsive">
+                                    <table class="table tablesorter" id="tutor-upcoming-meetings">
+                                        <thead>
+                                            <tr>
+                                                <th class="normal-text" style="width: 25%;">
+                                                    Meeting Title
+                                                </th>
+                                                <th class="normal-text" style="width: 12%;">
+                                                    Date
+                                                </th>
+                                                <th class="normal-text" style="width: 18%;">
+                                                    Time
+                                                </th>
+                                                <th class="normal-text" style="width: 25%;">
+                                                    Students
+                                                </th>
+                                                <th class="normal-text" style="width: 15%;">
+                                                    Meeting Type
+                                                </th>
+                                                <th class="text-center normal-text" style="width: 10%;">
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if ($meetings->isEmpty())
                                                 <tr>
-                                                    <th class="normal-text" style="width: 25%;">
-                                                        Meeting Title
-                                                    </th>
-                                                    <th class="normal-text" style="width: 12%;">
-                                                        Date
-                                                    </th>
-                                                    <th class="normal-text" style="width: 18%;">
-                                                        Time
-                                                    </th>
-                                                    <th class="normal-text" style="width: 25%;">
-                                                        Students
-                                                    </th>
-                                                    <th class="normal-text" style="width: 15%;">
-                                                        Meeting Type
-                                                    </th>
-                                                    <th class="text-center normal-text" style="width: 10%;">
-                                                    </th>
+                                                    <td colspan="5" class="text-muted py-4">
+                                                        <i class="fas fa-calendar-times"></i> No Meetings Available
+                                                    </td>
                                                 </tr>
-                                            </thead>
-                                            <tbody>
+                                            @else
                                                 @foreach ($meetings as $meeting)
                                                     <tr>
                                                         <td class="normal-text">{{ $meeting->meeting_title }}</td>
@@ -148,13 +161,14 @@
                                                         </td>
                                                     </tr>
                                                 @endforeach
-                                            </tbody>
+                                            @endif
+                                        </tbody>
 
-                                        </table>
-                                        <div id="pagination-container"></div>
-                                    </div>
+                                    </table>
+                                    <div id="pagination-container"></div>
                                 </div>
                             </div>
+                        </div>
                         {{-- </div> --}}
                     </div>
 
@@ -217,7 +231,7 @@
                         if (typeof demo !== 'undefined') {
                             demo.initStudentInteractionsChart(
                                 studentNames, interactionCounts
-                                ); // Pass the data to your chart function
+                            ); // Pass the data to your chart function
                         }
                     }
                 },
@@ -301,7 +315,7 @@
                         if (typeof demo !== 'undefined') {
                             demo.initStudentInteractionsChart(
                                 studentNames, interactionCounts
-                                ); // Pass the data to your chart function
+                            ); // Pass the data to your chart function
                         }
                     }
                 },
