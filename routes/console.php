@@ -6,7 +6,7 @@ use App\Jobs\SendInactivityEmails;
 use Illuminate\Support\Facades\Schedule;
 
 
-Schedule::job(new SendInactivityEmails)->everyMinute();  // or .daily(), depending on your needs
+Schedule::job(new SendInactivityEmails)->weekly();  // or .daily(), depending on your needs
 
 
 Artisan::command('inspire', function () {

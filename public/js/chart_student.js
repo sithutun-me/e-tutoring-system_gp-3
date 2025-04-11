@@ -81,7 +81,10 @@ window.demo = {
     };
     async function getStudentActivities() {
       try {
-        const response = await fetch('/myActivities');
+        const studentId = window.App.studentId !== 'null' 
+        ? window.App.studentId 
+        : null;
+        const response = await fetch('/myActivities/'+studentId);
         const chartData = await response.json();
         const labels = chartData.labels;
         const counts = chartData.data;
@@ -213,7 +216,10 @@ window.demo = {
 
     async function getTutorActivities() {
       try {
-        const response = await fetch('/tutorActivities');
+        const studentId = window.App.studentId !== 'null' 
+        ? window.App.studentId 
+        : null;
+        const response = await fetch('/tutorActivities/' + studentId);
         const chartData = await response.json();
         const labels = chartData.labels;
         const counts = chartData.data;
@@ -309,7 +315,11 @@ window.demo = {
 
     async function getMeetingStatusCounts() {
       try {
-        const response = await fetch('/meeting_counts');
+        const studentId = window.App.studentId !== 'null' 
+        ? window.App.studentId 
+        : null;
+        console.log('meeting data '+studentId);
+        const response = await fetch('/meeting_counts/' + studentId);
         const chartMeetingData = await response.json();
         const labels = chartMeetingData.labels;
         const statusCounts = chartMeetingData.data;

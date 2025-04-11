@@ -179,6 +179,7 @@
 
     <script src="{{ asset('js/chart_tutor.js') }}"></script>
     <script>
+        window.authUserId = {{ auth()->id() ?? 'null' }};
         // Script for the side bar nav
         $(".sidebar ul li").on('click', function() {
             $(".sidebar ul li.active").removeClass('active');
@@ -195,10 +196,25 @@
             $('.sidebar').removeClass('active');
 
         });
+        function getUrlId() {
+            const lastSegment = window.location.pathname.split('/').pop();
+    
+    // Check if it's a valid number (e.g., "17")
+    if (/^\d+$/.test(lastSegment)) {
+        return lastSegment;
+    }
+    
+    // Fallback to logged-in user ID from Laravel
+    return window.authUserId || null;
+
+}
+// Execute the function to get the ID
+        let tutorId = getUrlId();   
 
         $(document).ready(function() {
+            console.log(tutorId + ' Tutor Id')
             $.ajax({
-                url: '/tutor_student_interaction_dashboard', // Adjust this to your correct route
+                url: '/tutor_student_interaction_dashboard/' + tutorId, // Adjust this to your correct route
                 method: 'GET',
                 data: {
                     interaction_type: "All"
@@ -248,10 +264,12 @@
 
 
         });
+        console.log(tutorId + ' Tutor Id')
         async function getInteractionCounts(filterValue) {
             try {
-
-                const response = await fetch('/tutor_student_interaction_dashboard?interaction_type=${filterValue}');
+                console.log(tutorId + ' Tutor Id')
+                //const tutorId =request()->route('id') ?? auth()->id() ?? 'null';
+                const response = await fetch('/tutor_student_interaction_dashboard/${tutorId}?interaction_type=${filterValue}');
                 const data = await response.json();
 
                 // Extract student names and interaction counts
@@ -282,7 +300,7 @@
             } = getInteractionCounts(selectedInteractionType);
             console.log(interactionCounts);
             $.ajax({
-                url: '/tutor_student_interaction_dashboard', // Adjust this to your correct route
+                url: '/tutor_student_interaction_dashboard/' + tutorId, // Adjust this to your correct route
                 method: 'GET',
                 data: {
                     interaction_type: selectedInteractionType

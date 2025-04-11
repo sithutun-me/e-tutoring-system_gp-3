@@ -18,9 +18,15 @@ use Carbon\Carbon;
 
 class TutorController extends Controller
 {
-    public function index()
+    public function index($id=null)
     {
-        $tutorId = Auth::id();
+        $tutorId ='';
+        if($id) {
+           $tutorId = $id;
+        }else{
+            $tutorId = auth()->id();
+        }
+        //$tutorId = Auth::id();
         $routeName = Route::currentRouteName();
         $isTutor = true;
 
@@ -53,9 +59,12 @@ class TutorController extends Controller
         
     }
 
-    public function interactionCounts(Request $request)
+    public function interactionCounts(Request $request,$id=null)
     {
-        $tutorId = Auth::id(); // Get logged-in tutor ID
+        $tutorId =  $id ?? auth()->id();
+
+        
+      //  $tutorId = Auth::id(); // Get logged-in tutor ID
         $startOfMonth = Carbon::now()->startOfMonth(); // First day of the current month
         $today = Carbon::now(); // Current day
         $filter = $request->query('interaction_type', 'All');

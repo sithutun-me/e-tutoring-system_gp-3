@@ -55,7 +55,7 @@ class AdminService
                 }
             })
 
-            ->get();
+            ->count();
 
         return $inactiveStudents;
     }
@@ -70,7 +70,7 @@ class AdminService
         return [
             'inactive_7_days' => $this->getInactiveStudentsCount(7, 30),
             'inactive_30_days' => $this->getInactiveStudentsCount(30, 60),
-            'inactive_60_days' => $this->getInactiveStudentsCount(28),
+            'inactive_60_days' => $this->getInactiveStudentsCount(60),
         ];
     }
 
