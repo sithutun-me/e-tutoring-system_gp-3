@@ -114,20 +114,24 @@ class StudentController extends Controller
     public function myActivities($id=null){
         
         $studentId =  $id ?? auth()->id();
-
+        $currentMonth = Carbon::now()->month;
 
         $postCount = DB::table('post')
             ->where('post_create_by', $studentId)
             ->where('is_meeting',0)
+            ->where('post_status', '!=', 'deleted')
+            ->whereMonth('updated_at',$currentMonth)
             ->count();
 
         $commentCount = DB::table('comment')
             ->where('user_id', $studentId)
+            ->whereMonth('updated_at',$currentMonth)
             ->count();
 
         $documentCount = DB::table('document')
                 ->join('post', 'document.post_id', '=', 'post.id')
                 ->where('post.post_create_by', $studentId)
+                ->whereMonth('document.updated_at',$currentMonth)
                 ->count();
         $interactionCounts = [
             'labels' =>['Posts', 'Comments', 'Documents'],
@@ -137,6 +141,7 @@ class StudentController extends Controller
     }
     public function tutorActivities($id=null){
         $studentId =  $id ?? auth()->id();
+        $currentMonth = Carbon::now()->month;
 
         
         $tutorId = DB::table('allocation')
@@ -146,7 +151,9 @@ class StudentController extends Controller
         $postCount = DB::table('post')
             ->where('post_create_by', $tutorId)
             ->where('post_received_by',$studentId)
+            ->where('post_status', '!=', 'deleted')
             ->where('is_meeting',0)
+            ->whereMonth('updated_at',$currentMonth)
             ->count();
 
         $commentCount = DB::table('comment')
@@ -154,12 +161,14 @@ class StudentController extends Controller
             ->where('comment.user_id', $tutorId)
             ->where('post.post_create_by',$tutorId)
             ->where('post.post_received_by',$studentId)
+            ->whereMonth('comment.updated_at',$currentMonth)
             ->count();
 
         $documentCount = DB::table('document')
                 ->join('post', 'document.post_id', '=', 'post.id')
                 ->where('post.post_create_by', $tutorId)
                 ->where('post.post_received_by',$studentId)
+                ->whereMonth('document.updated_at',$currentMonth)
                 ->count();
         $interactionCounts = [
             'labels' =>['Posts', 'Comments', 'Documents'],
@@ -463,61 +472,64 @@ class StudentController extends Controller
     
         // Fetch activities grouped by month
         $studentActivities = DB::table('post')
-            ->selectRaw("MONTH(created_at) as month, COUNT(*) as posts")
+            ->selectRaw("MONTH(updated_at) as month, COUNT(*) as posts")
             ->where('post_create_by', $studentId)
             ->where('is_meeting', 0)
-            ->whereYear('created_at', $currentYear)
+            ->where('post_status', '!=', 'deleted')
+            ->whereYear('updated_at', $currentYear)
             ->groupBy('month')
             ->pluck('posts', 'month');
     
         $commentCounts = DB::table('comment')
-            ->selectRaw("MONTH(created_at) as month, COUNT(*) as comments")
+            ->selectRaw("MONTH(updated_at) as month, COUNT(*) as comments")
             ->where('user_id', $studentId)
-            ->whereYear('created_at', $currentYear)
+            ->whereYear('updated_at', $currentYear)
             ->groupBy('month')
             ->pluck('comments', 'month');
     
         $documentCounts = DB::table('document')
             ->join('post', 'document.post_id', '=', 'post.id')
-            ->selectRaw("MONTH(document.created_at) as month, COUNT(*) as documents")
+            ->selectRaw("MONTH(document.updated_at) as month, COUNT(*) as documents")
             ->where('post.post_create_by', $studentId)
-            ->whereYear('document.created_at', $currentYear)
+            ->whereYear('document.updated_at', $currentYear)
             ->groupBy('month')
             ->pluck('documents', 'month');
     
         $meetingCounts = DB::table('meeting_schedule')
             ->selectRaw("MONTH(meeting_date) as month, COUNT(*) as meetings")
             ->where('student_id', $studentId)
+            ->where('meeting_status','completed')
             ->whereYear('updated_at', $currentYear)
             ->groupBy('month')
             ->pluck('meetings', 'month');
     
         // Fetch tutor data
         $tutorActivities = DB::table('post')
-            ->selectRaw("MONTH(created_at) as month, COUNT(*) as posts")
+            ->selectRaw("MONTH(updated_at) as month, COUNT(*) as posts")
             ->where('post_create_by', $tutorId)
             ->where('post_received_by', $studentId)
             ->where('is_meeting', 0)
-            ->whereYear('created_at', $currentYear)
+            ->where('post_status', '!=', 'deleted')
+            ->whereYear('updated_at', $currentYear)
             ->groupBy('month')
             ->pluck('posts', 'month');
     
         $tutorCommentCounts = DB::table('comment')
             ->join('post', 'comment.post_id', '=', 'post.id')
-            ->selectRaw("MONTH(comment.created_at) as month, COUNT(*) as comments")
+            ->selectRaw("MONTH(comment.updated_at) as month, COUNT(*) as comments")
             ->where('comment.user_id', $tutorId)
             ->where('post.post_create_by', $tutorId)
             ->where('post.post_received_by', $studentId)
-            ->whereYear('comment.created_at', $currentYear)
+            ->whereYear('comment.updated_at', $currentYear)
             ->groupBy('month')
             ->pluck('comments', 'month');
     
         $tutorDocumentCounts = DB::table('document')
             ->join('post', 'document.post_id', '=', 'post.id')
-            ->selectRaw("MONTH(document.created_at) as month, COUNT(*) as documents")
+            ->selectRaw("MONTH(document.updated_at) as month, COUNT(*) as documents")
             ->where('post.post_create_by', $tutorId)
             ->where('post.post_received_by', $studentId)
-            ->whereYear('document.created_at', $currentYear)
+            ->whereYear('document.updated_at', $currentYear)
             ->groupBy('month')
             ->pluck('documents', 'month');
     

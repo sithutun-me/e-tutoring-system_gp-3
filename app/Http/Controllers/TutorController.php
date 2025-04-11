@@ -405,6 +405,7 @@ class TutorController extends Controller
         $post->post_title = $request->post_title;
         $post->post_description = $request->post_desc;
         $post->post_status = 'new';
+        $post->is_meeting = 0;
         $post->post_create_by = $request->create_by;
         $post->post_received_by = $request->selected_student;
         $post->save();
@@ -615,6 +616,8 @@ class TutorController extends Controller
         $studentReports = $students
             ->leftJoin('post as posts', function ($join) use ($currentMonth) {
                 $join->on('posts.post_create_by', '=', 'users.id')
+                    ->where('is_meeting', 0)
+                    ->where('post_status', '!=', 'deleted')
                     ->whereMonth('posts.created_at', $currentMonth);
             })
             ->leftJoin('comment as comments', function ($join) use ($currentMonth) {
@@ -626,6 +629,7 @@ class TutorController extends Controller
             })
             ->leftJoin('meeting_schedule as meeting_schedules', function ($join) use ($currentMonth) {
                 $join->on('meeting_schedules.student_id', '=', 'users.id')
+                    ->where('meeting_schedules.meeting_status','completed')
                     ->whereMonth('meeting_schedules.meeting_date', $currentMonth);
             })
             ->select(

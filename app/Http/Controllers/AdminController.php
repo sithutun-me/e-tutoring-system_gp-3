@@ -39,8 +39,13 @@ class AdminController extends Controller
         ];
         $students = $this->adminDashboardService->studentsWithoutTutors();
 
-        $mostViewed = PageView::orderByDesc('view_count')->first();
-        $friendlyName = $pageMap[$mostViewed->page_name] ?? $mostViewed->page_name;
+        // $mostViewed = PageView::orderByDesc('view_count')->first();
+        // $friendlyName = $pageMap[$mostViewed->page_name] ?? $mostViewed->page_name;
+        $mostViewed = PageView::whereIn('page_name', array_keys($pageMap))
+                    ->orderByDesc('view_count')
+                    ->first();
+
+        $friendlyName = $mostViewed ? $pageMap[$mostViewed->page_name] : null;
 
         $activeUsers = $this->adminDashboardService->getMostActiveUsers(30);
         $mostActiveUser = $activeUsers->first();
@@ -80,35 +85,7 @@ class AdminController extends Controller
 
     public function report(Request $request)
     {
-        //     $pagesMap = [
-        //         'tutor.meetings' => 'Tutor Meetings',
-        //         'student.meetings' => 'Student Meetings',
-        //         'tutor.blogs' => 'Tutor Blogging',
-        //         'student.blogs' => 'Student Blogging',
-        //         'admin.reports' => 'Admin Reports',
-        //         'admin.dashboard' => 'Admin Dashboard',
-        //         'tutor.dashboard' => 'Tutor Dashboard',
-        //         'student.dashboard' => 'Student Dashboard',
-        //         'allocation' => 'Allocation',
-        //         'reschedule' => 'Reschedule',
-        //         'meeting.detail' => 'Meeting Detail',
-        //         'assigned.list' => 'Assigned list',
-        //         'tutor.list' => 'Tutor List',
-        //         'student.list' => 'Student List',
-        //         'tutor.reports' => 'Tutor Reports',
-        //         'student.reports' => 'Student Reports',
-        //         'reallocation' => 'Reallocation'
-        //     ];
-        //     $pageViews = PageView::whereIn('page_name', array_keys($pagesMap))
-        //     ->orderByDesc('view_count')
-        //     ->get()
-        //     ->map(function ($pageView) use ($pagesMap) {
-        //     return [
-        //         'name' => $pagesMap[$pageView->page_name] ?? $pageView->page_name,
-        //         'count' => $pageView->view_count
-        //     ];
-        // })
-        // ->values(); // reset keys
+        
         //most viewed pages
         $pageMap = [
             'admin/dashboard' => 'Admin Dashboard',

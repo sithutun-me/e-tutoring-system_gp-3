@@ -190,9 +190,11 @@ class AdminService
         return $tutors;
     }
 
-    public function getMostActiveUsers($periodDays = 30)
+    public function getMostActiveUsers($periodDays = null)
     {
-        $startDate = Carbon::now()->subDays($periodDays);
+        $startDate = Carbon::now()->subDays($periodDays);   
+         $currentYear = Carbon::now()->year;
+        $currentMonth = Carbon::now()->month;
         $activeUsers = DB::table('users')
             ->select(
                 'users.id',
@@ -210,23 +212,27 @@ class AdminService
                  COUNT(DISTINCT document.id) +
                  COUNT(DISTINCT meeting_schedule.id)) as total_activity')
             )
-            ->leftJoin('post', function ($join) use ($startDate) {
+            ->leftJoin('post', function ($join) use ($currentMonth) {
                 $join->on('post.post_create_by', '=', 'users.id')
                     ->where('post.is_meeting', 0)
-                    ->where('post.updated_at', '>=', $startDate);
+                    ->whereMonth('post.updated_at', $currentMonth);
+                   // ->where('post.updated_at', '>=', $startDate);
             })
-            ->leftJoin('comment', function ($join) use ($startDate) {
+            ->leftJoin('comment', function ($join) use ($currentMonth) {
                 $join->on('comment.user_id', '=', 'users.id')
-                    ->where('comment.updated_at', '>=', $startDate);
+                ->whereMonth('comment.updated_at', $currentMonth);
+                    //->where('comment.updated_at', '>=', $startDate);
             })
-            ->leftJoin('document', function ($join) use ($startDate) {
+            ->leftJoin('document', function ($join) use ($currentMonth) {
                 $join->on('document.post_id', '=', 'post.id')
-                    ->where('document.updated_at', '>=', $startDate);
+                ->whereMonth('document.updated_at', $currentMonth);
+                    //->where('document.updated_at', '>=', $startDate);
             })
-            ->leftJoin('meeting_schedule', function ($join) use ($startDate) {
+            ->leftJoin('meeting_schedule', function ($join) use ($currentMonth) {
                 $join->on('meeting_schedule.student_id', '=', 'users.id')
                     ->where('meeting_schedule.meeting_status', 'completed')
-                    ->where('meeting_schedule.meeting_date', '>=', $startDate);
+                    ->whereMonth('meeting_schedule.meeting_date', $currentMonth);
+                   // ->where('meeting_schedule.meeting_date', '>=', $startDate);
             })
             ->groupBy('users.id', 'users.user_code', 'users.first_name', 'users.last_name', 'users.email', 'users.last_login_at')
             ->orderByDesc('total_activity')

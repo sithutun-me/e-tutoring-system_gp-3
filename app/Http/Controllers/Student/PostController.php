@@ -118,6 +118,7 @@ class PostController extends Controller
         $post->post_title = $request->post_title;
         $post->post_description = $request->post_desc;
         $post->post_status = 'new';
+        $post->is_meeting = 0;
         $post->post_create_by = $request->create_by;
         $post->post_received_by = $request->received_by;
         $post->save();
