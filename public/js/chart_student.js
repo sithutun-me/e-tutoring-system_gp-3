@@ -321,20 +321,32 @@ window.demo = {
         console.log('meeting data '+studentId);
         const response = await fetch('/meeting_counts/' + studentId);
         const chartMeetingData = await response.json();
-        const labels = chartMeetingData.labels;
+       // const labels = chartMeetingData.labels;
         const statusCounts = chartMeetingData.data;
 
-        const filteredData = labels.map((label, index) => ({
-          label,
-          count: statusCounts[index]
-        })).filter(item => item.count > 0);
+        // const filteredData = labels.map((label, index) => ({
+        //   label,
+        //   count: statusCounts[index]
+        // })).filter(item => item.count > 0);
 
-        // Extract the filtered labels and counts
-        const filteredCounts = filteredData.map(item => item.count);
-        console.log(filteredData);
-        console.log('count '+filteredCounts);
+        // // Extract the filtered labels and counts
+        // const filteredCounts = filteredData.map(item => item.count);
+        // console.log(filteredData);
+        // console.log('count '+filteredCounts);
 
-        return { labels, filteredCounts };
+        // return { labels, filteredCounts };
+        const { labels, data } = chartMeetingData;
+        const nonZeroData = labels.reduce((acc, label, index) => {
+          if (data[index] > 0) {
+            acc.labels.push(label);
+            acc.counts.push(data[index]);
+          }
+          return acc;
+        }, { labels: [], counts: [] });
+
+        console.log('Non-zero data:', nonZeroData);
+        return nonZeroData;
+
       } catch (error) {
         return {
           labels: [],
@@ -342,7 +354,7 @@ window.demo = {
         };
       }
     }
-    const { labels, filteredCounts } = await getMeetingStatusCounts();
+    const { labels, counts } = await getMeetingStatusCounts();
     const labelColors = ["#00B312", "#004AAD", "#D73030",'#B4B4B4'];
     var ctx = document.getElementById("MeetingCountChart").getContext("2d");
 
@@ -352,7 +364,7 @@ window.demo = {
         labels: labels,
         datasets: [{
           backgroundColor: labelColors,
-          data: filteredCounts
+          data: counts
         }]
       },
       options: pieChartConfiguration
