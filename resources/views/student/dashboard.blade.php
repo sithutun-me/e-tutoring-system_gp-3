@@ -243,6 +243,10 @@
 
 
     <script>
+        window.App = {
+            isStudent: {{ Route::currentRouteName() !== 'admin.student.dashboard' ? 'true' : 'false' }},
+            studentId: {{ request()->route('id') ?? auth()->id() ?? 'null' }}
+        };
         // Script for the side bar nav
         $(".sidebar ul li").on('click', function() {
             $(".sidebar ul li.active").removeClass('active');

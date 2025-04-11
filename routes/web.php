@@ -29,8 +29,8 @@ Route::middleware(['auth', 'protect_auth'])->group(function () {
         Route::get('/admin/reallocation', [AdminController::class, 'reallocation'])->name('admin.reallocation');
         Route::get('/admin/tutorlists', [AdminController::class, 'tutorlists'])->name('admin.tutorlists');
         Route::get('/admin/studentlists', [AdminController::class, 'studentlists'])->name('admin.studentlists');
-        Route::get('/admin/student/dashboard', [StudentController::class, 'index'])->name('admin.student.dashboard');
-        Route::get('/admin/tutor/dashboard', [TutorController::class, 'index'])->name('admin.tutor.dashboard');
+        Route::get('/admin/student/dashboard/{id}', [StudentController::class, 'index'])->name('admin.student.dashboard');
+        Route::get('/admin/tutor/dashboard/{id}', [TutorController::class, 'index'])->name('admin.tutor.dashboard');
 
         Route::get('/admin/allocation/{id?}', [AllocationController::class, 'index'])->name('admin.allocation');
         Route::post('/admin/allocate', [AllocationController::class, 'allocate'])->name('admin.allocate');
@@ -179,20 +179,17 @@ Route::get('/browser-chart', [AdminController::class, 'getBrowserPieData']);
 Route::get('/student_list_with_assigned_tutors', [AdminController::class, 'getStudentListWithAssignedTutors']);
 
 //tutor dashboard chart
-Route::get('/tutor_student_interaction_dashboard', [TutorController::class, 'interactionCounts']);
+Route::get('/tutor_student_interaction_dashboard/{id}', [TutorController::class, 'interactionCounts']);
 
 //student dashboard chart
-Route::get('/meeting_counts', [StudentController::class, 'getMeetingPieData']);
-Route::get('/myActivities', [StudentController::class, 'myActivities']);
-Route::get('/tutorActivities', [StudentController::class, 'tutorActivities']);
+Route::get('/meeting_counts/{id}', [StudentController::class, 'getMeetingPieData']);
+Route::get('/myActivities/{id}', [StudentController::class, 'myActivities']);
+Route::get('/tutorActivities/{id}', [StudentController::class, 'tutorActivities']);
 
 
 Route::post('tutor/blogging/{id}/comment', [TutorController::class, 'postcomment'])->name('tutor.postcomment');
 
-//student dashboard chart
-Route::get('/meeting_counts', [StudentController::class, 'getMeetingPieData']);
-Route::get('/myActivities', [StudentController::class, 'myActivities']);
-Route::get('/tutorActivities', [StudentController::class, 'tutorActivities']);
+
 
 Route::fallback(function () {
     abort(404);

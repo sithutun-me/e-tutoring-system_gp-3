@@ -13,9 +13,31 @@ use Illuminate\Support\Facades\Route;
 use Carbon\Carbon;
 class StudentController extends Controller
 {
-    public function index()
+    protected $studentId;
+    public function __construct()
     {
-        $studentId = auth()->id();
+        $this->resolveStudentId();
+    }
+    private function resolveStudentId()
+    {
+        //$isStudent = Route::currentRouteName() !== 'admin.student.dashboard';
+
+        $this->studentId = request()->route('id') ?? Auth::id();
+        
+        // // Authorization check
+        // if (request()->route('id') && !Auth::user()->isAdmin()) {
+        //     abort(403, 'Unauthorized');
+        // }
+    }
+    public function index($id=null)
+    {   
+        // $studentId = $id;
+        // if($studentId) {
+           
+        // }else{
+        //     $studentId = auth()->id();
+        // }
+        $studentId = $this->studentId;
         $routeName = Route::currentRouteName();
         $isStudent = true;
 
@@ -63,8 +85,10 @@ class StudentController extends Controller
         return view('student.dashboard',compact('postCount','meetings','tutorName','isStudent'));
     }
     //for dashboard
-    public function getMeetingPieData(){
-        $studentId = auth()->id();
+    public function getMeetingPieData($id=null){
+        
+        $studentId =  $id ?? auth()->id();
+        
         $currentMonth = Carbon::now()->month;; 
         $today = Carbon::now();
         $meetingCounts = DB::table('meeting_schedule')
@@ -87,8 +111,11 @@ class StudentController extends Controller
         return response()->json($chartData);
     }
     
-    public function myActivities(){
-        $studentId = auth()->id();
+    public function myActivities($id=null){
+        
+        $studentId =  $id ?? auth()->id();
+
+
         $postCount = DB::table('post')
             ->where('post_create_by', $studentId)
             ->where('is_meeting',0)
@@ -108,8 +135,10 @@ class StudentController extends Controller
         ];
         return response()->json($interactionCounts);
     }
-    public function tutorActivities(){
-        $studentId = auth()->id();
+    public function tutorActivities($id=null){
+        $studentId =  $id ?? auth()->id();
+
+        
         $tutorId = DB::table('allocation')
                 ->where('student_id', $studentId)
                 ->value('tutor_id');

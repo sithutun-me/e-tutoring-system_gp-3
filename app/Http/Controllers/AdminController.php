@@ -152,7 +152,7 @@ class AdminController extends Controller
             ->map(function ($count, $name) {
                 return ['page_name' => $name, 'view_count' => $count];
             })
-            ->sortByDesc('count')
+            ->sortByDesc('view_count')
             ->values();
 
         // Get the time period filter (default: last 30 days)
