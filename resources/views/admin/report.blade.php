@@ -65,7 +65,7 @@
                                 <label for="selectNoInteraction" class="sort-label"
                                     style="font-family: 'Poppins'; font-size:0.875rem; ">Search</label>
                                 <select class="form-select ms-2" id="selectNoInteraction"
-                                    aria-label="Floating label select example" onchange="updateTableStd()">
+                                    aria-label="Floating label select example" >
                                     <option value="all" {{ request('no_interaction') == 'all' ? 'selected' : '' }}>All</option>
                                     <option value="7days" {{ request('no_interaction') == '7days' ? 'selected' : '' }}>More than 7 days</option>
                                     <option value="30days" {{ request('no_interaction') == '30days' ? 'selected' : '' }}>More than 30 days</option>
@@ -372,6 +372,7 @@
 <script>
     $(document).ready(function() {
         $('#datepicker').datepicker({
+            enableTime: true,
             format: 'yyyy-mm-dd',
             autoclose: true,
             todayHighlight: true

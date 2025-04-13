@@ -8,6 +8,7 @@ use App\Services\AdminService;
 use App\Model\User;
 use App\Models\BrowserUsage;
 use App\Models\PageView;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 
@@ -85,7 +86,7 @@ class AdminController extends Controller
 
     public function report(Request $request)
     {
-        
+
         //most viewed pages
         $pageMap = [
             'admin/dashboard' => 'Admin Dashboard',
@@ -147,7 +148,7 @@ class AdminController extends Controller
 
         // Retrieve query parameters
         $noInteractionPeriod = $request->input('no_interaction', 'all'); // Default to all
-        $selectedDate = $request->input('interaction_date'); // Optional date filter
+        $selectedDate = $request->input('interaction_date',Carbon::now()->toDateString()); // Optional date filter
 
         // Fetch students with no interaction using the service
         $students = $this->adminDashboardService->getStudentsWithNoInteraction($noInteractionPeriod, $selectedDate);
