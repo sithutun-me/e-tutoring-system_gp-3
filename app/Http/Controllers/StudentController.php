@@ -23,17 +23,17 @@ class StudentController extends Controller
         //$isStudent = Route::currentRouteName() !== 'admin.student.dashboard';
 
         $this->studentId = request()->route('id') ?? Auth::id();
-        
+
         // // Authorization check
         // if (request()->route('id') && !Auth::user()->isAdmin()) {
         //     abort(403, 'Unauthorized');
         // }
     }
     public function index($id=null)
-    {   
+    {
         // $studentId = $id;
         // if($studentId) {
-           
+
         // }else{
         //     $studentId = auth()->id();
         // }
@@ -86,10 +86,10 @@ class StudentController extends Controller
     }
     //for dashboard
     public function getMeetingPieData($id=null){
-        
+
         $studentId =  $id ?? auth()->id();
-        
-        $currentMonth = Carbon::now()->month;; 
+
+        $currentMonth = Carbon::now()->month;;
         $today = Carbon::now();
         $meetingCounts = DB::table('meeting_schedule')
         ->where('student_id', $studentId)
@@ -110,9 +110,9 @@ class StudentController extends Controller
 
         return response()->json($chartData);
     }
-    
+
     public function myActivities($id=null){
-        
+
         $studentId =  $id ?? auth()->id();
         $currentMonth = Carbon::now()->month;
 
@@ -143,7 +143,7 @@ class StudentController extends Controller
         $studentId =  $id ?? auth()->id();
         $currentMonth = Carbon::now()->month;
 
-        
+
         $tutorId = DB::table('allocation')
                 ->where('student_id', $studentId)
                 ->value('tutor_id');
@@ -292,7 +292,7 @@ class StudentController extends Controller
 
 
         $meeting_schedules = $id ? MeetingSchedule::find($id) : null;
-        
+
         $currentTutor = $id?User::find($meeting_schedules->tutor_id):null;
        // $readOnly = request()->routeIs('tutor.meetingdetail.update') ? false : true;
 
@@ -422,12 +422,12 @@ class StudentController extends Controller
             ]);
 
             $post = Post::create([
-                'post_create_by' => Auth::id(), 
+                'post_create_by' => Auth::id(),
                 'post_received_by'=> $assignedTutor->tutor_id,
                 'post_title' => $request->meeting_title,
                 'post_status'=>"new",
                 'post_description' => $request->meeting_description,
-                'is_meeting' => 1, 
+                'is_meeting' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -461,15 +461,15 @@ class StudentController extends Controller
         $tutorId = DB::table('allocation')
             ->where('student_id', $studentId)
             ->value('tutor_id');
-    
+
         $tutorName = DB::table('users')
             ->where('id', $tutorId)
             ->selectRaw('CONCAT(first_name, " ", last_name) as full_name')
             ->value('full_name');
-    
+
         $currentYear = Carbon::now()->year;
         $currentMonth = Carbon::now()->month; // Get the current month (1 = Jan, 2 = Feb, etc.)
-    
+
         // Fetch activities grouped by month
         $studentActivities = DB::table('post')
             ->selectRaw("MONTH(updated_at) as month, COUNT(*) as posts")
@@ -479,14 +479,14 @@ class StudentController extends Controller
             ->whereYear('updated_at', $currentYear)
             ->groupBy('month')
             ->pluck('posts', 'month');
-    
+
         $commentCounts = DB::table('comment')
             ->selectRaw("MONTH(updated_at) as month, COUNT(*) as comments")
             ->where('user_id', $studentId)
             ->whereYear('updated_at', $currentYear)
             ->groupBy('month')
             ->pluck('comments', 'month');
-    
+
         $documentCounts = DB::table('document')
             ->join('post', 'document.post_id', '=', 'post.id')
             ->selectRaw("MONTH(document.updated_at) as month, COUNT(*) as documents")
@@ -494,7 +494,7 @@ class StudentController extends Controller
             ->whereYear('document.updated_at', $currentYear)
             ->groupBy('month')
             ->pluck('documents', 'month');
-    
+
         $meetingCounts = DB::table('meeting_schedule')
             ->selectRaw("MONTH(meeting_date) as month, COUNT(*) as meetings")
             ->where('student_id', $studentId)
@@ -502,18 +502,19 @@ class StudentController extends Controller
             ->whereYear('updated_at', $currentYear)
             ->groupBy('month')
             ->pluck('meetings', 'month');
-    
+
         // Fetch tutor data
         $tutorActivities = DB::table('post')
             ->selectRaw("MONTH(updated_at) as month, COUNT(*) as posts")
             ->where('post_create_by', $tutorId)
             ->where('post_received_by', $studentId)
+            ->where('post_status','!=','deleted')
             ->where('is_meeting', 0)
             ->where('post_status', '!=', 'deleted')
             ->whereYear('updated_at', $currentYear)
             ->groupBy('month')
             ->pluck('posts', 'month');
-    
+
         $tutorCommentCounts = DB::table('comment')
             ->join('post', 'comment.post_id', '=', 'post.id')
             ->selectRaw("MONTH(comment.updated_at) as month, COUNT(*) as comments")
@@ -523,7 +524,7 @@ class StudentController extends Controller
             ->whereYear('comment.updated_at', $currentYear)
             ->groupBy('month')
             ->pluck('comments', 'month');
-    
+
         $tutorDocumentCounts = DB::table('document')
             ->join('post', 'document.post_id', '=', 'post.id')
             ->selectRaw("MONTH(document.updated_at) as month, COUNT(*) as documents")
@@ -532,29 +533,29 @@ class StudentController extends Controller
             ->whereYear('document.updated_at', $currentYear)
             ->groupBy('month')
             ->pluck('documents', 'month');
-    
+
         $tutorMeetingCounts = DB::table('meeting_schedule')
             ->selectRaw("MONTH(meeting_date) as month, COUNT(*) as meetings")
             ->where('student_id', $studentId)
             ->whereYear('updated_at', $currentYear)
             ->groupBy('month')
             ->pluck('meetings', 'month');
-    
+
         // Prepare months and monthly data
         $months = [
             1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April',
             5 => 'May', 6 => 'June', 7 => 'July', 8 => 'August',
             9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December'
         ];
-    
+
         $studentMonthlyData = [];
         $tutorMonthlyData = [];
-    
+
         foreach ($months as $monthNum => $monthName) {
             if ($monthNum > $currentMonth) {
                 break; // Stop adding months if they exceed the current month
             }
-    
+
             $studentMonthlyData[] = [
                 'month' => $monthName,
                 'posts' => $studentActivities[$monthNum] ?? 0,
@@ -562,7 +563,7 @@ class StudentController extends Controller
                 'documents' => $documentCounts[$monthNum] ?? 0,
                 'meetings' => $meetingCounts[$monthNum] ?? 0
             ];
-    
+
             $tutorMonthlyData[] = [
                 'month' => $monthName,
                 'posts' => $tutorActivities[$monthNum] ?? 0,
@@ -571,9 +572,9 @@ class StudentController extends Controller
                 'meetings' => $tutorMeetingCounts[$monthNum] ?? 0
             ];
         }
-    
+
         return view('student.report', compact('studentMonthlyData', 'tutorMonthlyData', 'tutorName'));
-    
+
     }
 
     public function blogging()
@@ -581,7 +582,7 @@ class StudentController extends Controller
         return view('student.blogging');
     }
 
-    
+
     public function createpost()
     {
         return view('student.createpost');

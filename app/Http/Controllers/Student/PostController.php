@@ -251,6 +251,11 @@ class PostController extends Controller
         if (Auth::user()->id) {
             $post->post_status = 'deleted';
             $post->save();
+            // Delete all related comments where post_id matches
+            Comment::where('post_id', $post->id)->delete();
+
+            // Delete all related documents where post_id matches
+            Document::where('post_id', $post->id)->delete();
             return redirect()->route('student.blogging')->with('success', 'Your post is deleted!');
         }
         // $meeting->delete();

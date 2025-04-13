@@ -18,12 +18,12 @@ use Carbon\Carbon;
 
 class TutorController extends Controller
 {
-    public function index($id=null)
+    public function index($id = null)
     {
-        $tutorId ='';
-        if($id) {
-           $tutorId = $id;
-        }else{
+        $tutorId = '';
+        if ($id) {
+            $tutorId = $id;
+        } else {
             $tutorId = auth()->id();
         }
         //$tutorId = Auth::id();
@@ -55,16 +55,15 @@ class TutorController extends Controller
             )
             ->get();
 
-        return view('tutor.dashboard', compact('meetings','isTutor'));
-        
+        return view('tutor.dashboard', compact('meetings', 'isTutor'));
     }
 
-    public function interactionCounts(Request $request,$id=null)
+    public function interactionCounts(Request $request, $id = null)
     {
         $tutorId =  $id ?? auth()->id();
 
-        
-      //  $tutorId = Auth::id(); // Get logged-in tutor ID
+
+        //  $tutorId = Auth::id(); // Get logged-in tutor ID
         $startOfMonth = Carbon::now()->startOfMonth(); // First day of the current month
         $today = Carbon::now(); // Current day
         $filter = $request->query('interaction_type', 'All');
@@ -538,6 +537,11 @@ class TutorController extends Controller
         if (Auth::user()->id) {
             $post->post_status = 'deleted';
             $post->save();
+            // Delete all related comments where post_id matches
+            Comment::where('post_id', $post->id)->delete();
+
+            // Delete all related documents where post_id matches
+            Document::where('post_id', $post->id)->delete();
             return redirect()->route('tutor.blogging')->with('success', 'Your post is deleted!');
         }
         // $meeting->delete();
