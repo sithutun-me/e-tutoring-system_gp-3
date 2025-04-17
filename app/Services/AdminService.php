@@ -37,27 +37,98 @@ class AdminService
     }
     public function getInactiveStudentsCount(int $minDays, ?int $maxDays = null)
     {
-        $startDate = Carbon::now()->subDays($minDays);
-        $endDate = $maxDays ? Carbon::now()->subDays($maxDays) : null;
+        // $startDate = Carbon::now()->subDays($minDays);
+        // $endDate = $maxDays ? Carbon::now()->subDays($maxDays) : null;
 
+        // // $startDate = now();
+        // // $endDate = null;
+        // // // $cutoffStart = now()->subDays(30);  // More than 7 days ago (upper bound: 30)
+        // // // $cutoffEnd = now()->subDays(7);     //
 
-        $inactiveStudents = User::where('role_id', 1)
-            ->whereDoesntHave('posts', function ($query) use ($startDate, $endDate) {
-                $query->where('updated_at', '>=', $startDate);
-                if ($endDate) {
-                    $query->where('updated_at', '<', $endDate);
-                }
-            })
-            ->whereDoesntHave('comments', function ($query) use ($startDate, $endDate) {
-                $query->where('updated_at', '>=', $startDate);
-                if ($endDate) {
-                    $query->where('updated_at', '<', $endDate);
-                }
-            })
+        // // $startDate = $maxDays ?  now()->subDays($maxDays):null;
+        // // $endDate = now()->subDays($minDays);
 
-            ->count();
+        // $inactiveStudents = User::where('role_id', 1)
+        //     ->whereDoesntHave('posts', function ($query) use ($startDate, $endDate) {
+        //         $query->where('updated_at', '>=', $startDate);
+        //         if ($endDate) {
+        //             $query->where('updated_at', '<', $endDate);
+        //         }
+        //     })
+        //     ->whereDoesntHave('comments', function ($query) use ($startDate, $endDate) {
+        //         $query->where('updated_at', '>=', $startDate);
+        //         if ($endDate) {
+        //             $query->where('updated_at', '<', $endDate);
+        //         }
+        //     })
 
-        return $inactiveStudents;
+        //     ->count();
+
+        // return $inactiveStudents;
+        $olderThan = now()->subDays($minDays);   // >7 days inactive
+        $newerThan = now()->subDays($maxDays); 
+        // if ($noInteractionPeriod === '7days') {
+        //     $olderThan = now()->subDays(7);   // >7 days inactive
+        //     $newerThan = now()->subDays(30);  // ≤30 days inactive
+        // } elseif ($noInteractionPeriod === '30days') {
+        //     $olderThan = now()->subDays(30);  // >30 days inactive
+        //     $newerThan = now()->subDays(60);  // ≤60 days inactive
+        // } elseif ($noInteractionPeriod === '60days') {
+        //     $olderThan = now()->subDays(60);  // >60 days inactive
+        //     $newerThan = null;                // No upper limit
+        // }
+    
+        $query = User::where('role_id', 1)
+                    ->leftJoin('post', 'post.post_create_by', '=', 'users.id')
+                    ->leftJoin('comment', 'comment.user_id', '=', 'users.id')
+                    ->select([
+                        'users.id',
+                        'users.user_code',
+                    'users.first_name',
+                    'users.last_name',
+                    'users.email',
+                    DB::raw('GREATEST(
+                        COALESCE(MAX(post.updated_at), "1970-01-01"),
+                        COALESCE(MAX(comment.updated_at), "1970-01-01"),
+                        COALESCE(users.updated_at, "1970-01-01")
+                    ) as last_active_date'),
+                    DB::raw('CASE 
+        WHEN GREATEST(
+            COALESCE(MAX(post.updated_at), "1970-01-01"),
+            COALESCE(MAX(comment.updated_at), "1970-01-01"),
+            COALESCE(users.updated_at, "1970-01-01")
+        ) = "1970-01-01" 
+        THEN DATEDIFF(NOW(), "1970-01-01") 
+        ELSE DATEDIFF(NOW(), GREATEST(
+            COALESCE(MAX(post.updated_at), "1970-01-01"),
+            COALESCE(MAX(comment.updated_at), "1970-01-01"),
+            COALESCE(users.updated_at, "1970-01-01")
+        )) 
+    END as no_interaction_days')
+                    ])
+                   
+                    ->groupBy('users.id', 'user_code', 'first_name', 'last_name', 'email', 'users.updated_at');
+                  
+        if ($minDays === 60) {
+            $query->havingRaw('no_interaction_days > 60');
+        } 
+        
+        else {
+            $query->havingRaw('no_interaction_days > ?', [$olderThan->diffInDays(now())])
+                  ->havingRaw('no_interaction_days <= ?', [$newerThan->diffInDays(now())]);
+        }
+         $query->where(function($q) use ($olderThan) {
+            $q->whereDoesntHave('posts', function($q2) use ($olderThan) {
+                  $q2->where('updated_at', '>', $olderThan);
+               })
+               ->orWhereDoesntHave('comments', function($q2) use ($olderThan) {
+                  $q2->where('updated_at', '>', $olderThan);
+               });
+        });
+        $students = $query->count();
+              
+    
+        return $students;
     }
 
     /**
@@ -77,31 +148,56 @@ class AdminService
 
     public function getAverageMessagesPerTutor(int $timeFrame)
     {
-        $messages = DB::table('users AS tutors')
-            ->select(
-                'tutors.first_name AS tutor_name',
-                DB::raw('COUNT(comment.id) AS message_count')
-            )
-            ->leftJoin('post', function ($join) {
-                $join->on('post.post_create_by', '=', 'tutors.id')
-                    ->orOn('post.post_received_by', '=', 'tutors.id');
-            })
-            ->leftJoin('comment', function ($join) use ($timeFrame) {
-                $join->on('comment.post_id', '=', 'post.id')
-                    ->whereIn('comment.user_id', function ($query) {
-                        $query->select('id')
-                            ->from('users')
-                            ->where('role_id', 1); // Only students
-                    })
-                    ->where('comment.created_at', '>=', now()->subMonths($timeFrame));
-            })
-            ->where('tutors.role_id', 2) // Only tutors
-            ->groupBy('tutors.id', 'tutors.first_name')
-            ->get();
+        // $messages = DB::table('users AS tutors')
+        //     ->select(
+        //         'tutors.first_name AS tutor_name',
+        //         DB::raw('COUNT(comment.id) AS message_count')
+        //     )
+        //     ->leftJoin('post', function ($join) {
+        //         $join->on('post.post_create_by', '=', 'tutors.id')
+        //             ->orOn('post.post_received_by', '=', 'tutors.id');
+        //     })
+        //     ->leftJoin('comment', function ($join) use ($timeFrame) {
+        //         $join->on('comment.post_id', '=', 'post.id')
+        //             ->whereIn('comment.user_id', function ($query) {
+        //                 $query->select('id')
+        //                     ->from('users')
+        //                     ->where('role_id', 1); // Only students
+        //             })
+        //             ->where('comment.created_at', '>=', now()->subMonths($timeFrame));
+        //     })
+        //     ->where('tutors.role_id', 2) // Only tutors
+        //     ->groupBy('tutors.id', 'tutors.first_name')
+        //     ->get();
+        $startOfMonth = now()->startOfMonth();
+$daysSoFar = now()->diffInDays($startOfMonth) + 1; // +1 to include today
+
+$messages = DB::table('users AS tutors')
+    ->select(
+        'tutors.first_name AS tutor_name',
+        DB::raw('ROUND(COUNT(comment.id) / DATEDIFF(NOW(), \'' . $startOfMonth->toDateString() . '\'), 2) as avg_messages_per_day')
+        //DB::raw('ROUND(COUNT(DISTINCT comment.id) / ' . $daysSoFar . ', 2) AS average_messages_per_day')
+    )
+    ->leftJoin('post', function($join) {
+        $join->on('post.post_create_by', '=', 'tutors.id')
+             ->orOn('post.post_received_by', '=', 'tutors.id');
+    })
+    ->leftJoin('comment', function($join) use ($startOfMonth) {
+        $join->on('comment.post_id', '=', 'post.id')
+             ->where('comment.updated_at', '>=', $startOfMonth)
+             ->whereIn('comment.user_id', function($query) {
+                 $query->select('id')
+                       ->from('users')
+                       ->where('role_id', 1); // Only students
+             });
+    })
+    ->where('tutors.role_id', 2) // Only tutors
+    ->groupBy('tutors.id', 'tutors.first_name')
+    ->get();
 
         // Preparing data for chart
         $labels = $messages->pluck('tutor_name');
-        $data = $messages->pluck('message_count');
+        $data = $messages->pluck('avg_messages_per_day');
 
         return [
             'labels' => $labels,
@@ -190,9 +286,11 @@ class AdminService
         return $tutors;
     }
 
-    public function getMostActiveUsers($periodDays = 30)
+    public function getMostActiveUsers($periodDays = null)
     {
         $startDate = Carbon::now()->subDays($periodDays);
+        $currentYear = Carbon::now()->year;
+        $currentMonth = Carbon::now()->month;
         $activeUsers = DB::table('users')
             ->select(
                 'users.id',
@@ -210,23 +308,27 @@ class AdminService
                  COUNT(DISTINCT document.id) +
                  COUNT(DISTINCT meeting_schedule.id)) as total_activity')
             )
-            ->leftJoin('post', function ($join) use ($startDate) {
+            ->leftJoin('post', function ($join) use ($currentMonth) {
                 $join->on('post.post_create_by', '=', 'users.id')
                     ->where('post.is_meeting', 0)
-                    ->where('post.updated_at', '>=', $startDate);
+                    ->whereMonth('post.updated_at', $currentMonth);
+                // ->where('post.updated_at', '>=', $startDate);
             })
-            ->leftJoin('comment', function ($join) use ($startDate) {
+            ->leftJoin('comment', function ($join) use ($currentMonth) {
                 $join->on('comment.user_id', '=', 'users.id')
-                    ->where('comment.updated_at', '>=', $startDate);
+                    ->whereMonth('comment.updated_at', $currentMonth);
+                //->where('comment.updated_at', '>=', $startDate);
             })
-            ->leftJoin('document', function ($join) use ($startDate) {
+            ->leftJoin('document', function ($join) use ($currentMonth) {
                 $join->on('document.post_id', '=', 'post.id')
-                    ->where('document.updated_at', '>=', $startDate);
+                    ->whereMonth('document.updated_at', $currentMonth);
+                //->where('document.updated_at', '>=', $startDate);
             })
-            ->leftJoin('meeting_schedule', function ($join) use ($startDate) {
+            ->leftJoin('meeting_schedule', function ($join) use ($currentMonth) {
                 $join->on('meeting_schedule.student_id', '=', 'users.id')
                     ->where('meeting_schedule.meeting_status', 'completed')
-                    ->where('meeting_schedule.meeting_date', '>=', $startDate);
+                    ->whereMonth('meeting_schedule.meeting_date', $currentMonth);
+                // ->where('meeting_schedule.meeting_date', '>=', $startDate);
             })
             ->groupBy('users.id', 'users.user_code', 'users.first_name', 'users.last_name', 'users.email', 'users.last_login_at')
             ->orderByDesc('total_activity')
@@ -308,41 +410,231 @@ class AdminService
 
     public function getStudentsWithNoInteraction($noInteractionPeriod = 'all', $selectedDate = null)
     {
-        // Calculate the cutoff date based on the selected period
-        $cutoffDate = now();
-        if ($noInteractionPeriod === '7days') {
-            $cutoffDate = now()->subDays(7);
-        } elseif ($noInteractionPeriod === '30days') {
-            $cutoffDate = now()->subDays(30);
-        } elseif ($noInteractionPeriod === '60days') {
-            $cutoffDate = now()->subDays(60);
-        }
+        //saving comment to use later (might delete later if not necessary)
+        
+    //      // Initialize date ranges
+    // $cutoffStart = now();
+    // $cutoffEnd = null;
+    // $olderThan = now()->subDays(7);   // >7 days inactive
+    // $newerThan = now()->subDays(30); 
+    // // // Set date ranges based on selected period
+    // // if ($noInteractionPeriod === '7days') {
+    // //     $cutoffStart = now()->subDays(30);  // More than 7 days ago (upper bound: 30)
+    // //     $cutoffEnd = now()->subDays(7);     // More recent than 7 days ago (lower bound)
+    // // } elseif ($noInteractionPeriod === '30days') {
+    // //     $cutoffStart = now()->subDays(60);  // More than 30 days ago (upper bound: 60)
+    // //     $cutoffEnd = now()->subDays(30);    // More recent than 30 days ago (lower bound)
+    // // } elseif ($noInteractionPeriod === '60days') {
+    // //     $cutoffStart = now()->subDays(365); // A year ago (just as a safe upper bound)
+    // //     $cutoffEnd = now()->subDays(60);    // More recent than 60 days ago (lower bound)
+    // // }
+    // if ($noInteractionPeriod === '7days') {
+    //     $olderThan = now()->subDays(7);   // >7 days inactive
+    //     $newerThan = now()->subDays(30);  // ≤30 days inactive
+    // } elseif ($noInteractionPeriod === '30days') {
+    //     $olderThan = now()->subDays(30);  // >30 days inactive
+    //     $newerThan = now()->subDays(60);  // ≤60 days inactive
+    // } elseif ($noInteractionPeriod === '60days') {
+    //     $olderThan = now()->subDays(60);  // >60 days inactive
+    //     $newerThan = null;                // No upper limit
+    // }
 
-        // Query to fetch students with no interaction after the cutoff date
-        $students = DB::table('users AS students')
-            ->select(
-                'students.id',
-                'students.user_code',
-                'students.first_name',
-                'students.last_name',
-                'students.email',
-                DB::raw('MAX(comment.created_at) as last_active_date'),
-                DB::raw('DATEDIFF(NOW(), MAX(comment.created_at)) as no_interaction_days')
-            )
-            ->leftJoin('comment', function ($join) use ($cutoffDate, $selectedDate) {
-                $join->on('comment.user_id', '=', 'students.id')
-                    ->where('comment.created_at', '<=', $cutoffDate);
+    // $query = User::where('role_id', 1)
+    //             ->leftJoin('post', 'post.post_create_by', '=', 'users.id')
+    //             ->leftJoin('comment', 'comment.user_id', '=', 'users.id')
+    //             ->select([
+    //                 'users.id',
+    //                 'users.user_code',
+    //                 'users.first_name',
+    //                 'users.last_name',
+    //                 'users.email',
+    //                 DB::raw('
+    //                     GREATEST(
+    //                         IFNULL(MAX(post.updated_at), "1970-01-01"),
+    //                         IFNULL(MAX(comment.updated_at), "1970-01-01"),
+    //                         IFNULL(users.updated_at, "1970-01-01")
+    //                     ) as last_active_date'),
+    //                 DB::raw('
+    //                     CASE 
+    //                         WHEN GREATEST(
+    //                             IFNULL(MAX(post.updated_at), "1970-01-01"),
+    //                             IFNULL(MAX(comment.updated_at), "1970-01-01"),
+    //                             IFNULL(users.updated_at, "1970-01-01")
+    //                         ) = "1970-01-01"
+    //                         THEN DATEDIFF(NOW(), "1970-01-01")
+    //                         ELSE DATEDIFF(NOW(), GREATEST(
+    //                             IFNULL(MAX(post.updated_at), "1970-01-01"),
+    //                             IFNULL(MAX(comment.updated_at), "1970-01-01"),
+    //                             IFNULL(users.updated_at, "1970-01-01")
+    //                         ))
+    //                     END as no_interaction_days'),
+    //                     DB::raw('
+    //                     CASE 
+    //                         WHEN GREATEST(
+    //                             IFNULL(MAX(post.updated_at), "1970-01-01"),
+    //                             IFNULL(MAX(comment.updated_at), "1970-01-01"),
+    //                             IFNULL(users.updated_at, "1970-01-01")
+    //                         ) = "1970-01-01"
+    //                         THEN "Not active yet"
+    //                         ELSE CONCAT(DATEDIFF(NOW(), GREATEST(
+    //                             IFNULL(MAX(post.updated_at), "1970-01-01"),
+    //                             IFNULL(MAX(comment.updated_at), "1970-01-01"),
+    //                             IFNULL(users.updated_at, "1970-01-01")
+    //                         )), " days ago")
+    //                     END as interaction_label')
+    //             ])
+               
+    //             ->groupBy('users.id', 'user_code', 'first_name', 'last_name', 'email', 'users.updated_at');
+              
+    // if ($noInteractionPeriod === '60days') {
+    //     $query->havingRaw('no_interaction_days > 60');
+    // } 
+    
+    // else {
+    //     $query->havingRaw('no_interaction_days > ?', [$olderThan->diffInDays(now())])
+    //           ->havingRaw('no_interaction_days <= ?', [$newerThan->diffInDays(now())]);
+    // }
+    //  $query->where(function($q) use ($olderThan) {
+    //     $q->whereDoesntHave('posts', function($q2) use ($olderThan) {
+    //           $q2->where('updated_at', '>', $olderThan);
+    //        })
+    //        ->orWhereDoesntHave('comments', function($q2) use ($olderThan) {
+    //           $q2->where('updated_at', '>', $olderThan);
+    //        });
+    // });
+    $baseDate = $selectedDate ?Carbon::parse($selectedDate) : now();
 
-                if ($selectedDate) {
-                    $join->whereDate('comment.created_at', '=', $selectedDate);
-                }
-            })
-            ->where('students.role_id', 1) // Only students
-            ->groupBy('students.id', 'students.user_code', 'students.first_name', 'students.last_name', 'students.email')
-            ->havingRaw('MAX(comment.created_at) IS NULL OR MAX(comment.created_at) <= ?', [$cutoffDate])
-            ->orderByDesc('no_interaction_days')
-            ->get();
+    // Define thresholds relative to base date
+    $olderThan = $baseDate->copy()->subDays(7);
+    $newerThan = $baseDate->copy()->subDays(30);
 
-        return $students;
+    if ($noInteractionPeriod === '7days') {
+        $olderThan = $baseDate->copy()->subDays(7);   // >7 days inactive
+        $newerThan = $baseDate->copy()->subDays(30);  // ≤30 days inactive
+    } elseif ($noInteractionPeriod === '30days') {
+        $olderThan = $baseDate->copy()->subDays(30);  // >30 days inactive
+        $newerThan = $baseDate->copy()->subDays(60);  // ≤60 days inactive
+    } elseif ($noInteractionPeriod === '60days') {
+        $olderThan = $baseDate->copy()->subDays(60);  // >60 days inactive
+        $newerThan = null;                            // No upper limit
+    }
+
+    $query = User::where('role_id', 1)
+        ->leftJoin('post', 'post.post_create_by', '=', 'users.id')
+        ->leftJoin('comment', 'comment.user_id', '=', 'users.id')
+        ->select([
+            'users.id',
+            'users.user_code',
+            'users.first_name',
+            'users.last_name',
+            'users.email',
+            DB::raw('
+                GREATEST(
+                    IFNULL(MAX(post.updated_at), "1970-01-01"),
+                    IFNULL(MAX(comment.updated_at), "1970-01-01"),
+                    IFNULL(users.updated_at, "1970-01-01")
+                ) as last_active_date'),
+            DB::raw("
+                CASE 
+                    WHEN GREATEST(
+                        IFNULL(MAX(post.updated_at), '1970-01-01'),
+                        IFNULL(MAX(comment.updated_at), '1970-01-01'),
+                        IFNULL(users.updated_at, '1970-01-01')
+                    ) = '1970-01-01'
+                    THEN DATEDIFF('$baseDate', '1970-01-01')
+                    ELSE DATEDIFF('$baseDate', GREATEST(
+                        IFNULL(MAX(post.updated_at), '1970-01-01'),
+                        IFNULL(MAX(comment.updated_at), '1970-01-01'),
+                        IFNULL(users.updated_at, '1970-01-01')
+                    ))
+                END as no_interaction_days"),
+            DB::raw("
+                CASE 
+                    WHEN GREATEST(
+                        IFNULL(MAX(post.updated_at), '1970-01-01'),
+                        IFNULL(MAX(comment.updated_at), '1970-01-01'),
+                        IFNULL(users.updated_at, '1970-01-01')
+                    ) = '1970-01-01'
+                    THEN 'Not active yet'
+                    ELSE CONCAT(DATEDIFF('$baseDate', GREATEST(
+                        IFNULL(MAX(post.updated_at), '1970-01-01'),
+                        IFNULL(MAX(comment.updated_at), '1970-01-01'),
+                        IFNULL(users.updated_at, '1970-01-01')
+                    )), ' days ago')
+                END as interaction_label")
+        ])
+        ->groupBy('users.id', 'user_code', 'first_name', 'last_name', 'email', 'users.updated_at');
+
+    // Filter by number of inactive days
+    if ($noInteractionPeriod === '60days') {
+        $query->havingRaw('no_interaction_days > 60');
+    } else {
+        $query->havingRaw('no_interaction_days > ?', [$olderThan->diffInDays($baseDate)])
+              ->havingRaw('no_interaction_days <= ?', [$newerThan->diffInDays($baseDate)]);
+    }
+
+    // Exclude users who had recent posts/comments
+    $query->where(function($q) use ($olderThan) {
+        $q->whereDoesntHave('posts', function($q2) use ($olderThan) {
+            $q2->where('updated_at', '>', $olderThan);
+        })->orWhereDoesntHave('comments', function($q2) use ($olderThan) {
+            $q2->where('updated_at', '>', $olderThan);
+        });
+    });
+
+
+    $students = $query->get();
+          
+
+    return $students;
+
+
+//         // Calculate the cutoff date based on the selected period
+//         $cutoffDate = now();
+//         if ($noInteractionPeriod === '7days') {
+//             $cutoffDate = now()->subDays(7);
+//         } elseif ($noInteractionPeriod === '30days') {
+//             $cutoffDate = now()->subDays(30);
+//         } elseif ($noInteractionPeriod === '60days') {
+//             $cutoffDate = now()->subDays(60);
+//         }
+//         // Query to fetch students with no interaction after the cutoff date
+//         $students = DB::table('users AS students')
+//             ->select(
+//                 'students.id',
+//                 'students.user_code',
+//                 'students.first_name',
+//                 'students.last_name',
+//                 'students.email',
+//                 DB::raw('COALESCE(GREATEST(MAX(comment.updated_at), MAX(post.updated_at)), students.updated_at) as last_active_date'),
+//                 DB::raw('CASE
+//                         WHEN COALESCE(GREATEST(MAX(comment.updated_at), MAX(post.updated_at)), students.updated_at) IS NOT NULL
+//                         THEN DATEDIFF(NOW(), COALESCE(GREATEST(MAX(comment.updated_at), MAX(post.updated_at)), students.updated_at))
+//                         ELSE NULL
+//                      END as no_interaction_days')
+//             )
+//             ->leftJoin('comment', function ($join) use ($cutoffDate, $selectedDate) {
+//                 $join->on('comment.user_id', '=', 'students.id')
+//                     ->where('comment.updated_at', '<=', $cutoffDate);
+
+//                 if ($selectedDate) {
+//                     $join->whereDate('comment.updated_at', '=', $selectedDate);
+//                 }
+//             })
+//             ->leftJoin('post', function ($join) use ($cutoffDate, $selectedDate) {
+//                 $join->on('post.post_create_by', '=', 'students.id')
+//                     ->where('post.updated_at', '<=', $cutoffDate);
+
+//                 if ($selectedDate) {
+//                     $join->whereDate('post.updated_at', '=', $selectedDate);
+//                 }
+//             })
+//             ->where('students.role_id', 1) // Only students
+//             ->groupBy('students.id', 'students.user_code', 'students.first_name', 'students.last_name', 'students.email', 'students.updated_at')
+//             ->havingRaw('COALESCE(GREATEST(MAX(comment.updated_at), MAX(post.updated_at)), students.updated_at) <= ?', [$cutoffDate])
+//             ->orderByDesc('no_interaction_days')
+//             ->get();
+// // dd($students->count());
+//         return $students;
     }
 }

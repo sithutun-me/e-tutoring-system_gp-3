@@ -232,19 +232,19 @@ window.demo = {
         });
 
         // Returning both labels and average message counts in a single object
-        return { labels, averageMessageCounts };
+        return { labels, messageCounts };
       } catch (error) {
         console.error('Error fetching average messages:', error);
 
         // Fallback in case of an error
         return {
           labels: [],
-          averageMessageCounts: []
+          messageCounts: []
         };
       }
     }
 
-    const { labels, averageMessageCounts } = await getAverageMessagesPerTutor();
+    const { labels, messageCounts } = await getAverageMessagesPerTutor();
 
     var ctx = document.getElementById("TutorMessagesChart").getContext("2d");
     // ctx.width = data.length * 50;
@@ -258,7 +258,7 @@ window.demo = {
       data: {
         labels: labels,
         datasets: [{
-          label: "Messages",
+          label: "Count",
           fill: true,
           backgroundColor: '#004AAD',
           hoverBackgroundColor: '#004AAD',
@@ -266,7 +266,7 @@ window.demo = {
           borderWidth: 1,
           borderDash: [],
           borderDashOffset: 0.0,
-          data: averageMessageCounts,
+          data: messageCounts,
         }]
       },
       options: gradientBarChartConfigurationTutor,

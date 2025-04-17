@@ -45,14 +45,16 @@ class PostController extends Controller
 
             case 'tutorPosts':
                 // Show only posts created by the assigned tutor
-                $query->where('post_create_by', $tutorId);
+                $query->where('post_create_by', $tutorId)
+                ->where('post_received_by', $studentId);
                 break;
 
             default:
                 // Default case: Show posts created by the student AND their tutor
                 $query->where(function ($q) use ($studentId, $tutorId) {
                     $q->where('post_create_by', $studentId)
-                        ->orWhere('post_create_by', $tutorId);
+                        ->orWhere('post_create_by', $tutorId)
+                        ->where('post_received_by', $studentId);;
                 });
                 break;
         }
@@ -116,6 +118,7 @@ class PostController extends Controller
         $post->post_title = $request->post_title;
         $post->post_description = $request->post_desc;
         $post->post_status = 'new';
+        $post->is_meeting = 0;
         $post->post_create_by = $request->create_by;
         $post->post_received_by = $request->received_by;
         $post->save();
@@ -248,6 +251,11 @@ class PostController extends Controller
         if (Auth::user()->id) {
             $post->post_status = 'deleted';
             $post->save();
+            // Delete all related comments where post_id matches
+            Comment::where('post_id', $post->id)->delete();
+
+            // Delete all related documents where post_id matches
+            Document::where('post_id', $post->id)->delete();
             return redirect()->route('student.blogging')->with('success', 'Your post is deleted!');
         }
         // $meeting->delete();

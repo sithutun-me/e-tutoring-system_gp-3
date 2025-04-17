@@ -14,7 +14,7 @@
                 <div class="last-login me-3">
                     <p class="text-dark mb-0">
                         @if (Auth::check() && Auth::user()->last_login_at)
-                            Last login: {{ Auth::user()->last_login_at }}
+                            {{ Auth::user()->first_name }}, Last login: {{ Auth::user()->last_login_at }}
                         @else
                             Welcome, {{ Auth::user()->first_name }}
                         @endif

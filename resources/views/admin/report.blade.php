@@ -50,7 +50,7 @@
         <div class="dashboard-content px-4 pt-4">
             <h2 class="fs-2 fw-bold mb-3">Reports</h2>
 
-            <div class="report-container mb-4">
+            <div class="report-container mb-5">
                 <div class="admin-tabs">
                     <button id="studentsTab" onclick="showContent('students')">Students with no interactions</button>
                     <button id="tutorsTab" onclick="showContent('tutors')">Average messages for each tutor</button>
@@ -65,7 +65,7 @@
                                 <label for="selectNoInteraction" class="sort-label"
                                     style="font-family: 'Poppins'; font-size:0.875rem; ">Search</label>
                                 <select class="form-select ms-2" id="selectNoInteraction"
-                                    aria-label="Floating label select example" onchange="updateTableStd()">
+                                    aria-label="Floating label select example" >
                                     <option value="all" {{ request('no_interaction') == 'all' ? 'selected' : '' }}>All</option>
                                     <option value="7days" {{ request('no_interaction') == '7days' ? 'selected' : '' }}>More than 7 days</option>
                                     <option value="30days" {{ request('no_interaction') == '30days' ? 'selected' : '' }}>More than 30 days</option>
@@ -74,8 +74,8 @@
                             </div>
                             <div class="col-md-5 mb-2 d-flex justify-content-center align-items-center">
                                 <div class="input-group" id="datetimepicker">
-                                    <input type="text" class="form-control" name="meeting_date" id="datepicker"
-                                        value="{{ request('meeting_date') }}" placeholder="Select a date" readonly />
+                                    <input type="text" class="form-control" name="interaction_date" id="datepicker"
+                                        value="{{ request('interaction_date') }}" placeholder="Select a date" readonly />
                                     <span class="input-group-text" id="datepicker-icon">
                                         <i class="fas fa-calendar-alt"></i>
                                     </span>
@@ -108,8 +108,13 @@
                                     <td data-title="StudentCode">{{ $student->user_code }}</td>
                                     <td data-title="StudentName">{{ $student->first_name }} {{ $student->last_name }}</td>
                                     <td data-title="Email">{{ $student->email }}</td>
-                                    <td data-title="LastActiveDate">{{ \Carbon\Carbon::parse($student->last_active_date)->format('d M Y') }}</td>
-                                    <td data-title="NoInteractionDays">{{ $student->no_interaction_days ?? 'N/A' }} days</td>
+                                    <td data-title="LastActiveDate">@if($student->last_active_date == '1970-01-01')
+                                        Never Active
+                                    @else
+                                    {{ \Carbon\Carbon::parse($student->last_active_date)->format('d M Y') }}
+                                    @endif
+                                    </td>
+                                    <td data-title="NoInteractionDays">{{ $student->interaction_label ?? 'No active' }}</td>
                                 </tr>
                                 @endforeach
 
@@ -223,93 +228,7 @@
                                     <td data-title="View Count">{{ $pageView['view_count'] }}</td>
                                 </tr>
                                 @endforeach
-                                {{-- <tr>
-                                        <td class="small-col" data-title="No.">1.</td>
-                                        <td data-title="Pages">Tutor Meetings</td>
-                                        <td data-title="View Count">50</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">2.</td>
-                                        <td data-title="Pages">Student Meetings</td>
-                                        <td data-title="View Count">48</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">3.</td>
-                                        <td data-title="Pages">Tutor Blogging</td>
-                                        <td data-title="View Count">45</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">4.</td>
-                                        <td data-title="Pages">Student Blogging</td>
-                                        <td data-title="View Count">30</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">5.</td>
-                                        <td data-title="Pages">Admin Reports</td>
-                                        <td data-title="View Count">30</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">6.</td>
-                                        <td data-title="Pages">Admin Dashboard</td>
-                                        <td data-title="View Count">29</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">7.</td>
-                                        <td data-title="Pages">Tutor Dashboard</td>
-                                        <td data-title="View Count">28</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">8.</td>
-                                        <td data-title="Pages">Student Dashboard</td>
-                                        <td data-title="View Count">27</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">9.</td>
-                                        <td data-title="Pages">Allocation</td>
-                                        <td data-title="View Count">20</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">10.</td>
-                                        <td data-title="Pages">Reschedule</td>
-                                        <td data-title="View Count">19</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">11.</td>
-                                        <td data-title="Pages">Meeting Detail</td>
-                                        <td data-title="View Count">17</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">12.</td>
-                                        <td data-title="Pages">Assigned list</td>
-                                        <td data-title="View Count">16</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">13.</td>
-                                        <td data-title="Pages">Tutor List</td>
-                                        <td data-title="View Count">15</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">14.</td>
-                                        <td data-title="Pages">Student List</td>
-                                        <td data-title="View Count">15</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">15.</td>
-                                        <td data-title="Pages">Tutor Reports</td>
-                                        <td data-title="View Count">13</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">16.</td>
-                                        <td data-title="Pages">Student Reports</td>
-                                        <td data-title="View Count">13</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">17.</td>
-                                        <td data-title="Pages">Reallocation</td>
-                                        <td data-title="View Count">20</td>
-                                    </tr> --}}
-
-
+                                
                             </tbody>
                         </table>
                     </div>
@@ -318,10 +237,10 @@
                 <div id="mostactiveusers" class="content-area mt-4">
 
                     <div class="table-responsive" id="no-more-tables">
-                        <table class="adminreport" id="adminreportTableActiveusers">
+                        <table class="adminreportactive" id="adminreportTableActiveusers">
                             <thead>
                                 <tr>
-                                    <th class="small-col">No.</th>
+                                    <th class="small-col text-center">No.</th>
                                     <th class="text-center">User Code</th>
                                     <th class="text-center">User Name</th>
                                     <th class="text-center">Interaction Count</th>
@@ -372,6 +291,7 @@
 <script>
     $(document).ready(function() {
         $('#datepicker').datepicker({
+            enableTime: true,
             format: 'yyyy-mm-dd',
             autoclose: true,
             todayHighlight: true
@@ -394,18 +314,18 @@
 
     });
 
-    // $(document).ready(function() {
-    //     $('#adminreportTableInteraction').DataTable({
-    //         paging: true,
-    //         pageLength: 15,
-    //         lengthChange: false,
-    //         searching: false,
-    //         ordering: false,
-    //         "language": {
-    //             "info": "Total Records: _TOTAL_",
-    //         }
-    //     });
-    // });
+    $(document).ready(function() {
+        $('#adminreportTableInteraction').DataTable({
+            paging: true,
+            pageLength: 15,
+            lengthChange: false,
+            searching: false,
+            ordering: false,
+            "language": {
+                "info": "Total Records: _TOTAL_",
+            }
+        });
+    });
 
     // $(document).ready(function() {
     //     $('#adminreportTableMessage').DataTable({
@@ -420,18 +340,18 @@
     //     });
     // });
 
-    //      $(document).ready(function() {
-    //     $('#adminreportTableActiveusers').DataTable({
-    //         paging: true,
-    //         pageLength: 15,
-    //         lengthChange: false,
-    //         searching: false,
-    //         ordering: false,
-    //         "language": {
-    //             "info": "Total Records: _TOTAL_",
-    //         }
-    //     });
-    // });
+         $(document).ready(function() {
+        $('#adminreportTableActiveusers').DataTable({
+            paging: true,
+            pageLength: 15,
+            lengthChange: false,
+            searching: false,
+            ordering: false,
+            "language": {
+                "info": "Total Records: _TOTAL_",
+            }
+        });
+    });
 
 
     // document.addEventListener("DOMContentLoaded", function() {
@@ -489,11 +409,11 @@
         // Get selected values from dropdown and datepicker
         const noInteractionPeriod = document.getElementById("selectNoInteraction").value;
         const selectedDate = document.getElementById("datepicker").value;
-
+console.log(noInteractionPeriod);
         // Build query string
         const queryParams = new URLSearchParams({
             no_interaction: noInteractionPeriod !== "all" ? noInteractionPeriod : undefined,
-            meeting_date: selectedDate || undefined,
+            interaction_date: selectedDate || "",
         }).toString();
 
         // Redirect to the same page with updated query parameters

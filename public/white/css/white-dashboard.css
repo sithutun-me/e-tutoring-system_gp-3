@@ -237,6 +237,105 @@ border-right: 1px solid #D3D3D3;
 
 }
 
+/* for most active table for now */
+
+.adminreportactive {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.adminreportactive thead {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  background: #004AAD;
+  color: white;
+}
+
+.adminreportactive tbody {
+  display: block;
+  height: 400px;
+  overflow-y: auto;
+  table-layout: fixed;
+  width: 100%;
+  font-family: "Poppins";
+  font-size: 0.875rem;
+}
+
+.adminreportactive tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+/* Column width control */
+.adminreportactive th:nth-child(1),
+.adminreportactive td:nth-child(1) {
+  width: 50px;
+}
+
+.adminreportactive th:nth-child(2),
+.adminreportactive td:nth-child(2) {
+  width: 150px;
+}
+
+.adminreportactive th:nth-child(3),
+.adminreportactive td:nth-child(3) {
+  width: 200px;
+}
+
+.adminreportactive th:nth-child(4),
+.adminreportactive td:nth-child(4) {
+  width: 130px;
+}
+
+.adminreportactive th:nth-child(5),
+.adminreportactive td:nth-child(5) {
+  width: 200px;
+}
+
+.adminreportactive th, 
+.adminreportactive td {
+  text-align: center;
+  padding: 10px;
+  border-top: 1px solid #D3D3D3;
+  border-bottom: 1px solid #D3D3D3;
+  border-left: none;
+  border-right: none;
+  text-wrap: auto;
+  word-wrap: break-word;
+}
+
+.adminreportactive th:first-child,
+.adminreportactive td:first-child {
+  border-left: 1px solid #D3D3D3;
+}
+
+.adminreportactive th:last-child,
+.adminreportactive td:last-child {
+  border-right: 1px solid #D3D3D3;
+}
+
+.adminreportactive td {
+  white-space: nowrap;
+  /* overflow: hidden; */
+  text-overflow: ellipsis; 
+}
+
+.adminreportactive {
+  table-layout: fixed;
+}
+
+.adminreportactive td,
+.adminreportactive th {
+  word-wrap: break-word;
+  white-space: nowrap;
+  text-align: center;
+  vertical-align: middle;
+}
+
+
 #adminreportTableMessage_wrapper .dataTables_wrapper {
   min-height: 450px; /* Ensures consistent height */
 }

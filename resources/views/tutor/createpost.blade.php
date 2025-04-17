@@ -258,7 +258,6 @@
     }
     document.getElementById("upload-btn").addEventListener("click", function() {
         if (fileArray.length === 0) {
-            alert("No files to upload!");
             return;
         }
 

@@ -65,7 +65,7 @@
                         <div class="row">
 
                             <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center">
-                                <select class="form-select" id="postBy" name="post_by" aria-label="Floating label select example">
+                                <select class="form-select" id="postBy" name="post_by" aria-label="Floating label select example" style="font-size: 0.875rem; font-family:'Poppins';">
                                     <option value="all" {{ request('post_by') == 'all' ? 'selected' : '' }}>All</option>
                                     <option value="myPosts" {{ request('post_by') == 'myPosts' ? 'selected' : '' }}>My Posts</option>
                                     <option value="tutorPosts" {{ request('post_by') == 'tutorPosts' ? 'selected' : '' }}>Tutor Posts</option>
@@ -235,7 +235,7 @@
                         <label for="commentContent" class="form-label">Comment</label>
                         <input class="form-control" id="commentContent" name="comment_update"> </input>
                     </div>
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="submit" class="btn btn-primary"style="background-color: #004AAD;">Save Changes</button>
                 </form>
             </div>
         </div>
