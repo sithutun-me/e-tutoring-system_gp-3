@@ -108,8 +108,13 @@
                                     <td data-title="StudentCode">{{ $student->user_code }}</td>
                                     <td data-title="StudentName">{{ $student->first_name }} {{ $student->last_name }}</td>
                                     <td data-title="Email">{{ $student->email }}</td>
-                                    <td data-title="LastActiveDate">{{ \Carbon\Carbon::parse($student->last_active_date)->format('d M Y') }}</td>
-                                    <td data-title="NoInteractionDays">{{ $student->no_interaction_days ?? 'N/A' }} days</td>
+                                    <td data-title="LastActiveDate">@if($student->last_active_date == '1970-01-01')
+                                        Never Active
+                                    @else
+                                    {{ \Carbon\Carbon::parse($student->last_active_date)->format('d M Y') }}
+                                    @endif
+                                    </td>
+                                    <td data-title="NoInteractionDays">{{ $student->interaction_label ?? 'No active' }}</td>
                                 </tr>
                                 @endforeach
 
@@ -223,93 +228,7 @@
                                     <td data-title="View Count">{{ $pageView['view_count'] }}</td>
                                 </tr>
                                 @endforeach
-                                {{-- <tr>
-                                        <td class="small-col" data-title="No.">1.</td>
-                                        <td data-title="Pages">Tutor Meetings</td>
-                                        <td data-title="View Count">50</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">2.</td>
-                                        <td data-title="Pages">Student Meetings</td>
-                                        <td data-title="View Count">48</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">3.</td>
-                                        <td data-title="Pages">Tutor Blogging</td>
-                                        <td data-title="View Count">45</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">4.</td>
-                                        <td data-title="Pages">Student Blogging</td>
-                                        <td data-title="View Count">30</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">5.</td>
-                                        <td data-title="Pages">Admin Reports</td>
-                                        <td data-title="View Count">30</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">6.</td>
-                                        <td data-title="Pages">Admin Dashboard</td>
-                                        <td data-title="View Count">29</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">7.</td>
-                                        <td data-title="Pages">Tutor Dashboard</td>
-                                        <td data-title="View Count">28</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">8.</td>
-                                        <td data-title="Pages">Student Dashboard</td>
-                                        <td data-title="View Count">27</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">9.</td>
-                                        <td data-title="Pages">Allocation</td>
-                                        <td data-title="View Count">20</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">10.</td>
-                                        <td data-title="Pages">Reschedule</td>
-                                        <td data-title="View Count">19</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">11.</td>
-                                        <td data-title="Pages">Meeting Detail</td>
-                                        <td data-title="View Count">17</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">12.</td>
-                                        <td data-title="Pages">Assigned list</td>
-                                        <td data-title="View Count">16</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">13.</td>
-                                        <td data-title="Pages">Tutor List</td>
-                                        <td data-title="View Count">15</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">14.</td>
-                                        <td data-title="Pages">Student List</td>
-                                        <td data-title="View Count">15</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">15.</td>
-                                        <td data-title="Pages">Tutor Reports</td>
-                                        <td data-title="View Count">13</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">16.</td>
-                                        <td data-title="Pages">Student Reports</td>
-                                        <td data-title="View Count">13</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small-col" data-title="No.">17.</td>
-                                        <td data-title="Pages">Reallocation</td>
-                                        <td data-title="View Count">20</td>
-                                    </tr> --}}
-
-
+                                
                             </tbody>
                         </table>
                     </div>
@@ -494,7 +413,7 @@ console.log(noInteractionPeriod);
         // Build query string
         const queryParams = new URLSearchParams({
             no_interaction: noInteractionPeriod !== "all" ? noInteractionPeriod : undefined,
-            interaction_date: selectedDate || undefined,
+            interaction_date: selectedDate || "",
         }).toString();
 
         // Redirect to the same page with updated query parameters
