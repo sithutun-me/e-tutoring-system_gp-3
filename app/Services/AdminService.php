@@ -506,6 +506,7 @@ $messages = DB::table('users AS tutors')
 
     // Define thresholds relative to base date
     $olderThan = $baseDate->copy()->subDays(7);
+   // $newerThan = null;
     $newerThan = $baseDate->copy()->subDays(30);
 
     if ($noInteractionPeriod === '7days') {
@@ -517,6 +518,9 @@ $messages = DB::table('users AS tutors')
     } elseif ($noInteractionPeriod === '60days') {
         $olderThan = $baseDate->copy()->subDays(60);  // >60 days inactive
         $newerThan = null;                            // No upper limit
+    } else if ($noInteractionPeriod == 'all'){
+        $olderThan = $baseDate->copy()->subDays(7);  // >60 days inactive
+        $newerThan = null; 
     }
 
     $query = User::where('role_id', 1)
@@ -568,10 +572,15 @@ $messages = DB::table('users AS tutors')
     // Filter by number of inactive days
     if ($noInteractionPeriod === '60days') {
         $query->havingRaw('no_interaction_days > 60');
-    } else {
+    }else if ($noInteractionPeriod === 'all') {
+    
+        $query->havingRaw('no_interaction_days > 7');
+    } 
+     else {
         $query->havingRaw('no_interaction_days > ?', [$olderThan->diffInDays($baseDate)])
               ->havingRaw('no_interaction_days <= ?', [$newerThan->diffInDays($baseDate)]);
     }
+    
 
     // Exclude users who had recent posts/comments
     $query->where(function($q) use ($olderThan) {

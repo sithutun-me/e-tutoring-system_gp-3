@@ -254,7 +254,7 @@
                                     <td data-title="User Code">{{ $user ->user_code }}</td>
                                     <td data-title="User Name">{{ $user ->first_name}} {{ $user->last_name }}</td>
                                     <td data-title="Interaction Count">{{$user->total_activity}}</td>
-                                    <td data-title="Last Login">{{$user->last_login_at}}</td>
+                                    <td data-title="Last Login">{{ $user->last_login_at ?? 'Never login' }}</td>
                                 </tr>
                                 @endforeach
 
@@ -412,7 +412,7 @@
 console.log(noInteractionPeriod);
         // Build query string
         const queryParams = new URLSearchParams({
-            no_interaction: noInteractionPeriod !== "all" ? noInteractionPeriod : undefined,
+            no_interaction: noInteractionPeriod !== "all" ? noInteractionPeriod : "all",
             interaction_date: selectedDate || "",
         }).toString();
 
