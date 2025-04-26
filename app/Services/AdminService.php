@@ -338,74 +338,165 @@ $messages = DB::table('users AS tutors')
 
     public function getTutorMessages($msgOrder = 'desc', $nameOrder = 'asc', $month = 'all')
     {
-        // Default start of the current month
-        $startDate = now()->startOfMonth();
+        // // Default start of the current month
+        // $startDate = now()->startOfMonth();
+        
+        // // Adjust start date based on the selected month
+        // if ($month !== 'all') {
+        //     $months = [
+        //         'jan' => 1,
+        //         'feb' => 2,
+        //         'mar' => 3,
+        //         'apr' => 4,
+        //         'may' => 5,
+        //         'jun' => 6,
+        //         'jul' => 7,
+        //         'aug' => 8,
+        //         'sept' => 9,
+        //         'oct' => 10,
+        //         'nov' => 11,
+        //         'dec' => 12
+        //     ];
+        //     $monthNumber = $months[$month] ?? null;
+        //     if ($monthNumber) {
+        //         $startDate = now()->month($monthNumber)->startOfMonth();
+        //     }
+        // }
+        // \Log::info('start date ' . $startDate . $month);
+        // // Query to fetch tutor messages
+        // $tutorMessages = DB::table('users AS tutors')
+        // ->leftJoin('post', function ($join) use ($startDate) {
+        //     $join->on('post.post_create_by', '=', 'tutors.id')
+        //         ->orOn('post.post_received_by', '=', 'tutors.id');
+        // })
+        // ->leftJoin('comment', function ($join) use ($startDate) {
+        //     $join->on('comment.post_id', '=', 'post.id')
+        //         ->whereIn('comment.user_id', function ($query) {
+        //             $query->select('id')
+        //                 ->from('users')
+        //                 ->where('role_id', 1); // Only students
+        //         });
+        //       //  ->where('comment.updated_at', '>=', $startDate);
+        // })
+        //     ->select(
+        //         'tutors.id',
+        //         'tutors.user_code',
+        //         'tutors.first_name',
+        //         'tutors.last_name',
+        //         'tutors.email',
+        //         DB::raw('COUNT(CASE WHEN comment.updated_at >= "' . $startDate->toDateString() . '" THEN comment.id ELSE NULL END) as total_messages'),
+        //         DB::raw('ROUND(
+        //             COUNT(CASE WHEN comment.updated_at >= "' . $startDate->toDateString() . '" THEN comment.id ELSE NULL END) 
+        //             / 
+        //             DATEDIFF(NOW(), "' . $startDate->toDateString() . '"), 
+        //         2) as avg_messages_per_day')
+        //         // DB::raw('COUNT(comment.id) as total_messages'),
+        //         // DB::raw('ROUND(COUNT(comment.id) / DATEDIFF(NOW(), \'' . $startDate->toDateString() . '\'), 2) as avg_messages_per_day')
+        //     )
+            
+        //     ->where('tutors.role_id', 2) // Only tutors
+        //     ->groupBy('tutors.id', 'tutors.user_code', 'tutors.first_name', 'tutors.last_name', 'tutors.email');
 
-        // Adjust start date based on the selected month
-        if ($month !== 'all') {
-            $months = [
-                'jan' => 1,
-                'feb' => 2,
-                'mar' => 3,
-                'apr' => 4,
-                'may' => 5,
-                'jun' => 6,
-                'jul' => 7,
-                'aug' => 8,
-                'sept' => 9,
-                'oct' => 10,
-                'nov' => 11,
-                'dec' => 12
-            ];
-            $monthNumber = $months[$month] ?? null;
-            if ($monthNumber) {
-                $startDate = now()->month($monthNumber)->startOfMonth();
-            }
+        // // Apply sorting by message count
+        // if ($msgOrder === 'asc') {
+        //     $tutorMessages->orderBy('total_messages', 'asc');
+        // } elseif ($msgOrder === 'desc') {
+        //     $tutorMessages->orderBy('total_messages', 'desc');
+        // }
+
+        // // Apply sorting by name
+        // if ($nameOrder === 'az') {
+        //     $tutorMessages->orderBy('tutors.first_name', 'asc');
+        // } elseif ($nameOrder === 'za') {
+        //     $tutorMessages->orderBy('tutors.first_name', 'desc');
+        // }
+        // //  \Log::info('start date ' . $tutorMessages);
+        // // Fetch and return the results
+        // return $tutorMessages->get();
+        // Default: start of current year
+    $startDate = now()->startOfYear();
+    $endDate = now()->endOfMonth(); // default: now (for 'all')
+    $daysInMonth = $startDate->daysInMonth;
+
+    // Adjust start and end date based on the selected month
+    if ($month !== 'all') {
+        $months = [
+            'jan' => 1,
+            'feb' => 2,
+            'mar' => 3,
+            'apr' => 4,
+            'may' => 5,
+            'jun' => 6,
+            'jul' => 7,
+            'aug' => 8,
+            'sept' => 9,
+            'oct' => 10,
+            'nov' => 11,
+            'dec' => 12
+        ];
+
+        $monthNumber = $months[$month] ?? null;
+        if ($monthNumber) {
+            $startDate = now()->startOfYear()->month($monthNumber)->startOfMonth();
+            $endDate = now()->startOfYear()->month($monthNumber)->endOfMonth();
         }
+    }
+    $daysCount = $month === 'all'
+    ? $startDate->diffInDays($endDate) + 1// inclusive
+    : $startDate->daysInMonth;
+    \Log::info('Start Date: ' . $startDate . ' | End Date: ' . $endDate);
 
-        // Query to fetch tutor messages
-        $tutorMessages = DB::table('users AS tutors')
-            ->select(
-                'tutors.id',
-                'tutors.user_code',
-                'tutors.first_name',
-                'tutors.last_name',
-                'tutors.email',
-                DB::raw('COUNT(comment.id) as total_messages'),
-                DB::raw('ROUND(COUNT(comment.id) / DATEDIFF(NOW(), \'' . $startDate->toDateString() . '\'), 2) as avg_messages_per_day')
-            )
-            ->leftJoin('post', function ($join) use ($startDate) {
-                $join->on('post.post_create_by', '=', 'tutors.id')
-                    ->orOn('post.post_received_by', '=', 'tutors.id');
-            })
-            ->leftJoin('comment', function ($join) use ($startDate) {
-                $join->on('comment.post_id', '=', 'post.id')
-                    ->whereIn('comment.user_id', function ($query) {
-                        $query->select('id')
-                            ->from('users')
-                            ->where('role_id', 1); // Only students
-                    })
-                    ->where('comment.created_at', '>=', $startDate);
-            })
-            ->where('tutors.role_id', 2) // Only tutors
-            ->groupBy('tutors.id', 'tutors.user_code', 'tutors.first_name', 'tutors.last_name', 'tutors.email');
+    // Query to fetch tutor messages
+    $tutorMessages = DB::table('users AS tutors')
+        ->leftJoin('post', function ($join) {
+            $join->on('post.post_create_by', '=', 'tutors.id')
+                ->orOn('post.post_received_by', '=', 'tutors.id');
+        })
+        ->leftJoin('comment', function ($join) use ($startDate, $endDate){
+            $join->on('comment.post_id', '=', 'post.id')
+                ->whereIn('comment.user_id', function ($query) {
+                    $query->select('id')
+                        ->from('users')
+                        ->where('role_id', 1); // Only students
+                });
+                //->whereBetween('comment.updated_at', [$startDate->toDateString(), $endDate->toDateString()]);
+        })
+        ->select(
+            'tutors.id',
+            'tutors.user_code',
+            'tutors.first_name',
+            'tutors.last_name',
+            'tutors.email',
+            DB::raw('COUNT(CASE WHEN comment.updated_at BETWEEN "' . $startDate->toDateString() . '" AND "' . $endDate->toDateString() . '" THEN comment.id ELSE NULL END) as total_messages'),
+            DB::raw('ROUND(
+                COUNT(CASE WHEN comment.updated_at BETWEEN "' . $startDate->toDateString() . '" AND "' . $endDate->toDateString() . '" THEN comment.id ELSE NULL END)
+                /
+                ' . $daysCount . ',
+            2) as avg_messages_per_day')
+            // DB::raw('ROUND(
+            //     COUNT(CASE WHEN comment.updated_at BETWEEN "' . $startDate->toDateString() . '" AND "' . $endDate->toDateString() . '" THEN comment.id ELSE NULL END)
+            //     /
+            //     ' . $startDate->daysInMonth . ',
+            // 2) as avg_messages_per_day')
+        )
+        ->where('tutors.role_id', 2) // Only tutors
+        ->groupBy('tutors.id', 'tutors.user_code', 'tutors.first_name', 'tutors.last_name', 'tutors.email');
 
-        // Apply sorting by message count
-        if ($msgOrder === 'asc') {
-            $tutorMessages->orderBy('total_messages', 'asc');
-        } elseif ($msgOrder === 'desc') {
-            $tutorMessages->orderBy('total_messages', 'desc');
-        }
+    // Apply sorting by message count
+    if ($msgOrder === 'asc') {
+        $tutorMessages->orderBy('total_messages', 'asc');
+    } elseif ($msgOrder === 'desc') {
+        $tutorMessages->orderBy('total_messages', 'desc');
+    }
 
-        // Apply sorting by name
-        if ($nameOrder === 'az') {
-            $tutorMessages->orderBy('tutors.first_name', 'asc');
-        } elseif ($nameOrder === 'za') {
-            $tutorMessages->orderBy('tutors.first_name', 'desc');
-        }
+    // Apply sorting by name
+    if ($nameOrder === 'az') {
+        $tutorMessages->orderBy('tutors.first_name', 'asc');
+    } elseif ($nameOrder === 'za') {
+        $tutorMessages->orderBy('tutors.first_name', 'desc');
+    }
 
-        // Fetch and return the results
-        return $tutorMessages->get();
+    return $tutorMessages->get();
     }
 
     public function getStudentsWithNoInteraction($noInteractionPeriod = 'all', $selectedDate = null)
@@ -506,6 +597,7 @@ $messages = DB::table('users AS tutors')
 
     // Define thresholds relative to base date
     $olderThan = $baseDate->copy()->subDays(7);
+   // $newerThan = null;
     $newerThan = $baseDate->copy()->subDays(30);
 
     if ($noInteractionPeriod === '7days') {
@@ -517,6 +609,9 @@ $messages = DB::table('users AS tutors')
     } elseif ($noInteractionPeriod === '60days') {
         $olderThan = $baseDate->copy()->subDays(60);  // >60 days inactive
         $newerThan = null;                            // No upper limit
+    } else if ($noInteractionPeriod == 'all'){
+        $olderThan = $baseDate->copy()->subDays(7);  // >60 days inactive
+        $newerThan = null; 
     }
 
     $query = User::where('role_id', 1)
@@ -568,10 +663,15 @@ $messages = DB::table('users AS tutors')
     // Filter by number of inactive days
     if ($noInteractionPeriod === '60days') {
         $query->havingRaw('no_interaction_days > 60');
-    } else {
+    }else if ($noInteractionPeriod === 'all') {
+    
+        $query->havingRaw('no_interaction_days > 7');
+    } 
+     else {
         $query->havingRaw('no_interaction_days > ?', [$olderThan->diffInDays($baseDate)])
               ->havingRaw('no_interaction_days <= ?', [$newerThan->diffInDays($baseDate)]);
     }
+    
 
     // Exclude users who had recent posts/comments
     $query->where(function($q) use ($olderThan) {

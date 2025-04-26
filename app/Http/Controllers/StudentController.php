@@ -47,6 +47,7 @@ class StudentController extends Controller
 
         $tutorId = DB::table('allocation')
                 ->where('student_id', $studentId)
+                ->where('active',1)
                 ->value('tutor_id');
 
         $tutorName = DB::table('users')
@@ -116,17 +117,46 @@ class StudentController extends Controller
         $studentId =  $id ?? auth()->id();
         $currentMonth = Carbon::now()->month;
 
+        $tutorId = DB::table('allocation')
+                ->where('student_id', $studentId)
+                ->where('active',1)
+                ->value('tutor_id');
+
         $postCount = DB::table('post')
             ->where('post_create_by', $studentId)
-            ->where('is_meeting',0)
+            ->where('post_received_by',$tutorId)
             ->where('post_status', '!=', 'deleted')
             ->whereMonth('updated_at',$currentMonth)
             ->count();
 
         $commentCount = DB::table('comment')
-            ->where('user_id', $studentId)
-            ->whereMonth('updated_at',$currentMonth)
+            ->join('post', 'comment.post_id', '=', 'post.id')
+            ->where('comment.user_id', $studentId) // Comment is made by the student
+            ->whereMonth('comment.updated_at', $currentMonth)
+            ->where(function($query) use ($studentId,$tutorId) {
+                $query->where(function($q) use ($studentId,$tutorId) {
+                    // Case 1: Post created by tutor and received by student
+                    $q->where('post.post_create_by', $tutorId) // Tutor is creator
+                    ->where('post.post_received_by', $studentId);  // Student is receiver
+                })->orWhere(function($q) use ($studentId,$tutorId) {
+                    // Case 2: Post created by student and received by tutor
+                    $q->where('post.post_create_by', $studentId)     // Student is creator
+                    ->where('post.post_received_by',$tutorId); // Tutor is receiver
+                });
+            })
             ->count();
+       
+            // table join
+        // $commentCount = DB::table('comment')
+        //     ->where('user_id', $studentId)
+        //     ->whereMonth('updated_at',$currentMonth)
+        //     ->count();
+
+        // $commentCount = DB::table('comment')
+        //     ->join('post', 'comment.post_id', '=', 'post.id')
+        //     ->where('comment.user_id', $studentId)
+        //     ->whereMonth('comment.updated_at',$currentMonth)
+        //     ->count();
 
         $documentCount = DB::table('document')
                 ->join('post', 'document.post_id', '=', 'post.id')
@@ -146,23 +176,40 @@ class StudentController extends Controller
 
         $tutorId = DB::table('allocation')
                 ->where('student_id', $studentId)
+                ->where('active',1)
                 ->value('tutor_id');
 
         $postCount = DB::table('post')
             ->where('post_create_by', $tutorId)
             ->where('post_received_by',$studentId)
             ->where('post_status', '!=', 'deleted')
-            ->where('is_meeting',0)
             ->whereMonth('updated_at',$currentMonth)
             ->count();
 
+            //create both
         $commentCount = DB::table('comment')
             ->join('post', 'comment.post_id', '=', 'post.id')
-            ->where('comment.user_id', $tutorId)
-            ->where('post.post_create_by',$tutorId)
-            ->where('post.post_received_by',$studentId)
-            ->whereMonth('comment.updated_at',$currentMonth)
+            ->where('comment.user_id', $tutorId) // Comment is made by the student
+            ->whereMonth('comment.updated_at', $currentMonth)
+            ->where(function($query) use ($studentId,$tutorId) {
+                $query->where(function($q) use ($studentId,$tutorId) {
+                    // Case 1: Post created by tutor and received by student
+                    $q->where('post.post_create_by', $tutorId) // Tutor is creator
+                    ->where('post.post_received_by', $studentId);  // Student is receiver
+                })->orWhere(function($q) use ($studentId,$tutorId) {
+                    // Case 2: Post created by student and received by tutor
+                    $q->where('post.post_create_by', $studentId)     // Student is creator
+                    ->where('post.post_received_by',$tutorId); // Tutor is receiver
+                });
+            })
             ->count();
+        // $commentCount = DB::table('comment')
+        //     ->join('post', 'comment.post_id', '=', 'post.id')
+        //     ->where('comment.user_id', $tutorId)
+        //     ->where('post.post_create_by',$tutorId)
+        //     ->where('post.post_received_by',$studentId)
+        //     ->whereMonth('comment.updated_at',$currentMonth)
+        //     ->count();
 
         $documentCount = DB::table('document')
                 ->join('post', 'document.post_id', '=', 'post.id')
@@ -460,6 +507,7 @@ class StudentController extends Controller
         $studentId = auth()->id();
         $tutorId = DB::table('allocation')
             ->where('student_id', $studentId)
+            ->where('active',1)
             ->value('tutor_id');
 
         $tutorName = DB::table('users')
@@ -474,29 +522,48 @@ class StudentController extends Controller
         $studentActivities = DB::table('post')
             ->selectRaw("MONTH(updated_at) as month, COUNT(*) as posts")
             ->where('post_create_by', $studentId)
-            ->where('is_meeting', 0)
             ->where('post_status', '!=', 'deleted')
             ->whereYear('updated_at', $currentYear)
             ->groupBy('month')
             ->pluck('posts', 'month');
 
         $commentCounts = DB::table('comment')
-            ->selectRaw("MONTH(updated_at) as month, COUNT(*) as comments")
-            ->where('user_id', $studentId)
-            ->whereYear('updated_at', $currentYear)
+            ->selectRaw("MONTH(comment.updated_at) as month, COUNT(*) as comments")
+            ->join('post', 'comment.post_id', '=', 'post.id')
+            ->where('comment.user_id', $studentId) // Comment is made by the student
+            ->whereYear('comment.updated_at', $currentYear)
+            ->where(function($query) use ($studentId,$tutorId) {
+                $query->where(function($q) use ($studentId,$tutorId) {
+                    // Case 1: Post created by tutor and received by student
+                    $q->where('post.post_create_by', $tutorId) // Tutor is creator
+                    ->where('post.post_received_by', $studentId);  // Student is receiver
+                })->orWhere(function($q) use ($studentId,$tutorId) {
+                    // Case 2: Post created by student and received by tutor
+                    $q->where('post.post_create_by', $studentId)     // Student is creator
+                    ->where('post.post_received_by', $tutorId); // Tutor is receiver
+                });
+            })
             ->groupBy('month')
             ->pluck('comments', 'month');
+        // $commentCounts = DB::table('comment')
+        //     ->selectRaw("MONTH(updated_at) as month, COUNT(*) as comments")
+        //     ->where('user_id', $studentId)
+        //     ->whereYear('updated_at', $currentYear)
+        //     ->groupBy('month')
+        //     ->pluck('comments', 'month');
 
         $documentCounts = DB::table('document')
             ->join('post', 'document.post_id', '=', 'post.id')
             ->selectRaw("MONTH(document.updated_at) as month, COUNT(*) as documents")
             ->where('post.post_create_by', $studentId)
+            ->where('post.post_received_by',$tutorId)
             ->whereYear('document.updated_at', $currentYear)
             ->groupBy('month')
             ->pluck('documents', 'month');
 
         $meetingCounts = DB::table('meeting_schedule')
             ->selectRaw("MONTH(meeting_date) as month, COUNT(*) as meetings")
+            ->where('tutor_id',$tutorId)
             ->where('student_id', $studentId)
             ->where('meeting_status','completed')
             ->whereYear('updated_at', $currentYear)
@@ -509,21 +576,37 @@ class StudentController extends Controller
             ->where('post_create_by', $tutorId)
             ->where('post_received_by', $studentId)
             ->where('post_status','!=','deleted')
-            ->where('is_meeting', 0)
-            ->where('post_status', '!=', 'deleted')
             ->whereYear('updated_at', $currentYear)
             ->groupBy('month')
             ->pluck('posts', 'month');
 
         $tutorCommentCounts = DB::table('comment')
-            ->join('post', 'comment.post_id', '=', 'post.id')
             ->selectRaw("MONTH(comment.updated_at) as month, COUNT(*) as comments")
-            ->where('comment.user_id', $tutorId)
-            ->where('post.post_create_by', $tutorId)
-            ->where('post.post_received_by', $studentId)
+            ->join('post', 'comment.post_id', '=', 'post.id')
+            ->where('comment.user_id', $tutorId) // Comment is made by the student
             ->whereYear('comment.updated_at', $currentYear)
+            ->where(function($query) use ($studentId,$tutorId) {
+                $query->where(function($q) use ($studentId,$tutorId) {
+                    // Case 1: Post created by tutor and received by student
+                    $q->where('post.post_create_by', $tutorId) // Tutor is creator
+                    ->where('post.post_received_by', $studentId);  // Student is receiver
+                })->orWhere(function($q) use ($studentId,$tutorId) {
+                    // Case 2: Post created by student and received by tutor
+                    $q->where('post.post_create_by', $studentId)     // Student is creator
+                    ->where('post.post_received_by', $tutorId); // Tutor is receiver
+                });
+            })
             ->groupBy('month')
             ->pluck('comments', 'month');
+        // $tutorCommentCounts = DB::table('comment')
+        //     ->join('post', 'comment.post_id', '=', 'post.id')
+        //     ->selectRaw("MONTH(comment.updated_at) as month, COUNT(*) as comments")
+        //     ->where('comment.user_id', $tutorId)
+        //     ->where('post.post_create_by', $tutorId)
+        //     ->where('post.post_received_by', $studentId)
+        //     ->whereYear('comment.updated_at', $currentYear)
+        //     ->groupBy('month')
+        //     ->pluck('comments', 'month');
 
         $tutorDocumentCounts = DB::table('document')
             ->join('post', 'document.post_id', '=', 'post.id')
@@ -537,6 +620,7 @@ class StudentController extends Controller
         $tutorMeetingCounts = DB::table('meeting_schedule')
             ->selectRaw("MONTH(meeting_date) as month, COUNT(*) as meetings")
             ->where('student_id', $studentId)
+            ->where('meeting_status','completed')
             ->whereYear('updated_at', $currentYear)
             ->groupBy('month')
             ->pluck('meetings', 'month');
