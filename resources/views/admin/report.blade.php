@@ -395,9 +395,9 @@
 
         // Build query string
         const queryParams = new URLSearchParams({
-            msgOrder: msgOrder !== "all" ? msgOrder : undefined,
-            nameOrder: nameOrder !== "all" ? nameOrder : undefined,
-            month: month !== "all" ? month : undefined,
+            msgOrder: msgOrder !== "all" ? msgOrder : "",
+            nameOrder: nameOrder !== "all" ? nameOrder : "",
+            month: month !== "all" ? month : "",
             tab: activeTab, // Include the active tab in the query string
         }).toString();
 

@@ -66,6 +66,7 @@ class TutorController extends Controller
         //  $tutorId = Auth::id(); // Get logged-in tutor ID
         $startOfMonth = Carbon::now()->startOfMonth(); // First day of the current month
         $today = Carbon::now(); // Current day
+        
         $filter = $request->query('interaction_type', 'All');
         // $filter = 'Posts';
         // Get students assigned to the tutor (max 15)
@@ -95,7 +96,7 @@ class TutorController extends Controller
             if ($filter === 'All' || $filter === 'Comments') {
                 $commentCount = DB::table('comment')
                     ->join('post', 'comment.post_id', '=', 'post.id')
-                    ->where('comment.user_id', $tutorId) // Comment is made by the student
+                    ->where('comment.user_id', $studentId) // Comment is made by the student
                     ->whereBetween('comment.updated_at', [$startOfMonth, $today])
                     ->where(function($query) use ($studentId,$tutorId) {
                         $query->where(function($q) use ($studentId,$tutorId) {
@@ -318,12 +319,14 @@ class TutorController extends Controller
         switch ($request->input('post_by')) {
             case 'myPosts':
                 // Show only posts created by the tutor
-                $query->where('post_create_by', $tutorId);
+                $query->where('post_create_by', $tutorId)
+                ->whereIn('post_received_by',$assignedStudentIds);
 
                 // Optionally filter by a specific student if provided
                 $studentId = $request->input('student_filter');
                 if ($studentId) {
-                    $query->where('post_received_by', $studentId);
+                    $query->where('post_received_by', $studentId)
+                    ->where('post_create_by',$tutorId);
                 }
                 break;
 
@@ -332,10 +335,12 @@ class TutorController extends Controller
                 $studentId = $request->input('student_filter');
                 if ($studentId && in_array($studentId, $assignedStudentIds)) {
                     // If a specific student is selected, show only their posts
-                    $query->where('post_create_by', $studentId);
+                    $query->where('post_create_by', $studentId)
+                    -> where('post_received_by',$tutorId);
                 } else {
                     // Otherwise, show posts from all assigned students
-                    $query->whereIn('post_create_by', $assignedStudentIds);
+                    $query->whereIn('post_create_by', $assignedStudentIds)
+                    ->where('post_received_by',$tutorId);
                 }
                 break;
 
@@ -343,7 +348,9 @@ class TutorController extends Controller
                 // Default case: Show posts created by the tutor AND their assigned students
                 $query->where(function ($q) use ($tutorId, $assignedStudentIds) {
                     $q->where('post_create_by', $tutorId)
-                        ->orWhereIn('post_create_by', $assignedStudentIds);
+                        ->whereIn('post_received_by',$assignedStudentIds)
+                        ->orWhereIn('post_create_by', $assignedStudentIds)
+                        ->where('post_received_by',$tutorId);
                 });
 
                 // Additional logic: If a specific student is selected, show posts received by or created by that student

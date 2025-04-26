@@ -47,6 +47,7 @@ class StudentController extends Controller
 
         $tutorId = DB::table('allocation')
                 ->where('student_id', $studentId)
+                ->where('active',1)
                 ->value('tutor_id');
 
         $tutorName = DB::table('users')
@@ -118,6 +119,7 @@ class StudentController extends Controller
 
         $tutorId = DB::table('allocation')
                 ->where('student_id', $studentId)
+                ->where('active',1)
                 ->value('tutor_id');
 
         $postCount = DB::table('post')
@@ -174,6 +176,7 @@ class StudentController extends Controller
 
         $tutorId = DB::table('allocation')
                 ->where('student_id', $studentId)
+                ->where('active',1)
                 ->value('tutor_id');
 
         $postCount = DB::table('post')
@@ -504,6 +507,7 @@ class StudentController extends Controller
         $studentId = auth()->id();
         $tutorId = DB::table('allocation')
             ->where('student_id', $studentId)
+            ->where('active',1)
             ->value('tutor_id');
 
         $tutorName = DB::table('users')
