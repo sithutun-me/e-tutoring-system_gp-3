@@ -171,11 +171,13 @@ class AdminService
         //     ->get();
         $startOfMonth = now()->startOfMonth();
 $daysSoFar = now()->diffInDays($startOfMonth) + 1; // +1 to include today
+$daysInMonth = Carbon::now()->daysInMonth; 
 
 $messages = DB::table('users AS tutors')
     ->select(
         'tutors.first_name AS tutor_name',
-        DB::raw('ROUND(COUNT(comment.id) / DATEDIFF(NOW(), \'' . $startOfMonth->toDateString() . '\'), 2) as avg_messages_per_day')
+        DB::raw('ROUND(COUNT(DISTINCT comment.id) / ' . $daysInMonth . ', 2) AS avg_messages_per_day')
+        //DB::raw('ROUND(COUNT(comment.id) / DATEDIFF(NOW(), \'' . $startOfMonth->toDateString() . '\'), 2) as avg_messages_per_day')
         //DB::raw('ROUND(COUNT(DISTINCT comment.id) / ' . $daysSoFar . ', 2) AS average_messages_per_day')
     )
     ->leftJoin('post', function($join) {
