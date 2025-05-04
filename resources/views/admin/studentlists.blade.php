@@ -84,7 +84,7 @@
                                 <td data-title="Email"  >{{ $student->email }}</td>
                                 <td data-title="Assigned Tutor" >{{ $student->tutor_name }}</td>
                                 <td class="stu-button" style="text-align: center; overflow-x:auto;"><button type="button" class="btn btn-primary btn-sm shadow-none" style="background-color:#004AAD; width:190px;">
-                                        <a href="student/dashboard" class="text-decoration-none " style="color: white; ">View Dashboard >></a></button>
+                                        <a href="{{ url('admin/student/dashboard/'.$student->id) }}" class="text-decoration-none " style="color: white; ">View Dashboard >></a></button>
                                 </td>
                             </tr>
                             @endforeach

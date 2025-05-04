@@ -60,7 +60,7 @@ h6 {
     border: none;
     border-radius: 5px;
     box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
-  
+
   }
 
   .card-header,
@@ -197,12 +197,12 @@ h6 {
 
 
   #side_nav{
-   
+
     background: #004AAD;
     min-width: 200px;
     max-width: 200px;
     transition: all 0.3s;
-    
+
     /* Sticky Positioning */
     position: fixed;
     top: 0;
@@ -218,7 +218,7 @@ h6 {
     margin-left: 200px; /* Shift content to the right */
     transition: all 0.3s;
   }
-  
+
   hr.h-color{
     background: #eee;
   }
@@ -234,7 +234,7 @@ h6 {
   margin-bottom: 8px;
   }
 
- 
+
   #side_nav.active li a {
     color: #fff;
   }
@@ -242,12 +242,16 @@ h6 {
   /* active sidebar page  */
 
   .sidebar li a.active {
-    background-color: #7895CB !important; 
-    color: #fff !important; 
+    background-color: #7895CB !important;
+    color: #fff !important;
     border-radius: 5px !important;
 }
 
-  
+.last-login{
+  font-family: "Poppins";
+  font-size: 0.875rem;
+}
+
 
    @media(max-width: 767px){
     #side_nav{
@@ -265,7 +269,7 @@ h6 {
       margin-left: 0; /* Reset margin when sidebar is collapsed */
     }
 
-  
+
    }
 
    .col-12 button{
@@ -276,20 +280,20 @@ h6 {
   /* Allocation to student lists -table responsive */
   @media only screen and (max-width: 1200px){
     #no-more-tables {
-      overflow-y: auto; 
+      overflow-y: auto;
       overflow-x: scroll;
-      display: block; 
+      display: block;
     }
 
-    
+
     #no-more-tables tbody,
     #no-more-tables tr,
     #no-more-tables td{
       display: block;
-      
+
     }
-    
-   
+
+
     #no-more-tables thead tr{
       position: absolute;
       top: -9999px;
@@ -314,11 +318,60 @@ h6 {
       border-bottom: 1px solid #ccc ;
     }
 
-  
-
-
-
   }
+
+  /* for admin report most active */
+
+  @media only screen and (max-width: 1200px) {
+    #no-more-tables .adminreportactive {
+      overflow-y: auto;
+      overflow-x: auto;
+      display: block;
+    }
+  
+    #no-more-tables .adminreportactive table,
+    #no-more-tables .adminreportactive thead,
+    #no-more-tables .adminreportactive tbody,
+    #no-more-tables .adminreportactive th,
+    #no-more-tables .adminreportactive td,
+    #no-more-tables .adminreportactive tr {
+      display: block;
+      width: 100%;
+    }
+  
+    #no-more-tables .adminreportactive thead tr {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
+  
+    #no-more-tables .adminreportactive tr {
+      border-bottom: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+  
+    #no-more-tables .adminreportactive td {
+      position: relative;
+      padding-left: 50%;
+      padding-right: 10px;
+      text-align: center; 
+      border: none;
+      border-bottom: 1px solid #eee;
+      white-space: normal;
+    }
+  
+    #no-more-tables .adminreportactive td:before {
+      content: attr(data-title);
+      position: absolute;
+      left: 0;
+      width: 45%;
+      padding-left: 10px;
+      font-weight: bold;
+      white-space: nowrap;
+      text-align: left;
+    }
+  }
+  
 
 
   @media only screen and (max-width: 900px){
@@ -342,16 +395,13 @@ h6 {
 
   }
 
-  
+
   @media only screen and (max-width: 400px){
     .stu-button{
       margin-left: 120px;
      }
 
   }
-  
-
-  
 
   #no-more-tables .allocation-row, .assigned-row, .tutor-row, .student-row, .reallocation-row{
     text-align: center;
@@ -411,14 +461,14 @@ h6 {
 #allocationTable_wrapper .dataTables_paginate {
   margin-top: 15px;
   text-align: center;
- 
+
 }
 
 /* Allocation page pagination button styling */
 #allocationTable_wrapper .dataTables_paginate .paginate_button {
   display: inline-block;
   background-color: #FFFFFF !important;
-  color:  #92969c !important; 
+  color:  #92969c !important;
   border: 1px solid #D3D3D3 !important;
   border-radius: 5px;
   margin: 3px; /* Add spacing between buttons */
@@ -610,7 +660,7 @@ h6 {
 #assignedTable thead th:first-child,
 #assignedTable tbody td:first-child {
   border-bottom: none !important; /* Remove bottom border */
- 
+
 }
 
 #assignedTable thead th:last-child,
@@ -694,14 +744,14 @@ h6 {
   text-align: center;
   display: block !important;
   text-align: center;
- 
+
 }
 
 /* Assigned List Page pagination button styling */
 #reallocationTable_wrapper .dataTables_paginate .paginate_button {
   display: inline-block;
   background-color: #FFFFFF !important;
-  color:  #92969c !important; 
+  color:  #92969c !important;
   border: 1px solid #D3D3D3 !important;
   border-radius: 5px;
   margin: 3px; /* Add spacing between buttons */
@@ -726,7 +776,7 @@ h6 {
   border-color: #bfc1c4 !important;
   pointer-events: none;
 }
- 
+
 
 #reallocationTable {
   width: 100%;
@@ -818,7 +868,7 @@ h6 {
 #tutorTable_wrapper .dataTables_paginate {
   margin-top: 15px;
   text-align: center;
- 
+
 }
 
 /* Assigned List Page pagination button styling */
@@ -952,7 +1002,7 @@ h6 {
 #studentTable_wrapper .dataTables_paginate {
   margin-top: 15px;
   text-align: center;
- 
+
 }
 
 /* General pagination button styling */
@@ -1085,13 +1135,13 @@ h6 {
     .form-group {
         flex-direction: column;
         align-items: flex-start;
- 
+
     }
 
     .form-select {
         width: 100%; /* Make the select box full-width */
     }
-  
+
 
     .form-select, .btn {
       width: 100%; /* Make select box & button full-width */
@@ -1103,7 +1153,9 @@ h6 {
 
   }
 
-  
+  /* for allocation to student list responsive text align right */
+
+
   #no-more-tables .allocation-row, .assigned-row, .tutor-row, .student-row, .reallocation-row, .adminreport-row{
     text-align: right;
 
@@ -1175,7 +1227,7 @@ h6 {
   width: 300px;
   margin-top: 40px;
   margin-bottom: 20px;
- 
+
 }
 
 .post-container .file-attachment {
@@ -1194,11 +1246,12 @@ h6 {
   margin-left: 20px;
   word-wrap: break-word;
   text-wrap: auto;
- 
+
 }
 
 .post-title-desc{
   font-family: "Poppins";
+  
 }
 
 .post-title-desc .post-title{
@@ -1207,7 +1260,8 @@ h6 {
 }
 
 .post-title-desc .post-desc{
-  font-size: 0.875rem;
+  font-size: 1rem;
+  margin-bottom: 27px;
 }
 
 .comments-body{
@@ -1215,7 +1269,7 @@ h6 {
   text-wrap: auto;
   font-size: 0.875rem;
   margin-bottom: 20px;
- 
+
 }
 
 .comments {
@@ -1232,7 +1286,7 @@ h6 {
   background-color: #004AAD;
   display: flex;
 
- 
+
 }
 
  .post a {
@@ -1291,7 +1345,7 @@ h6 {
 .file-list {
   list-style: none;
   padding: 0;
-  width: 100%; /* Ensures it takes full width of the container */
+  width: 400px; /* Ensures it takes full width of the container */
 }
 
 .file-list li {
@@ -1373,7 +1427,7 @@ h6 {
     background: #f1f1f1;
     padding: 10px;
     width: 350px;
-   
+
   }
 
   .create-container{
@@ -1383,14 +1437,14 @@ h6 {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     margin-left: 5px;
     margin-bottom: 10px;
-    
+
   }
 
   /* .parent-container {
     display: flex;
     width: 100%;
   } */
-  
+
   .edit-container{
     width: 100%;
     background: white;
@@ -1399,7 +1453,7 @@ h6 {
     margin-left: 5px;
     margin-bottom: 40px;
   }
- 
+
   .file-list {
     list-style: none;
     padding: 0;
@@ -1407,15 +1461,15 @@ h6 {
   }
   .file-list li {
     flex-direction: column; /* Stack file name and remove button on smaller screens */
- 
+
   }
   .remove-file{
     margin-top: 10px;
   }
 
   .delete-btn{
-    margin-left: 0px;
-    margin-top: -4px;
+    margin-left: 10px;
+    margin-top: -5px;
   }
 
 
@@ -1461,7 +1515,7 @@ h6 {
     width: 100%;
   }
 
-  
+
 }
 
 @media only screen and (max-width: 420px) {
@@ -1471,7 +1525,7 @@ h6 {
     padding: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     margin-left: 10px;
-  
+
   }
 
   .edit-container {
@@ -1480,7 +1534,7 @@ h6 {
     padding: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     margin-left: 5px;
-  
+
   }
 
   .post-container .file-attachment {
@@ -1490,7 +1544,7 @@ h6 {
     background: #f1f1f1;
     padding: 10px;
     width: 300px;
-   
+
   }
 
 }
@@ -1544,8 +1598,8 @@ h6 {
 .tabs .active {
   background: #004AAD;
   color: #fff;
- 
-  
+
+
 }
 .content-area {
   display: none;
@@ -1569,12 +1623,12 @@ h6 {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
-  
+
 }
 .studentreport thead {
   background: #004AAD;
   color: white;
-  
+
 }
 /* .studentreport th, .studentreport td {
   padding: 10px;
@@ -1585,7 +1639,7 @@ h6 {
 } */
 
 /* .studentreport-container {
-  height: 400px; 
+  height: 400px;
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
@@ -1619,7 +1673,7 @@ width: 100%;
 border-collapse: collapse;
 }
 
-.studentreport th, 
+.studentreport th,
 .studentreport td {
 padding: 10px;
 text-align: center;
@@ -1630,13 +1684,13 @@ border-right: none; /* Remove vertical borders */
 }
 
 /* Keep the first column's left border */
-.studentreport th:first-child, 
+.studentreport th:first-child,
 .studentreport td:first-child {
 border-left: 1px solid #D3D3D3;
 }
 
 /* Keep the last column's right border */
-.studentreport th:last-child, 
+.studentreport th:last-child,
 .studentreport td:last-child {
 border-right: 1px solid #D3D3D3;
 }
@@ -1784,7 +1838,7 @@ width: 100%;
 border-collapse: collapse;
 }
 
-.tutorreport th, 
+.tutorreport th,
 .tutorreport td {
 padding: 10px;
 text-align: center;
@@ -1792,16 +1846,18 @@ border-top: 1px solid #D3D3D3;  /* Keeps horizontal lines */
 border-bottom: 1px solid #D3D3D3; /* Keeps horizontal lines */
 border-left: none;  /* Remove vertical borders */
 border-right: none; /* Remove vertical borders */
+text-wrap: auto;
+word-wrap: break-word;
 }
 
 /* Keep the first column's left border */
-.tutorreport th:first-child, 
+.tutorreport th:first-child,
 .tutorreport td:first-child {
 border-left: 1px solid #D3D3D3;
 }
 
 /* Keep the last column's right border */
-.tutorreport th:last-child, 
+.tutorreport th:last-child,
 .tutorreport td:last-child {
 border-right: 1px solid #D3D3D3;
 }
@@ -1811,7 +1867,7 @@ border-right: 1px solid #D3D3D3;
     width: 50px !important;
   }
 
- 
+
 
 }
 
@@ -1820,18 +1876,18 @@ border-right: 1px solid #D3D3D3;
 table.dataTable thead .sorting::before,
 table.dataTable thead .sorting_asc::after,
 table.dataTable thead .sorting_desc::after {
-    color: red !important; 
-    opacity: 1; 
+    color: red !important;
+    opacity: 1;
 } */
 
 /* When sorting is active (ascending) /* Change color for ascending sort */
 /* table.dataTable thead .sorting_asc::after {
-    color: green !important; 
+    color: green !important;
 } */
 
 /* When sorting is active (descending) /* Change color for descending sort */
 /* table.dataTable thead .sorting_desc::after {
-    color: blue !important; 
+    color: blue !important;
 } */
 
 
@@ -1917,24 +1973,24 @@ table.dataTable thead .sorting_desc::after {
   .tutorreport tbody {
     display: block;
     overflow-y: auto;
-    height: 400px; 
+    height: 400px;
     font-family: "Poppins";
     font-size: 0.875rem;
-  
+
   }
 
 
 }
 
 @media (max-width: 1200px) {
- 
+
   .tutorreport tbody {
     display: block;
     overflow-y: auto;
-    height: 400px; 
+    height: 400px;
     font-family: "Poppins";
     font-size: 0.875rem;
-  
+
   }
 
 

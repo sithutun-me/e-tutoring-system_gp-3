@@ -86,7 +86,7 @@
                                         <td data-title="Assigned Students" >{{ $tutor->assigned_students_count }}</td>
                                         <td><button type="button" class="btn btn-primary btn-sm shadow-none"
                                                 style="background-color:#004AAD; width:190px;">
-                                                <a href="tutor/dashboard" class="text-decoration-none "
+                                                <a href="{{ url('admin/tutor/dashboard/'.$tutor->tutor_id) }}" class="text-decoration-none "
                                                     style="color: white;">View Dashboard >></a></button>
                                         </td>
                                     </tr>

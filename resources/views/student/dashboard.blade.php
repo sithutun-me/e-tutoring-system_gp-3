@@ -16,29 +16,27 @@
                 </div>
 
                 <ul class="list-unstyled px-2">
-                    <li class=""><a href="/student/dashboard" class="text-decoration-none px-3 py-2 d-block">
+                    <li class=""><a href="{{ $isStudent ? '/student/dashboard' : '/admin/student/dashboard' }}"
+                            class="text-decoration-none px-3 py-2 d-block">
                             <img src="/icon images/dashboard.png" style="width:20px; margin-right: 10px;"> Dashboard
                         </a>
                     </li>
-                    <li class=""><a href="/student/meetinglists" class="text-decoration-none px-3 py-2 d-block">
-                            <img src="/icon images/meeting.png" style="width:20px; margin-right: 10px;"> Meetings
-                        </a>
-                    </li>
-                    <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block ">
-                            <img src="/icon images/blogging.png" style="width:20px; margin-right: 10px;"> Blogging
+                    @if ($isStudent)
+                        <li class=""><a href="/student/meetinglists" class="text-decoration-none px-3 py-2 d-block">
+                                <img src="/icon images/meeting.png" style="width:20px; margin-right: 10px;"> Meetings
+                            </a>
+                        </li>
+                        <li class=""><a href="/student/blogging" class="text-decoration-none px-3 py-2 d-block ">
+                                <img src="/icon images/blogging.png" style="width:20px; margin-right: 10px;"> Blogging
 
-                        </a>
-                    </li>
-                    <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block">
-                            <img src="/icon images/notification.png" style="width:20px; margin-right: 10px;"> Notifications
-                        </a>
-                    </li>
+                            </a>
+                        </li>
 
-                    <li class=""><a href="/student/report" class="text-decoration-none px-3 py-2 d-block">
-                            <img src="/icon images/reports.png" style="width:20px; margin-right: 10px;"> Reports
-                        </a>
-                    </li>
-
+                        <li class=""><a href="/student/report" class="text-decoration-none px-3 py-2 d-block">
+                                <img src="/icon images/reports.png" style="width:20px; margin-right: 10px;"> Reports
+                            </a>
+                        </li>
+                    @endif
                 </ul>
 
 
@@ -66,7 +64,7 @@
                                 <h2 class="fs-2 fw-bold"> Student Dashboard</h2>
                             </div>
                             <div class="col-md-6 header-text text-end">
-                                Tutor - {{$tutorName}}
+                                Tutor - {{ $tutorName }}
                             </div>
                         </div>
                         <div class="row mt-4">
@@ -93,17 +91,24 @@
                                     <div class="rounded-box col-md-6">
                                         <div style="width: 100%;" class="flex-step-box">
                                             <div class="top-row">
-                                                <div class="center-text large-font">
-                                                    {{ $postCount }}
-                                                </div>
-                                                <div class="center-text">
-                                                    new posts by tutor
-                                                </div>
+                                                @if ($postCount !== 0)
+                                                    <div class="center-text large-font">
+                                                        {{ $postCount }}
+                                                    </div>
+                                                    <div class="center-text">
+                                                        new posts by tutor
+                                                    </div>
+                                                @else
+                                                    <div class="center-text">
+                                                        No new post by tutor
+                                                    </div>
+                                                @endif
                                             </div>
-                                            <div class="box-align-bottom center-text">
-                                                <a href="#"> View posts>></a>
-                                            </div>
-
+                                            @if ($isStudent)
+                                                <div class="box-align-bottom center-text">
+                                                    <a href="/student/blogging">View posts>></a>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -120,9 +125,11 @@
                                     <div class="chart-card-body">
                                         <div class="chart-area">
                                             <canvas id="StudentActivityChart" class="chart-canvas"></canvas>
-                                            <div class="box-align-right">
-                                                <a href="#" class="small-text">View Report>>></a>
-                                            </div>
+                                            @if ($isStudent)
+                                                <div class="box-align-right">
+                                                    <a href="/student/report" class="small-text">View Report>>></a>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -134,9 +141,11 @@
                                     <div class="chart-card-body">
                                         <div class="chart-area">
                                             <canvas id="TutorActivityChart" class="chart-canvas"></canvas>
-                                            <div class="box-align-right">
-                                                <a href="#" class="small-text">View Report>>></a>
-                                            </div>
+                                            @if ($isStudent)
+                                                <div class="box-align-right">
+                                                    <a href="/student/report" class="small-text">View Report>>></a>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -170,25 +179,36 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($meetings as $meeting)
-                                                        <tr>
-                                                            <td class="normal-text">{{ $meeting->meeting_title }}</td>
-                                                            <td class="normal-text">
-                                                                {{ \Carbon\Carbon::parse($meeting->meeting_date)->format('d M Y') }}
-                                                            </td>
-                                                            <td class="normal-text">
-                                                                {{ \Carbon\Carbon::parse($meeting->meeting_start_time)->format('h:i A') }}
-                                                                -
-                                                                {{ \Carbon\Carbon::parse($meeting->meeting_end_time)->format('h:i A') }}
-                                                            </td>
-                                                            <td class="normal-text">{{ $meeting->meeting_type }}</td>
 
-                                                            <td class="text-center">
-                                                                <a href="{{ route('student.meetingdetail.view', $meeting->id) }}"
-                                                                    class="btn btn-primary shadow-none">Detail</a>
+                                                    @if ($meetings->isEmpty())
+                                                        <tr>
+                                                            <td colspan="5" class="text-muted py-4">
+                                                                <i class="fas fa-calendar-times"></i> No Meetings Available
                                                             </td>
                                                         </tr>
-                                                    @endforeach
+                                                    @else
+                                                        @foreach ($meetings as $meeting)
+                                                            <tr>
+                                                                <td class="normal-text">{{ $meeting->meeting_title }}</td>
+                                                                <td class="normal-text">
+                                                                    {{ \Carbon\Carbon::parse($meeting->meeting_date)->format('d M Y') }}
+                                                                </td>
+                                                                <td class="normal-text">
+                                                                    {{ \Carbon\Carbon::parse($meeting->meeting_start_time)->format('h:i A') }}
+                                                                    -
+                                                                    {{ \Carbon\Carbon::parse($meeting->meeting_end_time)->format('h:i A') }}
+                                                                </td>
+                                                                <td class="normal-text">{{ $meeting->meeting_type }}</td>
+
+                                                                <td class="text-center">
+                                                                    <a href="{{ route('student.meetingdetail.view', $meeting->id) }}"
+                                                                        class="btn btn-primary shadow-none">Detail</a>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @endif
+
+
                                                 </tbody>
 
                                             </table>
@@ -223,6 +243,10 @@
 
 
     <script>
+        window.App = {
+            isStudent: {{ Route::currentRouteName() !== 'admin.student.dashboard' ? 'true' : 'false' }},
+            studentId: {{ request()->route('id') ?? auth()->id() ?? 'null' }}
+        };
         // Script for the side bar nav
         $(".sidebar ul li").on('click', function() {
             $(".sidebar ul li.active").removeClass('active');

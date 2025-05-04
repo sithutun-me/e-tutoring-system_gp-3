@@ -11,7 +11,10 @@ window.demo = {
       plugins: {
         legend: {
           display: false
-        }
+        },
+        datalabels: {
+          display: false
+        },
       },
       maintainAspectRatio: false,
       legend: {
@@ -136,17 +139,20 @@ window.demo = {
 
     gradientBarChartConfigurationTutor = {
 
-      barPercentage: 0.8,      
-      categoryPercentage: 0.6, 
+      barPercentage: 0.8,
+      categoryPercentage: 0.6,
       elements: {
         bar: {
-          maxBarThickness: 50 
+          maxBarThickness: 50
         }
       },
       plugins: {
         legend: {
           display: false
-        }
+        },
+        datalabels: {
+          display: false
+        },
       },
       maintainAspectRatio: false,
 
@@ -226,19 +232,19 @@ window.demo = {
         });
 
         // Returning both labels and average message counts in a single object
-        return { labels, averageMessageCounts };
+        return { labels, messageCounts };
       } catch (error) {
         console.error('Error fetching average messages:', error);
 
         // Fallback in case of an error
         return {
           labels: [],
-          averageMessageCounts: []
+          messageCounts: []
         };
       }
     }
 
-    const { labels, averageMessageCounts } = await getAverageMessagesPerTutor();
+    const { labels, messageCounts } = await getAverageMessagesPerTutor();
 
     var ctx = document.getElementById("TutorMessagesChart").getContext("2d");
     // ctx.width = data.length * 50;
@@ -252,7 +258,7 @@ window.demo = {
       data: {
         labels: labels,
         datasets: [{
-          label: "Messages",
+          label: "Count",
           fill: true,
           backgroundColor: '#004AAD',
           hoverBackgroundColor: '#004AAD',
@@ -260,10 +266,92 @@ window.demo = {
           borderWidth: 1,
           borderDash: [],
           borderDashOffset: 0.0,
-          data: averageMessageCounts,
+          data: messageCounts,
         }]
       },
       options: gradientBarChartConfigurationTutor,
+    });
+  },
+  initUsedBrowsersChart: async function () {
+
+    pieChartConfiguration = {
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: {
+        padding: 45
+      },
+      plugins: {
+        datalabels: {
+          display: true,
+          color: '#fff',
+          font: {
+            size: 13,
+            family: 'Poppins'
+          },
+          formatter: (value) => value,
+          anchor: 'center',
+          align: 'center',
+        },
+        legend: {
+          position: 'right',
+          labels: {
+            usePointStyle: true,
+            pointStyle: 'circle',
+            color: '#333333',
+            font: {
+              size: 13,
+              family: 'Poppins'
+            },
+            // generateLabels: function (chart) {
+            //   return labels.map((label, index) => ({
+            //     text: label, // Show all labels in legend
+            //     fillStyle: labelColors[index % labelColors.length], // Use correct colors for all labels
+            //     hidden: false
+            //   }));
+            // }
+          }
+        }
+      }
+    };
+
+    async function getBrowserPieData() {
+      try {
+        const response = await fetch('/browser-chart');
+        const chartData = await response.json(); // This is an array
+
+        const total = chartData.reduce((sum, item) => sum + item.count, 0);
+
+        // Extract browser names and counts into separate arrays
+        const labels = chartData.map(item => item.browser);
+        const percentages = chartData.map(item => {
+          return total > 0 ? Math.round((item.count / total) * 100) : 0;
+        });
+
+        console.log('Fetched browser data:', labels);
+        return { labels, percentages };
+
+      } catch (error) {
+        console.error('Error fetching browser pie data:', error);
+        return {
+          labels: [],
+          percentages: []
+        };
+      }
+    }
+    const { labels, percentages } = await getBrowserPieData();
+    const labelColors = ["#00B312", "#004AAD", "#D73030"];
+    var ctx = document.getElementById("UsedBrowsersChart").getContext("2d");
+
+    var myChart = new Chart(document.getElementById("UsedBrowsersChart"), {
+      type: 'pie',
+      data: {
+        labels: labels,
+        datasets: [{
+          backgroundColor: labelColors,
+          data: percentages
+        }]
+      },
+      options: pieChartConfiguration
     });
   }
 }
