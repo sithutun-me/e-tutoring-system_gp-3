@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Carbon\Carbon;
+
 class StudentController extends Controller
 {
     protected $studentId;
@@ -29,7 +30,7 @@ class StudentController extends Controller
         //     abort(403, 'Unauthorized');
         // }
     }
-    public function index($id=null)
+    public function index($id = null)
     {
         // $studentId = $id;
         // if($studentId) {
@@ -46,107 +47,109 @@ class StudentController extends Controller
         }
 
         $tutorId = DB::table('allocation')
-                ->where('student_id', $studentId)
-                ->where('active',1)
-                ->value('tutor_id');
+            ->where('student_id', $studentId)
+            ->where('active', 1)
+            ->value('tutor_id');
 
         $tutorName = DB::table('users')
-        ->where('id', $tutorId)
-        ->selectRaw('CONCAT(first_name, " ", last_name) as full_name')
-        ->value('full_name');
+            ->where('id', $tutorId)
+            ->selectRaw('CONCAT(first_name, " ", last_name) as full_name')
+            ->value('full_name');
 
 
         $postCount = DB::table('post')
             ->where('post_create_by', $tutorId)
-            ->where('post_received_by',$studentId)
-            ->where('is_meeting',0)
-            ->where('post_status','new') //case sensitive
+            ->where('post_received_by', $studentId)
+            ->where('is_meeting', 0)
+            ->where('post_status', 'new') //case sensitive
             ->count();
 
         //getting upcoming meeting list within one week.
 
         $meetings = DB::table('meeting_schedule')
-                    ->leftjoin('users as students', 'meeting_schedule.student_id', '=', 'students.id')
-                    ->where('meeting_schedule.tutor_id', $tutorId)
-                    ->where('meeting_schedule.meeting_status', 'new')
-                    ->where('meeting_schedule.meeting_date', '<=', Carbon::now()->addDays(7))
-                    ->orderBy('meeting_schedule.meeting_date','asc')
-                    ->select(
-                        'meeting_schedule.id',
-                        'meeting_schedule.meeting_title',
-                        'meeting_schedule.meeting_type',
-                        'meeting_schedule.meeting_date',
-                        'meeting_schedule.meeting_start_time',
-                        'meeting_schedule.meeting_end_time',
-                        'meeting_schedule.updated_at',
-                        'students.first_name',
-                        'students.last_name'
-                    )
-                    ->get();
-        return view('student.dashboard',compact('postCount','meetings','tutorName','isStudent'));
+            ->leftjoin('users as students', 'meeting_schedule.student_id', '=', 'students.id')
+            ->where('meeting_schedule.tutor_id', $tutorId)
+            ->where('meeting_schedule.meeting_status', 'new')
+            ->where('meeting_schedule.meeting_date', '<=', Carbon::now()->addDays(7))
+            ->orderBy('meeting_schedule.meeting_date', 'asc')
+            ->select(
+                'meeting_schedule.id',
+                'meeting_schedule.meeting_title',
+                'meeting_schedule.meeting_type',
+                'meeting_schedule.meeting_date',
+                'meeting_schedule.meeting_start_time',
+                'meeting_schedule.meeting_end_time',
+                'meeting_schedule.updated_at',
+                'students.first_name',
+                'students.last_name'
+            )
+            ->get();
+        return view('student.dashboard', compact('postCount', 'meetings', 'tutorName', 'isStudent'));
     }
     //for dashboard
-    public function getMeetingPieData($id=null){
+    public function getMeetingPieData($id = null)
+    {
 
         $studentId =  $id ?? auth()->id();
 
         $currentMonth = Carbon::now()->month;;
         $today = Carbon::now();
         $meetingCounts = DB::table('meeting_schedule')
-        ->where('student_id', $studentId)
-        ->whereMonth('meeting_date',$currentMonth)
-        ->select(
-            DB::raw("COUNT(CASE WHEN meeting_status = 'completed' THEN 1 END) as completed"),
-            DB::raw("COUNT(CASE WHEN meeting_status = 'new' THEN 1 END) as new"),
-            DB::raw("COUNT(CASE WHEN meeting_status = 'cancelled' THEN 1 END) as cancelled"),
-            DB::raw("COUNT(CASE WHEN meeting_status = 'overdue' THEN 1 END) as overdue")
-        )
-        ->first();
+            ->where('student_id', $studentId)
+            ->whereMonth('meeting_date', $currentMonth)
+            ->select(
+                DB::raw("COUNT(CASE WHEN meeting_status = 'completed' THEN 1 END) as completed"),
+                DB::raw("COUNT(CASE WHEN meeting_status = 'new' THEN 1 END) as new"),
+                DB::raw("COUNT(CASE WHEN meeting_status = 'cancelled' THEN 1 END) as cancelled"),
+                DB::raw("COUNT(CASE WHEN meeting_status = 'overdue' THEN 1 END) as overdue")
+            )
+            ->first();
 
         // Format data for Pie Chart
         $chartData = [
-            'labels' => ['Completed', 'New', 'Cancelled','Overdue'],
-            'data' => [$meetingCounts->completed, $meetingCounts->new, $meetingCounts->cancelled,$meetingCounts->overdue]
+            'labels' => ['Completed', 'New', 'Cancelled', 'Overdue'],
+            'data' => [$meetingCounts->completed, $meetingCounts->new, $meetingCounts->cancelled, $meetingCounts->overdue]
         ];
 
         return response()->json($chartData);
     }
 
-    public function myActivities($id=null){
+    public function myActivities($id = null)
+    {
 
         $studentId =  $id ?? auth()->id();
         $currentMonth = Carbon::now()->month;
 
         $tutorId = DB::table('allocation')
-                ->where('student_id', $studentId)
-                ->where('active',1)
-                ->value('tutor_id');
+            ->where('student_id', $studentId)
+            ->where('active', 1)
+            ->value('tutor_id');
 
         $postCount = DB::table('post')
             ->where('post_create_by', $studentId)
-            ->where('post_received_by',$tutorId)
+            ->where('post_received_by', $tutorId)
             ->where('post_status', '!=', 'deleted')
-            ->whereMonth('updated_at',$currentMonth)
+            ->whereMonth('updated_at', $currentMonth)
             ->count();
 
         $commentCount = DB::table('comment')
             ->join('post', 'comment.post_id', '=', 'post.id')
             ->where('comment.user_id', $studentId) // Comment is made by the student
             ->whereMonth('comment.updated_at', $currentMonth)
-            ->where(function($query) use ($studentId,$tutorId) {
-                $query->where(function($q) use ($studentId,$tutorId) {
+            ->where(function ($query) use ($studentId, $tutorId) {
+                $query->where(function ($q) use ($studentId, $tutorId) {
                     // Case 1: Post created by tutor and received by student
                     $q->where('post.post_create_by', $tutorId) // Tutor is creator
-                    ->where('post.post_received_by', $studentId);  // Student is receiver
-                })->orWhere(function($q) use ($studentId,$tutorId) {
+                        ->where('post.post_received_by', $studentId);  // Student is receiver
+                })->orWhere(function ($q) use ($studentId, $tutorId) {
                     // Case 2: Post created by student and received by tutor
                     $q->where('post.post_create_by', $studentId)     // Student is creator
-                    ->where('post.post_received_by',$tutorId); // Tutor is receiver
+                        ->where('post.post_received_by', $tutorId); // Tutor is receiver
                 });
             })
             ->count();
-       
-            // table join
+
+        // table join
         // $commentCount = DB::table('comment')
         //     ->where('user_id', $studentId)
         //     ->whereMonth('updated_at',$currentMonth)
@@ -159,47 +162,48 @@ class StudentController extends Controller
         //     ->count();
 
         $documentCount = DB::table('document')
-                ->join('post', 'document.post_id', '=', 'post.id')
-                ->where('post.post_create_by', $studentId)
-                ->whereMonth('document.updated_at',$currentMonth)
-                ->count();
+            ->join('post', 'document.post_id', '=', 'post.id')
+            ->where('post.post_create_by', $studentId)
+            ->whereMonth('document.updated_at', $currentMonth)
+            ->count();
         $interactionCounts = [
-            'labels' =>['Posts', 'Comments', 'Documents'],
-            'data' => [$postCount,$commentCount,$documentCount]
+            'labels' => ['Posts', 'Comments', 'Documents'],
+            'data' => [$postCount, $commentCount, $documentCount]
         ];
         return response()->json($interactionCounts);
     }
-    public function tutorActivities($id=null){
+    public function tutorActivities($id = null)
+    {
         $studentId =  $id ?? auth()->id();
         $currentMonth = Carbon::now()->month;
 
 
         $tutorId = DB::table('allocation')
-                ->where('student_id', $studentId)
-                ->where('active',1)
-                ->value('tutor_id');
+            ->where('student_id', $studentId)
+            ->where('active', 1)
+            ->value('tutor_id');
 
         $postCount = DB::table('post')
             ->where('post_create_by', $tutorId)
-            ->where('post_received_by',$studentId)
+            ->where('post_received_by', $studentId)
             ->where('post_status', '!=', 'deleted')
-            ->whereMonth('updated_at',$currentMonth)
+            ->whereMonth('updated_at', $currentMonth)
             ->count();
 
-            //create both
+        //create both
         $commentCount = DB::table('comment')
             ->join('post', 'comment.post_id', '=', 'post.id')
             ->where('comment.user_id', $tutorId) // Comment is made by the student
             ->whereMonth('comment.updated_at', $currentMonth)
-            ->where(function($query) use ($studentId,$tutorId) {
-                $query->where(function($q) use ($studentId,$tutorId) {
+            ->where(function ($query) use ($studentId, $tutorId) {
+                $query->where(function ($q) use ($studentId, $tutorId) {
                     // Case 1: Post created by tutor and received by student
                     $q->where('post.post_create_by', $tutorId) // Tutor is creator
-                    ->where('post.post_received_by', $studentId);  // Student is receiver
-                })->orWhere(function($q) use ($studentId,$tutorId) {
+                        ->where('post.post_received_by', $studentId);  // Student is receiver
+                })->orWhere(function ($q) use ($studentId, $tutorId) {
                     // Case 2: Post created by student and received by tutor
                     $q->where('post.post_create_by', $studentId)     // Student is creator
-                    ->where('post.post_received_by',$tutorId); // Tutor is receiver
+                        ->where('post.post_received_by', $tutorId); // Tutor is receiver
                 });
             })
             ->count();
@@ -212,14 +216,14 @@ class StudentController extends Controller
         //     ->count();
 
         $documentCount = DB::table('document')
-                ->join('post', 'document.post_id', '=', 'post.id')
-                ->where('post.post_create_by', $tutorId)
-                ->where('post.post_received_by',$studentId)
-                ->whereMonth('document.updated_at',$currentMonth)
-                ->count();
+            ->join('post', 'document.post_id', '=', 'post.id')
+            ->where('post.post_create_by', $tutorId)
+            ->where('post.post_received_by', $studentId)
+            ->whereMonth('document.updated_at', $currentMonth)
+            ->count();
         $interactionCounts = [
-            'labels' =>['Posts', 'Comments', 'Documents'],
-            'data' => [$postCount,$commentCount,$documentCount]
+            'labels' => ['Posts', 'Comments', 'Documents'],
+            'data' => [$postCount, $commentCount, $documentCount]
         ];
         return response()->json($interactionCounts);
     }
@@ -232,9 +236,9 @@ class StudentController extends Controller
         $studentId = Auth::id();
 
         $assignedTutor = Allocation::where('student_id', $studentId)
-                ->where('active', 1)
-                ->with('tutor')
-                ->get();
+            ->where('active', 1)
+            ->with('tutor')
+            ->get();
         $assignedTutorIds = $assignedTutor->pluck('tutor.id')->toArray();
 
 
@@ -262,62 +266,63 @@ class StudentController extends Controller
 
 
 
-            // Filter by meeting type if selected
-    if ($request->filled('meeting_type') && $request->meeting_type !== 'All') {
-        $query->where('meeting_schedules.meeting_type', $request->meeting_type);
-    }
+        // Filter by meeting type if selected
+        if ($request->filled('meeting_type') && $request->meeting_type !== 'All') {
+            $query->where('meeting_schedules.meeting_type', $request->meeting_type);
+        }
 
-    // Filter by date if selected
-    if ($request->filled('meeting_date')) {
-        $query->where('meeting_schedules.meeting_date', $request->meeting_date);
-    }
+        // Filter by date if selected
+        if ($request->filled('meeting_date')) {
+            $query->where('meeting_schedules.meeting_date', $request->meeting_date);
+        }
 
-    // Filter by student if selected
-    // if ($request->filled('student_id')) {
-    //     $query->where('meeting_schedules.student_id', $request->student_id);
-    // }
+        // Filter by student if selected
+        // if ($request->filled('student_id')) {
+        //     $query->where('meeting_schedules.student_id', $request->student_id);
+        // }
 
-    // Get results and group by date
-    $meeting_schedules = $query
-        ->orderBy('meeting_schedules.meeting_date','desc')
-        ->orderBy('meeting_schedules.meeting_start_time')
-        ->get()
-        ->groupBy('meeting_date');
-            // if(is_null($meeting_schedules)){
-            //     return view('tutor.meetinglists',compact('meeting_schedules'));
-            // }
-            foreach ($meeting_schedules as $date => $meetings) {
-                foreach ($meetings as $meeting) {
-                    $meeting->isTutorAssigned = in_array($meeting->tutorId, $assignedTutorIds);
-                }
+        // Get results and group by date
+        $meeting_schedules = $query
+            ->orderBy('meeting_schedules.meeting_date', 'desc')
+            ->orderBy('meeting_schedules.meeting_start_time')
+            ->get()
+            ->groupBy('meeting_date');
+        // if(is_null($meeting_schedules)){
+        //     return view('tutor.meetinglists',compact('meeting_schedules'));
+        // }
+        foreach ($meeting_schedules as $date => $meetings) {
+            foreach ($meetings as $meeting) {
+                $meeting->isTutorAssigned = in_array($meeting->tutorId, $assignedTutorIds);
             }
-        return view('student.meetinglists', compact('meeting_schedules','assignedTutor'));
-
+        }
+        return view('student.meetinglists', compact('meeting_schedules', 'assignedTutor'));
     }
-    public function overdueStatus(){
+    public function overdueStatus()
+    {
         $now = Carbon::now();
 
         // Fetch meetings
         $meetings = DB::table('meeting_schedule')
-        ->orderBy('meeting_date')
-        ->orderBy('meeting_start_time')
-        ->whereNotIn('meeting_status', ['completed', 'cancelled'])
-        ->get();
+            ->orderBy('meeting_date')
+            ->orderBy('meeting_start_time')
+            ->whereNotIn('meeting_status', ['completed', 'cancelled'])
+            ->get();
 
-    foreach ($meetings as $meeting) {
-        $meetingEndDateTime = Carbon::parse($meeting->meeting_date . ' ' . $meeting->meeting_end_time);
+        foreach ($meetings as $meeting) {
+            $meetingEndDateTime = Carbon::parse($meeting->meeting_date . ' ' . $meeting->meeting_end_time);
 
-        if ($meetingEndDateTime->isPast()) {
-            DB::table('meeting_schedule')
-                ->where('id', $meeting->id)
-                ->update(['meeting_status' => 'overdue']);
+            if ($meetingEndDateTime->isPast()) {
+                DB::table('meeting_schedule')
+                    ->where('id', $meeting->id)
+                    ->update(['meeting_status' => 'overdue']);
+            }
         }
-    }
 
-      //  return view('tutor.meetinglists', compact('meeting_schedules', 'students'));
+        //  return view('tutor.meetinglists', compact('meeting_schedules', 'students'));
     }
     //create or update view
-    public function meetingdetail($id = null) {
+    public function meetingdetail($id = null)
+    {
         \Log::info('Meetingdetail called with ID: ' . $id);
         $studentId = Auth::id(); // Get logged-in tutor’s ID
         // $userRole = DB::table('users') // Assuming your users table is named "users"
@@ -333,61 +338,62 @@ class StudentController extends Controller
         //         ->get();
         // }
         $assignedTutor = Allocation::where('student_id', $studentId)
-        ->where('active', 1)
-        ->with('tutor') // Assuming you have a relationship
-        ->get();
+            ->where('active', 1)
+            ->with('tutor') // Assuming you have a relationship
+            ->get();
 
 
         $meeting_schedules = $id ? MeetingSchedule::find($id) : null;
 
-        $currentTutor = $id?User::find($meeting_schedules->tutor_id):null;
-       // $readOnly = request()->routeIs('tutor.meetingdetail.update') ? false : true;
+        $currentTutor = $id ? User::find($meeting_schedules->tutor_id) : null;
+        // $readOnly = request()->routeIs('tutor.meetingdetail.update') ? false : true;
 
-        if($id) {
+        if ($id) {
             // $resource = Resource::findOrFail($id);
             $readOnly = false;
             $isTutorAllocated = Allocation::where('student_id', $meeting_schedules->student_id)
-            ->where('tutor_id', $meeting_schedules->tutor_id)
-            ->where('active', 1)
-            ->exists();
-            return view('student.meetingdetail', compact('id','assignedTutor','meeting_schedules','readOnly','currentTutor','isTutorAllocated'));
+                ->where('tutor_id', $meeting_schedules->tutor_id)
+                ->where('active', 1)
+                ->exists();
+            return view('student.meetingdetail', compact('id', 'assignedTutor', 'meeting_schedules', 'readOnly', 'currentTutor', 'isTutorAllocated'));
         }
         // For create (no ID), just pass null or empty data
-        return view('student.meetingdetail', ['id' => null,'assignedTutor' => $assignedTutor,'meeting_schedules'=>$meeting_schedules,'readOnly'=>false,'currentTutor'=>null,'isTutorAllocated'=>false]);
-
+        return view('student.meetingdetail', ['id' => null, 'assignedTutor' => $assignedTutor, 'meeting_schedules' => $meeting_schedules, 'readOnly' => false, 'currentTutor' => null, 'isTutorAllocated' => false]);
     }
 
-    public function meetingview($id=null) {
+    public function meetingview($id = null)
+    {
 
         $studentId = Auth::id(); // Get logged-in tutor’s ID
         $assignedTutor = Allocation::where('student_id', $studentId)
-                ->where('active', 1)
-                ->with('tutor')
-                ->get();
+            ->where('active', 1)
+            ->with('tutor')
+            ->get();
 
-        if( $id) {
+        if ($id) {
             // $resource = Resource::findOrFail($id);
             $meeting_schedules = MeetingSchedule::findOrFail($id);
-           // $currentStudent = User::find($meeting_schedules->student_id);
-            $currentTutor = $id?User::find($meeting_schedules->tutor_id):null;
+            // $currentStudent = User::find($meeting_schedules->student_id);
+            $currentTutor = $id ? User::find($meeting_schedules->tutor_id) : null;
             $isTutorAllocated = Allocation::where('student_id', $meeting_schedules->student_id)
-            ->where('tutor_id', $meeting_schedules->tutor_id)
-            ->where('active', 1)
-            ->exists();
+                ->where('tutor_id', $meeting_schedules->tutor_id)
+                ->where('active', 1)
+                ->exists();
 
             $readOnly = true;
-            return view('student.meetingdetail', compact('id','meeting_schedules','readOnly','assignedTutor','currentTutor','isTutorAllocated'));
+            return view('student.meetingdetail', compact('id', 'meeting_schedules', 'readOnly', 'assignedTutor', 'currentTutor', 'isTutorAllocated'));
         }
-        $meeting_schedules=null;
+        $meeting_schedules = null;
 
         // For create (no ID), just pass null or empty data
-        return view('student.meetingdetail', ['id' => null,'meeting_schedules' =>$meeting_schedules,'assignedTutor'=>$assignedTutor,'currentTutor'=>null,'isTutorAllocated'=>false]);
+        return view('student.meetingdetail', ['id' => null, 'meeting_schedules' => $meeting_schedules, 'assignedTutor' => $assignedTutor, 'currentTutor' => null, 'isTutorAllocated' => false]);
     }
 
-    public function save(Request $request,$id=null)
+    public function save(Request $request, $id = null)
     {
         $studentId = Auth::id();
-        $assignedTutor = Allocation::where('student_id', $studentId)->first();
+        $assignedTutor = Allocation::where('student_id', $studentId)
+            ->where('active', 1)->first();
 
 
         $request->validate([
@@ -402,7 +408,7 @@ class StudentController extends Controller
             // ? 'required|date' // For updates
             // : 'required|date|after_or_equal:today', // For creates
 
-           'meeting_date' => 'required|date|after_or_equal:today',
+            'meeting_date' => 'required|date|after_or_equal:today',
             'meeting_start_time' => [
                 'required',
                 'date_format:h:i A', // Validate the correct time format
@@ -440,7 +446,7 @@ class StudentController extends Controller
                 'meeting_start_time' => $start_time,
                 'meeting_end_time' => $end_time,
                 'meeting_description' => $request->meeting_description,
-                'meeting_status' =>"New",
+                'meeting_status' => "New",
                 'tutor_id' => $assignedTutor->tutor_id,
                 'student_id' => Auth::id(),
                 'meeting_location' => $request->meeting_type === 'real' ? $request->meeting_location : null,
@@ -470,9 +476,9 @@ class StudentController extends Controller
 
             $post = Post::create([
                 'post_create_by' => Auth::id(),
-                'post_received_by'=> $assignedTutor->tutor_id,
+                'post_received_by' => $assignedTutor->tutor_id,
                 'post_title' => $request->meeting_title,
-                'post_status'=>"new",
+                'post_status' => "new",
                 'post_description' => $request->meeting_description,
                 'is_meeting' => 1,
                 'created_at' => now(),
@@ -481,23 +487,23 @@ class StudentController extends Controller
 
             return redirect()->route('student.meetinglists')->with('success', 'Meeting created!');
         }
-
-
     }
-    public function toggleStatus($id){
+    public function toggleStatus($id)
+    {
         $meeting = MeetingSchedule::findOrFail($id);
 
         // Toggle status between "completed" and "new"
         $meeting->meeting_status = $meeting->meeting_status === 'completed' ? 'new' : 'completed';
         $meeting->save();
         return redirect()->route('student.meetinglists')->with('success', 'Meeting status updated successfully!')->header('Cache-Control', 'no-store');
-      //  return redirect()->back()->with('success', 'Meeting status updated successfully!');
+        //  return redirect()->back()->with('success', 'Meeting status updated successfully!');
     }
-    public function cancelMeeting(Request $request){
+    public function cancelMeeting(Request $request)
+    {
         $meeting = MeetingSchedule::findOrFail($request->id);
         $meeting->meeting_status = 'cancelled';
         $meeting->save();
-       // $meeting->delete();
+        // $meeting->delete();
 
         return redirect()->route('student.meetinglists')->with('success', 'Meeting is cancelled!');
     }
@@ -507,7 +513,7 @@ class StudentController extends Controller
         $studentId = auth()->id();
         $tutorId = DB::table('allocation')
             ->where('student_id', $studentId)
-            ->where('active',1)
+            ->where('active', 1)
             ->value('tutor_id');
 
         $tutorName = DB::table('users')
@@ -532,15 +538,15 @@ class StudentController extends Controller
             ->join('post', 'comment.post_id', '=', 'post.id')
             ->where('comment.user_id', $studentId) // Comment is made by the student
             ->whereYear('comment.updated_at', $currentYear)
-            ->where(function($query) use ($studentId,$tutorId) {
-                $query->where(function($q) use ($studentId,$tutorId) {
+            ->where(function ($query) use ($studentId, $tutorId) {
+                $query->where(function ($q) use ($studentId, $tutorId) {
                     // Case 1: Post created by tutor and received by student
                     $q->where('post.post_create_by', $tutorId) // Tutor is creator
-                    ->where('post.post_received_by', $studentId);  // Student is receiver
-                })->orWhere(function($q) use ($studentId,$tutorId) {
+                        ->where('post.post_received_by', $studentId);  // Student is receiver
+                })->orWhere(function ($q) use ($studentId, $tutorId) {
                     // Case 2: Post created by student and received by tutor
                     $q->where('post.post_create_by', $studentId)     // Student is creator
-                    ->where('post.post_received_by', $tutorId); // Tutor is receiver
+                        ->where('post.post_received_by', $tutorId); // Tutor is receiver
                 });
             })
             ->groupBy('month')
@@ -556,16 +562,16 @@ class StudentController extends Controller
             ->join('post', 'document.post_id', '=', 'post.id')
             ->selectRaw("MONTH(document.updated_at) as month, COUNT(*) as documents")
             ->where('post.post_create_by', $studentId)
-            ->where('post.post_received_by',$tutorId)
+            ->where('post.post_received_by', $tutorId)
             ->whereYear('document.updated_at', $currentYear)
             ->groupBy('month')
             ->pluck('documents', 'month');
 
         $meetingCounts = DB::table('meeting_schedule')
             ->selectRaw("MONTH(meeting_date) as month, COUNT(*) as meetings")
-            ->where('tutor_id',$tutorId)
+            ->where('tutor_id', $tutorId)
             ->where('student_id', $studentId)
-            ->where('meeting_status','completed')
+            ->where('meeting_status', 'completed')
             ->whereYear('updated_at', $currentYear)
             ->groupBy('month')
             ->pluck('meetings', 'month');
@@ -575,7 +581,7 @@ class StudentController extends Controller
             ->selectRaw("MONTH(updated_at) as month, COUNT(*) as posts")
             ->where('post_create_by', $tutorId)
             ->where('post_received_by', $studentId)
-            ->where('post_status','!=','deleted')
+            ->where('post_status', '!=', 'deleted')
             ->whereYear('updated_at', $currentYear)
             ->groupBy('month')
             ->pluck('posts', 'month');
@@ -585,15 +591,15 @@ class StudentController extends Controller
             ->join('post', 'comment.post_id', '=', 'post.id')
             ->where('comment.user_id', $tutorId) // Comment is made by the student
             ->whereYear('comment.updated_at', $currentYear)
-            ->where(function($query) use ($studentId,$tutorId) {
-                $query->where(function($q) use ($studentId,$tutorId) {
+            ->where(function ($query) use ($studentId, $tutorId) {
+                $query->where(function ($q) use ($studentId, $tutorId) {
                     // Case 1: Post created by tutor and received by student
                     $q->where('post.post_create_by', $tutorId) // Tutor is creator
-                    ->where('post.post_received_by', $studentId);  // Student is receiver
-                })->orWhere(function($q) use ($studentId,$tutorId) {
+                        ->where('post.post_received_by', $studentId);  // Student is receiver
+                })->orWhere(function ($q) use ($studentId, $tutorId) {
                     // Case 2: Post created by student and received by tutor
                     $q->where('post.post_create_by', $studentId)     // Student is creator
-                    ->where('post.post_received_by', $tutorId); // Tutor is receiver
+                        ->where('post.post_received_by', $tutorId); // Tutor is receiver
                 });
             })
             ->groupBy('month')
@@ -620,16 +626,25 @@ class StudentController extends Controller
         $tutorMeetingCounts = DB::table('meeting_schedule')
             ->selectRaw("MONTH(meeting_date) as month, COUNT(*) as meetings")
             ->where('student_id', $studentId)
-            ->where('meeting_status','completed')
+            ->where('meeting_status', 'completed')
             ->whereYear('updated_at', $currentYear)
             ->groupBy('month')
             ->pluck('meetings', 'month');
 
         // Prepare months and monthly data
         $months = [
-            1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April',
-            5 => 'May', 6 => 'June', 7 => 'July', 8 => 'August',
-            9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December'
+            1 => 'January',
+            2 => 'February',
+            3 => 'March',
+            4 => 'April',
+            5 => 'May',
+            6 => 'June',
+            7 => 'July',
+            8 => 'August',
+            9 => 'September',
+            10 => 'October',
+            11 => 'November',
+            12 => 'December'
         ];
 
         $studentMonthlyData = [];
@@ -658,7 +673,6 @@ class StudentController extends Controller
         }
 
         return view('student.report', compact('studentMonthlyData', 'tutorMonthlyData', 'tutorName'));
-
     }
 
     public function blogging()
@@ -676,5 +690,4 @@ class StudentController extends Controller
     {
         return view('student.updatepost');
     }
-
 }
